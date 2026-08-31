@@ -17,37 +17,63 @@ export interface TextFieldProps extends TextFieldInputProps, FieldAnatomyProps {
 	technical?: boolean;
 }
 
-export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(function TextField(
-	{
-		label,
-		description,
-		error,
-		invalid,
-		disabled,
-		readOnly,
-		required,
-		name,
-		size = "md",
-		className,
-		style,
-		requiredIndicator,
-		validate,
-		validationMode,
-		validationDebounceTime,
-		dirty,
-		touched,
-		actionsRef,
-		inputClassName,
-		inputStyle,
-		inputSize,
-		startAdornment,
-		endAdornment,
-		technical,
-		"aria-invalid": ariaInvalid,
-		...inputProps
-	},
-	ref
-) {
+interface TextFieldAnatomyProps extends TextFieldProps {
+	forwardedRef: React.ForwardedRef<HTMLInputElement>;
+	countrySelector?: React.ReactNode;
+	countrySelectorClassName?: string;
+	countrySelectorStyle?: React.CSSProperties;
+}
+
+function TextFieldAnatomy({
+	forwardedRef,
+	countrySelector,
+	countrySelectorClassName,
+	countrySelectorStyle,
+	label,
+	description,
+	error,
+	invalid,
+	disabled,
+	readOnly,
+	required,
+	name,
+	size = "md",
+	className,
+	style,
+	requiredIndicator,
+	validate,
+	validationMode,
+	validationDebounceTime,
+	dirty,
+	touched,
+	actionsRef,
+	inputClassName,
+	inputStyle,
+	inputSize,
+	startAdornment,
+	endAdornment,
+	technical,
+	"aria-invalid": ariaInvalid,
+	...inputProps
+}: TextFieldAnatomyProps) {
+	const control = (
+		<div className={cx("lyds-field__control-frame", countrySelector != null && "lyds-phone-field__input-frame")} data-size={size} data-technical={technical || undefined}>
+			{startAdornment != null ? <span className="lyds-field__adornment lyds-field__adornment--start">{startAdornment}</span> : null}
+			<BaseInput
+				{...inputProps}
+				ref={forwardedRef}
+				className={withStateClassName<BaseInput.State>("lyds-field__input", inputClassName)}
+				style={inputStyle}
+				disabled={disabled}
+				readOnly={readOnly}
+				required={required}
+				size={inputSize}
+				aria-invalid={invalid ? true : ariaInvalid}
+			/>
+			{endAdornment != null ? <span className="lyds-field__adornment lyds-field__adornment--end">{endAdornment}</span> : null}
+		</div>
+	);
+
 	return (
 		<FieldFrame
 			label={label}
@@ -69,23 +95,28 @@ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(func
 			touched={touched}
 			actionsRef={actionsRef}
 		>
-			<div className="lyds-field__control-frame" data-size={size} data-technical={technical || undefined}>
-				{startAdornment != null ? <span className="lyds-field__adornment lyds-field__adornment--start">{startAdornment}</span> : null}
-				<BaseInput
-					{...inputProps}
-					ref={ref}
-					className={withStateClassName<BaseInput.State>("lyds-field__input", inputClassName)}
-					style={inputStyle}
-					disabled={disabled}
-					readOnly={readOnly}
-					required={required}
-					size={inputSize}
-					aria-invalid={invalid ? true : ariaInvalid}
-				/>
-				{endAdornment != null ? <span className="lyds-field__adornment lyds-field__adornment--end">{endAdornment}</span> : null}
-			</div>
+			{countrySelector != null ? (
+				<div className="lyds-phone-field">
+					<span
+						className={cx("lyds-phone-field__country", countrySelectorClassName)}
+						style={countrySelectorStyle}
+						aria-disabled={disabled || readOnly || undefined}
+						inert={disabled || readOnly || undefined}
+						data-invalid={invalid || undefined}
+					>
+						{countrySelector}
+					</span>
+					{control}
+				</div>
+			) : (
+				control
+			)}
 		</FieldFrame>
 	);
+}
+
+export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(function TextField(props, ref) {
+	return <TextFieldAnatomy {...props} forwardedRef={ref} />;
 });
 
 export interface TextareaProps extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "className" | "size" | "style"> {
@@ -273,15 +304,49 @@ export const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldPro
 	);
 });
 
-export type CodeFieldProps = Omit<TextFieldProps, "technical" | "type">;
+export interface PhoneFieldCountrySelectorState {
+	disabled: boolean;
+	readOnly: boolean;
+	/** Reflects the externally controlled `invalid` prop, not validator-derived Base UI state. */
+	externallyInvalid: boolean;
+}
 
-export const CodeField = React.forwardRef<HTMLInputElement, CodeFieldProps>(function CodeField({ spellCheck, autoCapitalize, autoCorrect, ...props }, ref) {
-	return <TextField {...props} ref={ref} type="text" technical spellCheck={spellCheck ?? false} autoCapitalize={autoCapitalize ?? "none"} autoCorrect={autoCorrect ?? "off"} />;
-});
-
-export type PhoneFieldProps = Omit<TextFieldProps, "technical" | "type">;
+export interface PhoneFieldProps extends Omit<TextFieldProps, "technical" | "type"> {
+	/**
+	 * Consumer-owned country picker or selector trigger. Supplying this slot
+	 * switches PhoneField to the Modulor two-segment composition.
+	 */
+	countrySelector?: React.ReactNode | ((state: PhoneFieldCountrySelectorState) => React.ReactNode);
+	countrySelectorClassName?: string;
+	countrySelectorStyle?: React.CSSProperties;
+}
 
 /** A format-agnostic telephone field. Country selection and validation belong to the consumer. */
-export const PhoneField = React.forwardRef<HTMLInputElement, PhoneFieldProps>(function PhoneField({ autoComplete, inputMode, ...props }, ref) {
-	return <TextField {...props} ref={ref} type="tel" technical autoComplete={autoComplete ?? "tel"} inputMode={inputMode ?? "tel"} />;
+export const PhoneField = React.forwardRef<HTMLInputElement, PhoneFieldProps>(function PhoneField(
+	{ countrySelector, countrySelectorClassName, countrySelectorStyle, autoComplete, inputMode, ...props },
+	ref
+) {
+	const resolvedCountrySelector =
+		typeof countrySelector === "function"
+			? countrySelector({
+					disabled: Boolean(props.disabled),
+					readOnly: Boolean(props.readOnly),
+					externallyInvalid: Boolean(props.invalid)
+				})
+			: countrySelector;
+	const hasCountrySelector = resolvedCountrySelector !== null && resolvedCountrySelector !== undefined && resolvedCountrySelector !== false;
+
+	return (
+		<TextFieldAnatomy
+			{...props}
+			forwardedRef={ref}
+			type="tel"
+			technical
+			autoComplete={autoComplete ?? "tel"}
+			inputMode={inputMode ?? "tel"}
+			{...(hasCountrySelector ? { countrySelector: resolvedCountrySelector } : {})}
+			{...(countrySelectorClassName !== undefined ? { countrySelectorClassName } : {})}
+			{...(countrySelectorStyle !== undefined ? { countrySelectorStyle } : {})}
+		/>
+	);
 });

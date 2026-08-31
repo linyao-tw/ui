@@ -44,7 +44,7 @@ for (const path of cssFiles) {
 		...findMatches(source, /#[\da-f]{3,8}\b/gi, "raw hexadecimal color"),
 		...findMatches(source, /\b(?:rgb|rgba|hsl|hsla|oklch|oklab|lab|lch|color)\(/gi, "raw color function"),
 		...findMatches(source, /(?<![-\w])(?:black|white|transparent)(?![-\w])/gi, "raw named color"),
-		...findMatches(source, /(?:\d*\.)?\d+px\b/gi, "fixed px length other than a 1px hairline", value => value !== "1px"),
+		...findMatches(source, /(?:\d*\.)?\d+px\b/gi, "fixed px length other than an approved 0.5px/1px hairline", value => !["0.5px", "1px"].includes(value)),
 		...findMatches(source, /\btransition\s*:[^;]*\ball\b/gi, "transition: all"),
 		...findMatches(source, /\b(?:cubic-bezier|steps)\(/gi, "untokenized motion curve")
 	];

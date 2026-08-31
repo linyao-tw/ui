@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import axe from "axe-core";
 import * as React from "react";
 import { describe, expect, it, vi } from "vitest";
-import { DropZone, FileUpload, Input, NumberField, OTPField, PasswordField, TextField } from "./index";
+import { CodeField, DropZone, FileUpload, Input, NumberField, OTPField, PasswordField, PhoneField, TextField } from "./index";
 
 describe("Input and TextField", () => {
 	it("associates its label, description, and external error with the control", () => {
@@ -118,6 +118,136 @@ describe("OTPField", () => {
 	});
 });
 
+describe("CodeField", () => {
+	it("defaults to six individual numeric cells and preserves Base UI paste details", () => {
+		const onValueChange = vi.fn();
+		const onValueComplete = vi.fn();
+		render(<CodeField label="Device code" onValueChange={onValueChange} onValueComplete={onValueComplete} />);
+
+		const group = screen.getByRole("group", { name: "Device code" });
+		const inputs = group.querySelectorAll("input");
+		expect(inputs).toHaveLength(6);
+		expect(group.querySelector(".lyds-code-field__group")).toBeNull();
+		expect(inputs[1]).toHaveAccessibleName("Character 2 of 6");
+
+		fireEvent.paste(inputs[0] as HTMLInputElement, {
+			clipboardData: { getData: () => "123456" }
+		});
+
+		expect(Array.from(inputs, input => input.value)).toEqual(["1", "2", "3", "4", "5", "6"]);
+		expect(onValueChange).toHaveBeenLastCalledWith("123456", expect.objectContaining({ reason: "input-paste" }));
+		expect(onValueComplete).toHaveBeenLastCalledWith("123456", expect.objectContaining({ reason: "input-paste" }));
+	});
+
+	it("supports controlled keyboard entry without replacing the Base UI change contract", async () => {
+		const user = userEvent.setup();
+		const onValueChange = vi.fn();
+
+		function ControlledCode() {
+			const [value, setValue] = React.useState("");
+			return (
+				<CodeField
+					label="Controlled code"
+					value={value}
+					onValueChange={(nextValue, details) => {
+						onValueChange(nextValue, details);
+						setValue(nextValue);
+					}}
+				/>
+			);
+		}
+
+		render(<ControlledCode />);
+		const inputs = screen.getByRole("group", { name: "Controlled code" }).querySelectorAll("input");
+		await user.click(inputs[0] as HTMLInputElement);
+		await user.keyboard("654321");
+
+		expect(Array.from(inputs, input => input.value)).toEqual(["6", "5", "4", "3", "2", "1"]);
+		expect(onValueChange).toHaveBeenLastCalledWith("654321", expect.objectContaining({ reason: "input-change" }));
+	});
+
+	it("groups long codes by four and lets consumers override grouping", () => {
+		const { rerender } = render(<CodeField label="Recovery code" length={12} defaultValue="123456789012" />);
+		let root = screen.getByRole("group", { name: "Recovery code" });
+		let groups = root.querySelectorAll(".lyds-code-field__group");
+		expect(groups).toHaveLength(3);
+		expect(Array.from(groups, group => group.querySelectorAll("input").length)).toEqual([4, 4, 4]);
+
+		rerender(<CodeField label="Recovery code" length={8} defaultValue="12345678" />);
+		root = screen.getByRole("group", { name: "Recovery code" });
+		expect(root.querySelectorAll(".lyds-code-field__group")).toHaveLength(0);
+		expect(root.querySelectorAll("input")).toHaveLength(8);
+
+		rerender(<CodeField label="Recovery code" length={8} groupSize={4} defaultValue="12345678" />);
+		root = screen.getByRole("group", { name: "Recovery code" });
+		groups = root.querySelectorAll(".lyds-code-field__group");
+		expect(groups).toHaveLength(2);
+		expect(Array.from(groups, group => group.querySelectorAll("input").length)).toEqual([4, 4]);
+	});
+});
+
+describe("PhoneField", () => {
+	it("composes a consumer-owned country selector with an associated phone input", async () => {
+		const user = userEvent.setup();
+		const onValueChange = vi.fn();
+		render(
+			<PhoneField
+				label="Contact phone"
+				defaultValue="20000000"
+				countrySelector={({ disabled, readOnly, externallyInvalid }) => (
+					<button type="button" aria-label="Choose country code" disabled={disabled || readOnly} data-invalid={externallyInvalid || undefined}>
+						TW +886
+					</button>
+				)}
+				onValueChange={onValueChange}
+			/>
+		);
+
+		const selector = screen.getByRole("button", { name: "Choose country code" });
+		const input = screen.getByRole("textbox", { name: "Contact phone" });
+		expect(selector).toBeEnabled();
+		expect(input).toHaveAttribute("type", "tel");
+		expect(input).toHaveAttribute("autocomplete", "tel");
+
+		await user.tab();
+		expect(selector).toHaveFocus();
+		await user.tab();
+		expect(input).toHaveFocus();
+		await user.keyboard("1");
+		expect(input).toHaveValue("1");
+		expect(onValueChange).toHaveBeenLastCalledWith("1", expect.objectContaining({ reason: "none" }));
+	});
+
+	it("passes field state to the country selector without owning country data", () => {
+		render(
+			<PhoneField
+				label="Unavailable phone"
+				disabled
+				invalid
+				countrySelector={state => (
+					<button type="button" aria-label="Choose country code" disabled={state.disabled || state.readOnly} data-invalid={state.externallyInvalid || undefined}>
+						Country
+					</button>
+				)}
+			/>
+		);
+
+		expect(screen.getByRole("button", { name: "Choose country code" })).toBeDisabled();
+		expect(screen.getByRole("textbox", { name: "Unavailable phone" })).toBeDisabled();
+	});
+
+	it("treats false, null, and undefined selector nodes as an absent slot", () => {
+		const { rerender } = render(<PhoneField label="Contact phone" countrySelector={false} />);
+		expect(document.querySelector(".lyds-phone-field")).toBeNull();
+
+		rerender(<PhoneField label="Contact phone" countrySelector={null} />);
+		expect(document.querySelector(".lyds-phone-field")).toBeNull();
+
+		rerender(<PhoneField label="Contact phone" countrySelector={undefined} />);
+		expect(document.querySelector(".lyds-phone-field")).toBeNull();
+	});
+});
+
 describe("file controls", () => {
 	it("reports files selected with the native file picker", async () => {
 		const user = userEvent.setup();
@@ -189,6 +319,15 @@ describe("accessibility", () => {
 				<PasswordField label="Access key" />
 				<NumberField label="Target output" defaultValue={12} />
 				<OTPField label="Verification code" length={4} />
+				<CodeField label="Device code" />
+				<PhoneField
+					label="Contact phone"
+					countrySelector={
+						<button type="button" aria-label="Choose country code">
+							TW +886
+						</button>
+					}
+				/>
 				<FileUpload label="Diagnostic file" />
 				<DropZone label="Attachments" />
 			</form>

@@ -281,9 +281,9 @@ async function verifyConsumer(tarballPath, temporaryRoot, packageJson) {
 		runtimeSmokePath,
 		`import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { Button, DatePicker } from "@lyds/ui";
+import { Button, CodeField, DatePicker } from "@lyds/ui";
 
-for (const [name, value] of Object.entries({ Button, DatePicker })) {
+for (const [name, value] of Object.entries({ Button, CodeField, DatePicker })) {
   if (value == null) throw new Error(\`@lyds/ui did not provide the named ESM export \${name}.\`);
 }
 
@@ -303,10 +303,18 @@ console.log(\`Named ESM imports work; CSS export resolves to \${cssPath}.\`);
 	await writeFile(
 		typeScriptSmokePath,
 		`import type { ComponentProps } from "react";
-import { Button, DatePicker } from "@lyds/ui";
+import { Button, CodeField, DatePicker } from "@lyds/ui";
 
 const buttonProps = { children: "Verify package" } satisfies ComponentProps<typeof Button>;
+const codeFieldProps = {
+  length: 6,
+  groupSize: 3,
+  value: "",
+  onValueChange: () => {},
+  ref: null
+} satisfies ComponentProps<typeof CodeField>;
 void buttonProps;
+void codeFieldProps;
 void DatePicker;
 `
 	);

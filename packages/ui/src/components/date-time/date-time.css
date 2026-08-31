@@ -1,6 +1,5 @@
 .lyds-date-field,
 .lyds-calendar {
-	--lyds-date-control-height: var(--control-height-md);
 	--lyds-date-field-background: var(--component-field-background, var(--control-surface));
 	--lyds-date-field-background-hover: var(--component-field-background-hover, var(--control-surface-hover));
 	--lyds-date-field-border: var(--component-field-border, var(--border-control));
@@ -16,19 +15,21 @@
 	font-variant-numeric: tabular-nums lining-nums;
 }
 
-.lyds-date-field[data-size="sm"] {
-	--lyds-date-control-height: var(--control-height-sm);
-}
-
-.lyds-date-field[data-size="lg"] {
-	--lyds-date-control-height: var(--control-height-lg);
-}
-
 .lyds-date-field {
+	--lyds-date-control-height: var(--control-height-md);
+
 	display: grid;
 	gap: var(--space-2);
 	inline-size: fit-content;
 	max-inline-size: 100%;
+}
+
+.lyds-date-field[data-size="sm"] {
+	--lyds-date-control-height: var(--control-height-md);
+}
+
+.lyds-date-field[data-size="lg"] {
+	--lyds-date-control-height: var(--control-height-lg);
 }
 
 .lyds-date-picker {
@@ -43,25 +44,13 @@
 	color: var(--lyds-date-field-label);
 	font-size: var(--font-size-300);
 	font-weight: var(--font-weight-semibold);
-	letter-spacing: var(--letter-spacing-label);
+	letter-spacing: var(--letter-spacing-body);
 	line-height: var(--line-height-heading);
 }
 
-.lyds-date-label::after {
-	content: "";
-	display: inline-block;
-	inline-size: var(--space-2);
-	block-size: 1px;
-	margin-inline-start: var(--space-2);
-	vertical-align: middle;
-	background: var(--divider-strong);
-}
-
-.lyds-date-field[data-required] .lyds-date-label::before {
-	content: "◆";
-	margin-inline-end: var(--space-1);
+.lyds-date-field[data-required] .lyds-date-label::after {
+	content: " *";
 	color: var(--text-accent);
-	font-size: var(--font-size-100);
 }
 
 .lyds-date-description,
@@ -83,12 +72,13 @@
 .lyds-date-input-shell,
 .lyds-date-picker-group {
 	min-block-size: var(--lyds-date-control-height);
-	border: var(--border-width-hairline) solid var(--lyds-date-field-border);
+	border: 1px solid var(--lyds-date-field-border);
+	border-radius: var(--radius-md);
 	background: var(--lyds-date-field-background);
-	box-shadow: var(--elevation-inset);
 	transition:
 		border-color var(--motion-duration-fast) var(--motion-ease-out),
-		background-color var(--motion-duration-fast) var(--motion-ease-out);
+		background-color var(--motion-duration-fast) var(--motion-ease-out),
+		box-shadow var(--motion-duration-fast) var(--motion-ease-out);
 }
 
 .lyds-date-input {
@@ -107,9 +97,9 @@
 
 .lyds-date-input-shell > .lyds-date-input {
 	flex: 1;
+	min-block-size: 0;
 	border: 0;
 	background: var(--background-transparent);
-	box-shadow: none;
 }
 
 .lyds-date-input-affordance {
@@ -117,13 +107,11 @@
 	place-items: center;
 	inline-size: var(--lyds-date-control-height);
 	color: var(--icon-secondary);
-	border-inline-start: var(--border-width-hairline) solid var(--divider-main);
 }
 
 .lyds-date-input[data-hovered],
 .lyds-date-input-shell:hover,
 .lyds-date-picker-group[data-hovered] {
-	border-color: var(--border-control-hover);
 	background: var(--lyds-date-field-background-hover);
 }
 
@@ -132,9 +120,8 @@
 .lyds-date-picker-group[data-focus-within] {
 	border-color: var(--lyds-date-field-border-focus);
 	box-shadow:
-		var(--elevation-inset),
-		0 0 0 0.125rem var(--focus-ring),
-		0 0 0 0.25rem var(--focus-halo);
+		0 0 0 0.125rem var(--focus-halo),
+		0 0 0 0.25rem var(--focus-ring);
 }
 
 .lyds-date-field[data-invalid] .lyds-date-input,
@@ -147,7 +134,7 @@
 .lyds-date-field[data-disabled] .lyds-date-input-shell,
 .lyds-date-field[data-disabled] .lyds-date-picker-group {
 	color: var(--text-disabled);
-	border-color: var(--divider-main);
+	border-color: var(--background-transparent);
 	background: var(--control-surface-disabled);
 	box-shadow: none;
 	cursor: not-allowed;
@@ -156,7 +143,7 @@
 .lyds-date-field[data-readonly] .lyds-date-input,
 .lyds-date-field[data-readonly] .lyds-date-input-shell,
 .lyds-date-field[data-readonly] .lyds-date-picker-group {
-	border-style: dashed;
+	background: var(--background-inset);
 }
 
 .lyds-date-segment {
@@ -164,16 +151,17 @@
 	padding: var(--space-1);
 	border-radius: var(--radius-xs);
 	color: inherit;
-	font-family: var(--font-family-mono);
-	font-variant-numeric: tabular-nums lining-nums slashed-zero;
+	font-family: var(--font-family-sans);
+	font-variant-numeric: tabular-nums lining-nums;
 	outline: none;
 	transition:
 		color var(--motion-duration-fast) var(--motion-ease-out),
-		background-color var(--motion-duration-fast) var(--motion-ease-out);
+		background-color var(--motion-duration-fast) var(--motion-ease-out),
+		box-shadow var(--motion-duration-fast) var(--motion-ease-out);
 }
 
 .lyds-date-segment[data-placeholder] {
-	color: var(--text-secondary);
+	color: var(--control-placeholder);
 }
 
 .lyds-date-segment[data-focused] {
@@ -182,9 +170,7 @@
 }
 
 .lyds-date-segment[data-focus-visible] {
-	outline: 0.125rem solid var(--focus-ring);
-	outline-offset: 0.125rem;
-	box-shadow: 0 0 0 0.25rem var(--focus-halo);
+	box-shadow: 0 0 0 0.125rem var(--focus-ring);
 }
 
 .lyds-date-picker-group {
@@ -197,9 +183,9 @@
 .lyds-date-picker-group > .lyds-date-input {
 	flex: 1 1 auto;
 	min-inline-size: 0;
+	min-block-size: 0;
 	border: 0;
 	background: var(--background-transparent);
-	box-shadow: none;
 }
 
 .lyds-date-picker-button,
@@ -209,30 +195,31 @@
 	min-inline-size: var(--control-target-min);
 	min-block-size: var(--control-target-min);
 	border: 0;
+	border-radius: var(--radius-md);
 	color: var(--icon-main);
-	background: var(--control-surface);
+	background: var(--background-transparent);
 	cursor: pointer;
 	transition:
 		color var(--motion-duration-fast) var(--motion-ease-out),
 		background-color var(--motion-duration-fast) var(--motion-ease-out),
-		transform var(--motion-duration-fast) var(--motion-ease-out);
+		box-shadow var(--motion-duration-fast) var(--motion-ease-out);
 }
 
 .lyds-date-picker-button {
 	inline-size: var(--lyds-date-control-height);
-	border-inline-start: var(--border-width-hairline) solid var(--divider-main);
+	border-start-start-radius: 0;
+	border-end-start-radius: 0;
 }
 
 .lyds-date-picker-button[data-hovered],
 .lyds-calendar-navigation-button[data-hovered] {
 	color: var(--icon-accent);
-	background: var(--control-surface-hover);
+	background: var(--control-secondary-hover);
 }
 
 .lyds-date-picker-button[data-pressed],
 .lyds-calendar-navigation-button[data-pressed] {
-	background: var(--control-surface-pressed);
-	transform: translateY(0.0625rem);
+	background: var(--control-secondary-pressed);
 }
 
 .lyds-date-picker-button[data-focus-visible],
@@ -245,7 +232,7 @@
 
 .lyds-date-picker-button[data-disabled] {
 	color: var(--icon-disabled);
-	background: var(--control-surface-disabled);
+	background: var(--background-transparent);
 	cursor: not-allowed;
 }
 
@@ -254,8 +241,8 @@
 	block-size: var(--icon-size-md);
 	fill: none;
 	stroke: currentColor;
-	stroke-linecap: square;
-	stroke-linejoin: miter;
+	stroke-linecap: round;
+	stroke-linejoin: round;
 	stroke-width: 1.5;
 }
 
@@ -264,17 +251,16 @@
 	place-items: center;
 	padding-inline: var(--space-1);
 	color: var(--text-secondary);
-	font-family: var(--font-family-mono);
 }
 
 .lyds-date-popover {
 	z-index: var(--z-popover);
 	max-inline-size: calc(100vw - var(--space-4));
 	overflow: auto;
-	border: var(--border-width-hairline) solid var(--divider-strong);
+	border: 1px solid var(--divider-subtle);
+	border-radius: var(--radius-md);
 	background: var(--background-elevated);
 	box-shadow: var(--elevation-2);
-	clip-path: polygon(0 0, calc(100% - var(--shape-cut-md)) 0, 100% var(--shape-cut-md), 100% 100%, var(--shape-cut-md) 100%, 0 calc(100% - var(--shape-cut-md)));
 	transform-origin: var(--trigger-anchor-point);
 }
 
@@ -291,36 +277,12 @@
 }
 
 .lyds-calendar {
-	inline-size: min(100%, 20rem);
+	inline-size: min(100%, 21.25rem);
 	min-inline-size: 0;
 	max-inline-size: 100%;
-	padding: var(--space-3);
+	padding: var(--space-4);
 	color: var(--text-main);
 	background: var(--background-elevated);
-}
-
-@media (max-width: 30rem) {
-	.lyds-calendar {
-		--component-calendar-day-size: 1.75rem;
-		padding: var(--space-2);
-	}
-
-	.lyds-date-picker .lyds-date-input {
-		gap: 0;
-		padding-inline: var(--space-1);
-	}
-
-	.lyds-date-picker .lyds-date-segment {
-		padding-inline: 0;
-	}
-
-	.lyds-date-range-picker .lyds-date-segment {
-		padding-inline: 0;
-	}
-
-	.lyds-date-range-separator {
-		padding-inline: 0;
-	}
 }
 
 .lyds-calendar-panel {
@@ -332,11 +294,10 @@
 	display: grid;
 	grid-template-columns: var(--control-target-min) minmax(0, 1fr) var(--control-target-min);
 	align-items: center;
-	border-block: var(--border-width-hairline) solid var(--divider-main);
+	gap: var(--space-1);
 }
 
 .lyds-calendar-navigation-button {
-	font-family: var(--font-family-mono);
 	font-size: var(--font-size-600);
 	line-height: 1;
 }
@@ -344,12 +305,11 @@
 .lyds-calendar-heading {
 	color: var(--text-title);
 	font-family: var(--font-family-sans);
-	font-size: var(--font-size-300);
-	font-weight: var(--font-weight-bold);
-	letter-spacing: var(--letter-spacing-technical);
-	line-height: var(--line-height-tight);
+	font-size: var(--font-size-400);
+	font-weight: var(--font-weight-semibold);
+	letter-spacing: var(--letter-spacing-body);
+	line-height: var(--line-height-heading);
 	text-align: center;
-	text-transform: uppercase;
 }
 
 .lyds-calendar-period-pickers {
@@ -359,20 +319,27 @@
 }
 
 .lyds-calendar-period-select {
-	min-block-size: var(--control-height-sm);
-	padding-inline: var(--space-2);
-	border: var(--border-width-hairline) solid var(--border-control);
-	border-radius: var(--radius-none);
+	min-block-size: var(--control-height-md);
+	padding-inline: var(--space-3);
+	border: 1px solid var(--background-transparent);
+	border-radius: var(--radius-md);
 	color: var(--text-main);
-	background: var(--background-inset);
-	font-family: var(--font-family-mono);
-	font-size: var(--font-size-200);
+	background: var(--control-surface);
+	font-family: var(--font-family-sans);
+	font-size: var(--font-size-300);
 	font-variant-numeric: tabular-nums lining-nums;
+	transition:
+		border-color var(--motion-duration-fast) var(--motion-ease-out),
+		background-color var(--motion-duration-fast) var(--motion-ease-out),
+		box-shadow var(--motion-duration-fast) var(--motion-ease-out);
+}
+
+.lyds-calendar-period-select:hover {
+	background: var(--control-surface-hover);
 }
 
 .lyds-calendar-period-select:disabled {
 	color: var(--text-disabled);
-	border-color: var(--divider-main);
 	background: var(--control-surface-disabled);
 	cursor: not-allowed;
 }
@@ -380,35 +347,36 @@
 .lyds-calendar-grid {
 	inline-size: 100%;
 	border-collapse: separate;
-	border-spacing: 0 var(--space-1);
+	border-spacing: 0;
 }
 
 .lyds-calendar-weekday {
 	block-size: var(--control-height-sm);
 	color: var(--text-secondary);
-	font-family: var(--font-family-mono);
+	font-family: var(--font-family-sans);
 	font-size: var(--font-size-100);
-	font-weight: var(--font-weight-semibold);
-	letter-spacing: var(--letter-spacing-technical);
+	font-weight: var(--font-weight-medium);
+	letter-spacing: var(--letter-spacing-body);
 	text-align: center;
-	text-transform: uppercase;
 }
 
 .lyds-calendar-cell {
 	position: relative;
 	inline-size: var(--component-calendar-day-size);
 	block-size: var(--component-calendar-day-size);
+	border-radius: var(--radius-md);
 	color: var(--text-main);
-	font-family: var(--font-family-mono);
+	font-family: var(--font-family-sans);
 	font-size: var(--font-size-300);
 	font-variant-numeric: tabular-nums lining-nums;
+	font-weight: var(--font-weight-regular);
 	text-align: center;
 	outline: none;
 	cursor: pointer;
 	transition:
 		color var(--motion-duration-fast) var(--motion-ease-out),
 		background-color var(--motion-duration-fast) var(--motion-ease-out),
-		transform var(--motion-duration-fast) var(--motion-ease-out);
+		box-shadow var(--motion-duration-fast) var(--motion-ease-out);
 }
 
 .lyds-calendar-cell[data-hovered] {
@@ -417,7 +385,6 @@
 
 .lyds-calendar-cell[data-pressed] {
 	background: var(--control-surface-pressed);
-	transform: scale(var(--motion-press-scale));
 }
 
 .lyds-calendar-cell[data-focus-visible] {
@@ -427,8 +394,16 @@
 	box-shadow: inset 0 0 0 0.25rem var(--focus-halo);
 }
 
-.lyds-calendar-cell[data-today] {
-	box-shadow: inset 0 0 0 0.125rem var(--component-calendar-day-ring-today);
+.lyds-calendar-cell[data-today]::before {
+	content: "";
+	position: absolute;
+	inset-block-end: var(--space-1);
+	inset-inline-start: 50%;
+	inline-size: var(--space-1);
+	block-size: var(--space-1);
+	border-radius: var(--radius-round);
+	background: currentColor;
+	transform: translateX(-50%);
 }
 
 .lyds-calendar-cell[data-selected] {
@@ -441,44 +416,19 @@
 .lyds-calendar:not(.lyds-range-calendar) .lyds-calendar-cell[data-selected] {
 	color: var(--component-calendar-day-foreground-selected);
 	background: var(--component-calendar-day-background-selected);
-}
-
-.lyds-range-calendar .lyds-calendar-cell[data-selected]:not([data-selection-start]):not([data-selection-end])::after {
-	content: "";
-	position: absolute;
-	inset-block-end: var(--space-1);
-	inset-inline: 0;
-	block-size: 0.125rem;
-	background: var(--control-primary);
-}
-
-.lyds-range-calendar .lyds-calendar-cell[data-selection-start] {
-	clip-path: polygon(0 0, 100% 0, 100% 100%, var(--shape-cut-sm) 100%, 0 calc(100% - var(--shape-cut-sm)));
-}
-
-.lyds-range-calendar .lyds-calendar-cell[data-selection-end] {
-	clip-path: polygon(0 0, calc(100% - var(--shape-cut-sm)) 0, 100% var(--shape-cut-sm), 100% 100%, 0 100%);
+	font-weight: var(--font-weight-semibold);
 }
 
 .lyds-calendar-cell[data-unavailable] {
-	color: var(--text-secondary);
-	background: var(--background-inset);
+	color: var(--text-disabled);
+	background: var(--background-transparent);
+	text-decoration: line-through;
 	cursor: not-allowed;
-}
-
-.lyds-calendar-cell[data-unavailable]::before {
-	content: "";
-	position: absolute;
-	inset-inline: 22%;
-	inset-block-start: 50%;
-	block-size: 1px;
-	background: var(--divider-strong);
-	transform: rotate(-24deg);
 }
 
 .lyds-calendar-cell[data-disabled] {
 	color: var(--text-disabled);
-	background: var(--control-surface-disabled);
+	background: var(--background-transparent);
 	cursor: not-allowed;
 }
 
@@ -489,8 +439,29 @@
 .lyds-calendar[data-disabled] .lyds-calendar-navigation-button,
 .lyds-calendar-navigation-button[data-disabled] {
 	color: var(--icon-disabled);
-	background: var(--control-surface-disabled);
+	background: var(--background-transparent);
 	cursor: not-allowed;
+}
+
+@media (max-width: 30rem) {
+	.lyds-calendar {
+		padding: var(--space-2);
+	}
+
+	.lyds-date-picker .lyds-date-input,
+	.lyds-date-range-picker .lyds-date-input {
+		gap: 0;
+		padding-inline: var(--space-1);
+	}
+
+	.lyds-date-picker .lyds-date-segment,
+	.lyds-date-range-picker .lyds-date-segment {
+		padding-inline: 0;
+	}
+
+	.lyds-date-range-separator {
+		padding-inline: 0;
+	}
 }
 
 @keyframes lyds-date-popover-in {
@@ -526,5 +497,17 @@
 	.lyds-calendar-cell[data-selected] {
 		outline: 0.125rem solid currentColor;
 		outline-offset: -0.25rem;
+	}
+
+	.lyds-date-input[data-focus-within],
+	.lyds-date-input-shell:focus-within,
+	.lyds-date-picker-group[data-focus-within] {
+		outline: 0.125rem solid Highlight;
+		outline-offset: 0.125rem;
+	}
+
+	.lyds-date-segment[data-focus-visible] {
+		outline: 0.125rem solid Highlight;
+		outline-offset: -0.125rem;
 	}
 }

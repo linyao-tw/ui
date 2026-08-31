@@ -16,34 +16,36 @@
 	display: inline-grid;
 	place-items: center;
 	flex: 0 0 auto;
-	width: 1.375rem;
-	height: 1.375rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	padding: 0.0625rem;
 	color: var(--control-on-primary);
-	background: var(--control-surface);
-	border: 1px solid var(--border-control);
-	box-shadow: var(--elevation-inset);
+	background: var(--control-track);
+	background-clip: content-box;
+	border: 0;
 	cursor: pointer;
 	transition:
 		background-color var(--motion-duration-fast) var(--motion-ease-out),
-		border-color var(--motion-duration-fast) var(--motion-ease-out),
 		transform var(--motion-duration-fast) var(--motion-ease-snap);
 }
 
 .checkbox {
-	border-radius: var(--radius-xs);
-	clip-path: polygon(0 0, calc(100% - var(--shape-cut-sm)) 0, 100% var(--shape-cut-sm), 100% 100%, 0 100%);
+	border-radius: 0.25rem;
+}
+
+.checkbox:hover:not([data-disabled]):not([data-readonly]),
+.radio:hover:not([data-disabled]):not([data-readonly]) {
+	background-color: var(--control-border-hover);
 }
 
 .checkbox[data-checked],
 .checkbox[data-indeterminate],
 .radio[data-checked] {
-	background: var(--control-primary);
-	border-color: var(--control-primary-pressed);
-	box-shadow: var(--elevation-panel-seam);
+	background-color: var(--control-primary);
 }
 
-.checkbox:active:not([data-disabled]),
-.radio:active:not([data-disabled]) {
+.checkbox:active:not([data-disabled]):not([data-readonly]),
+.radio:active:not([data-disabled]):not([data-readonly]) {
 	transform: scale(var(--motion-press-scale));
 }
 
@@ -71,7 +73,24 @@
 .slider[data-disabled],
 .segmentedControl[data-disabled] {
 	cursor: not-allowed;
-	opacity: 0.56;
+}
+
+.checkbox[data-disabled],
+.radio[data-disabled],
+.switch[data-disabled] {
+	background: var(--control-surface-disabled);
+	color: var(--text-disabled);
+}
+
+.checkbox[data-disabled][data-checked],
+.checkbox[data-disabled][data-indeterminate],
+.radio[data-disabled][data-checked],
+.switch[data-disabled][data-checked] {
+	background: var(--control-primary-disabled);
+}
+
+.switch[data-disabled] .switchThumb {
+	opacity: 0.7;
 }
 
 .checkbox[data-readonly],
@@ -103,15 +122,15 @@
 	height: 0.875rem;
 	fill: none;
 	stroke: currentColor;
-	stroke-linecap: square;
-	stroke-linejoin: miter;
+	stroke-linecap: round;
+	stroke-linejoin: round;
 	stroke-width: 0.125rem;
 }
 
 .choiceGroup {
 	display: flex;
 	flex-direction: column;
-	gap: var(--space-3);
+	gap: var(--space-2);
 	color: var(--text-main);
 }
 
@@ -135,6 +154,7 @@
 
 .choiceTitle {
 	font: var(--font-weight-medium) var(--font-size-sm) / var(--line-height-body) var(--font-family-sans);
+	letter-spacing: var(--letter-spacing-body);
 	color: var(--text-title);
 }
 
@@ -170,51 +190,39 @@
 	align-items: center;
 	width: 3.25rem;
 	height: 1.875rem;
-	padding: 0.1875rem;
+	padding: 0.0625rem;
 	background: var(--control-track);
-	border: 1px solid var(--border-control);
+	border: 0;
 	border-radius: var(--radius-round);
-	box-shadow: var(--elevation-inset);
 	cursor: pointer;
-	transition:
-		background-color var(--motion-duration-normal) var(--motion-ease-out),
-		border-color var(--motion-duration-fast) var(--motion-ease-out);
+	transition: background-color var(--motion-duration-normal) var(--motion-ease-out);
+}
+
+.switch:hover:not([data-disabled]):not([data-readonly]) {
+	background: var(--control-border-hover);
 }
 
 .switch[data-checked] {
 	background: var(--control-track-checked);
-	border-color: var(--control-primary-pressed);
 }
 
 .switchSignal {
-	position: absolute;
-	inset-inline-start: 0.5rem;
-	width: 0.25rem;
-	height: 0.25rem;
-	background: var(--control-on-primary);
-	border-radius: var(--radius-round);
-	opacity: 0;
-	transition: opacity var(--motion-duration-fast) var(--motion-ease-mechanical);
-}
-
-.switch[data-checked] .switchSignal {
-	opacity: 1;
+	display: none;
 }
 
 .switchThumb {
-	width: 1.375rem;
-	height: 1.375rem;
-	background: var(--control-thumb);
-	border: 1px solid var(--divider-strong);
+	width: 1.75rem;
+	height: 1.75rem;
+	background: var(--control-knob);
+	border: 0;
 	border-radius: var(--radius-round);
-	box-shadow: var(--elevation-1);
+	box-shadow: var(--shadow-switch-knob);
 	transition:
 		translate var(--motion-duration-normal) var(--motion-ease-snap),
 		background-color var(--motion-duration-fast) var(--motion-ease-out);
 }
 
 .switch[data-checked] .switchThumb {
-	background: var(--control-thumb-checked);
 	translate: 1.375rem 0;
 }
 
@@ -257,43 +265,37 @@
 .sliderTrack {
 	position: relative;
 	width: 100%;
-	height: 0.5rem;
+	height: 0.25rem;
 	background: var(--control-track);
-	border: 1px solid var(--border-control);
-	border-radius: var(--radius-xs);
-	box-shadow: var(--elevation-inset);
+	border: 0;
+	border-radius: var(--radius-round);
 }
 
 .sliderTrack[data-orientation="vertical"] {
-	width: 0.5rem;
+	width: 0.25rem;
 	height: 100%;
 }
 
 .sliderIndicator {
-	background: var(--control-track-checked);
+	background: var(--control-range-indicator);
 	border-radius: inherit;
 }
 
 .sliderThumb {
-	width: 1.375rem;
-	height: 1.75rem;
-	background: var(--control-thumb);
-	border: 1px solid var(--divider-strong);
-	border-radius: var(--radius-xs);
-	box-shadow: var(--elevation-1);
-	clip-path: polygon(0.25rem 0, 100% 0, 100% calc(100% - 0.25rem), calc(100% - 0.25rem) 100%, 0 100%, 0 0.25rem);
+	width: 1.5rem;
+	height: 1.5rem;
+	background: var(--control-knob);
+	border: 0;
+	border-radius: var(--radius-round);
+	box-shadow: var(--shadow-low);
 	cursor: grab;
 	transition:
-		background-color var(--motion-duration-fast) var(--motion-ease-out),
+		box-shadow var(--motion-duration-fast) var(--motion-ease-out),
 		transform var(--motion-duration-fast) var(--motion-ease-out);
 }
 
-.sliderThumb::after {
-	position: absolute;
-	inset: 0.3125rem auto 0.3125rem 50%;
-	width: 1px;
-	background: var(--divider-main);
-	content: "";
+.sliderThumb:hover:not([data-disabled]) {
+	box-shadow: var(--shadow-medium);
 }
 
 .sliderThumb[data-dragging] {
@@ -307,50 +309,52 @@
 	align-items: center;
 	justify-content: center;
 	gap: var(--space-2);
-	min-height: var(--control-target-min);
+	min-height: var(--control-height-md);
 	padding-inline: var(--space-3);
 	font: var(--font-weight-medium) var(--font-size-sm) / 1 var(--font-family-sans);
+	letter-spacing: var(--letter-spacing-body);
 	color: var(--text-main);
-	background: var(--control-surface);
-	border: 1px solid var(--border-control);
-	border-radius: var(--radius-sm);
-	box-shadow: var(--elevation-panel-seam);
+	background: var(--control-secondary);
+	border: 0;
+	border-radius: var(--radius-md);
 	cursor: pointer;
 	transition:
 		background-color var(--motion-duration-fast) var(--motion-ease-out),
-		border-color var(--motion-duration-fast) var(--motion-ease-out),
+		color var(--motion-duration-fast) var(--motion-ease-out),
 		transform var(--motion-duration-fast) var(--motion-ease-out);
 }
 
 .toggle:hover:not([data-disabled]),
 .menuTrigger:hover:not([data-disabled]) {
-	background: var(--control-surface-hover);
-	border-color: var(--border-control-hover);
+	background: var(--control-secondary-hover);
 }
 
 .toggle:active:not([data-disabled]),
 .menuTrigger:active:not([data-disabled]) {
-	background: var(--control-surface-pressed);
-	transform: translateY(0.0625rem);
+	background: var(--control-secondary-pressed);
+	transform: scale(var(--motion-press-scale));
 }
 
 .toggle[data-pressed] {
-	color: var(--control-on-primary);
-	background: var(--control-primary);
-	border-color: var(--control-primary-pressed);
-	box-shadow: var(--elevation-inset);
+	color: var(--text-accent);
+	background: var(--control-selected-muted);
 }
 
 .toggleQuiet {
 	background: var(--background-transparent);
-	border-color: var(--background-transparent);
-	box-shadow: none;
+}
+
+.toggleQuiet:hover:not([data-disabled]) {
+	background: var(--control-secondary-hover);
 }
 
 .toggleGroup,
 .segmentedControl {
 	display: inline-flex;
 	align-items: stretch;
+}
+
+.toggleGroup {
 	gap: var(--space-1);
 }
 
@@ -360,42 +364,94 @@
 }
 
 .segmentedControl {
-	position: relative;
 	justify-self: start;
+	inline-size: min(100%, 20.5rem);
 	max-width: 100%;
-	padding: var(--space-1);
-	background: var(--background-inset);
-	border: 1px solid var(--divider-main);
-	border-radius: var(--radius-sm);
-	box-shadow: var(--elevation-inset);
-	clip-path: polygon(0.375rem 0, 100% 0, 100% calc(100% - 0.375rem), calc(100% - 0.375rem) 100%, 0 100%, 0 0.375rem);
+	min-height: 3.5rem;
+	overflow-x: auto;
+	padding: 1px;
+	background: var(--control-quaternary);
+	border: 0;
+	border-radius: var(--radius-md);
 }
 
-.segmentedControl::before {
-	position: absolute;
-	inset: 0.1875rem;
-	pointer-events: none;
-	border: 1px solid var(--divider-subtle);
-	content: "";
+.segmentedControl[data-size="sm"] {
+	min-height: 2.5rem;
 }
 
 .segmentedControl > .toggle {
 	position: relative;
-	flex: 1 1 auto;
-	min-height: 2.25rem;
-	border-color: var(--background-transparent);
-	box-shadow: none;
+	flex: 1 1 0;
+	min-width: 3.375rem;
+	min-height: calc(3.5rem - 0.125rem);
+	padding-inline: var(--space-2);
+	font-size: var(--font-size-md);
+	font-weight: var(--font-weight-regular);
+	letter-spacing: -0.02em;
+	color: var(--text-secondary);
+	background: var(--background-transparent);
+	border: 0;
+	border-radius: 0.6875rem;
+	box-shadow: var(--shadow-control-context);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.segmentedControl > .toggle + .toggle::before {
+	position: absolute;
+	inset-block-start: 50%;
+	inset-inline-start: -1px;
+	width: 1px;
+	height: 2rem;
+	background: var(--divider-main);
+	content: "";
+	transform: translateY(-50%) scaleX(0.5);
 }
 
 .segmentedControl[data-size="sm"] > .toggle {
-	min-height: 2rem;
-	padding-inline: var(--space-2);
-	font-size: var(--font-size-xs);
+	min-height: calc(2.5rem - 0.125rem);
+	font-size: var(--font-size-sm);
+	letter-spacing: -0.01em;
+}
+
+.segmentedControl > .toggle:hover:not([data-disabled]):not([data-pressed]) {
+	color: var(--text-main);
+	background: var(--control-secondary-hover);
+}
+
+.segmentedControl > .toggle:active:not([data-disabled]) {
+	transform: none;
 }
 
 .segmentedControl > .toggle[data-pressed] {
-	border-color: var(--control-primary-pressed);
-	box-shadow: var(--elevation-panel-seam);
+	font-weight: var(--font-weight-semibold);
+	color: var(--text-title);
+	background: var(--control-surface-selected);
+	box-shadow: var(--shadow-floating-control);
+}
+
+.segmentedControl > .toggle[data-pressed]::before,
+.segmentedControl > .toggle[data-pressed] + .toggle::before {
+	opacity: 0;
+}
+
+.segmentedControl[data-orientation="vertical"] {
+	inline-size: auto;
+	min-height: 0;
+	overflow: visible;
+}
+
+.segmentedControl[data-orientation="vertical"] > .toggle {
+	min-height: var(--control-height-md);
+}
+
+.segmentedControl[data-orientation="vertical"] > .toggle + .toggle::before {
+	inset-block-start: -1px;
+	inset-inline-start: 50%;
+	width: 2rem;
+	height: 1px;
+	transform: translateX(-50%) scaleY(0.5);
 }
 
 .selectTrigger,
@@ -404,12 +460,11 @@
 	align-items: center;
 	width: 100%;
 	min-width: 12rem;
-	min-height: var(--control-height-md);
+	min-height: var(--control-height-lg);
 	color: var(--text-main);
-	background: var(--control-surface);
+	background: var(--background-elevated);
 	border: 1px solid var(--border-control);
-	border-radius: var(--radius-sm);
-	box-shadow: var(--elevation-inset);
+	border-radius: var(--radius-md);
 	transition:
 		background-color var(--motion-duration-fast) var(--motion-ease-out),
 		border-color var(--motion-duration-fast) var(--motion-ease-out),
@@ -419,21 +474,23 @@
 .selectTrigger {
 	justify-content: space-between;
 	gap: var(--space-3);
-	padding-inline: var(--space-3);
-	font: var(--font-weight-regular) var(--font-size-sm) / var(--line-height-body) var(--font-family-sans);
+	padding-inline: var(--space-4);
+	font: var(--font-weight-regular) var(--font-size-md) / var(--line-height-body) var(--font-family-sans);
+	letter-spacing: var(--letter-spacing-body);
 	cursor: pointer;
 }
 
 .selectTrigger:hover:not([data-disabled]),
 .comboboxInputGroup:hover:not([data-disabled]) {
 	background: var(--control-surface-hover);
-	border-color: var(--border-control-hover);
+	border-color: var(--divider-strong);
 }
 
 .selectTrigger[data-popup-open],
 .comboboxInputGroup[data-popup-open],
 .comboboxInputGroup:focus-within {
 	border-color: var(--border-control-focus);
+	box-shadow: 0 0 0 1px var(--border-control-focus);
 }
 
 .selectTrigger[aria-invalid="true"],
@@ -460,7 +517,7 @@
 	place-items: center;
 	width: var(--icon-size-sm);
 	height: var(--icon-size-sm);
-	font-family: var(--font-family-mono);
+	font-family: var(--font-family-sans);
 	color: var(--icon-secondary);
 	transition: transform var(--motion-duration-normal) var(--motion-ease-out);
 }
@@ -475,10 +532,11 @@
 
 .comboboxInput {
 	min-width: 0;
-	min-height: calc(var(--control-height-md) - 0.125rem);
+	min-height: calc(var(--control-height-lg) - 0.125rem);
 	flex: 1;
-	padding-inline: var(--space-3);
-	font: var(--font-weight-regular) var(--font-size-sm) / var(--line-height-body) var(--font-family-sans);
+	padding-inline: var(--space-4);
+	font: var(--font-weight-regular) var(--font-size-md) / var(--line-height-body) var(--font-family-sans);
+	letter-spacing: var(--letter-spacing-body);
 	color: var(--text-main);
 	background: var(--background-transparent);
 	border: 0;
@@ -491,8 +549,8 @@
 	place-items: center;
 	flex: 0 0 auto;
 	width: var(--control-target-min);
-	min-height: var(--control-height-md);
-	font: var(--font-weight-medium) var(--font-size-md) / 1 var(--font-family-mono);
+	min-height: calc(var(--control-height-lg) - 0.125rem);
+	font: var(--font-weight-medium) var(--font-size-md) / 1 var(--font-family-sans);
 	color: var(--icon-secondary);
 	background: var(--background-transparent);
 	border: 0;
@@ -523,9 +581,9 @@
 	overflow: hidden;
 	color: var(--text-main);
 	background: var(--background-elevated);
-	border: 1px solid var(--divider-strong);
-	border-radius: var(--radius-sm);
-	box-shadow: var(--elevation-3);
+	border: 1px solid var(--divider-subtle);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-medium);
 	transform-origin: var(--transform-origin);
 	transition:
 		opacity var(--motion-duration-fast) var(--motion-ease-out),
@@ -557,9 +615,11 @@
 	min-height: var(--control-target-min);
 	padding: var(--space-2) var(--space-3);
 	font: var(--font-weight-regular) var(--font-size-sm) / var(--line-height-body) var(--font-family-sans);
+	letter-spacing: var(--letter-spacing-body);
 	color: var(--text-main);
-	border: 1px solid var(--background-transparent);
-	border-radius: var(--radius-xs);
+	background: var(--background-transparent);
+	border: 0;
+	border-radius: var(--radius-sm);
 	outline: 0;
 	cursor: default;
 	user-select: none;
@@ -569,11 +629,11 @@
 .menuItem[data-highlighted] {
 	color: var(--text-title);
 	background: var(--control-surface-hover);
-	border-color: var(--divider-main);
 }
 
 .option[data-selected] {
-	background: var(--control-surface-selected);
+	color: var(--text-title);
+	background: var(--background-selected);
 }
 
 .option[data-disabled],
@@ -589,7 +649,7 @@
 	flex: 0 0 auto;
 	width: var(--icon-size-sm);
 	height: var(--icon-size-sm);
-	font-family: var(--font-family-mono);
+	font-family: var(--font-family-sans);
 	font-size: var(--font-size-xs);
 	color: var(--icon-accent);
 }
@@ -614,9 +674,8 @@
 
 .groupLabel {
 	padding: var(--space-3) var(--space-3) var(--space-1);
-	font: var(--font-weight-semibold) var(--font-size-xs) / 1 var(--font-family-mono);
-	letter-spacing: var(--letter-spacing-technical);
-	text-transform: uppercase;
+	font: var(--font-weight-medium) var(--font-size-xs) / var(--line-height-body) var(--font-family-sans);
+	letter-spacing: var(--letter-spacing-body);
 	color: var(--text-secondary);
 }
 
@@ -637,8 +696,8 @@
 
 .contextTrigger {
 	display: block;
-	border: 1px dashed var(--divider-main);
-	border-radius: var(--radius-sm);
+	border: 1px solid var(--divider-main);
+	border-radius: var(--radius-md);
 	outline: 0;
 }
 
@@ -648,7 +707,6 @@
 	.radio,
 	.radioIndicator,
 	.switch,
-	.switchSignal,
 	.switchThumb,
 	.sliderThumb,
 	.toggle,
@@ -659,5 +717,38 @@
 	.popup,
 	.menuPopup {
 		transition-duration: var(--motion-duration-instant);
+	}
+}
+
+@media (forced-colors: active) {
+	.checkbox,
+	.radio,
+	.switch,
+	.sliderTrack,
+	.sliderThumb,
+	.toggle,
+	.menuTrigger,
+	.selectTrigger,
+	.comboboxInputGroup,
+	.popup,
+	.menuPopup,
+	.contextTrigger {
+		border: 1px solid CanvasText;
+	}
+
+	.checkbox[data-checked],
+	.checkbox[data-indeterminate],
+	.radio[data-checked],
+	.switch[data-checked],
+	.sliderIndicator,
+	.toggle[data-pressed] {
+		background: Highlight;
+		color: HighlightText;
+	}
+
+	.switchThumb,
+	.sliderThumb,
+	.segmentedControl > .toggle[data-pressed] {
+		box-shadow: none;
 	}
 }

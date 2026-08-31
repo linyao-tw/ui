@@ -8,7 +8,7 @@ import {
 } from "@base-ui/react/accordion";
 import { Collapsible as BaseCollapsible, type CollapsiblePanelProps, type CollapsibleRootProps, type CollapsibleTriggerProps } from "@base-ui/react/collapsible";
 import { Tabs as BaseTabs, type TabsIndicatorProps, type TabsListProps, type TabsPanelProps, type TabsRootProps, type TabsTabProps } from "@base-ui/react/tabs";
-import { forwardRef, type HTMLAttributes, type JSX } from "react";
+import { forwardRef, type JSX } from "react";
 
 import { mergeClassName } from "./class-names";
 
@@ -94,6 +94,7 @@ export const TabsTab = forwardRef<HTMLElement, TabsTabProps>(function TabsTab({ 
 	return <BaseTabs.Tab {...props} ref={ref} className={mergeClassName("lyds-tabs__tab", className)} />;
 });
 
+/** Base UI indicator escape hatch. LYDS hides it by default because active tabs use their own pill surface. */
 export const TabsIndicator = forwardRef<HTMLSpanElement, TabsIndicatorProps>(function TabsIndicator({ className, ...props }, ref) {
 	return <BaseTabs.Indicator {...props} ref={ref} className={mergeClassName("lyds-tabs__indicator", className)} />;
 });
@@ -102,20 +103,10 @@ export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>(function Tab
 	return <BaseTabs.Panel {...props} ref={ref} className={mergeClassName("lyds-tabs__panel", className)} />;
 });
 
-export type TabsRailProps = HTMLAttributes<HTMLDivElement>;
-
-/** A technical annotation rail for labels or counters adjacent to a tab list. */
-export const TabsRail = forwardRef<HTMLDivElement, TabsRailProps>(function TabsRail({ className, ...props }, ref) {
-	const mergedClassName = className ? `lyds-tabs__rail ${className}` : "lyds-tabs__rail";
-
-	return <div {...props} ref={ref} className={mergedClassName} />;
-});
-
 export const Tabs = {
 	Root: TabsRoot,
 	List: TabsList,
 	Tab: TabsTab,
 	Indicator: TabsIndicator,
-	Panel: TabsPanel,
-	Rail: TabsRail
+	Panel: TabsPanel
 } as const;
