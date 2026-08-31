@@ -115,13 +115,11 @@
 	background: var(--lyds-date-field-background-hover);
 }
 
-.lyds-date-input[data-focus-within],
+.lyds-date-field > .lyds-date-input[data-focus-within],
 .lyds-date-input-shell:focus-within,
 .lyds-date-picker-group[data-focus-within] {
 	border-color: var(--lyds-date-field-border-focus);
-	box-shadow:
-		0 0 0 0.125rem var(--focus-halo),
-		0 0 0 0.25rem var(--focus-ring);
+	box-shadow: 0 0 0 0.125rem var(--focus-ring);
 }
 
 .lyds-date-field[data-invalid] .lyds-date-input,
@@ -362,6 +360,8 @@
 
 .lyds-calendar-cell {
 	position: relative;
+	display: grid;
+	place-items: center;
 	inline-size: var(--component-calendar-day-size);
 	block-size: var(--component-calendar-day-size);
 	border-radius: var(--radius-md);
@@ -370,6 +370,7 @@
 	font-size: var(--font-size-300);
 	font-variant-numeric: tabular-nums lining-nums;
 	font-weight: var(--font-weight-regular);
+	line-height: 1;
 	text-align: center;
 	outline: none;
 	cursor: pointer;
@@ -499,7 +500,7 @@
 		outline-offset: -0.25rem;
 	}
 
-	.lyds-date-input[data-focus-within],
+	.lyds-date-field > .lyds-date-input[data-focus-within],
 	.lyds-date-input-shell:focus-within,
 	.lyds-date-picker-group[data-focus-within] {
 		outline: 0.125rem solid Highlight;

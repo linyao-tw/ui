@@ -1,6 +1,7 @@
 import { Calendar, CalendarDate } from "@lyds/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { expect } from "storybook/test";
 
 import "../components/story-layout.css";
 
@@ -18,7 +19,21 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+	play: async ({ canvasElement }) => {
+		const selectedCell = canvasElement.querySelector<HTMLElement>('.lyds-calendar-cell[data-selected="true"]');
+		await expect(selectedCell).not.toBeNull();
+
+		const cellRect = selectedCell!.getBoundingClientRect();
+		const contentRange = document.createRange();
+		contentRange.selectNodeContents(selectedCell!);
+		const contentRect = contentRange.getBoundingClientRect();
+		const cellCenter = cellRect.top + cellRect.height / 2;
+		const contentCenter = contentRect.top + contentRect.height / 2;
+
+		await expect(Math.abs(cellCenter - contentCenter)).toBeLessThan(1);
+	}
+};
 
 function ControlledCalendar() {
 	const [value, setValue] = useState(initialDate);

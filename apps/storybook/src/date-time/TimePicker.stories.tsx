@@ -1,6 +1,7 @@
 import { Time, TimeField, TimePicker } from "@lyds/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { expect, userEvent, within } from "storybook/test";
 
 import "../components/story-layout.css";
 
@@ -22,7 +23,20 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		await userEvent.click(canvas.getAllByRole("spinbutton")[0]!);
+
+		const shell = canvasElement.querySelector<HTMLElement>(".lyds-date-input-shell");
+		const nestedInput = canvasElement.querySelector<HTMLElement>(".lyds-date-input-shell > .lyds-date-input");
+		await expect(shell).not.toBeNull();
+		await expect(nestedInput).not.toBeNull();
+		const shellFocusLayers = getComputedStyle(shell!).boxShadow.match(/0px 0px 0px/g) ?? [];
+		await expect(shellFocusLayers).toHaveLength(1);
+		await expect(getComputedStyle(nestedInput!).boxShadow).toBe("none");
+	}
+};
 
 function ControlledTime() {
 	const [value, setValue] = useState<Time | null>(defaultTime);
