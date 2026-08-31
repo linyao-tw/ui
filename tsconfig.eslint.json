@@ -3,12 +3,5 @@
 	"compilerOptions": {
 		"noEmit": true
 	},
-	"include": [
-		"packages/**/*.ts",
-		"packages/**/*.tsx",
-		"apps/**/*.ts",
-		"apps/**/*.tsx",
-		"apps/**/.storybook/**/*.ts",
-		"apps/**/.storybook/**/*.tsx"
-	]
+	"include": ["packages/**/*.ts", "packages/**/*.tsx", "apps/**/*.ts", "apps/**/*.tsx", "apps/**/.storybook/**/*.ts", "apps/**/.storybook/**/*.tsx"]
 }
