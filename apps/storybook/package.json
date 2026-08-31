@@ -1,0 +1,25 @@
+{
+	"name": "@lyds/storybook",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "storybook build -o storybook-static",
+		"storybook": "storybook dev -p 6006",
+		"typecheck": "tsc -p tsconfig.json"
+	},
+	"dependencies": {
+		"@lyds/ui": "workspace:*",
+		"react": "^19.2.8",
+		"react-dom": "^19.2.8"
+	},
+	"devDependencies": {
+		"@storybook/addon-a11y": "^10.5.10",
+		"@storybook/addon-docs": "^10.5.10",
+		"@storybook/react-vite": "^10.5.10",
+		"@types/react": "^19.2.18",
+		"@types/react-dom": "^19.2.5",
+		"storybook": "^10.5.10",
+		"vite": "^8.2.2"
+	}
+}

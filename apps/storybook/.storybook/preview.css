@@ -1,0 +1,18 @@
+html,
+body,
+#storybook-root {
+	min-height: 100%;
+}
+
+body {
+	background: var(--background-main);
+	color: var(--text-main);
+}
+
+.lyds-story-canvas {
+	min-height: 100dvh;
+	padding: var(--space-6, 1.5rem);
+	background: linear-gradient(var(--divider-subtle, transparent) 1px, transparent 1px), linear-gradient(90deg, var(--divider-subtle, transparent) 1px, transparent 1px), var(--background-main);
+	background-size: 2rem 2rem;
+	color: var(--text-main);
+}

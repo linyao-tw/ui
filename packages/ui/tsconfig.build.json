@@ -1,0 +1,7 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"types": ["react", "react-dom"]
+	},
+	"exclude": ["src/**/*.stories.*", "src/**/*.test.*", "src/test"]
+}
