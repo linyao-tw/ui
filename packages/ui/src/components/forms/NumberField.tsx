@@ -1,0 +1,86 @@
+import { NumberField as BaseNumberField } from "@base-ui/react/number-field";
+import * as React from "react";
+import "./forms.css";
+import { cx, FieldFrame, withStateClassName, type FieldAnatomyProps } from "./internal";
+
+type NumberRootProps = Omit<BaseNumberField.Root.Props, "className" | "disabled" | "name" | "readOnly" | "required" | "style">;
+
+export interface NumberFieldProps extends NumberRootProps, FieldAnatomyProps {
+	inputClassName?: BaseNumberField.Input.Props["className"];
+	inputStyle?: React.CSSProperties;
+	groupClassName?: BaseNumberField.Group.Props["className"];
+	showSteppers?: boolean;
+	incrementLabel?: string;
+	decrementLabel?: string;
+}
+
+/** Locale-aware numeric input powered by Base UI Number Field. */
+export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(function NumberField(
+	{
+		label,
+		description,
+		error,
+		invalid,
+		disabled,
+		readOnly,
+		required,
+		name,
+		size = "md",
+		className,
+		style,
+		requiredIndicator,
+		validate,
+		validationMode,
+		validationDebounceTime,
+		dirty,
+		touched,
+		actionsRef,
+		inputClassName,
+		inputStyle,
+		groupClassName,
+		showSteppers = true,
+		incrementLabel = "Increase value",
+		decrementLabel = "Decrease value",
+		...numberProps
+	},
+	ref
+) {
+	return (
+		<FieldFrame
+			label={label}
+			description={description}
+			error={error}
+			invalid={invalid}
+			disabled={disabled}
+			readOnly={readOnly}
+			required={required}
+			name={name}
+			size={size}
+			className={className}
+			style={style}
+			requiredIndicator={requiredIndicator}
+			validate={validate}
+			validationMode={validationMode}
+			validationDebounceTime={validationDebounceTime}
+			dirty={dirty}
+			touched={touched}
+			actionsRef={actionsRef}
+		>
+			<BaseNumberField.Root {...numberProps} ref={ref} className="lyds-number-field" name={name} disabled={disabled} readOnly={readOnly} required={required} data-size={size}>
+				<BaseNumberField.Group className={withStateClassName<BaseNumberField.Group.State>("lyds-number-field__group", groupClassName)}>
+					<BaseNumberField.Input className={withStateClassName<BaseNumberField.Input.State>("lyds-number-field__input", inputClassName)} style={inputStyle} />
+					{showSteppers ? (
+						<span className="lyds-number-field__steppers">
+							<BaseNumberField.Decrement className={cx("lyds-number-field__stepper", "lyds-number-field__stepper--decrement")} aria-label={decrementLabel}>
+								<span aria-hidden="true">−</span>
+							</BaseNumberField.Decrement>
+							<BaseNumberField.Increment className={cx("lyds-number-field__stepper", "lyds-number-field__stepper--increment")} aria-label={incrementLabel}>
+								<span aria-hidden="true">+</span>
+							</BaseNumberField.Increment>
+						</span>
+					) : null}
+				</BaseNumberField.Group>
+			</BaseNumberField.Root>
+		</FieldFrame>
+	);
+});

@@ -1,0 +1,530 @@
+.lyds-date-field,
+.lyds-calendar {
+	--lyds-date-control-height: var(--control-height-md);
+	--lyds-date-field-background: var(--component-field-background, var(--control-surface));
+	--lyds-date-field-background-hover: var(--component-field-background-hover, var(--control-surface-hover));
+	--lyds-date-field-border: var(--component-field-border, var(--border-control));
+	--lyds-date-field-border-focus: var(--component-field-border-focus, var(--border-control-focus));
+	--lyds-date-field-border-invalid: var(--component-field-border-invalid, var(--border-invalid));
+	--lyds-date-field-text: var(--component-field-text, var(--text-main));
+	--lyds-date-field-label: var(--component-field-label, var(--text-title));
+	--lyds-date-field-supporting: var(--component-field-supporting-text, var(--text-secondary));
+
+	color: var(--lyds-date-field-text);
+	font-family: var(--font-family-sans);
+	font-size: var(--font-size-300);
+	font-variant-numeric: tabular-nums lining-nums;
+}
+
+.lyds-date-field[data-size="sm"] {
+	--lyds-date-control-height: var(--control-height-sm);
+}
+
+.lyds-date-field[data-size="lg"] {
+	--lyds-date-control-height: var(--control-height-lg);
+}
+
+.lyds-date-field {
+	display: grid;
+	gap: var(--space-2);
+	inline-size: fit-content;
+	max-inline-size: 100%;
+}
+
+.lyds-date-picker {
+	inline-size: min(100%, 24rem);
+}
+
+.lyds-date-range-picker {
+	inline-size: min(100%, 32rem);
+}
+
+.lyds-date-label {
+	color: var(--lyds-date-field-label);
+	font-size: var(--font-size-300);
+	font-weight: var(--font-weight-semibold);
+	letter-spacing: var(--letter-spacing-label);
+	line-height: var(--line-height-heading);
+}
+
+.lyds-date-label::after {
+	content: "";
+	display: inline-block;
+	inline-size: var(--space-2);
+	block-size: 1px;
+	margin-inline-start: var(--space-2);
+	vertical-align: middle;
+	background: var(--divider-strong);
+}
+
+.lyds-date-field[data-required] .lyds-date-label::before {
+	content: "◆";
+	margin-inline-end: var(--space-1);
+	color: var(--text-accent);
+	font-size: var(--font-size-100);
+}
+
+.lyds-date-description,
+.lyds-date-error {
+	max-inline-size: 32rem;
+	font-size: var(--font-size-200);
+	line-height: var(--line-height-body);
+}
+
+.lyds-date-description {
+	color: var(--lyds-date-field-supporting);
+}
+
+.lyds-date-error {
+	color: var(--status-danger-foreground);
+}
+
+.lyds-date-input,
+.lyds-date-input-shell,
+.lyds-date-picker-group {
+	min-block-size: var(--lyds-date-control-height);
+	border: var(--border-width-hairline) solid var(--lyds-date-field-border);
+	background: var(--lyds-date-field-background);
+	box-shadow: var(--elevation-inset);
+	transition:
+		border-color var(--motion-duration-fast) var(--motion-ease-out),
+		background-color var(--motion-duration-fast) var(--motion-ease-out);
+}
+
+.lyds-date-input {
+	display: flex;
+	align-items: center;
+	gap: var(--space-1);
+	min-inline-size: 12rem;
+	padding-inline: var(--space-3);
+	line-height: 1;
+}
+
+.lyds-date-input-shell {
+	display: flex;
+	align-items: stretch;
+}
+
+.lyds-date-input-shell > .lyds-date-input {
+	flex: 1;
+	border: 0;
+	background: var(--background-transparent);
+	box-shadow: none;
+}
+
+.lyds-date-input-affordance {
+	display: grid;
+	place-items: center;
+	inline-size: var(--lyds-date-control-height);
+	color: var(--icon-secondary);
+	border-inline-start: var(--border-width-hairline) solid var(--divider-main);
+}
+
+.lyds-date-input[data-hovered],
+.lyds-date-input-shell:hover,
+.lyds-date-picker-group[data-hovered] {
+	border-color: var(--border-control-hover);
+	background: var(--lyds-date-field-background-hover);
+}
+
+.lyds-date-input[data-focus-within],
+.lyds-date-input-shell:focus-within,
+.lyds-date-picker-group[data-focus-within] {
+	border-color: var(--lyds-date-field-border-focus);
+	box-shadow:
+		var(--elevation-inset),
+		0 0 0 0.125rem var(--focus-ring),
+		0 0 0 0.25rem var(--focus-halo);
+}
+
+.lyds-date-field[data-invalid] .lyds-date-input,
+.lyds-date-field[data-invalid] .lyds-date-input-shell,
+.lyds-date-field[data-invalid] .lyds-date-picker-group {
+	border-color: var(--lyds-date-field-border-invalid);
+}
+
+.lyds-date-field[data-disabled] .lyds-date-input,
+.lyds-date-field[data-disabled] .lyds-date-input-shell,
+.lyds-date-field[data-disabled] .lyds-date-picker-group {
+	color: var(--text-disabled);
+	border-color: var(--divider-main);
+	background: var(--control-surface-disabled);
+	box-shadow: none;
+	cursor: not-allowed;
+}
+
+.lyds-date-field[data-readonly] .lyds-date-input,
+.lyds-date-field[data-readonly] .lyds-date-input-shell,
+.lyds-date-field[data-readonly] .lyds-date-picker-group {
+	border-style: dashed;
+}
+
+.lyds-date-segment {
+	min-inline-size: 0.625rem;
+	padding: var(--space-1);
+	border-radius: var(--radius-xs);
+	color: inherit;
+	font-family: var(--font-family-mono);
+	font-variant-numeric: tabular-nums lining-nums slashed-zero;
+	outline: none;
+	transition:
+		color var(--motion-duration-fast) var(--motion-ease-out),
+		background-color var(--motion-duration-fast) var(--motion-ease-out);
+}
+
+.lyds-date-segment[data-placeholder] {
+	color: var(--text-secondary);
+}
+
+.lyds-date-segment[data-focused] {
+	color: var(--component-date-field-segment-foreground, var(--text-title));
+	background: var(--component-date-field-segment-background-focused, var(--background-selected));
+}
+
+.lyds-date-segment[data-focus-visible] {
+	outline: 0.125rem solid var(--focus-ring);
+	outline-offset: 0.125rem;
+	box-shadow: 0 0 0 0.25rem var(--focus-halo);
+}
+
+.lyds-date-picker-group {
+	display: flex;
+	align-items: stretch;
+	inline-size: 100%;
+	max-inline-size: 100%;
+}
+
+.lyds-date-picker-group > .lyds-date-input {
+	flex: 1 1 auto;
+	min-inline-size: 0;
+	border: 0;
+	background: var(--background-transparent);
+	box-shadow: none;
+}
+
+.lyds-date-picker-button,
+.lyds-calendar-navigation-button {
+	display: grid;
+	place-items: center;
+	min-inline-size: var(--control-target-min);
+	min-block-size: var(--control-target-min);
+	border: 0;
+	color: var(--icon-main);
+	background: var(--control-surface);
+	cursor: pointer;
+	transition:
+		color var(--motion-duration-fast) var(--motion-ease-out),
+		background-color var(--motion-duration-fast) var(--motion-ease-out),
+		transform var(--motion-duration-fast) var(--motion-ease-out);
+}
+
+.lyds-date-picker-button {
+	inline-size: var(--lyds-date-control-height);
+	border-inline-start: var(--border-width-hairline) solid var(--divider-main);
+}
+
+.lyds-date-picker-button[data-hovered],
+.lyds-calendar-navigation-button[data-hovered] {
+	color: var(--icon-accent);
+	background: var(--control-surface-hover);
+}
+
+.lyds-date-picker-button[data-pressed],
+.lyds-calendar-navigation-button[data-pressed] {
+	background: var(--control-surface-pressed);
+	transform: translateY(0.0625rem);
+}
+
+.lyds-date-picker-button[data-focus-visible],
+.lyds-calendar-navigation-button[data-focus-visible],
+.lyds-calendar-period-select:focus-visible {
+	outline: 0.125rem solid var(--focus-ring);
+	outline-offset: -0.25rem;
+	box-shadow: inset 0 0 0 0.25rem var(--focus-halo);
+}
+
+.lyds-date-picker-button[data-disabled] {
+	color: var(--icon-disabled);
+	background: var(--control-surface-disabled);
+	cursor: not-allowed;
+}
+
+.lyds-date-glyph {
+	inline-size: var(--icon-size-md);
+	block-size: var(--icon-size-md);
+	fill: none;
+	stroke: currentColor;
+	stroke-linecap: square;
+	stroke-linejoin: miter;
+	stroke-width: 1.5;
+}
+
+.lyds-date-range-separator {
+	display: grid;
+	place-items: center;
+	padding-inline: var(--space-1);
+	color: var(--text-secondary);
+	font-family: var(--font-family-mono);
+}
+
+.lyds-date-popover {
+	z-index: var(--z-popover);
+	max-inline-size: calc(100vw - var(--space-4));
+	overflow: auto;
+	border: var(--border-width-hairline) solid var(--divider-strong);
+	background: var(--background-elevated);
+	box-shadow: var(--elevation-2);
+	clip-path: polygon(0 0, calc(100% - var(--shape-cut-md)) 0, 100% var(--shape-cut-md), 100% 100%, var(--shape-cut-md) 100%, 0 calc(100% - var(--shape-cut-md)));
+	transform-origin: var(--trigger-anchor-point);
+}
+
+.lyds-date-popover[data-entering] {
+	animation: lyds-date-popover-in var(--motion-duration-normal) var(--motion-ease-out);
+}
+
+.lyds-date-popover[data-exiting] {
+	animation: lyds-date-popover-out var(--motion-duration-fast) var(--motion-ease-in);
+}
+
+.lyds-date-popover-dialog {
+	outline: none;
+}
+
+.lyds-calendar {
+	inline-size: min(100%, 20rem);
+	min-inline-size: 0;
+	max-inline-size: 100%;
+	padding: var(--space-3);
+	color: var(--text-main);
+	background: var(--background-elevated);
+}
+
+@media (max-width: 30rem) {
+	.lyds-calendar {
+		--component-calendar-day-size: 1.75rem;
+		padding: var(--space-2);
+	}
+
+	.lyds-date-picker .lyds-date-input {
+		gap: 0;
+		padding-inline: var(--space-1);
+	}
+
+	.lyds-date-picker .lyds-date-segment {
+		padding-inline: 0;
+	}
+
+	.lyds-date-range-picker .lyds-date-segment {
+		padding-inline: 0;
+	}
+
+	.lyds-date-range-separator {
+		padding-inline: 0;
+	}
+}
+
+.lyds-calendar-panel {
+	display: grid;
+	gap: var(--space-3);
+}
+
+.lyds-calendar-navigation {
+	display: grid;
+	grid-template-columns: var(--control-target-min) minmax(0, 1fr) var(--control-target-min);
+	align-items: center;
+	border-block: var(--border-width-hairline) solid var(--divider-main);
+}
+
+.lyds-calendar-navigation-button {
+	font-family: var(--font-family-mono);
+	font-size: var(--font-size-600);
+	line-height: 1;
+}
+
+.lyds-calendar-heading {
+	color: var(--text-title);
+	font-family: var(--font-family-sans);
+	font-size: var(--font-size-300);
+	font-weight: var(--font-weight-bold);
+	letter-spacing: var(--letter-spacing-technical);
+	line-height: var(--line-height-tight);
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.lyds-calendar-period-pickers {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+	gap: var(--space-2);
+}
+
+.lyds-calendar-period-select {
+	min-block-size: var(--control-height-sm);
+	padding-inline: var(--space-2);
+	border: var(--border-width-hairline) solid var(--border-control);
+	border-radius: var(--radius-none);
+	color: var(--text-main);
+	background: var(--background-inset);
+	font-family: var(--font-family-mono);
+	font-size: var(--font-size-200);
+	font-variant-numeric: tabular-nums lining-nums;
+}
+
+.lyds-calendar-period-select:disabled {
+	color: var(--text-disabled);
+	border-color: var(--divider-main);
+	background: var(--control-surface-disabled);
+	cursor: not-allowed;
+}
+
+.lyds-calendar-grid {
+	inline-size: 100%;
+	border-collapse: separate;
+	border-spacing: 0 var(--space-1);
+}
+
+.lyds-calendar-weekday {
+	block-size: var(--control-height-sm);
+	color: var(--text-secondary);
+	font-family: var(--font-family-mono);
+	font-size: var(--font-size-100);
+	font-weight: var(--font-weight-semibold);
+	letter-spacing: var(--letter-spacing-technical);
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.lyds-calendar-cell {
+	position: relative;
+	inline-size: var(--component-calendar-day-size);
+	block-size: var(--component-calendar-day-size);
+	color: var(--text-main);
+	font-family: var(--font-family-mono);
+	font-size: var(--font-size-300);
+	font-variant-numeric: tabular-nums lining-nums;
+	text-align: center;
+	outline: none;
+	cursor: pointer;
+	transition:
+		color var(--motion-duration-fast) var(--motion-ease-out),
+		background-color var(--motion-duration-fast) var(--motion-ease-out),
+		transform var(--motion-duration-fast) var(--motion-ease-out);
+}
+
+.lyds-calendar-cell[data-hovered] {
+	background: var(--control-surface-hover);
+}
+
+.lyds-calendar-cell[data-pressed] {
+	background: var(--control-surface-pressed);
+	transform: scale(var(--motion-press-scale));
+}
+
+.lyds-calendar-cell[data-focus-visible] {
+	z-index: var(--z-sticky);
+	outline: 0.125rem solid var(--focus-ring);
+	outline-offset: -0.125rem;
+	box-shadow: inset 0 0 0 0.25rem var(--focus-halo);
+}
+
+.lyds-calendar-cell[data-today] {
+	box-shadow: inset 0 0 0 0.125rem var(--component-calendar-day-ring-today);
+}
+
+.lyds-calendar-cell[data-selected] {
+	color: var(--component-calendar-day-foreground-in-range);
+	background: var(--component-calendar-day-background-in-range);
+}
+
+.lyds-calendar-cell[data-selection-start],
+.lyds-calendar-cell[data-selection-end],
+.lyds-calendar:not(.lyds-range-calendar) .lyds-calendar-cell[data-selected] {
+	color: var(--component-calendar-day-foreground-selected);
+	background: var(--component-calendar-day-background-selected);
+}
+
+.lyds-range-calendar .lyds-calendar-cell[data-selected]:not([data-selection-start]):not([data-selection-end])::after {
+	content: "";
+	position: absolute;
+	inset-block-end: var(--space-1);
+	inset-inline: 0;
+	block-size: 0.125rem;
+	background: var(--control-primary);
+}
+
+.lyds-range-calendar .lyds-calendar-cell[data-selection-start] {
+	clip-path: polygon(0 0, 100% 0, 100% 100%, var(--shape-cut-sm) 100%, 0 calc(100% - var(--shape-cut-sm)));
+}
+
+.lyds-range-calendar .lyds-calendar-cell[data-selection-end] {
+	clip-path: polygon(0 0, calc(100% - var(--shape-cut-sm)) 0, 100% var(--shape-cut-sm), 100% 100%, 0 100%);
+}
+
+.lyds-calendar-cell[data-unavailable] {
+	color: var(--text-secondary);
+	background: var(--background-inset);
+	cursor: not-allowed;
+}
+
+.lyds-calendar-cell[data-unavailable]::before {
+	content: "";
+	position: absolute;
+	inset-inline: 22%;
+	inset-block-start: 50%;
+	block-size: 1px;
+	background: var(--divider-strong);
+	transform: rotate(-24deg);
+}
+
+.lyds-calendar-cell[data-disabled] {
+	color: var(--text-disabled);
+	background: var(--control-surface-disabled);
+	cursor: not-allowed;
+}
+
+.lyds-calendar-cell[data-outside-visible-range] {
+	visibility: hidden;
+}
+
+.lyds-calendar[data-disabled] .lyds-calendar-navigation-button,
+.lyds-calendar-navigation-button[data-disabled] {
+	color: var(--icon-disabled);
+	background: var(--control-surface-disabled);
+	cursor: not-allowed;
+}
+
+@keyframes lyds-date-popover-in {
+	from {
+		opacity: 0;
+		transform: translateY(calc(var(--motion-distance-sm) * -1));
+	}
+}
+
+@keyframes lyds-date-popover-out {
+	to {
+		opacity: 0;
+		transform: translateY(calc(var(--motion-distance-sm) * -1));
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.lyds-date-popover[data-entering],
+	.lyds-date-popover[data-exiting] {
+		animation: none;
+	}
+}
+
+@media (forced-colors: active) {
+	.lyds-date-input,
+	.lyds-date-input-shell,
+	.lyds-date-picker-group,
+	.lyds-date-popover,
+	.lyds-calendar-cell {
+		box-shadow: none;
+	}
+
+	.lyds-calendar-cell[data-selected] {
+		outline: 0.125rem solid currentColor;
+		outline-offset: -0.25rem;
+	}
+}

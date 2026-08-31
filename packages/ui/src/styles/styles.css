@@ -167,8 +167,8 @@
 
 	--text-title: #242321;
 	--text-main: #4d4d4d;
-	--text-secondary: #5a5550;
-	--text-muted: #5a5550;
+	--text-secondary: #514c47;
+	--text-muted: #514c47;
 	--text-disabled: #777169;
 	--text-accent: #7c1c0b;
 	--text-link: #a72100;
@@ -220,7 +220,7 @@
 	--control-thumb-checked: #000000;
 	--control-track: #aaa196;
 	--control-track-checked: #fe3300;
-	--control-placeholder: #69635c;
+	--control-placeholder: #4d4843;
 
 	--focus-ring: #741900;
 	--focus-halo: #f7f2ea;
@@ -244,7 +244,7 @@
 	--status-danger-background: #f2c0b6;
 	--status-danger-foreground: #5a1609;
 	--status-danger-border: #a72100;
-	--status-danger-control: #a72100;
+	--status-danger-control: #951d00;
 
 	--shadow-hairline: 0 0 0 1px oklch(0.42 0 0 / 24%);
 	--shadow-low: 0 0.125rem 0.25rem oklch(0.22 0.01 75 / 14%);
@@ -406,10 +406,10 @@ select {
 
 .lyds-sr-only {
 	position: absolute;
-	width: 1px;
-	height: 1px;
+	width: 0.0625rem;
+	height: 0.0625rem;
 	padding: 0;
-	margin: -1px;
+	margin: -0.0625rem;
 	overflow: hidden;
 	clip: rect(0, 0, 0, 0);
 	white-space: nowrap;

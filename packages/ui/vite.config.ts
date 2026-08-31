@@ -11,6 +11,13 @@ const isExternal = (id: string) =>
 	id.startsWith("@internationalized/date") ||
 	id.startsWith("react-aria-components");
 
+const addJavaScriptExtension = (specifier: string) => (/\.(?:[cm]?js|json|css)$/i.test(specifier) ? specifier : `${specifier}.js`);
+
+const normalizeDeclarationSpecifiers = (content: string) =>
+	content
+		.replace(/(\bfrom\s+["'])(\.\.?\/[^"']+)(["'])/g, (_match, prefix: string, specifier: string, suffix: string) => `${prefix}${addJavaScriptExtension(specifier)}${suffix}`)
+		.replace(/(\bimport\s*\(\s*["'])(\.\.?\/[^"']+)(["']\s*\))/g, (_match, prefix: string, specifier: string, suffix: string) => `${prefix}${addJavaScriptExtension(specifier)}${suffix}`);
+
 export default defineConfig({
 	plugins: [
 		react(),
@@ -18,6 +25,10 @@ export default defineConfig({
 			entryRoot: "src",
 			exclude: ["src/**/*.stories.*", "src/**/*.test.*", "src/test/**"],
 			insertTypesEntry: true,
+			beforeWriteFile: (filePath, content) => ({
+				content: normalizeDeclarationSpecifiers(content),
+				filePath
+			}),
 			tsconfigPath: "./tsconfig.build.json"
 		})
 	],
@@ -32,7 +43,10 @@ export default defineConfig({
 		rolldownOptions: {
 			external: isExternal,
 			output: {
-				assetFileNames: assetInfo => (assetInfo.name?.endsWith(".css") ? "styles.css" : "assets/[name][extname]")
+				assetFileNames: assetInfo => (assetInfo.name?.endsWith(".css") ? "styles.css" : "assets/[name][extname]"),
+				entryFileNames: "[name].js",
+				preserveModules: true,
+				preserveModulesRoot: "src"
 			}
 		},
 		sourcemap: true
