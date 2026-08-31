@@ -33,7 +33,7 @@ function ControlledPicker() {
 		<div className="lyds-story-stack lyds-story-stack--narrow">
 			<DatePicker label="Controlled inspection date" value={value} onValueChange={setValue} locale="en-GB" firstDayOfWeek="mon" />
 			<p className="lyds-story-readout" aria-live="polite">
-				DATE / {value?.toString() ?? "UNSET"}
+				Selected date: {value?.toString() ?? "Not set"}
 			</p>
 		</div>
 	);
@@ -72,7 +72,7 @@ export const DateTime: Story = {
 				granularity="minute"
 				description="CalendarDateTime represents a wall-clock value without silently assigning a time zone."
 			/>
-			<DateTimePicker label="US operator view" defaultValue={new CalendarDateTime(2026, 8, 31, 14, 30)} locale="en-US" hourCycle={12} granularity="minute" />
+			<DateTimePicker label="US locale" defaultValue={new CalendarDateTime(2026, 8, 31, 14, 30)} locale="en-US" hourCycle={12} granularity="minute" />
 		</div>
 	)
 };
@@ -80,7 +80,7 @@ export const DateTime: Story = {
 export const LongText: Story = {
 	render: () => (
 		<DatePicker
-			label="The planned service date for the remotely operated thermal regulation controller"
+			label="The planned publication date for a document with an unusually long translated title"
 			description="Long localized supporting copy wraps independently while the date segments retain their predictable keyboard and screen-reader behavior."
 			defaultValue={defaultDate}
 		/>

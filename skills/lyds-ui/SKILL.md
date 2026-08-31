@@ -18,7 +18,8 @@ Use LYDS through its public package API. Inspect the installed version's exports
 - Prefer an existing LYDS component or composition before creating a wrapper, fork, or new primitive. Import only from `@lyds/ui` and documented subpaths.
 - Import `@lyds/ui/styles.css` once at the application entry. Theme with `data-lyds-theme="light"` or `data-lyds-theme="dark"`; the product owns persistence and user preference.
 - Use semantic CSS variables such as `--background-elevated`, `--text-main`, `--control-primary`, and `--focus-ring`. Do not place raw color values in product or component CSS.
-- Use tokens, `rem`, or fluid units for fixed CSS lengths. Reserve `1px` for genuine hairlines; SVG coordinates are exempt. Do not reproduce a LYDS component with arbitrary fixed `px` geometry.
+- Preserve the Modulor-derived LYDS anatomy: clean main/secondary/elevated surfaces, `0.75rem` core radius, restrained selected plates, compact type hierarchy, and structural dividers only where the component calls for them. Do not add cut corners, panel seams, decorative engineering grids, fake serial labels, generalized uppercase, or terminal styling to make an interface look "technical".
+- Use tokens, `rem`, or fluid units for fixed CSS lengths. Reserve `1px` and the Figma-verified `0.5px` list/segment divider for genuine hairlines; SVG coordinates are exempt. Do not reproduce a LYDS component with arbitrary fixed `px` geometry.
 - Preserve controlled/uncontrolled contracts and vocabulary exposed by the component: commonly `value`, `defaultValue`, `onValueChange`, `open`, `defaultOpen`, `onOpenChange`, `variant`, `size`, and state props. Do not add routing, storage, analytics, network calls, business validation, or form-framework assumptions.
 - Keep accessible names, visible focus, keyboard behavior, overlay focus management, touch targets, contrast, and reduced-motion behavior intact. Styling must not replace headless behavior supplied by LYDS/Base UI.
 

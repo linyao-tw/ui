@@ -29,7 +29,7 @@ npm dist-tag: snapshot
 
 For example, `a1b2c3d4...` publishes `0.0.0-snapshot.a1b2c3` with `--tag snapshot`; it must not modify `latest`. The workflow must run all checks, derive the lowercase SHA dynamically, set the version only in CI, and avoid a git commit. Serialize concurrent main publications without `cancel-in-progress`, so one main commit is not silently discarded.
 
-Snapshot reruns are idempotent: query npm for the exact snapshot version before publishing. If it already exists, log that fact and exit successfully without publishing it again.
+Snapshot reruns are idempotent only when artifact identity is proven: query npm for the exact snapshot version, compare its SHA-512 integrity with the verified local tarball, and skip only when they are identical. An integrity mismatch, an unavailable integrity value, or an indeterminate registry response must fail closed.
 
 ## Tagged production releases
 

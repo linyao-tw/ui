@@ -27,7 +27,7 @@ function ControlledCalendar() {
 		<div className="lyds-story-stack lyds-story-stack--narrow">
 			<Calendar value={value} onValueChange={next => setValue(next)} locale="en-GB" firstDayOfWeek="mon" />
 			<p className="lyds-story-readout" aria-live="polite">
-				SELECTED / {value.toString()}
+				Selected date: {value.toString()}
 			</p>
 		</div>
 	);
@@ -61,11 +61,11 @@ export const LocalesAndWeekStarts: Story = {
 	render: () => (
 		<div className="lyds-story-grid">
 			<div className="lyds-story-panel">
-				<p className="lyds-story-panel__heading">Traditional Chinese / Sunday</p>
+				<p className="lyds-story-panel__heading">Traditional Chinese, week starts Sunday</p>
 				<Calendar defaultValue={initialDate} locale="zh-TW" firstDayOfWeek="sun" weekdayStyle="short" />
 			</div>
 			<div className="lyds-story-panel">
-				<p className="lyds-story-panel__heading">English UK / Monday</p>
+				<p className="lyds-story-panel__heading">English (UK), week starts Monday</p>
 				<Calendar defaultValue={initialDate} locale="en-GB" firstDayOfWeek="mon" weekdayStyle="short" />
 			</div>
 		</div>

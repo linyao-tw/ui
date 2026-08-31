@@ -4,7 +4,6 @@ import {
 	Button,
 	CheckboxGroup,
 	CheckboxItem,
-	CodeField,
 	DatePicker,
 	NumberField,
 	SegmentedControl,
@@ -46,7 +45,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 function DeploymentForm() {
-	const [projectName, setProjectName] = useState("Orbital inventory refresh");
+	const [projectName, setProjectName] = useState("Inventory service refresh");
 	const [environment, setEnvironment] = useState<(typeof environmentOptions)[number]["value"]>("staging");
 	const [submitted, setSubmitted] = useState(false);
 
@@ -60,7 +59,7 @@ function DeploymentForm() {
 			<section className="pattern-shell" aria-labelledby="release-title">
 				<aside className="pattern-sidebar">
 					<div className="pattern-brand">
-						<span className="pattern-overline">LYDS / RELEASE CONSOLE</span>
+						<span className="pattern-overline">LYDS example pattern</span>
 						<h1>Configure deployment window</h1>
 						<p>A realistic composition of controlled and uncontrolled LYDS fields. Products keep ownership of submission, validation policy, and backend behavior.</p>
 					</div>
@@ -87,19 +86,19 @@ function DeploymentForm() {
 							aria-valuenow={2}
 							aria-valuetext="Two of three sections configured"
 						>
-							<span className="pattern-meter__label">Configuration 02 / 03</span>
+							<span className="pattern-meter__label">Step 2 of 3</span>
 							<div className="pattern-meter__track" aria-hidden="true">
 								<div className="pattern-meter__fill" />
 							</div>
 						</div>
-						<p className="pattern-sidebar__footer">No network requests are made by this demonstration.</p>
+						<p className="pattern-sidebar__footer">This demonstration does not make network requests.</p>
 					</div>
 				</aside>
 
 				<form className="pattern-form" onSubmit={handleSubmit}>
 					<header className="pattern-form__header">
 						<div className="pattern-form__header-copy">
-							<span className="pattern-overline">STAGE 02 / SCHEDULE</span>
+							<span className="pattern-overline">Schedule</span>
 							<h2 id="release-title">Release parameters</h2>
 							<p className="pattern-form__intro">Define a clear window and rollout shape. Fields keep their own accessible behavior while this form owns the scenario.</p>
 						</div>
@@ -141,7 +140,7 @@ function DeploymentForm() {
 							/>
 						</div>
 
-						<CodeField description="Optional external reference. Formatting remains consumer-defined." label="Change reference" name="changeReference" placeholder="REL-2048" />
+						<TextField description="Optional external reference. Formatting remains consumer-defined." label="Change reference" name="changeReference" placeholder="REL-2048" />
 
 						<DatePicker
 							defaultValue={parseDate("2026-09-04")}
@@ -184,9 +183,9 @@ function DeploymentForm() {
 						<TextView
 							className="pattern-form__span"
 							defaultValue="Monitor error rate and checkout latency for fifteen minutes before increasing traffic."
-							description="Operational guidance only; the component does not interpret this content."
-							label="Operator note"
-							name="operatorNote"
+							description="Rollout guidance only; the component does not interpret this content."
+							label="Review note"
+							name="reviewNote"
 							rows={4}
 						/>
 
@@ -208,7 +207,7 @@ function DeploymentForm() {
 					<dl className="pattern-summary" aria-label="Release summary">
 						<div>
 							<dt>Environment</dt>
-							<dd>{environment.toUpperCase()}</dd>
+							<dd>{environmentOptions.find(option => option.value === environment)?.label}</dd>
 						</div>
 						<div>
 							<dt>Window</dt>

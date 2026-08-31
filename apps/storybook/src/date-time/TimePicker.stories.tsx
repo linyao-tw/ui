@@ -31,7 +31,7 @@ function ControlledTime() {
 		<div className="lyds-story-stack lyds-story-stack--narrow">
 			<TimePicker label="Controlled activation time" value={value} onValueChange={setValue} locale="en-GB" hourCycle={24} />
 			<p className="lyds-story-readout" aria-live="polite">
-				TIME / {value?.toString() ?? "UNSET"}
+				Selected time: {value?.toString() ?? "Not set"}
 			</p>
 		</div>
 	);
@@ -44,8 +44,8 @@ export const ControlledValue: Story = {
 export const ClockFormats: Story = {
 	render: () => (
 		<div className="lyds-story-grid">
-			<TimePicker label="24-hour operator view" defaultValue={new Time(21, 5)} locale="zh-TW" hourCycle={24} />
-			<TimePicker label="12-hour operator view" defaultValue={new Time(21, 5)} locale="en-US" hourCycle={12} />
+			<TimePicker label="24-hour format" defaultValue={new Time(21, 5)} locale="zh-TW" hourCycle={24} />
+			<TimePicker label="12-hour format" defaultValue={new Time(21, 5)} locale="en-US" hourCycle={12} />
 			<TimeField label="Segmented field" defaultValue={new Time(8, 14, 32)} granularity="second" description="TimeField omits the picker affordance while keeping locale-aware segments." />
 			<TimePicker label="Read-only synchronized time" defaultValue={new Time(6, 45)} readOnly />
 		</div>

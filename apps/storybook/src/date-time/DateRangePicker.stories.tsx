@@ -13,7 +13,7 @@ const meta = {
 	title: "Date & Time/DateRangePicker",
 	component: DateRangePicker,
 	args: {
-		label: "Diagnostic capture period",
+		label: "Reporting period",
 		description: "Select an inclusive start and end date.",
 		defaultValue: defaultRange,
 		locale: "zh-TW"
@@ -36,7 +36,7 @@ function ControlledRange() {
 		<div className="lyds-story-stack lyds-story-stack--narrow">
 			<DateRangePicker label="Controlled capture period" value={value} onValueChange={next => next && setValue(next)} locale="en-GB" />
 			<p className="lyds-story-readout" aria-live="polite">
-				RANGE / {value.start.toString()} — {value.end.toString()}
+				Selected range: {value.start.toString()} — {value.end.toString()}
 			</p>
 		</div>
 	);

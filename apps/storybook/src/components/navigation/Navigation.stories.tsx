@@ -51,21 +51,21 @@ export const HeaderPattern: Story = {
 	render: () => (
 		<Header>
 			<HeaderRail>
-				<span className="lyds-story-readout">LY / DS-01</span>
+				<span className="lyds-story-note">Documentation</span>
 				<HeaderStatus>
 					<Badge size="sm" variant="success">
-						Network nominal
+						All services available
 					</Badge>
 				</HeaderStatus>
 			</HeaderRail>
-			<HeaderBrand href="#">LYDS Control</HeaderBrand>
+			<HeaderBrand href="#">LYDS</HeaderBrand>
 			<HeaderNav>
-				<a href="#systems">Systems</a>
-				<a href="#telemetry">Telemetry</a>
-				<a href="#records">Records</a>
+				<a href="#guides">Guides</a>
+				<a href="#components">Components</a>
+				<a href="#resources">Resources</a>
 			</HeaderNav>
 			<HeaderActions>
-				<Button size="sm">New panel</Button>
+				<Button size="sm">Get started</Button>
 			</HeaderActions>
 		</Header>
 	)
@@ -74,22 +74,22 @@ export const HeaderPattern: Story = {
 export const BreadcrumbAndPagination: Story = {
 	render: () => (
 		<div className="lyds-story-stack">
-			<Breadcrumb label="Equipment location">
+			<Breadcrumb label="Documentation location">
 				<BreadcrumbList>
 					<BreadcrumbItem>
-						<BreadcrumbLink href="#plant">Plant 04</BreadcrumbLink>
+						<BreadcrumbLink href="#components">Components</BreadcrumbLink>
 						<BreadcrumbSeparator />
 					</BreadcrumbItem>
 					<BreadcrumbItem>
-						<BreadcrumbLink href="#rack">Rack 12</BreadcrumbLink>
+						<BreadcrumbLink href="#inputs">Inputs</BreadcrumbLink>
 						<BreadcrumbSeparator />
 					</BreadcrumbItem>
 					<BreadcrumbItem>
-						<BreadcrumbPage>Thermal relay</BreadcrumbPage>
+						<BreadcrumbPage>Text field</BreadcrumbPage>
 					</BreadcrumbItem>
 				</BreadcrumbList>
 			</Breadcrumb>
-			<Pagination label="Event log pages">
+			<Pagination label="Search result pages">
 				<PaginationList>
 					<PaginationItem>
 						<PaginationPrevious href="#previous" disabled aria-label="Previous page" />
@@ -119,22 +119,22 @@ export const ApplicationNavigation: Story = {
 	render: () => (
 		<NavigationMenu>
 			<NavigationMenuList>
-				<NavigationMenuItem value="systems">
+				<NavigationMenuItem value="products">
 					<NavigationMenuTrigger>
-						Systems <NavigationMenuIcon />
+						Products <NavigationMenuIcon />
 					</NavigationMenuTrigger>
 					<NavigationMenuContent>
-						<NavigationMenuLink href="#power">Power channels</NavigationMenuLink>
-						<NavigationMenuLink href="#thermal">Thermal relays</NavigationMenuLink>
+						<NavigationMenuLink href="#platform">Platform</NavigationMenuLink>
+						<NavigationMenuLink href="#mobile">Mobile applications</NavigationMenuLink>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
-				<NavigationMenuItem value="records">
+				<NavigationMenuItem value="resources">
 					<NavigationMenuTrigger>
-						Records <NavigationMenuIcon />
+						Resources <NavigationMenuIcon />
 					</NavigationMenuTrigger>
 					<NavigationMenuContent>
-						<NavigationMenuLink href="#events">Event log</NavigationMenuLink>
-						<NavigationMenuLink href="#service">Service history</NavigationMenuLink>
+						<NavigationMenuLink href="#guides">Guides</NavigationMenuLink>
+						<NavigationMenuLink href="#support">Support</NavigationMenuLink>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 			</NavigationMenuList>
@@ -152,11 +152,11 @@ export const ApplicationNavigation: Story = {
 export const ToolbarRovingFocus: Story = {
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<Toolbar aria-label="Diagram controls">
-				<ToolbarButton>Move</ToolbarButton>
-				<ToolbarButton>Rotate</ToolbarButton>
+			<Toolbar aria-label="Editor controls">
+				<ToolbarButton>Undo</ToolbarButton>
+				<ToolbarButton>Redo</ToolbarButton>
 				<ToolbarSeparator />
-				<ToolbarButton disabled>Lock</ToolbarButton>
+				<ToolbarButton disabled>Publish</ToolbarButton>
 			</Toolbar>
 			<p className="lyds-story-note">Tab into the toolbar once, then use arrow keys to move through enabled controls.</p>
 		</div>

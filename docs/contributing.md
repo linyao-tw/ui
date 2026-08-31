@@ -62,7 +62,7 @@ command -v playwright
 - Fixed CSS lengths 使用 rem；只允許真正 hairline/decorative divider 使用 1px。
 - 所有 transition duration/easing 使用 motion tokens。
 - 加入 Light/Dark，以及 relevant hover/pressed/focus-visible/selected/open/disabled/read-only/loading/invalid states。
-- Retro-industrial details 不能遮住文字、focus 或 hit target。
+- 不加入 Figma anatomy 沒有依據的切角、偽技術標籤、面板接縫或裝飾性工程網格；reference 延伸也不能遮住文字、focus 或 hit target。
 - `prefers-reduced-motion: reduce` 下仍能理解 state。
 
 ### Storybook

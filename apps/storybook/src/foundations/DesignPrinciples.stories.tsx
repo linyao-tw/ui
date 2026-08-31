@@ -5,32 +5,32 @@ import { FoundationHero, FoundationSection } from "./story-primitives";
 
 const principles = [
 	{
-		label: "01 / SEMANTICS",
+		label: "Semantic tokens",
 		title: "Meaning survives the theme",
 		copy: "Components consume category, role, and state tokens instead of physical color names. The same API can move between warm daylight and low-light conditions without changing its intent."
 	},
 	{
-		label: "02 / COMPOSITION",
+		label: "Composition",
 		title: "Parts assemble into systems",
 		copy: "Small controls compose into grouped fields, list cells, overlays, and application patterns. Consumers should extend through slots and render APIs before forking component internals."
 	},
 	{
-		label: "03 / STATES",
+		label: "Interaction states",
 		title: "Behavior is visible",
 		copy: "Hover, pressed, selected, open, disabled, invalid, loading, and focus-visible states remain distinct. Decorative geometry never obscures a state change or target."
 	},
 	{
-		label: "04 / MATERIAL",
-		title: "Industrial, not theatrical",
-		copy: "Inset surfaces, seams, clipped corners, and signal indicators appear selectively. Readability and familiar control affordances remain stronger than the retro-technical expression."
+		label: "Reference fidelity",
+		title: "Anatomy before decoration",
+		copy: "Verified Modulor dimensions, surfaces, type hierarchy, and state organization define the component. LYDS changes the palette without adding unrelated ornament."
 	},
 	{
-		label: "05 / ACCESS",
+		label: "Accessibility",
 		title: "Accessibility is structural",
 		copy: "Base UI and React Aria provide interaction semantics where appropriate. Focus, keyboard navigation, announcements, and reduced motion are designed into the component contract."
 	},
 	{
-		label: "06 / OWNERSHIP",
+		label: "Product ownership",
 		title: "Products own business logic",
 		copy: "LYDS exposes controlled and uncontrolled primitives. Data fetching, routing, analytics, persistence, validation policy, and final date formatting stay with the consuming product."
 	}
@@ -39,12 +39,10 @@ const principles = [
 const inventory = [
 	{
 		category: "Foundations",
-		count: "10",
 		items: ["Button and IconButton", "Link and Badge", "Avatar and Separator", "Card and CloudBox", "SectionHeading and ListCell"]
 	},
 	{
 		category: "Forms and selection",
-		count: "25+",
 		items: [
 			"Text, search, password, code, phone, and number fields",
 			"OTP, file upload, and drop zone",
@@ -54,12 +52,10 @@ const inventory = [
 	},
 	{
 		category: "Structure and overlays",
-		count: "15+",
 		items: ["Accordion, Collapsible, and Tabs", "Tooltip, Popover, and Preview Card", "Dialog, AlertDialog, Drawer, and BottomSheet"]
 	},
 	{
 		category: "Feedback and navigation",
-		count: "20+",
 		items: [
 			"Toast, Alert, Banner, Progress, Meter, and loaders",
 			"Breadcrumb, Pagination, Navigation Menu, Menubar, and Toolbar",
@@ -68,7 +64,6 @@ const inventory = [
 	},
 	{
 		category: "Date and time",
-		count: "08",
 		items: ["Calendar and DateField", "DatePicker and DateRangePicker", "TimeField and TimePicker", "DateTimePicker with locale-aware segmented input"]
 	}
 ] as const;
@@ -87,17 +82,12 @@ export const SystemPrinciplesAndInventory: Story = {
 	render: () => (
 		<main className="foundation-page">
 			<FoundationHero
-				eyebrow="LYDS / SYSTEM MAP"
-				title="A control panel, scaled into a language."
-				description="LYDS adopts Modulor’s semantic-token, explicit-state, and compositional discipline, then reinterprets it through a warm future-retro industrial material system for serious application interfaces."
-				readouts={[
-					{ value: "06", label: "principles" },
-					{ value: "70+", label: "public pieces" },
-					{ value: "01", label: "package install" }
-				]}
+				eyebrow="LYDS system overview"
+				title="A consistent language for application interfaces."
+				description="LYDS follows Modulor’s verified component anatomy, semantic-token structure, explicit states, and compositional discipline, then remaps those roles to the LYDS palette."
 			/>
 
-			<FoundationSection number="01" title="Design principles">
+			<FoundationSection title="Design principles">
 				<div className="foundation-principle-grid">
 					{principles.map(principle => (
 						<article className="foundation-principle" key={principle.label}>
@@ -109,11 +99,10 @@ export const SystemPrinciplesAndInventory: Story = {
 				</div>
 			</FoundationSection>
 
-			<FoundationSection number="02" title="Component inventory">
+			<FoundationSection title="Component inventory">
 				<div className="foundation-inventory-grid">
 					{inventory.map(group => (
 						<article className="foundation-inventory" key={group.category}>
-							<span className="foundation-inventory-count">{group.count} ITEMS</span>
 							<h3>{group.category}</h3>
 							<ul>
 								{group.items.map(item => (

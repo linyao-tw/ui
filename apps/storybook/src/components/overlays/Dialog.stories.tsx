@@ -14,25 +14,25 @@ type Story = StoryObj<typeof meta>;
 function ConfigurationDialog({ defaultOpen = false, longText = false }: { defaultOpen?: boolean; longText?: boolean }) {
 	return (
 		<Dialog.Root defaultOpen={defaultOpen}>
-			<Dialog.Trigger>Configure relay</Dialog.Trigger>
+			<Dialog.Trigger>Edit profile</Dialog.Trigger>
 			<Dialog.Portal>
 				<Dialog.Backdrop />
 				<Dialog.Viewport>
 					<Dialog.Popup>
 						<Dialog.Header>
-							<Dialog.Title>{longText ? "Configure remote thermal relay operating and reporting parameters" : "Configure relay"}</Dialog.Title>
+							<Dialog.Title>{longText ? "Update profile information shown to everyone in the workspace" : "Edit profile"}</Dialog.Title>
 							<Dialog.Description>
 								{longText
-									? "Changes are applied to the selected remote controller after validation. Existing measurement sessions continue with their previous parameters until the next synchronized cycle."
-									: "Update the operator-facing label without changing the hardware address."}
+									? "Changes are applied after validation. Existing activity and shared links continue to use the previous information until the update is complete."
+									: "Update the name shown to other members of the workspace."}
 							</Dialog.Description>
 						</Dialog.Header>
 						<Dialog.Body>
-							<TextField label="Operator label" defaultValue="Thermal relay A" />
+							<TextField label="Display name" defaultValue="Alex Chen" />
 						</Dialog.Body>
 						<Dialog.Footer>
 							<Dialog.Close>Cancel</Dialog.Close>
-							<Button>Save configuration</Button>
+							<Button>Save profile</Button>
 						</Dialog.Footer>
 					</Dialog.Popup>
 				</Dialog.Viewport>
@@ -56,18 +56,18 @@ export const LongText: Story = {
 export const DestructiveConfirmation: Story = {
 	render: () => (
 		<AlertDialog.Root>
-			<AlertDialog.Trigger>Isolate controller</AlertDialog.Trigger>
+			<AlertDialog.Trigger>Delete workspace</AlertDialog.Trigger>
 			<AlertDialog.Portal>
 				<AlertDialog.Backdrop />
 				<AlertDialog.Viewport>
 					<AlertDialog.Popup>
 						<AlertDialog.Header>
-							<AlertDialog.Title>Isolate controller?</AlertDialog.Title>
-							<AlertDialog.Description>The controller will stop accepting remote commands until a local operator restores the uplink.</AlertDialog.Description>
+							<AlertDialog.Title>Delete workspace?</AlertDialog.Title>
+							<AlertDialog.Description>This action permanently removes the workspace and its shared content.</AlertDialog.Description>
 						</AlertDialog.Header>
 						<AlertDialog.Actions>
 							<AlertDialog.Close>Cancel</AlertDialog.Close>
-							<Button variant="danger">Isolate controller</Button>
+							<Button variant="danger">Delete workspace</Button>
 						</AlertDialog.Actions>
 					</AlertDialog.Popup>
 				</AlertDialog.Viewport>

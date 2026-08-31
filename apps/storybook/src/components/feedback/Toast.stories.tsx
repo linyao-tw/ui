@@ -12,17 +12,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function ToastConsole({ automatic = false }: { automatic?: boolean }) {
+function ToastDemo({ automatic = false }: { automatic?: boolean }) {
 	const manager: ToastManager = useMemo(() => createToastManager(), []);
 
 	const addToast = (status: "neutral" | "info" | "success" | "warning" | "danger") => {
 		manager.add({
 			data: { status },
-			description:
-				status === "danger"
-					? "The cooling loop stopped responding. Inspect the physical controller before retrying."
-					: "The control-panel state has been synchronized across active operator sessions.",
-			title: status === "danger" ? "Controller fault" : `${status[0]?.toUpperCase()}${status.slice(1)} notification`,
+			description: status === "danger" ? "The changes could not be saved. Check your connection and try again." : "The latest changes are now available to everyone in the workspace.",
+			title: status === "danger" ? "Save failed" : `${status[0]?.toUpperCase()}${status.slice(1)} notification`,
 			timeout: 7000
 		});
 	};
@@ -40,7 +37,7 @@ function ToastConsole({ automatic = false }: { automatic?: boolean }) {
 						Show warning toast
 					</Button>
 					<Button variant="danger" onClick={() => addToast("danger")}>
-						Show fault toast
+						Show error toast
 					</Button>
 				</div>
 			</div>
@@ -55,7 +52,7 @@ function VisibleToast() {
 		manager.add({
 			id: "storybook-visible-toast",
 			data: { status: "success" },
-			description: "The control-panel state has been synchronized across active operator sessions.",
+			description: "The latest changes are now available to everyone in the workspace.",
 			title: "Configuration saved",
 			timeout: 0
 		});
@@ -73,14 +70,14 @@ export const Default: Story = {
 };
 
 export const Interactive: Story = {
-	render: () => <ToastConsole />
+	render: () => <ToastDemo />
 };
 
 export const AutoDismiss: Story = {
-	render: () => <ToastConsole automatic />
+	render: () => <ToastDemo automatic />
 };
 
 export const DarkTheme: Story = {
 	globals: { theme: "dark" },
-	render: () => <ToastConsole />
+	render: () => <ToastDemo />
 };

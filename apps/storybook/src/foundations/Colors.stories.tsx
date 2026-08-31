@@ -55,7 +55,7 @@ const surfaceTokens: readonly TokenSpecimen[] = [
 	},
 	{
 		name: "Background/Inset",
-		role: "Recessed panels",
+		role: "Quiet grouped controls",
 		value: "var(--background-inset)",
 		ink: "var(--text-main)"
 	},
@@ -116,7 +116,7 @@ const contrastPairs = [
 		copy: "Text/On_Accent on Background/Accent"
 	},
 	{
-		name: "Recessed readout",
+		name: "Inset control",
 		foreground: "var(--text-on-inset)",
 		background: "var(--background-inset)",
 		border: "var(--divider-strong)",
@@ -154,34 +154,29 @@ export const SemanticColorSystem: Story = {
 	render: () => (
 		<main className="foundation-page">
 			<FoundationHero
-				eyebrow="LYDS / COLOR SYSTEM"
-				title="Material first. Meaning always."
-				description="A restrained industrial palette becomes useful through semantic roles. Components consume purpose-driven tokens, so light and dark themes retain the same hierarchy without copying physical color names into component CSS."
-				readouts={[
-					{ value: "03", label: "brand foundations" },
-					{ value: "02", label: "complete themes" },
-					{ value: "AA", label: "contrast target" }
-				]}
+				eyebrow="LYDS color system"
+				title="Color roles that keep their meaning."
+				description="LYDS maps the Modulor surface and control hierarchy to Limestone, Charcoal, Vermilion, and a small set of accessible status hues. Components consume purpose-driven tokens, so light and dark themes retain the same structure."
 			/>
 
-			<FoundationSection number="01" title="Brand foundations">
+			<FoundationSection title="Brand foundations">
 				<p className="foundation-section-copy">
 					Limestone supplies warmth, Charcoal defines structure, and Vermilion behaves as a signal. These palette values are references for theme authors—not component-level styling hooks.
 				</p>
 				<TokenGrid tokens={brandTokens} />
 			</FoundationSection>
 
-			<FoundationSection number="02" title="Semantic surfaces">
+			<FoundationSection title="Semantic surfaces">
 				<p className="foundation-section-copy">Surface roles describe elevation and interaction. Their actual values change with the active theme while component intent stays stable.</p>
 				<TokenGrid tokens={surfaceTokens} />
 			</FoundationSection>
 
-			<FoundationSection number="03" title="Feedback states">
+			<FoundationSection title="Feedback states">
 				<p className="foundation-section-copy">Status colors pair backgrounds, foregrounds, and borders. Never communicate status by color alone; pair them with a label, icon, or explanatory text.</p>
 				<TokenGrid tokens={stateTokens} />
 			</FoundationSection>
 
-			<FoundationSection number="04" title="Intentional foreground pairs">
+			<FoundationSection title="Intentional foreground pairs">
 				<div className="foundation-pair-grid">
 					{contrastPairs.map(pair => (
 						<article

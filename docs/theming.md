@@ -62,20 +62,20 @@ SSR 應讓 server markup 與 client 初次 render 使用相同 theme。若 theme
 
 ## Light strategy
 
-Light theme 的 material hierarchy：
+Light theme 的 surface hierarchy：
 
 ```text
 Limestone foundation
-├─ Background/Main       dominant warm material
-├─ Background/Secondary  adjacent panel
-├─ Background/Elevated   raised content
-├─ Background/Inset      recessed control group
-└─ Background/Sunken     deepest seam/well
+├─ Background/Main       near-white warm canvas
+├─ Background/Secondary  list and adjacent surface
+├─ Background/Elevated   white floating surface
+├─ Background/Inset      quiet grouped control surface
+└─ Background/Sunken     lower-value supporting surface
 
 Charcoal foundation
 ├─ Text/Title and Text/Main
-├─ icons and structural borders
-└─ technical seams
+├─ icons
+└─ low-contrast structural dividers
 
 Vermilion foundation
 ├─ primary action
@@ -83,7 +83,7 @@ Vermilion foundation
 └─ limited status emphasis
 ```
 
-Surface depth同時使用 value、border、inset seam 與克制 shadow，避免把所有內容變成 white rounded cards。Vermilion foreground 使用 `OnAccent` semantic value，不直接使用 Limestone/Charcoal/white。
+Surface depth優先使用 value、selected plate 與結構性 divider；shadow 只用於真正 floating 的 control 或 overlay。Vermilion foreground 使用 `OnAccent` semantic value，不直接使用 Limestone/Charcoal/white。
 
 ## Dark strategy
 
@@ -91,7 +91,7 @@ Dark theme 是同一套 physical system 在低光下的表現：
 
 - `Background/Main` 約為 `oklch(0.18 0.008 75)` 的 warm near-black。
 - `Background/Secondary` 與 `Background/Elevated` 逐層提高 lightness。
-- `Background/Inset` / `Sunken` 降低 lightness，形成 recess 而不是 generic black box。
+- `Background/Inset` / `Sunken` 調整 lightness，保留 grouped surface 階層而不是 generic black box。
 - `Text/Main` 回到 Limestone/warm neutral family。
 - Vermilion 維持 signal/action 角色，不加 neon glow。
 - Hairlines 與 shadows 依 dark compositing 重新指定，不反轉 Light values。
@@ -119,7 +119,7 @@ Dark palette、semantic assignments 與 motion 是 LYDS 自主設計，並非從
 
 ```tsx
 <section className="operations-theme" data-lyds-theme="light">
-	<OperationsConsole />
+	<AccountSettings />
 </section>
 ```
 

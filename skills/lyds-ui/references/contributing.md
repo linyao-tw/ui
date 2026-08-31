@@ -15,7 +15,9 @@ Use Base UI as the primary behavior/accessibility layer when it provides the pri
 - Expose public modules from the package entry point; do not require consumers or Storybook to import internals.
 - Keep every component tree-shakeable and ensure CSS remains covered by the package stylesheet and `sideEffects` metadata.
 
-Style states from the primitive's supported state/data attributes. Cover default, hover, pressed, focus-visible, selected/checked/open, disabled, read-only, loading, and invalid states where relevant. Every color—including borders, focus rings, shadows, overlays, and disabled/status colors—must resolve through semantic tokens. Use tokens or `rem` for fixed lengths; `1px` is reserved for true hairlines, and SVG coordinate values are exempt. Use only tokenized durations and easing, and preserve the reduced-motion overrides.
+Style states from the primitive's supported state/data attributes. Cover default, hover, pressed, focus-visible, selected/checked/open, disabled, read-only, loading, and invalid states where relevant. Every color—including borders, focus rings, shadows, overlays, and disabled/status colors—must resolve through semantic tokens. Use tokens or `rem` for fixed lengths; `1px` and the Figma-verified `0.5px` structural divider are reserved for true hairlines, and SVG coordinate values are exempt. Use only tokenized durations and easing, and preserve the reduced-motion overrides.
+
+For visual work, inspect the corresponding visible Modulor Figma specimen/component set before inventing geometry. Match verified anatomy, sizes, radii, padding, type hierarchy and variant organization; remap physical colors through LYDS semantic tokens. If no corresponding specimen is available, extend the same clean surface language. Do not infer hidden-master values, and do not add cut corners, inset seams, fake technical labels, decorative grids or generalized uppercase as a substitute for reference evidence.
 
 ## Stories
 

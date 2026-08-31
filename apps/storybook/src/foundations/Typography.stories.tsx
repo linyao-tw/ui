@@ -9,7 +9,7 @@ const specimens = [
 		scale: "display",
 		label: "Display / Sans",
 		meta: "GenKiGothicTW · Bold",
-		copy: "精密構造 / 2048"
+		copy: "清楚的層級，準確的節奏。"
 	},
 	{
 		family: "serif",
@@ -23,22 +23,22 @@ const specimens = [
 		scale: "body",
 		label: "Interface / Sans",
 		meta: "GenKiGothicTW · Regular",
-		copy: "LYDS combines the discipline of an instrument panel with the clarity required by everyday application interfaces. 中文段落維持清楚節奏，長內容不因造型而犧牲可讀性。"
+		copy: "LYDS uses the same clear hierarchy in everyday application interfaces. 中文段落維持清楚節奏，長內容不因造型而犧牲可讀性。"
 	},
 	{
 		family: "mono",
-		scale: "technical",
-		label: "Readout / Mono",
+		scale: "structured",
+		label: "Structured values / Mono",
 		meta: "Geist Mono · Medium",
-		copy: "T–04 / 2026-08-31 / 23:48:06"
+		copy: "2026-08-31 · 23:48:06 · 87.5%"
 	}
 ] as const;
 
-const numericReadouts = [
-	{ label: "DATE", value: "2026.08.31" },
-	{ label: "TIME", value: "23:48:06" },
-	{ label: "COUNT", value: "0042" },
-	{ label: "LOAD", value: "87.5%" }
+const numericExamples = [
+	{ label: "Date", value: "2026.08.31" },
+	{ label: "Time", value: "23:48:06" },
+	{ label: "Count", value: "0042" },
+	{ label: "Load", value: "87.5%" }
 ] as const;
 
 const meta = {
@@ -55,17 +55,12 @@ export const TypeSystem: Story = {
 	render: () => (
 		<main className="foundation-page">
 			<FoundationHero
-				eyebrow="LYDS / TYPOGRAPHY"
+				eyebrow="LYDS typography"
 				title="A voice for labels and long-form thought."
 				description="One Traditional Chinese–ready sans, one editorial serif, and one precise monospace family form the system. Hierarchy comes from scale, weight, tracking, and numeric features—not an ever-growing font list."
-				readouts={[
-					{ value: "03", label: "font families" },
-					{ value: "09", label: "size steps" },
-					{ value: "TNUM", label: "numeric feature" }
-				]}
 			/>
 
-			<FoundationSection number="01" title="System specimens">
+			<FoundationSection title="System specimens">
 				<div>
 					{specimens.map(specimen => (
 						<article className="type-specimen" key={specimen.label}>
@@ -81,10 +76,10 @@ export const TypeSystem: Story = {
 				</div>
 			</FoundationSection>
 
-			<FoundationSection number="02" title="Tabular readouts">
-				<p className="foundation-section-copy">Dates, times, counters, and technical measures use tabular numerals so adjacent values stay aligned when they change.</p>
+			<FoundationSection title="Tabular numerals">
+				<p className="foundation-section-copy">Dates, times, counters, and numeric fields use tabular numerals so adjacent values stay aligned when they change.</p>
 				<div className="type-numeric-rack">
-					{numericReadouts.map(readout => (
+					{numericExamples.map(readout => (
 						<div className="type-numeric-cell" key={readout.label}>
 							<span className="foundation-label">{readout.label}</span>
 							<strong>{readout.value}</strong>
@@ -93,7 +88,7 @@ export const TypeSystem: Story = {
 				</div>
 			</FoundationSection>
 
-			<FoundationSection number="03" title="Usage discipline">
+			<FoundationSection title="Usage discipline">
 				<div className="foundation-principle-grid">
 					<article className="foundation-principle">
 						<span className="foundation-kicker">Interface</span>
@@ -106,9 +101,9 @@ export const TypeSystem: Story = {
 						<p>Use GenKiMinTW selectively for narrative headings, quotations, or quiet moments. It should create contrast, not an alternate interface hierarchy.</p>
 					</article>
 					<article className="foundation-principle">
-						<span className="foundation-kicker">Technical</span>
+						<span className="foundation-kicker">Structured values</span>
 						<h3>Mono for structured values</h3>
-						<p>Use Geist Mono for codes, timestamps, serials, and compact labels. Technical tracking is useful in short labels but harmful in paragraphs.</p>
+						<p>Use Geist Mono for codes, timestamps, serials, and changing numeric values. Keep tracking natural and never use it for body paragraphs.</p>
 					</article>
 				</div>
 			</FoundationSection>

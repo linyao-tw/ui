@@ -31,44 +31,44 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function MaintenanceForm() {
+function WorkshopForm() {
 	return (
-		<Card variant="inset" className="lyds-story-stack">
+		<Card variant="material" className="lyds-story-stack">
 			<CardHeader>
-				<span className="lyds-story-readout">WORK ORDER / NEW</span>
-				<CardTitle>Schedule controller maintenance</CardTitle>
+				<span className="lyds-story-note">New workshop</span>
+				<CardTitle>Schedule a team workshop</CardTitle>
 				<CardDescription>This composition demonstrates LYDS controls together without embedding submission, validation, or scheduling business logic.</CardDescription>
 			</CardHeader>
 			<CardBody>
 				<form className="lyds-story-form" onSubmit={event => event.preventDefault()}>
-					<TextField required requiredIndicator="REQ" label="Work-order title" defaultValue="Inspect thermal regulation loop" />
+					<TextField required requiredIndicator="Required" label="Workshop title" defaultValue="Quarterly planning session" />
 					<Select<string>
-						aria-label="Assigned controller"
-						defaultValue="xr-071"
+						aria-label="Facilitator"
+						defaultValue="design-team"
 						options={[
-							{ value: "xr-071", label: "XR-071 / Thermal relay" },
-							{ value: "op-122", label: "OP-122 / Optical scanner" }
+							{ value: "design-team", label: "Design team" },
+							{ value: "product-team", label: "Product team" }
 						]}
 					/>
-					<DatePicker label="Service date" defaultValue={new CalendarDate(2026, 9, 8)} />
+					<DatePicker label="Workshop date" defaultValue={new CalendarDate(2026, 9, 8)} />
 					<TimePicker label="Start time" defaultValue={new Time(14, 30)} hourCycle={24} />
-					<NumberField label="Estimated duration" description="Minutes" defaultValue={45} min={15} step={15} />
-					<RadioGroup aria-label="Service priority" defaultValue="normal">
-						<RadioItem value="normal" label="Normal priority" />
-						<RadioItem value="urgent" label="Urgent intervention" />
+					<NumberField label="Available seats" description="Participants" defaultValue={12} min={1} step={1} />
+					<RadioGroup aria-label="Attendance" defaultValue="in-person">
+						<RadioItem value="in-person" label="In person" />
+						<RadioItem value="remote" label="Remote" />
 					</RadioGroup>
-					<TextView className="lyds-story-form__wide" label="Operator notes" defaultValue="Inspect fan bearing and verify the post-service temperature curve." />
+					<TextView className="lyds-story-form__wide" label="Agenda" defaultValue="Review the last quarter, agree on priorities, and assign owners." />
 					<div className="lyds-story-form__wide lyds-story-stack">
-						<CheckboxItem defaultChecked label="Notify active operators before maintenance begins" />
+						<CheckboxItem defaultChecked label="Email participants when the schedule changes" />
 						<div className="lyds-story-row">
 							<Switch defaultChecked aria-labelledby="recording-switch-label" />
-							<span id="recording-switch-label">Keep telemetry recording active</span>
+							<span id="recording-switch-label">Record the session</span>
 						</div>
 					</div>
 				</form>
 			</CardBody>
 			<CardFooter className="lyds-story-row">
-				<Button>Schedule maintenance</Button>
+				<Button>Schedule workshop</Button>
 				<Button variant="quiet">Save draft</Button>
 			</CardFooter>
 		</Card>
@@ -76,10 +76,10 @@ function MaintenanceForm() {
 }
 
 export const Default: Story = {
-	render: () => <MaintenanceForm />
+	render: () => <WorkshopForm />
 };
 
 export const DarkTheme: Story = {
 	globals: { theme: "dark" },
-	render: () => <MaintenanceForm />
+	render: () => <WorkshopForm />
 };

@@ -8,9 +8,9 @@ const meta = {
 	title: "Components/Inputs/TextField",
 	component: TextField,
 	args: {
-		label: "Module name",
-		description: "Visible to operators in the control index.",
-		placeholder: "e.g. Thermal relay A"
+		label: "Project name",
+		description: "Visible to everyone in this workspace.",
+		placeholder: "e.g. Website refresh"
 	},
 	argTypes: {
 		size: { control: "select", options: ["sm", "md", "lg"] }
@@ -29,9 +29,9 @@ export const StandaloneInput: Story = {
 export const Sizes: Story = {
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<TextField size="sm" label="Small field" defaultValue="SYS-01" technical />
-			<TextField size="md" label="Medium field" defaultValue="SYS-02" technical />
-			<TextField size="lg" label="Large field" defaultValue="SYS-03" technical />
+			<TextField size="sm" label="Small field" defaultValue="Example value" />
+			<TextField size="md" label="Medium field" defaultValue="Example value" />
+			<TextField size="lg" label="Large field" defaultValue="Example value" />
 		</div>
 	)
 };
@@ -39,21 +39,21 @@ export const Sizes: Story = {
 export const InvalidAndUnavailable: Story = {
 	render: () => (
 		<div className="lyds-story-grid">
-			<TextField label="Serial number" defaultValue="A?19" invalid error="Use uppercase letters and digits only." technical />
-			<TextField label="Provisioned endpoint" defaultValue="relay-02.internal" disabled description="Managed by the deployment service." />
-			<TextField label="Calibration stamp" defaultValue="2026-08-31 / LAB 04" readOnly description="Read-only verification record." technical />
+			<TextField label="Account code" defaultValue="A?19" invalid error="Use uppercase letters and digits only." />
+			<TextField label="Managed email" defaultValue="member@example.com" disabled description="Managed by your organization." />
+			<TextField label="Last updated" defaultValue="31 August 2026" readOnly description="Read-only audit information." />
 		</div>
 	)
 };
 
 function ControlledFieldDemo() {
-	const [value, setValue] = useState("Channel alpha");
+	const [value, setValue] = useState("Project Alpha");
 
 	return (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<TextField label="Controlled channel label" value={value} onValueChange={nextValue => setValue(nextValue)} />
+			<TextField label="Controlled name" value={value} onValueChange={nextValue => setValue(nextValue)} />
 			<p className="lyds-story-readout" aria-live="polite">
-				VALUE / {value || "EMPTY"}
+				Current value: {value || "Empty"}
 			</p>
 		</div>
 	);
@@ -66,12 +66,12 @@ export const ControlledValue: Story = {
 export const FieldFamily: Story = {
 	render: () => (
 		<div className="lyds-story-form">
-			<SearchField label="Search telemetry" placeholder="Pressure, voltage, serial…" />
-			<PasswordField label="Operator key" defaultValue="signal-room" />
-			<CodeField label="Protocol code" defaultValue="XR-81/B" description="Whitespace and casing are preserved." />
-			<PhoneField label="Response line" placeholder="+886" description="Formatting and validation belong to the product." />
-			<TextView className="lyds-story-form__wide" label="Maintenance note" defaultValue="Replace thermal sleeve during the next service window." />
-			<Textarea className="lyds-story-form__wide" aria-label="Unframed technical notes" defaultValue="Standalone textarea control" />
+			<SearchField label="Search projects" placeholder="Name, owner, or keyword…" />
+			<PasswordField label="Password" defaultValue="correct-horse" />
+			<CodeField label="Verification code" defaultValue="817204" description="Paste or enter the six-digit code." />
+			<PhoneField label="Contact phone" placeholder="+886" description="Formatting and validation belong to the product." />
+			<TextView className="lyds-story-form__wide" label="Notes" defaultValue="Share the revised outline before the next review." />
+			<Textarea className="lyds-story-form__wide" aria-label="Unframed notes" defaultValue="Standalone textarea control" />
 		</div>
 	)
 };
@@ -81,7 +81,7 @@ export const LongText: Story = {
 		<TextField
 			label="A field label that remains understandable when an application uses unusually long translated interface copy"
 			description="Supporting copy may wrap across multiple lines without crowding the control or detaching from the field it explains."
-			defaultValue="A very long operator-entered value remains readable and scrollable inside the control"
+			defaultValue="A very long user-entered value remains readable and scrollable inside the control"
 		/>
 	)
 };
@@ -90,8 +90,8 @@ export const DarkTheme: Story = {
 	globals: { theme: "dark" },
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<TextField label="Low-light channel" defaultValue="NIGHT-OPS-17" technical />
-			<TextField label="Fault code" defaultValue="E-401" invalid error="Authorization handshake rejected." technical />
+			<TextField label="Display name" defaultValue="Evening support team" />
+			<TextField label="Reference code" defaultValue="E-401" invalid error="This reference code is not recognized." />
 		</div>
 	)
 };

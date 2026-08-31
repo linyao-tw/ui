@@ -14,18 +14,18 @@ type Story = StoryObj<typeof meta>;
 export const Dropdown: Story = {
 	render: () => (
 		<DropdownMenu.Root>
-			<MenuTrigger>System menu</MenuTrigger>
+			<MenuTrigger>Actions</MenuTrigger>
 			<DropdownMenu.Portal>
 				<MenuPositioner>
 					<MenuPopup>
-						<MenuItem>Open diagnostics</MenuItem>
-						<MenuItem>Duplicate panel</MenuItem>
+						<MenuItem>Open details</MenuItem>
+						<MenuItem>Duplicate item</MenuItem>
 						<MenuSeparator />
 						<MenuCheckboxItem defaultChecked>
 							<MenuCheckboxItemIndicator>✓</MenuCheckboxItemIndicator>
-							Show technical labels
+							Show descriptions
 						</MenuCheckboxItem>
-						<MenuItem disabled>Firmware update unavailable</MenuItem>
+						<MenuItem disabled>Archive unavailable</MenuItem>
 					</MenuPopup>
 				</MenuPositioner>
 			</DropdownMenu.Portal>
@@ -36,14 +36,14 @@ export const Dropdown: Story = {
 export const Contextual: Story = {
 	render: () => (
 		<ContextMenu.Root>
-			<ContextMenu.Trigger className="lyds-story-context-area">Right-click or press Shift+F10 on this equipment plate</ContextMenu.Trigger>
+			<ContextMenu.Trigger className="lyds-story-context-area">Right-click or press Shift+F10 on this item</ContextMenu.Trigger>
 			<ContextMenu.Portal>
 				<ContextMenu.Positioner>
 					<ContextMenu.Popup>
-						<ContextMenu.Item>Inspect channel</ContextMenu.Item>
-						<ContextMenu.Item>Copy serial number</ContextMenu.Item>
+						<ContextMenu.Item>Open details</ContextMenu.Item>
+						<ContextMenu.Item>Copy link</ContextMenu.Item>
 						<ContextMenu.Separator />
-						<ContextMenu.Item>Isolate module</ContextMenu.Item>
+						<ContextMenu.Item>Move to archive</ContextMenu.Item>
 					</ContextMenu.Popup>
 				</ContextMenu.Positioner>
 			</ContextMenu.Portal>

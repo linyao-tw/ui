@@ -94,7 +94,7 @@ High-level `Select` / `Combobox` 適合一般 options。需要 group、separator
 
 - `Accordion` family。
 - `Collapsible` family。
-- `Tabs` family：Root、List、Tab、Indicator、Panel 與 LYDS rail。
+- `Tabs` family：Root、List、Tab、Indicator 與 Panel；Indicator 預設隱藏，可由產品在確有需要時自行樣式化。
 
 Accordion 是多 section disclosure；Collapsible 是單一 region；Tabs 是在同一 context 中切換 panels。Tabs 不應被拿來偽裝 route navigation；需要真正 URL/link semantics 時使用 navigation patterns。
 

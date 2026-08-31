@@ -49,7 +49,7 @@ React + browser platform + Intl
 
 ### Base UI
 
-Base UI 是 buttons、selection、menu、overlay、disclosure、navigation 等一般互動 primitive 的主要層。LYDS 保留其成熟的 focus management、keyboard interactions、ARIA relationship 與 controlled/uncontrolled model，再加入一致的 API naming、anatomy class、semantic CSS 與 retro-industrial visual treatment。
+Base UI 是 buttons、selection、menu、overlay、disclosure、navigation 等一般互動 primitive 的主要層。LYDS 保留其成熟的 focus management、keyboard interactions、ARIA relationship 與 controlled/uncontrolled model，再加入一致的 API naming、anatomy class、semantic CSS，以及由 Modulor 可見 specimens 驗證的視覺比例與狀態層級。
 
 不要為了「統一」而在 LYDS 重新實作 Base UI 已正確處理的 roving focus、Escape close、focus trap、return focus 或 popup positioning。
 

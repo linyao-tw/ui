@@ -5,10 +5,10 @@ import { useState } from "react";
 import "../story-layout.css";
 
 const sites = [
-	{ value: "north", label: "Northern relay", description: "Rack A · Online" },
-	{ value: "harbor", label: "Harbor sensor array", description: "Rack C · Maintenance" },
-	{ value: "archive", label: "Archive controller", description: "Legacy connection", disabled: true },
-	{ value: "field", label: "Field station with an intentionally long descriptive label", description: "Remote uplink · 420 ms" }
+	{ value: "north", label: "North office", description: "Taipei · Open" },
+	{ value: "harbor", label: "Harbor office", description: "Kaohsiung · Limited hours" },
+	{ value: "archive", label: "Archived workspace", description: "Read only", disabled: true },
+	{ value: "field", label: "Regional office with an intentionally long descriptive label", description: "Remote team" }
 ] as const;
 
 const meta = {
@@ -16,6 +16,7 @@ const meta = {
 	component: Select<string>,
 	args: {
 		"aria-label": "Controller site",
+		className: "lyds-story-control",
 		options: sites,
 		placeholder: "Choose a site"
 	}
@@ -39,9 +40,9 @@ function ControlledSelectDemo() {
 
 	return (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<Select<string> aria-label="Active relay" options={sites} value={value} onValueChange={next => setValue(next)} />
+			<Select<string> aria-label="Active office" className="lyds-story-control" options={sites} value={value} onValueChange={next => setValue(next)} />
 			<p className="lyds-story-readout" aria-live="polite">
-				ACTIVE / {value ?? "NONE"}
+				Current selection: {value ?? "None"}
 			</p>
 		</div>
 	);
@@ -55,12 +56,12 @@ export const SearchableSelection: Story = {
 	render: () => (
 		<div className="lyds-story-grid">
 			<div className="lyds-story-panel">
-				<p className="lyds-story-panel__heading">Combobox / selected value</p>
-				<Combobox<string> aria-label="Find controller" options={sites} placeholder="Type a controller name" />
+				<p className="lyds-story-panel__heading">Combobox with a selected value</p>
+				<Combobox<string> aria-label="Find office" className="lyds-story-control" options={sites} placeholder="Type an office name" />
 			</div>
 			<div className="lyds-story-panel">
-				<p className="lyds-story-panel__heading">Autocomplete / text suggestion</p>
-				<Autocomplete<string> aria-label="Command argument" options={sites} placeholder="Complete a station name" />
+				<p className="lyds-story-panel__heading">Autocomplete with text suggestions</p>
+				<Autocomplete<string> aria-label="Office name" className="lyds-story-control" options={sites} placeholder="Complete an office name" />
 			</div>
 		</div>
 	)

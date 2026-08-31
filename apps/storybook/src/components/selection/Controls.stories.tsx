@@ -13,10 +13,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Checkbox: Story = {
 	render: () => (
-		<CheckboxGroup aria-label="Diagnostic channels" defaultValue={["thermal", "optical"]}>
-			<CheckboxItem value="thermal" label="Thermal channel" description="Include temperature and fan telemetry." />
-			<CheckboxItem value="optical" label="Optical channel" description="Include scanner and alignment data." />
-			<CheckboxItem value="legacy" label="Legacy bus" description="Unavailable on this controller." disabled />
+		<CheckboxGroup aria-label="Notification channels" defaultValue={["email", "in-app"]}>
+			<CheckboxItem value="email" label="Email notifications" description="Receive important updates by email." />
+			<CheckboxItem value="in-app" label="In-app notifications" description="Show updates while the application is open." />
+			<CheckboxItem value="sms" label="SMS notifications" description="Unavailable for this account." disabled />
 		</CheckboxGroup>
 	)
 };
@@ -24,9 +24,11 @@ export const Checkbox: Story = {
 export const CheckboxStates: Story = {
 	render: () => (
 		<div className="lyds-story-row">
+			<CheckboxItem label="Unchecked" />
 			<CheckboxItem defaultChecked label="Checked" />
 			<CheckboxItem indeterminate label="Indeterminate" />
-			<CheckboxItem disabled label="Disabled" />
+			<CheckboxItem disabled label="Disabled unchecked" />
+			<CheckboxItem disabled defaultChecked label="Disabled checked" />
 		</div>
 	)
 };
@@ -35,12 +37,33 @@ export const Switch: Story = {
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
 			<div className="lyds-story-row">
+				<LydsSwitch aria-labelledby="manual-save-label" />
+				<span id="manual-save-label">Save changes manually</span>
+			</div>
+			<div className="lyds-story-row">
 				<LydsSwitch defaultChecked aria-labelledby="automatic-regulation-label" />
-				<span id="automatic-regulation-label">Automatic regulation</span>
+				<span id="automatic-regulation-label">Save changes automatically</span>
 			</div>
 			<div className="lyds-story-row">
 				<LydsSwitch aria-labelledby="emergency-uplink-label" disabled />
-				<span id="emergency-uplink-label">Emergency uplink unavailable</span>
+				<span id="emergency-uplink-label">Offline access unavailable</span>
+			</div>
+		</div>
+	)
+};
+
+export const DarkControlStates: Story = {
+	globals: { theme: "dark" },
+	render: () => (
+		<div className="lyds-story-stack lyds-story-stack--narrow">
+			<CheckboxItem label="Unchecked in dark theme" />
+			<RadioGroup aria-label="Dark theme radio states" defaultValue="selected">
+				<RadioItem value="unselected" label="Unselected option" />
+				<RadioItem value="selected" label="Selected option" />
+			</RadioGroup>
+			<div className="lyds-story-row">
+				<LydsSwitch aria-labelledby="dark-switch-label" />
+				<span id="dark-switch-label">Off in dark theme</span>
 			</div>
 		</div>
 	)
@@ -48,10 +71,10 @@ export const Switch: Story = {
 
 export const RadioChoices: Story = {
 	render: () => (
-		<RadioGroup aria-label="Sampling mode" defaultValue="balanced">
-			<RadioItem value="precision" label="Precision" description="Maximum fidelity, slower cycle." />
-			<RadioItem value="balanced" label="Balanced" description="Recommended for normal operation." />
-			<RadioItem value="rapid" label="Rapid" description="Reduced fidelity, minimum latency." />
+		<RadioGroup aria-label="Update frequency" defaultValue="daily">
+			<RadioItem value="weekly" label="Weekly" description="A summary every Monday." />
+			<RadioItem value="daily" label="Daily" description="Recommended for most teams." />
+			<RadioItem value="realtime" label="As changes happen" description="Immediate updates throughout the day." />
 		</RadioGroup>
 	)
 };
@@ -60,8 +83,8 @@ export const SliderControl: Story = {
 	name: "Slider",
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<Slider aria-label="Output gain" defaultValue={64} min={0} max={100} showValue />
-			<Slider aria-label="Accepted temperature range" defaultValue={[18, 27]} min={0} max={50} showValue getAriaLabel={index => (index === 0 ? "Minimum temperature" : "Maximum temperature")} />
+			<Slider aria-label="Volume" defaultValue={64} min={0} max={100} showValue />
+			<Slider aria-label="Preferred price range" defaultValue={[18, 27]} min={0} max={50} showValue getAriaLabel={index => (index === 0 ? "Minimum price" : "Maximum price")} />
 		</div>
 	)
 };
@@ -70,14 +93,14 @@ export const ToggleControls: Story = {
 	render: () => (
 		<div className="lyds-story-stack">
 			<div className="lyds-story-row">
-				<Toggle defaultPressed>Grid overlay</Toggle>
-				<Toggle variant="quiet">Labels</Toggle>
-				<Toggle disabled>Locked layer</Toggle>
+				<Toggle defaultPressed>Preview pane</Toggle>
+				<Toggle variant="quiet">Descriptions</Toggle>
+				<Toggle disabled>Archived items</Toggle>
 			</div>
 			<ToggleGroup aria-label="View options" defaultValue={["diagram"]}>
-				<Toggle value="diagram">Diagram</Toggle>
-				<Toggle value="telemetry">Telemetry</Toggle>
-				<Toggle value="history">History</Toggle>
+				<Toggle value="diagram">Cards</Toggle>
+				<Toggle value="list">List</Toggle>
+				<Toggle value="history">Timeline</Toggle>
 			</ToggleGroup>
 		</div>
 	)
@@ -105,12 +128,12 @@ export const DarkTheme: Story = {
 	globals: { theme: "dark" },
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<CheckboxItem defaultChecked label="Night telemetry" />
+			<CheckboxItem defaultChecked label="Email notifications" />
 			<div className="lyds-story-row">
 				<LydsSwitch defaultChecked aria-labelledby="low-light-controls-label" />
-				<span id="low-light-controls-label">Low-light controls</span>
+				<span id="low-light-controls-label">Dark theme</span>
 			</div>
-			<Slider aria-label="Panel luminance" defaultValue={38} showValue />
+			<Slider aria-label="Interface contrast" defaultValue={38} showValue />
 		</div>
 	)
 };

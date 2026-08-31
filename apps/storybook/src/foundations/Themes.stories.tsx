@@ -5,8 +5,8 @@ import "./foundations.css";
 import { FoundationHero, FoundationSection } from "./story-primitives";
 
 const themeSamples = [
-	{ theme: "light", name: "Light material", code: "LIMESTONE / DAY" },
-	{ theme: "dark", name: "Low-light material", code: "CHARCOAL / NIGHT" }
+	{ theme: "light", name: "Light theme", code: "Limestone in daylight" },
+	{ theme: "dark", name: "Dark theme", code: "Charcoal in low light" }
 ] as const;
 
 const meta = {
@@ -23,17 +23,12 @@ export const LightAndDark: Story = {
 	render: () => (
 		<main className="foundation-page">
 			<FoundationHero
-				eyebrow="LYDS / THEMES"
-				title="The same machine in two conditions."
-				description="Light and dark themes preserve material warmth, depth hierarchy, and Vermilion signaling. Dark mode is designed as a low-light operating condition—not a mathematical inversion."
-				readouts={[
-					{ value: "02", label: "theme modes" },
-					{ value: "01", label: "semantic contract" },
-					{ value: "AA", label: "interactive text" }
-				]}
+				eyebrow="LYDS themes"
+				title="One semantic system in two themes."
+				description="Light and dark themes preserve the same surface hierarchy and Vermilion action role. Dark mode is a complete semantic mapping, not a mathematical inversion."
 			/>
 
-			<FoundationSection number="01" title="Theme comparison">
+			<FoundationSection title="Theme comparison">
 				<div className="foundation-theme-grid">
 					{themeSamples.map(sample => (
 						<section className="foundation-theme-sample" data-lyds-theme={sample.theme} key={sample.theme}>
@@ -42,20 +37,20 @@ export const LightAndDark: Story = {
 									<span className="foundation-theme-code">{sample.code}</span>
 									<h3>{sample.name}</h3>
 								</div>
-								<Badge variant="accent">Signal online</Badge>
+								<Badge variant="accent">Accent role</Badge>
 							</header>
-							<Card variant="inset">
+							<Card variant="material">
 								<CardHeader>
-									<CardTitle>Transit control</CardTitle>
+									<CardTitle>Account settings</CardTitle>
 									<CardDescription>Semantic roles preserve the hierarchy across both material conditions.</CardDescription>
 								</CardHeader>
 								<CardBody>
 									<div className="foundation-theme-sample__panel">
-										<span className="foundation-label">SECTION 04 / POWER</span>
-										<p>Primary text stays readable while inset seams and dividers retain physical depth.</p>
+										<span className="foundation-label">Preferences</span>
+										<p>Primary text stays readable while surface values and structural dividers preserve the hierarchy.</p>
 										<div className="foundation-theme-sample__controls">
 											<Switch defaultChecked aria-label={`${sample.name} power control`} />
-											<Button size="sm">Confirm state</Button>
+											<Button size="sm">Save preferences</Button>
 										</div>
 									</div>
 								</CardBody>
@@ -65,7 +60,7 @@ export const LightAndDark: Story = {
 				</div>
 			</FoundationSection>
 
-			<FoundationSection number="02" title="Theme authoring contract">
+			<FoundationSection title="Theme authoring contract">
 				<div className="foundation-principle-grid">
 					<article className="foundation-principle">
 						<span className="foundation-kicker">Set</span>

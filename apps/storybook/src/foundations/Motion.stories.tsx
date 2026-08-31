@@ -77,17 +77,12 @@ export const MotionVocabulary: Story = {
 	render: () => (
 		<main className="foundation-page">
 			<FoundationHero
-				eyebrow="LYDS / MOTION"
-				title="Movement with mechanical intent."
+				eyebrow="LYDS motion"
+				title="A small, predictable motion vocabulary."
 				description="A compact motion vocabulary creates continuity without turning the interface into spectacle. Timing belongs to the system, and reduced-motion preferences remove nonessential travel."
-				readouts={[
-					{ value: "05", label: "easing curves" },
-					{ value: "04", label: "core durations" },
-					{ value: "RM", label: "reduced motion" }
-				]}
 			/>
 
-			<FoundationSection number="01" title="Easing curves">
+			<FoundationSection title="Easing curves">
 				<p className="foundation-section-copy">Activate any track with pointer or keyboard to compare how the same distance feels under each tokenized curve.</p>
 				<div className="foundation-motion-list">
 					{easingCurves.map(curve => (
@@ -96,7 +91,7 @@ export const MotionVocabulary: Story = {
 				</div>
 			</FoundationSection>
 
-			<FoundationSection number="02" title="Duration scale">
+			<FoundationSection title="Duration scale">
 				<div className="foundation-duration-grid">
 					{durations.map(duration => (
 						<article className="foundation-duration" data-instant={duration.instant} key={duration.name} style={{ "--foundation-motion-duration": duration.duration } as FoundationStyle}>
@@ -110,7 +105,7 @@ export const MotionVocabulary: Story = {
 				</div>
 			</FoundationSection>
 
-			<FoundationSection number="03" title="Application rules">
+			<FoundationSection title="Application rules">
 				<div className="foundation-principle-grid">
 					<article className="foundation-principle">
 						<span className="foundation-kicker">Default</span>

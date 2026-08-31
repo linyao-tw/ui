@@ -71,8 +71,8 @@ Snapshot contract：
 5. 不產生 commit、不 push version change、不建立 tag。
 6. 發佈命令使用 `--access public --tag snapshot`。
 7. `snapshot` publication 絕不帶 `latest`；不可依 npm default tag。
-8. 發佈前查詢 exact version：若已存在，log 清楚說明 rerun 已發佈並成功略過。
-9. 不應把 network/auth/permission error 誤判為「version 已存在」。只有 registry 明確回報該 exact version 才 skip。
+8. 發佈前查詢 exact version：若已存在，必須再比對 registry 與本次已驗證 tarball 的 SHA-512 integrity；只有完全一致才 log 清楚說明並成功略過。
+9. Integrity 不一致、network/auth/permission error 或不完整的 registry response 一律 fail closed，不得誤判為安全 rerun。
 10. Main publish concurrency 要 serialize，且 `cancel-in-progress: false`，避免較舊但已排隊的 commit 靜默失去 snapshot。
 
 Snapshot idempotency 只適用 exact snapshot rerun；不能覆寫既有 version，因為 npm version contents immutable。
@@ -135,7 +135,9 @@ Snapshot 與 production 刻意不同：
 
 ```text
 snapshot exact version exists
--> log "already exists"
+-> compare registry SHA-512 with the verified local tarball
+-> fail if integrity differs or cannot be established
+-> log "already exists with identical integrity"
 -> skip publish
 -> workflow succeeds
 

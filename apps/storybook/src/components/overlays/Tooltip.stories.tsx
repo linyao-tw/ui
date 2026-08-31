@@ -11,15 +11,15 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function DiagnosticTooltip({ defaultOpen = false }: { defaultOpen?: boolean }) {
+function HelpTooltip({ defaultOpen = false }: { defaultOpen?: boolean }) {
 	return (
 		<Tooltip.Provider delay={250}>
 			<Tooltip.Root defaultOpen={defaultOpen}>
-				<Tooltip.Trigger aria-label="SIG 92 — signal quality details">SIG 92</Tooltip.Trigger>
+				<Tooltip.Trigger aria-label="Formatting help">Formatting help</Tooltip.Trigger>
 				<Tooltip.Portal>
 					<Tooltip.Positioner side="top">
 						<Tooltip.Popup>
-							Signal quality / 92%
+							Markdown formatting is supported
 							<Tooltip.Arrow />
 						</Tooltip.Popup>
 					</Tooltip.Positioner>
@@ -30,24 +30,24 @@ function DiagnosticTooltip({ defaultOpen = false }: { defaultOpen?: boolean }) {
 }
 
 export const Default: Story = {
-	render: () => <DiagnosticTooltip />
+	render: () => <HelpTooltip />
 };
 
 export const Open: Story = {
-	render: () => <DiagnosticTooltip defaultOpen />
+	render: () => <HelpTooltip defaultOpen />
 };
 
 export const PopoverPanel: Story = {
 	render: () => (
 		<Popover.Root>
-			<Popover.Trigger>Channel details</Popover.Trigger>
+			<Popover.Trigger>Member details</Popover.Trigger>
 			<Popover.Portal>
 				<Popover.Positioner>
 					<Popover.Popup>
-						<Popover.Title>Thermal channel 04</Popover.Title>
-						<Popover.Description>Nominal range 18–32 °C. Last calibrated 2026-08-14.</Popover.Description>
+						<Popover.Title>Alex Chen</Popover.Title>
+						<Popover.Description>Editor · Joined 14 August 2026.</Popover.Description>
 						<div className="lyds-story-row">
-							<Button size="sm">Inspect history</Button>
+							<Button size="sm">View profile</Button>
 							<Popover.Close>Close</Popover.Close>
 						</div>
 						<Popover.Arrow />
@@ -61,13 +61,12 @@ export const PopoverPanel: Story = {
 export const Preview: Story = {
 	render: () => (
 		<PreviewCard.Root>
-			<PreviewCard.Trigger href="#relay">Relay XR-071</PreviewCard.Trigger>
+			<PreviewCard.Trigger href="#article">Designing accessible forms</PreviewCard.Trigger>
 			<PreviewCard.Portal>
 				<PreviewCard.Positioner>
 					<PreviewCard.Popup>
-						<p className="lyds-story-panel__heading">Controller preview</p>
-						<strong>Relay XR-071</strong>
-						<p>Online · 24.8 V · 38.2 °C</p>
+						<strong>Designing accessible forms</strong>
+						<p>A practical guide to labels, errors, focus, and keyboard interaction.</p>
 						<PreviewCard.Arrow />
 					</PreviewCard.Popup>
 				</PreviewCard.Positioner>
@@ -78,5 +77,5 @@ export const Preview: Story = {
 
 export const DarkTheme: Story = {
 	globals: { theme: "dark" },
-	render: () => <DiagnosticTooltip defaultOpen />
+	render: () => <HelpTooltip defaultOpen />
 };

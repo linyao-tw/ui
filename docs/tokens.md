@@ -33,20 +33,20 @@ Foundation palette 包含三個品牌原色：
 | `--palette-charcoal`  | `#4D4D4D` | `oklch(0.4202 0 0)`          | structure / text foundation |
 | `--palette-vermilion` | `#FE3300` | `oklch(65% 0.245 31.5)`      | signal / action foundation  |
 
-另有 warm neutral 與 signal ramps，供 theme assignment 使用。Palette tokens 不是 component contract；component 不應直接取用 `--palette-warm-700` 或 `--palette-vermilion`。
+另有 warm neutral 與 signal ramps，供 theme assignment 使用。Info、success、warning 各自使用低彩度 blue、green、amber ramps；它們是為狀態辨識與對比設計的輔助色相，不取代 Vermilion 的品牌 action 角色。Palette tokens 不是 component contract；component 不應直接取用 `--palette-warm-700` 或 `--palette-vermilion`。
 
 ### Semantic colors
 
 主要 categories：
 
 - `Background/*`：`Main`、`Secondary`、`Elevated`、`Inset`、`Sunken`、`Modal`、`Accent`、`Selected`、`Disabled`、`Backdrop`。
-- `Text/*`：`Title`、`Main`、`Secondary`、`Muted`、`Disabled`、`Accent`、`Link`、`On_Accent`、`Always_White`、`Always_Dark`。
+- `Text/*`：`Title`、`Main`、`Secondary`、`Muted`、`Disabled`、`Accent`、`Link`、`On_Accent`、`On_Danger`、`Always_White`、`Always_Dark`。
 - `Icon/*`：一般、次要、accent、disabled、on-accent 與 always roles。
 - `Divider/*` 與 `Border/*`：subtle/main/strong、control states 與 invalid。
-- `Control/*`：primary/secondary/surface、hover/pressed/disabled、selected、track、thumb、knob、placeholder。
+- `Control/*`：primary/secondary/quaternary/surface、hover/pressed/disabled、selected、track、thumb、knob、placeholder。
 - `Focus/*` 與 `Selection/*`：focus ring、halo/offset 與 selection foreground/background。
 - `Status/*`：neutral、info、success、warning、danger 各自的 background/foreground/border。
-- `Shadow/*` 與 `Elevation/*`：hairline、low、medium、overlay、inset、panel seam。
+- `Shadow/*` 與 `Elevation/*`：hairline、low、medium、overlay 與 selected/floating control 的超柔和 shadow。Legacy inset/panel-seam aliases 目前解析為 `none`，只為避免既有 consumer theme 立即破壞；新元件不得依賴它們。
 
 下列寫法是正確的 component rule：
 
@@ -128,13 +128,13 @@ Fixed lengths 使用 rem：
 
 ```css
 padding: var(--space-3); /* 0.75rem */
-min-height: var(--control-height-md); /* 2.75rem */
-border-radius: var(--radius-md); /* 0.5rem */
+min-height: var(--control-height-md); /* 3rem */
+border-radius: var(--radius-md); /* 0.75rem */
 ```
 
-只有真正 pixel-precise 的 1px border/divider 可使用 `px`。SVG viewBox coordinates 不屬於 CSS lengths。Fluid layout 可使用 `%`、`fr`、`vw`、`dvh` 與 unitless line-height；規則不是把所有 layout 機械轉成 rem。
+只有真正 pixel-precise 的 1px border/divider，以及 Figma 明確指定的 0.5px ornamental divider 可使用 `px`。SVG viewBox coordinates 不屬於 CSS lengths。Fluid layout 可使用 `%`、`fr`、`vw`、`dvh` 與 unitless line-height；規則不是把所有 layout 機械轉成 rem。
 
-Control size tokens 與 `--control-target-min` 讓視覺尺寸和 minimum interaction target 分開。切角使用 `--shape-cut-*`，不要在每個 component 發明新的 clip distance。
+Control size tokens 與 `--control-target-min` 讓視覺尺寸和 minimum interaction target 分開。`--shape-cut-*` 是相容性 alias，預設為 `0`；Modulor 對應 anatomy 沒有切角時，不得在 component 自行加入 clip-path。
 
 ## Motion
 

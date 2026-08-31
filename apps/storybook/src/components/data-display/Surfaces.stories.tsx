@@ -56,24 +56,24 @@ export const Cards: Story = {
 			<Card variant="material">
 				<CardHeader>
 					<Badge size="sm" variant="success">
-						Nominal
+						Active
 					</Badge>
-					<CardTitle>Thermal controller</CardTitle>
-					<CardDescription>Primary temperature regulation module.</CardDescription>
+					<CardTitle>Team workspace</CardTitle>
+					<CardDescription>A shared space for planning, files, and project updates.</CardDescription>
 				</CardHeader>
-				<CardBody className="lyds-story-readout">38.2 °C / 1840 RPM</CardBody>
+				<CardBody className="lyds-story-readout">12 members · 24 recent updates</CardBody>
 				<CardFooter>
 					<Button size="sm" variant="secondary">
-						Inspect
+						Open workspace
 					</Button>
 				</CardFooter>
 			</Card>
 			<CloudBox>
 				<CardHeader>
-					<CardTitle>Remote archive</CardTitle>
-					<CardDescription>CloudBox is LYDS's elevated cloud-equivalent composition.</CardDescription>
+					<CardTitle>Shared archive</CardTitle>
+					<CardDescription>CloudBox provides an elevated surface for grouped content.</CardDescription>
 				</CardHeader>
-				<CardBody>17 diagnostic bundles synchronized.</CardBody>
+				<CardBody>17 files were added this week.</CardBody>
 			</CloudBox>
 		</div>
 	)
@@ -82,20 +82,20 @@ export const Cards: Story = {
 export const ListCells: Story = {
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<SectionHeading annotation="CONNECTED / 03" description="Controller list cells preserve slots and semantic interactive rendering." action={<Badge variant="success">Online</Badge>}>
-				Active controllers
+			<SectionHeading annotation="3 available" description="List cells preserve slots and semantic interactive rendering." action={<Badge variant="success">Current</Badge>}>
+				Recent workspaces
 			</SectionHeading>
-			<ListCell leading={<Avatar alt="Thermal relay" fallback="TR" status="online" statusLabel="Online" />} title="Thermal relay" description="Rack 04 · Channel A" metadata="38.2 °C" trailing="›" />
-			<Separator spacing="none" variant="technical" />
+			<ListCell leading={<Avatar alt="Design team" fallback="DT" status="online" statusLabel="Online" />} title="Design team" description="12 members" metadata="Updated today" trailing="›" />
+			<Separator spacing="none" variant="solid" />
 			<ListCell
-				action={{ href: "#optical", "aria-label": "Open optical scanner details" }}
-				leading={<Avatar alt="Optical scanner" fallback="OS" />}
-				title="Optical scanner with an unusually long equipment label"
-				description="Remote field station · Delayed uplink"
-				metadata="420 ms"
+				action={{ href: "#research", "aria-label": "Open research workspace details" }}
+				leading={<Avatar alt="Research workspace" fallback="RW" />}
+				title="Research workspace with an unusually long descriptive name"
+				description="Private workspace · 8 members"
+				metadata="Yesterday"
 				trailing="›"
 			/>
-			<ListCell disabled leading={<Avatar alt="Archive bus" fallback="AB" status="offline" statusLabel="Offline" />} title="Archive bus" description="Unavailable" metadata="OFF" />
+			<ListCell disabled leading={<Avatar alt="Archived workspace" fallback="AW" status="offline" statusLabel="Archived" />} title="Archived workspace" description="Read only" metadata="Archived" />
 		</div>
 	)
 };
@@ -104,14 +104,14 @@ export const CollectionPrimitives: Story = {
 	render: () => (
 		<Collection density="comfortable" className="lyds-story-stack lyds-story-stack--narrow">
 			{[
-				["XR-071", "Thermal relay", "38.2 °C"],
-				["OP-122", "Optical scanner", "92%"],
-				["AR-004", "Archive controller", "17 files"]
-			].map(([serial, label, status]) => (
-				<CollectionItem key={serial}>
+				["design", "Design planning", "Shared workspace", "Updated today"],
+				["research", "User research", "Private workspace", "8 members"],
+				["archive", "Project archive", "Read-only workspace", "17 files"]
+			].map(([key, label, description, status]) => (
+				<CollectionItem key={key}>
 					<CollectionContent>
 						<CollectionHeading>{label}</CollectionHeading>
-						<CollectionDescription>{serial}</CollectionDescription>
+						<CollectionDescription>{description}</CollectionDescription>
 					</CollectionContent>
 					<CollectionMeta className="lyds-story-readout">{status}</CollectionMeta>
 					<CollectionActions>›</CollectionActions>
@@ -127,7 +127,7 @@ export const ScrollableCollection: Story = {
 			<ScrollAreaViewport>
 				<ScrollAreaContent className="lyds-story-scroll-content">
 					{Array.from({ length: 10 }, (_, index) => (
-						<ListCell key={index} title={`Capture ${String(index + 1).padStart(2, "0")}`} description="Diagnostic record" metadata={`T+${String(index * 7).padStart(3, "0")}`} />
+						<ListCell key={index} title={`Document ${index + 1}`} description="Shared document" metadata={`${index + 1} days ago`} />
 					))}
 				</ScrollAreaContent>
 			</ScrollAreaViewport>
@@ -143,51 +143,43 @@ export const DataTableComposition: Story = {
 		<DataTable>
 			<DataTableHeader>
 				<div>
-					<DataTableTitle>Live hardware telemetry</DataTableTitle>
+					<DataTableTitle>Workspace members</DataTableTitle>
 					<DataTableDescription>Presentation and semantic structure only; sorting, filtering, and data loading remain application-owned.</DataTableDescription>
 				</div>
-				<DataTableStatus className="lyds-story-readout">REFRESH / 14:32:08</DataTableStatus>
+				<DataTableStatus className="lyds-story-readout">Updated at 14:32</DataTableStatus>
 			</DataTableHeader>
-			<DataTableRegion label="Hardware telemetry records" className="lyds-story-table-wrap">
+			<DataTableRegion label="Workspace member records" className="lyds-story-table-wrap">
 				<Table>
-					<TableCaption>Current measurements from connected controllers</TableCaption>
+					<TableCaption>Current members and access levels</TableCaption>
 					<TableHeader>
 						<TableRow>
-							<TableHead>Module</TableHead>
-							<TableHead>Serial</TableHead>
-							<TableHead textAlign="end">Voltage</TableHead>
-							<TableHead textAlign="end">Temperature</TableHead>
+							<TableHead>Name</TableHead>
+							<TableHead>Email</TableHead>
+							<TableHead>Role</TableHead>
+							<TableHead textAlign="end">Last active</TableHead>
 							<TableHead>Status</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
 						<TableRow>
-							<TableCell>Thermal relay</TableCell>
-							<TableCell numeric>XR-071</TableCell>
-							<TableCell numeric textAlign="end">
-								24.8 V
-							</TableCell>
-							<TableCell numeric textAlign="end">
-								38.2 °C
-							</TableCell>
+							<TableCell>Alex Chen</TableCell>
+							<TableCell>alex@example.com</TableCell>
+							<TableCell>Editor</TableCell>
+							<TableCell textAlign="end">Today</TableCell>
 							<TableCell>
 								<Badge size="sm" variant="success">
-									Nominal
+									Active
 								</Badge>
 							</TableCell>
 						</TableRow>
 						<TableRow>
-							<TableCell>Optical scanner</TableCell>
-							<TableCell numeric>OP-122</TableCell>
-							<TableCell numeric textAlign="end">
-								12.1 V
-							</TableCell>
-							<TableCell numeric textAlign="end">
-								41.7 °C
-							</TableCell>
+							<TableCell>Mina Lin</TableCell>
+							<TableCell>mina@example.com</TableCell>
+							<TableCell>Viewer</TableCell>
+							<TableCell textAlign="end">3 days ago</TableCell>
 							<TableCell>
 								<Badge size="sm" variant="warning">
-									Service
+									Invited
 								</Badge>
 							</TableCell>
 						</TableRow>
@@ -201,9 +193,9 @@ export const DataTableComposition: Story = {
 export const DarkTheme: Story = {
 	globals: { theme: "dark" },
 	render: () => (
-		<Card variant="inset" className="lyds-story-stack lyds-story-stack--narrow">
-			<SectionHeading annotation="LOW LIGHT / ACTIVE">Controller summary</SectionHeading>
-			<ListCell title="Thermal relay" description="Rack 04 · Channel A" metadata="38.2 °C" />
+		<Card variant="material" className="lyds-story-stack lyds-story-stack--narrow">
+			<SectionHeading annotation="Dark theme">Workspace summary</SectionHeading>
+			<ListCell title="Design team" description="12 members" metadata="Updated today" />
 		</Card>
 	)
 };

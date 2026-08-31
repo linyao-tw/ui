@@ -1,6 +1,6 @@
 # LYDS
 
-LYDS 是一套給 React 應用使用的設計系統，預計以 `@lyds/ui` 發佈。它把可組合、可存取的互動 primitive，轉譯成「retro industrial technology」的 LYDS 視覺語言：溫暖材料、機械面板接縫、技術標示、清楚的實體控制暗示，以及作為動作／訊號色的 Vermilion。
+LYDS 是一套給 React 應用使用的設計系統，預計以 `@lyds/ui` 發佈。元件 anatomy、尺寸、variant 組織與互動層級依循 Modulor Figma 中可驗證的設計；LYDS 以 Limestone、Charcoal、Vermilion 重新映射色盤，並為 Web、Dark theme 與 WCAG 2.2 AA 補齊必要狀態。沒有直接 reference 的元件，使用同一套表面、圓角、字級、間距與狀態語言延伸。
 
 目前 repository 處於發佈前審閱階段。套件、Storybook、測試與發佈自動化都在此 monorepo 維護，但 **本次實作不會發佈任何 npm 版本**；npm 發佈預設由 `NPM_PUBLISH_ENABLED` repository variable 關閉。
 
@@ -37,10 +37,10 @@ import { Button, Card, CardBody, CardTitle, TextField } from "@lyds/ui";
 
 export function AccountPanel() {
 	return (
-		<Card variant="inset">
-			<CardTitle>Account console</CardTitle>
+		<Card variant="material">
+			<CardTitle>Account settings</CardTitle>
 			<CardBody>
-				<TextField label="Call sign" description="Shown to collaborators." name="callSign" required />
+				<TextField label="Display name" description="Shown to collaborators." name="displayName" required />
 				<Button variant="primary">Save changes</Button>
 			</CardBody>
 		</Card>
@@ -85,7 +85,7 @@ Motion/Ease/InOut -> --motion-ease-in-out
 在 theme scope 覆寫 semantic token，可調整品牌表現而不 fork 元件：
 
 ```css
-.customer-console {
+.customer-theme {
 	--control-primary: oklch(68% 0.22 34);
 	--control-primary-hover: oklch(72% 0.2 34);
 	--focus-ring: oklch(52% 0.18 34);
@@ -145,13 +145,13 @@ Consumer 仍須提供實際 label、說明、錯誤訊息、合理的 focus orde
 
 發佈採 npm Trusted Publishing／GitHub Actions OIDC，且預設關閉：只有 repository variable `NPM_PUBLISH_ENABLED=true` 時，publish workflow 才能觸及 npm。
 
-| 來源                | 版本                    | dist-tag   | 重複版本           |
-| ------------------- | ----------------------- | ---------- | ------------------ |
-| push 至 `main`      | `0.0.0-snapshot.<sha6>` | `snapshot` | 明確記錄後安全略過 |
-| tag `v1.2.3`        | `1.2.3`                 | `latest`   | 失敗               |
-| tag `v2.0.0-beta.1` | `2.0.0-beta.1`          | `beta`     | 失敗               |
+| 來源                | 版本                    | dist-tag   | 重複版本              |
+| ------------------- | ----------------------- | ---------- | --------------------- |
+| push 至 `main`      | `0.0.0-snapshot.<sha6>` | `snapshot` | 相同 integrity 才略過 |
+| tag `v1.2.3`        | `1.2.3`                 | `latest`   | 失敗                  |
+| tag `v2.0.0-beta.1` | `2.0.0-beta.1`          | `beta`     | 失敗                  |
 
-Snapshot 只移動 `snapshot`，不會移動 `latest`。Tagged prerelease 依第一個 prerelease identifier 使用 channel tag，例如 `beta`；stable release 才使用 npm 預設的 `latest`。CI 只在乾淨 checkout 暫時改 package version，不產生或 push version commit。
+Snapshot 只移動 `snapshot`，不會移動 `latest`。重跑時若 exact snapshot 已存在，只有 registry 的 SHA-512 integrity 與本次已驗證 tarball 完全一致才會安全略過；內容不一致或 registry 狀態不確定都會 fail closed。Tagged prerelease 依第一個 prerelease identifier 使用 channel tag，例如 `beta`；stable release 才使用 npm 預設的 `latest`。CI 只在乾淨 checkout 暫時改 package version，不產生或 push version commit。
 
 完整合約、OIDC 首次設定欄位、重複版本策略與人工 release 步驟見 [Publishing](docs/publishing.md)。在 review Storybook 並取得明確批准以前，請勿啟用 publish variable。
 
