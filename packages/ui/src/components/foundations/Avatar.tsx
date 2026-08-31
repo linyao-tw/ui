@@ -28,7 +28,7 @@ function getInitials(label: string): string {
 		.slice(0, 2)
 		.map(part => Array.from(part)[0] ?? "")
 		.join("")
-		.toLocaleUpperCase();
+		.toUpperCase();
 }
 
 export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(

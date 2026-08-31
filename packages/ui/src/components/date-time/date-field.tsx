@@ -1,16 +1,16 @@
 import type { CalendarDate } from "@internationalized/date";
 import { forwardRef, type ReactElement, type RefAttributes } from "react";
-import { DateField as AriaDateField, DateInput, DateSegment, type DateFieldProps as AriaDateFieldProps, type DateValue } from "react-aria-components/DateField";
+import { DateField as AriaDateField, DateInput, DateSegment, type DateFieldProps as AriaDateFieldProps } from "react-aria-components/DateField";
+import type { DateFieldBehaviorProps, DateValue as LydsDateValue } from "./date-types";
 import { FieldLabel, FieldMessages, LocaleBoundary, cx, type DateTimeFieldChromeProps } from "./shared";
 
-export interface DateFieldProps<T extends DateValue = CalendarDate>
-	extends Omit<AriaDateFieldProps<T>, "children" | "className" | "isDisabled" | "isInvalid" | "isReadOnly" | "isRequired" | "onChange">, DateTimeFieldChromeProps {
-	disabled?: boolean;
-	readOnly?: boolean;
-	required?: boolean;
-	invalid?: boolean;
-	onValueChange?: AriaDateFieldProps<T>["onChange"];
-}
+export interface DateFieldProps<T extends LydsDateValue = CalendarDate> extends DateFieldBehaviorProps<T>, DateTimeFieldChromeProps {}
+
+type DateFieldForwardedKeys = Exclude<keyof DateFieldBehaviorProps<LydsDateValue>, "disabled" | "invalid" | "onValueChange" | "readOnly" | "required">;
+type DateFieldUnexpectedForwardedKeys = Exclude<DateFieldForwardedKeys, keyof AriaDateFieldProps<LydsDateValue>>;
+type DateFieldPropContract = DateFieldUnexpectedForwardedKeys extends never ? true : never;
+const dateFieldPropContract: DateFieldPropContract = true;
+void dateFieldPropContract;
 
 export function DateInputSegments({ className, slot }: { className?: string; slot?: string }) {
 	return (
@@ -20,14 +20,16 @@ export function DateInputSegments({ className, slot }: { className?: string; slo
 	);
 }
 
-function DateFieldImpl<T extends DateValue>(
-	{ label, description, errorMessage, locale, size = "md", className, disabled, readOnly, required, invalid, onValueChange, ...fieldProps }: DateFieldProps<T>,
+function DateFieldImpl<T extends LydsDateValue>(
+	{ label, description, error, locale, size = "md", className, disabled, readOnly, required, invalid, onValueChange, ...fieldProps }: DateFieldProps<T>,
 	ref: React.ForwardedRef<HTMLDivElement>
 ) {
+	const ariaFieldProps = fieldProps as unknown as Omit<AriaDateFieldProps<T>, "children" | "className" | "isDisabled" | "isInvalid" | "isReadOnly" | "isRequired" | "onChange">;
+
 	return (
 		<LocaleBoundary locale={locale}>
 			<AriaDateField
-				{...fieldProps}
+				{...ariaFieldProps}
 				ref={ref}
 				className={cx("lyds-date-field", className)}
 				data-size={size}
@@ -35,14 +37,14 @@ function DateFieldImpl<T extends DateValue>(
 				{...(readOnly === undefined ? {} : { isReadOnly: readOnly })}
 				{...(required === undefined ? {} : { isRequired: required })}
 				{...(invalid === undefined ? {} : { isInvalid: invalid })}
-				{...(onValueChange === undefined ? {} : { onChange: onValueChange })}
+				{...(onValueChange === undefined ? {} : { onChange: onValueChange as unknown as NonNullable<AriaDateFieldProps<T>["onChange"]> })}
 			>
 				<FieldLabel>{label}</FieldLabel>
 				<DateInputSegments />
-				<FieldMessages description={description} errorMessage={errorMessage} />
+				<FieldMessages description={description} error={error} />
 			</AriaDateField>
 		</LocaleBoundary>
 	);
 }
 
-export const DateField = forwardRef(DateFieldImpl) as <T extends DateValue = CalendarDate>(props: DateFieldProps<T> & RefAttributes<HTMLDivElement>) => ReactElement | null;
+export const DateField = forwardRef(DateFieldImpl) as <T extends LydsDateValue = CalendarDate>(props: DateFieldProps<T> & RefAttributes<HTMLDivElement>) => ReactElement | null;

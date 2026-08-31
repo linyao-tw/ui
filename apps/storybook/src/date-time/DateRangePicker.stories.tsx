@@ -57,7 +57,7 @@ export const ConstraintsAndInvalid: Story = {
 				isDateUnavailable={date => date.day === 1 || date.day === 7}
 				description="Unavailable dates are supplied by the consumer."
 			/>
-			<DateRangePicker label="Required reporting period" invalid required errorMessage="The selected range overlaps a closed reporting interval." />
+			<DateRangePicker label="Required reporting period" invalid required error="The selected range overlaps a closed reporting interval." />
 		</div>
 	)
 };

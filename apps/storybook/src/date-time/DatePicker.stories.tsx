@@ -50,7 +50,7 @@ export const FieldStates: Story = {
 				label="Required inspection"
 				required
 				invalid
-				errorMessage="Choose a date inside the active service period."
+				error="Choose a date inside the active service period."
 				minValue={new CalendarDate(2026, 8, 20)}
 				maxValue={new CalendarDate(2026, 9, 18)}
 			/>

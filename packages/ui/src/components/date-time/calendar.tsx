@@ -11,23 +11,25 @@ import {
 	CalendarHeading,
 	CalendarMonthPicker,
 	CalendarYearPicker,
-	type CalendarProps as AriaCalendarProps,
-	type DateValue
+	type CalendarProps as AriaCalendarProps
 } from "react-aria-components/Calendar";
+import type { CalendarBehaviorProps, DateValue as LydsDateValue } from "./date-types";
 import { LocaleBoundary, cx } from "./shared";
 
-export type FirstDayOfWeek = "sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat";
+export type { FirstDayOfWeek } from "./date-types";
 export type WeekdayStyle = "narrow" | "short" | "long";
 
-export interface CalendarProps<T extends DateValue = CalendarDate> extends Omit<AriaCalendarProps<T>, "children" | "className" | "isDisabled" | "isInvalid" | "isReadOnly" | "onChange"> {
+export interface CalendarProps<T extends LydsDateValue = CalendarDate> extends CalendarBehaviorProps<T> {
 	locale?: string | undefined;
 	className?: string;
-	disabled?: boolean;
-	readOnly?: boolean;
-	invalid?: boolean;
-	onValueChange?: AriaCalendarProps<T>["onChange"];
 	weekdayStyle?: WeekdayStyle | undefined;
 }
+
+type CalendarForwardedKeys = Exclude<keyof CalendarBehaviorProps<LydsDateValue>, "disabled" | "invalid" | "onValueChange" | "readOnly">;
+type CalendarUnexpectedForwardedKeys = Exclude<CalendarForwardedKeys, keyof AriaCalendarProps<LydsDateValue>>;
+type CalendarPropContract = CalendarUnexpectedForwardedKeys extends never ? true : never;
+const calendarPropContract: CalendarPropContract = true;
+void calendarPropContract;
 
 export interface CalendarPanelProps {
 	weekdayStyle?: WeekdayStyle | undefined;
@@ -96,20 +98,22 @@ export function CalendarPanel({ weekdayStyle, showMonthYearPickers, disabled, cl
 	);
 }
 
-function CalendarImpl<T extends DateValue>(
+function CalendarImpl<T extends LydsDateValue>(
 	{ locale, className, disabled, readOnly, invalid, onValueChange, weekdayStyle, ...calendarProps }: CalendarProps<T>,
 	ref: React.ForwardedRef<HTMLDivElement>
 ) {
+	const ariaCalendarProps = calendarProps as unknown as Omit<AriaCalendarProps<T>, "children" | "className" | "isDisabled" | "isInvalid" | "isReadOnly" | "onChange">;
+
 	return (
 		<LocaleBoundary locale={locale}>
 			<AriaCalendar
-				{...calendarProps}
+				{...ariaCalendarProps}
 				ref={ref}
 				className={cx("lyds-calendar", className)}
 				{...(disabled === undefined ? {} : { isDisabled: disabled })}
 				{...(readOnly === undefined ? {} : { isReadOnly: readOnly })}
 				{...(invalid === undefined ? {} : { isInvalid: invalid })}
-				{...(onValueChange === undefined ? {} : { onChange: onValueChange })}
+				{...(onValueChange === undefined ? {} : { onChange: onValueChange as unknown as NonNullable<AriaCalendarProps<T>["onChange"]> })}
 			>
 				<CalendarPanel weekdayStyle={weekdayStyle} disabled={disabled} />
 			</AriaCalendar>
@@ -117,4 +121,4 @@ function CalendarImpl<T extends DateValue>(
 	);
 }
 
-export const Calendar = forwardRef(CalendarImpl) as <T extends DateValue = CalendarDate>(props: CalendarProps<T> & RefAttributes<HTMLDivElement>) => ReactElement | null;
+export const Calendar = forwardRef(CalendarImpl) as <T extends LydsDateValue = CalendarDate>(props: CalendarProps<T> & RefAttributes<HTMLDivElement>) => ReactElement | null;

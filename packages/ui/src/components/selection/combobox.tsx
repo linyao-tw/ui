@@ -13,7 +13,7 @@ import {
 	type ComboboxRootProps,
 	type ComboboxTriggerProps
 } from "@base-ui/react/combobox";
-import { forwardRef, type ReactNode } from "react";
+import { forwardRef, type Key, type ReactNode } from "react";
 
 import { mergeStateClassName } from "./classnames";
 import styles from "./selection.module.css";
@@ -61,7 +61,7 @@ export const ComboboxEmpty = forwardRef<HTMLDivElement, ComboboxEmptyProps>(func
 export interface ComboboxOption<Value> {
 	description?: ReactNode;
 	disabled?: boolean;
-	key?: string;
+	key?: Key;
 	label: ReactNode;
 	textValue?: string;
 	value: Value;
@@ -185,7 +185,7 @@ export const AutocompleteItem = forwardRef<HTMLDivElement, AutocompleteItemProps
 
 export interface AutocompleteOption<Value> {
 	disabled?: boolean;
-	key?: string;
+	key?: Key;
 	label: ReactNode;
 	textValue?: string;
 	value: Value;

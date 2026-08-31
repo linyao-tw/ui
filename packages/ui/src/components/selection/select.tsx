@@ -12,9 +12,9 @@ import {
 	type SelectTriggerProps,
 	type SelectValueProps
 } from "@base-ui/react/select";
-import { forwardRef, type ReactNode } from "react";
+import { forwardRef, type Key, type ReactNode } from "react";
 
-import { mergeStateClassName } from "./classnames";
+import { combineStateClassNames, mergeStateClassName } from "./classnames";
 import styles from "./selection.module.css";
 
 export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(function SelectTrigger({ className, ...props }, ref) {
@@ -60,6 +60,7 @@ export const SelectSeparator = forwardRef<HTMLDivElement, SelectSeparatorProps>(
 export interface SelectOption<Value> {
 	description?: ReactNode;
 	disabled?: boolean;
+	key?: Key;
 	label: ReactNode;
 	textValue?: string;
 	value: Value;
@@ -101,7 +102,7 @@ function SelectComponent<Value>({
 				aria-invalid={invalid || triggerProps?.["aria-invalid"] || undefined}
 				aria-label={ariaLabel ?? triggerProps?.["aria-label"]}
 				aria-labelledby={ariaLabelledby ?? triggerProps?.["aria-labelledby"]}
-				className={className ?? triggerProps?.className}
+				className={combineStateClassNames(className, triggerProps?.className)}
 			>
 				<SelectValue placeholder={placeholder} />
 				<BaseSelect.Icon aria-hidden="true" className={styles.selectIcon}>
@@ -113,7 +114,7 @@ function SelectComponent<Value>({
 					<SelectPopup {...popupProps}>
 						<SelectList>
 							{options.map((option, index) => (
-								<SelectItem disabled={option.disabled} key={option.textValue ?? index} label={option.textValue} value={option.value}>
+								<SelectItem disabled={option.disabled} key={option.key ?? option.textValue ?? index} label={option.textValue} value={option.value}>
 									<SelectItemIndicator>✓</SelectItemIndicator>
 									<SelectItemText>
 										<span>{option.label}</span>

@@ -1,32 +1,32 @@
 import type { CalendarDate } from "@internationalized/date";
 import { forwardRef, type ReactElement, type RefAttributes } from "react";
 import { Button } from "react-aria-components/Button";
-import { DateRangePicker as AriaDateRangePicker, RangeCalendar, type DateRangePickerProps as AriaDateRangePickerProps, type DateValue } from "react-aria-components/DateRangePicker";
+import { DateRangePicker as AriaDateRangePicker, RangeCalendar, type DateRangePickerProps as AriaDateRangePickerProps } from "react-aria-components/DateRangePicker";
 import { Dialog } from "react-aria-components/Dialog";
 import { Group } from "react-aria-components/Group";
-import { Popover, type Placement } from "react-aria-components/Popover";
+import { Popover } from "react-aria-components/Popover";
 import { CalendarPanel, type WeekdayStyle } from "./calendar";
 import { DateInputSegments } from "./date-field";
+import type { DatePopoverPlacement, DateRangePickerBehaviorProps, DateValue as LydsDateValue } from "./date-types";
 import { CalendarGlyph, FieldLabel, FieldMessages, LocaleBoundary, cx, type DateTimeFieldChromeProps } from "./shared";
 
-export interface DateRangePickerProps<T extends DateValue = CalendarDate>
-	extends Omit<AriaDateRangePickerProps<T>, "children" | "className" | "isDisabled" | "isInvalid" | "isOpen" | "isReadOnly" | "isRequired" | "onChange">, DateTimeFieldChromeProps {
-	open?: boolean;
-	disabled?: boolean;
-	readOnly?: boolean;
-	required?: boolean;
-	invalid?: boolean;
-	onValueChange?: AriaDateRangePickerProps<T>["onChange"];
+export interface DateRangePickerProps<T extends LydsDateValue = CalendarDate> extends DateRangePickerBehaviorProps<T>, DateTimeFieldChromeProps {
 	weekdayStyle?: WeekdayStyle | undefined;
 	showMonthYearPickers?: boolean | undefined;
-	popoverPlacement?: Placement | undefined;
+	popoverPlacement?: DatePopoverPlacement | undefined;
 }
 
-function DateRangePickerImpl<T extends DateValue>(
+type DateRangePickerForwardedKeys = Exclude<keyof DateRangePickerBehaviorProps<LydsDateValue>, "disabled" | "invalid" | "onValueChange" | "open" | "readOnly" | "required">;
+type DateRangePickerUnexpectedForwardedKeys = Exclude<DateRangePickerForwardedKeys, keyof AriaDateRangePickerProps<LydsDateValue>>;
+type DateRangePickerPropContract = DateRangePickerUnexpectedForwardedKeys extends never ? true : never;
+const dateRangePickerPropContract: DateRangePickerPropContract = true;
+void dateRangePickerPropContract;
+
+function DateRangePickerImpl<T extends LydsDateValue>(
 	{
 		label,
 		description,
-		errorMessage,
+		error,
 		locale,
 		size = "md",
 		className,
@@ -44,10 +44,12 @@ function DateRangePickerImpl<T extends DateValue>(
 	}: DateRangePickerProps<T>,
 	ref: React.ForwardedRef<HTMLDivElement>
 ) {
+	const ariaPickerProps = pickerProps as unknown as Omit<AriaDateRangePickerProps<T>, "children" | "className" | "isDisabled" | "isInvalid" | "isOpen" | "isReadOnly" | "isRequired" | "onChange">;
+
 	return (
 		<LocaleBoundary locale={locale}>
 			<AriaDateRangePicker
-				{...pickerProps}
+				{...ariaPickerProps}
 				ref={ref}
 				className={cx("lyds-date-field", "lyds-date-picker", "lyds-date-range-picker", className)}
 				data-size={size}
@@ -56,7 +58,7 @@ function DateRangePickerImpl<T extends DateValue>(
 				{...(readOnly === undefined ? {} : { isReadOnly: readOnly })}
 				{...(required === undefined ? {} : { isRequired: required })}
 				{...(invalid === undefined ? {} : { isInvalid: invalid })}
-				{...(onValueChange === undefined ? {} : { onChange: onValueChange })}
+				{...(onValueChange === undefined ? {} : { onChange: onValueChange as unknown as NonNullable<AriaDateRangePickerProps<T>["onChange"]> })}
 				{...(firstDayOfWeek === undefined ? {} : { firstDayOfWeek })}
 			>
 				<FieldLabel>{label}</FieldLabel>
@@ -70,7 +72,7 @@ function DateRangePickerImpl<T extends DateValue>(
 						<CalendarGlyph />
 					</Button>
 				</Group>
-				<FieldMessages description={description} errorMessage={errorMessage} />
+				<FieldMessages description={description} error={error} />
 				<Popover className="lyds-date-popover" placement={popoverPlacement}>
 					<Dialog className="lyds-date-popover-dialog">
 						<RangeCalendar className="lyds-calendar lyds-range-calendar" {...(firstDayOfWeek === undefined ? {} : { firstDayOfWeek })}>
@@ -83,4 +85,4 @@ function DateRangePickerImpl<T extends DateValue>(
 	);
 }
 
-export const DateRangePicker = forwardRef(DateRangePickerImpl) as <T extends DateValue = CalendarDate>(props: DateRangePickerProps<T> & RefAttributes<HTMLDivElement>) => ReactElement | null;
+export const DateRangePicker = forwardRef(DateRangePickerImpl) as <T extends LydsDateValue = CalendarDate>(props: DateRangePickerProps<T> & RefAttributes<HTMLDivElement>) => ReactElement | null;

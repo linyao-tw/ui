@@ -11,8 +11,8 @@ export interface DateTimeFieldChromeProps {
 	label?: ReactNode;
 	/** Supporting text connected to the control through React Aria. */
 	description?: ReactNode;
-	/** Validation message rendered when the React Aria field is invalid. */
-	errorMessage?: ReactNode;
+	/** Validation feedback associated with the control. */
+	error?: ReactNode;
 	/** BCP 47 locale used for segment order, labels, and numbering. Inherits the nearest provider when omitted. */
 	locale?: string | undefined;
 	size?: DateTimeSize;
@@ -35,7 +35,7 @@ export function FieldLabel({ children }: { children?: ReactNode }) {
 	return children == null ? null : <Label className="lyds-date-label">{children}</Label>;
 }
 
-export function FieldMessages({ description, errorMessage }: Pick<DateTimeFieldChromeProps, "description" | "errorMessage">) {
+export function FieldMessages({ description, error }: Pick<DateTimeFieldChromeProps, "description" | "error">) {
 	return (
 		<>
 			{description == null ? null : (
@@ -43,7 +43,7 @@ export function FieldMessages({ description, errorMessage }: Pick<DateTimeFieldC
 					{description}
 				</Text>
 			)}
-			{errorMessage == null ? null : <FieldError className="lyds-date-error">{errorMessage}</FieldError>}
+			{error == null ? null : <FieldError className="lyds-date-error">{error}</FieldError>}
 		</>
 	);
 }

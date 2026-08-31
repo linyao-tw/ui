@@ -320,9 +320,7 @@ void DatePicker;
 					module: "NodeNext",
 					moduleResolution: "NodeNext",
 					noEmit: true,
-					// ATTW already validates LYDS's declaration graph. Avoid failing on
-					// unrelated implementation conflicts inside third-party .d.ts files.
-					skipLibCheck: true,
+					skipLibCheck: false,
 					strict: true,
 					target: "ES2022",
 					verbatimModuleSyntax: true

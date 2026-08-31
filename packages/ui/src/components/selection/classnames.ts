@@ -11,3 +11,11 @@ export function mergeStateClassName<State>(base: string, className?: StateClassN
 
 	return cx(base, className);
 }
+
+export function combineStateClassNames<State>(first?: StateClassName<State>, second?: StateClassName<State>): StateClassName<State> {
+	if (typeof first === "function" || typeof second === "function") {
+		return state => cx(typeof first === "function" ? first(state) : first, typeof second === "function" ? second(state) : second);
+	}
+
+	return cx(first, second);
+}

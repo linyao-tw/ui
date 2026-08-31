@@ -20,7 +20,7 @@
 		"test:storybook": "pnpm --filter @lyds/storybook test",
 		"test:unit": "pnpm --filter @lyds/ui test",
 		"test:watch": "pnpm --filter @lyds/ui test:watch",
-		"typecheck": "pnpm -r --if-present typecheck"
+		"typecheck": "pnpm build:package && pnpm -r --if-present typecheck"
 	},
 	"devDependencies": {
 		"@arethetypeswrong/cli": "^0.18.5",

@@ -56,7 +56,7 @@ export const ConstraintsAndInvalid: Story = {
 	render: () => (
 		<div className="lyds-story-grid">
 			<TimePicker label="Shift handoff" defaultValue={defaultTime} minValue={new Time(8)} maxValue={new Time(18)} description="Allowed range: 08:00–18:00." />
-			<TimePicker label="Activation time" invalid required errorMessage="Choose a time inside the scheduled maintenance window." />
+			<TimePicker label="Activation time" invalid required error="Choose a time inside the scheduled maintenance window." />
 			<TimePicker label="Remote synchronized time" defaultValue={new Time(14, 30)} disabled description="Controlled by the remote controller." />
 		</div>
 	)
