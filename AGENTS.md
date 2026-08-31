@@ -36,3 +36,9 @@ PRs should describe the changed area, summarize the user-visible or developer-vi
 If no validation was run, state that explicitly and explain why. Do not claim to have run commands that were not actually executed.
 
 For UI changes that are not easily captured in a screenshot, describe the visual change and any manual checks performed.
+
+## LYDS Agent Skill
+
+Use the repository skill at `skills/lyds-ui/SKILL.md` whenever a task installs or uses `@lyds/ui`, composes LYDS components, changes semantic tokens or themes, adds a component, writes LYDS Storybook stories or tests, reviews accessibility, or prepares a release.
+
+Read the skill before making LYDS implementation changes and follow its routed references for usage, contribution, and publishing work. Prefer an existing public LYDS component or composition before creating a new primitive. Never publish `@lyds/ui`, create a release tag, enable the npm publishing gate, or change npm dist-tags without explicit user approval.

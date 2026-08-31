@@ -1,0 +1,4 @@
+interface:
+  display_name: "LYDS UI"
+  short_description: "Build and review interfaces with @lyds/ui"
+  default_prompt: "Use $lyds-ui to build this interface with LYDS components and semantic tokens."
