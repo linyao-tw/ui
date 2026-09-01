@@ -138,6 +138,12 @@ pnpm check              # full local quality gate
 
 Storybook 使用 `@lyds/ui` 的 workspace package API，而非複製元件來源，藉此盡早發現 exports 與 CSS packaging 問題。
 
+### 線上 Storybook
+
+通過完整 CI 的 `main` push 會把 production Storybook 部署至 `https://linyao-tw.github.io/ui/`。Pull requests 與其他 branches 只執行驗證，不會更新公開網站；GitHub Pages deployment 與 npm publishing 完全獨立，不需要啟用 `NPM_PUBLISH_ENABLED`。
+
+Repository owner 首次需在 GitHub `Settings → Pages` 將 Source 設為 `GitHub Actions`。CI 只給 deployment job `pages: write` 與 `id-token: write`，不使用 Pages、npm 或 repository write secrets。Pages 尚未啟用時，第一次 deploy 會失敗；完成設定後重跑該次 CI 即可。
+
 ## Accessibility
 
 LYDS 以 WCAG 2.2 AA 為目標。Base UI 與 React Aria Components 處理各自擅長的 keyboard、focus、overlay 與 ARIA semantics；LYDS 再提供一致且可見的 `focus-visible`、interactive states、warm-theme contrast、觸控目標與 reduced-motion tokens。
