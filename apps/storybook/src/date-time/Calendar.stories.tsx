@@ -8,7 +8,7 @@ import "../components/story-layout.css";
 const initialDate = new CalendarDate(2026, 8, 31);
 
 const meta = {
-	title: "Date & Time/Calendar",
+	title: "日期與時間/行事曆",
 	component: Calendar,
 	args: {
 		defaultValue: initialDate,
@@ -20,6 +20,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+	name: "預設",
 	play: async ({ canvasElement }) => {
 		const selectedCell = canvasElement.querySelector<HTMLElement>('.lyds-calendar-cell[data-selected="true"]');
 		await expect(selectedCell).not.toBeNull();
@@ -42,21 +43,23 @@ function ControlledCalendar() {
 		<div className="lyds-story-stack lyds-story-stack--narrow">
 			<Calendar value={value} onValueChange={next => setValue(next)} locale="en-GB" firstDayOfWeek="mon" />
 			<p className="lyds-story-readout" aria-live="polite">
-				Selected date: {value.toString()}
+				已選日期：{value.toString()}
 			</p>
 		</div>
 	);
 }
 
 export const ControlledSelection: Story = {
+	name: "受控選取",
 	render: () => <ControlledCalendar />
 };
 
 export const DateConstraints: Story = {
+	name: "日期限制",
 	render: () => (
 		<div className="lyds-story-grid">
 			<div className="lyds-story-panel">
-				<p className="lyds-story-panel__heading">Consumer-provided unavailable dates</p>
+				<p className="lyds-story-panel__heading">不可選日期</p>
 				<Calendar
 					defaultValue={initialDate}
 					minValue={new CalendarDate(2026, 8, 20)}
@@ -65,7 +68,7 @@ export const DateConstraints: Story = {
 				/>
 			</div>
 			<div className="lyds-story-panel">
-				<p className="lyds-story-panel__heading">Read-only calendar</p>
+				<p className="lyds-story-panel__heading">唯讀行事曆</p>
 				<Calendar defaultValue={initialDate} readOnly weekdayStyle="narrow" />
 			</div>
 		</div>
@@ -73,14 +76,15 @@ export const DateConstraints: Story = {
 };
 
 export const LocalesAndWeekStarts: Story = {
+	name: "地區格式與每週起始日",
 	render: () => (
 		<div className="lyds-story-grid">
 			<div className="lyds-story-panel">
-				<p className="lyds-story-panel__heading">Traditional Chinese, week starts Sunday</p>
+				<p className="lyds-story-panel__heading">繁體中文，週日起始</p>
 				<Calendar defaultValue={initialDate} locale="zh-TW" firstDayOfWeek="sun" weekdayStyle="short" />
 			</div>
 			<div className="lyds-story-panel">
-				<p className="lyds-story-panel__heading">English (UK), week starts Monday</p>
+				<p className="lyds-story-panel__heading">英式英文，週一起始</p>
 				<Calendar defaultValue={initialDate} locale="en-GB" firstDayOfWeek="mon" weekdayStyle="short" />
 			</div>
 		</div>
@@ -88,6 +92,7 @@ export const LocalesAndWeekStarts: Story = {
 };
 
 export const DarkTheme: Story = {
+	name: "深色主題",
 	globals: { theme: "dark" },
 	args: { defaultValue: initialDate, locale: "zh-TW" }
 };

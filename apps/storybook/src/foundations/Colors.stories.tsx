@@ -16,19 +16,19 @@ interface TokenSpecimen {
 const brandTokens: readonly TokenSpecimen[] = [
 	{
 		name: "Palette/Limestone",
-		role: "Warm material foundation",
+		role: "暖色基礎色",
 		value: "var(--palette-limestone)",
 		ink: "var(--text-always-dark)"
 	},
 	{
 		name: "Palette/Charcoal",
-		role: "Structural foundation",
+		role: "結構基礎色",
 		value: "var(--palette-charcoal)",
 		ink: "var(--text-always-white)"
 	},
 	{
 		name: "Palette/Vermilion",
-		role: "Signal and action foundation",
+		role: "操作與提示色",
 		value: "var(--palette-vermilion)",
 		ink: "var(--text-always-dark)"
 	}
@@ -37,37 +37,37 @@ const brandTokens: readonly TokenSpecimen[] = [
 const surfaceTokens: readonly TokenSpecimen[] = [
 	{
 		name: "Background/Main",
-		role: "Application canvas",
+		role: "頁面背景",
 		value: "var(--background-main)",
 		ink: "var(--text-main)"
 	},
 	{
 		name: "Background/Secondary",
-		role: "Grouped regions",
+		role: "分組區域",
 		value: "var(--background-secondary)",
 		ink: "var(--text-main)"
 	},
 	{
 		name: "Background/Elevated",
-		role: "Cards and overlays",
+		role: "卡片與浮動介面",
 		value: "var(--background-elevated)",
 		ink: "var(--text-main)"
 	},
 	{
 		name: "Background/Inset",
-		role: "Quiet grouped controls",
+		role: "分組控制項背景",
 		value: "var(--background-inset)",
 		ink: "var(--text-main)"
 	},
 	{
 		name: "Background/Selected",
-		role: "Selected regions",
+		role: "已選取區域",
 		value: "var(--background-selected)",
 		ink: "var(--text-title)"
 	},
 	{
 		name: "Control/Primary",
-		role: "Action signal",
+		role: "主要操作",
 		value: "var(--control-primary)",
 		ink: "var(--text-on-accent)"
 	}
@@ -76,25 +76,25 @@ const surfaceTokens: readonly TokenSpecimen[] = [
 const stateTokens: readonly TokenSpecimen[] = [
 	{
 		name: "Status/Info/Background",
-		role: "Informational feedback",
+		role: "資訊提示",
 		value: "var(--status-info-background)",
 		ink: "var(--status-info-foreground)"
 	},
 	{
 		name: "Status/Success/Background",
-		role: "Successful outcomes",
+		role: "成功狀態",
 		value: "var(--status-success-background)",
 		ink: "var(--status-success-foreground)"
 	},
 	{
 		name: "Status/Warning/Background",
-		role: "Cautionary feedback",
+		role: "警告狀態",
 		value: "var(--status-warning-background)",
 		ink: "var(--status-warning-foreground)"
 	},
 	{
 		name: "Status/Danger/Background",
-		role: "Destructive or invalid feedback",
+		role: "危險或無效狀態",
 		value: "var(--status-danger-background)",
 		ink: "var(--status-danger-foreground)"
 	}
@@ -102,21 +102,21 @@ const stateTokens: readonly TokenSpecimen[] = [
 
 const contrastPairs = [
 	{
-		name: "Primary interface",
+		name: "主要介面",
 		foreground: "var(--text-main)",
 		background: "var(--background-main)",
 		border: "var(--divider-strong)",
 		copy: "Text/Main on Background/Main"
 	},
 	{
-		name: "Prominent action",
+		name: "主要操作",
 		foreground: "var(--text-on-accent)",
 		background: "var(--background-accent)",
 		border: "var(--text-on-accent)",
 		copy: "Text/On_Accent on Background/Accent"
 	},
 	{
-		name: "Inset control",
+		name: "內嵌控制項",
 		foreground: "var(--text-on-inset)",
 		background: "var(--background-inset)",
 		border: "var(--divider-strong)",
@@ -125,7 +125,7 @@ const contrastPairs = [
 ] as const;
 
 const meta = {
-	title: "Foundations/Colors",
+	title: "基礎/色彩",
 	parameters: {
 		layout: "fullscreen"
 	}
@@ -151,32 +151,27 @@ function TokenGrid({ tokens }: { tokens: readonly TokenSpecimen[] }) {
 }
 
 export const SemanticColorSystem: Story = {
+	name: "語意色彩",
 	render: () => (
 		<main className="foundation-page">
-			<FoundationHero
-				eyebrow="LYDS color system"
-				title="Color roles that keep their meaning."
-				description="LYDS maps the Modulor surface and control hierarchy to Limestone, Charcoal, Vermilion, and a small set of accessible status hues. Components consume purpose-driven tokens, so light and dark themes retain the same structure."
-			/>
+			<FoundationHero eyebrow="Linyao Design System" title="色彩" description="品牌色透過語意變數對應至背景、文字、控制項與狀態。" />
 
-			<FoundationSection title="Brand foundations">
-				<p className="foundation-section-copy">
-					Limestone supplies warmth, Charcoal defines structure, and Vermilion behaves as a signal. These palette values are references for theme authors—not component-level styling hooks.
-				</p>
+			<FoundationSection title="品牌基礎色">
+				<p className="foundation-section-copy">Limestone、Charcoal 與 Vermilion 供主題設定使用。元件不得直接使用基礎色變數。</p>
 				<TokenGrid tokens={brandTokens} />
 			</FoundationSection>
 
-			<FoundationSection title="Semantic surfaces">
-				<p className="foundation-section-copy">Surface roles describe elevation and interaction. Their actual values change with the active theme while component intent stays stable.</p>
+			<FoundationSection title="語意背景">
+				<p className="foundation-section-copy">背景變數定義頁面、分組、卡片、浮動介面與已選取狀態，並依主題切換實際色值。</p>
 				<TokenGrid tokens={surfaceTokens} />
 			</FoundationSection>
 
-			<FoundationSection title="Feedback states">
-				<p className="foundation-section-copy">Status colors pair backgrounds, foregrounds, and borders. Never communicate status by color alone; pair them with a label, icon, or explanatory text.</p>
+			<FoundationSection title="狀態色彩">
+				<p className="foundation-section-copy">每個狀態包含背景、前景與邊框。狀態須同時使用文字或圖示說明，不得只依賴顏色。</p>
 				<TokenGrid tokens={stateTokens} />
 			</FoundationSection>
 
-			<FoundationSection title="Intentional foreground pairs">
+			<FoundationSection title="前景與背景配對">
 				<div className="foundation-pair-grid">
 					{contrastPairs.map(pair => (
 						<article

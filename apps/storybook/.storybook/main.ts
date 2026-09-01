@@ -8,7 +8,7 @@ const config: StorybookConfig = {
 		options: {}
 	},
 	docs: {
-		defaultName: "Documentation"
+		defaultName: "文件"
 	}
 };
 

@@ -44,7 +44,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import "../story-layout.css";
 
 const meta = {
-	title: "Components/Data Display/Surfaces & Collections",
+	title: "元件/資料顯示/卡片與清單",
 	parameters: { layout: "padded" }
 } satisfies Meta;
 
@@ -52,68 +52,71 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Cards: Story = {
+	name: "卡片",
 	render: () => (
 		<div className="lyds-story-grid">
 			<Card variant="material">
 				<CardHeader>
 					<Badge size="sm" variant="success">
-						Active
+						使用中
 					</Badge>
-					<CardTitle>Team workspace</CardTitle>
-					<CardDescription>A shared space for planning, files, and project updates.</CardDescription>
+					<CardTitle>團隊工作區</CardTitle>
+					<CardDescription>團隊的計畫、檔案與專案更新。</CardDescription>
 				</CardHeader>
-				<CardBody className="lyds-story-readout">12 members · 24 recent updates</CardBody>
+				<CardBody className="lyds-story-readout">12 位成員 · 24 筆近期更新</CardBody>
 				<CardFooter>
 					<Button size="sm" variant="secondary">
-						Open workspace
+						開啟工作區
 					</Button>
 				</CardFooter>
 			</Card>
 			<CloudBox>
 				<CardHeader>
-					<CardTitle>Shared archive</CardTitle>
-					<CardDescription>CloudBox provides an elevated surface for grouped content.</CardDescription>
+					<CardTitle>共用封存</CardTitle>
+					<CardDescription>共用檔案的封存空間。</CardDescription>
 				</CardHeader>
-				<CardBody>17 files were added this week.</CardBody>
+				<CardBody>本週新增 17 個檔案。</CardBody>
 			</CloudBox>
 		</div>
 	)
 };
 
 export const ListCells: Story = {
+	name: "清單項目",
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<SectionHeading annotation="3 available" description="List cells preserve slots and semantic interactive rendering." action={<Badge variant="success">Current</Badge>}>
-				Recent workspaces
+			<SectionHeading annotation="3 個可用" description="最近使用的工作區。" action={<Badge variant="success">目前</Badge>}>
+				最近的工作區
 			</SectionHeading>
 			<ListCell
-				leading={<Avatar alt="Design team" fallback="DT" status="online" statusLabel="Online" />}
-				title="Design team"
-				description="12 members"
-				metadata="Updated today"
+				leading={<Avatar alt="設計團隊" fallback="設" status="online" statusLabel="上線" />}
+				title="設計團隊"
+				description="12 位成員"
+				metadata="今天更新"
 				trailing={<CaretRightIcon aria-hidden weight="bold" />}
 			/>
 			<Separator spacing="none" variant="solid" />
 			<ListCell
-				action={{ href: "#research", "aria-label": "Open research workspace details" }}
-				leading={<Avatar alt="Research workspace" fallback="RW" />}
-				title="Research workspace with an unusually long descriptive name"
-				description="Private workspace · 8 members"
-				metadata="Yesterday"
+				action={{ href: "#research", "aria-label": "開啟研究工作區詳細資料" }}
+				leading={<Avatar alt="研究工作區" fallback="研" />}
+				title="名稱較長的使用者研究工作區"
+				description="私人工作區 · 8 位成員"
+				metadata="昨天"
 				trailing={<CaretRightIcon aria-hidden weight="bold" />}
 			/>
-			<ListCell disabled leading={<Avatar alt="Archived workspace" fallback="AW" status="offline" statusLabel="Archived" />} title="Archived workspace" description="Read only" metadata="Archived" />
+			<ListCell disabled leading={<Avatar alt="已封存工作區" fallback="封" status="offline" statusLabel="已封存" />} title="已封存工作區" description="唯讀" metadata="已封存" />
 		</div>
 	)
 };
 
 export const CollectionPrimitives: Story = {
+	name: "集合",
 	render: () => (
 		<Collection density="comfortable" className="lyds-story-stack lyds-story-stack--narrow">
 			{[
-				["design", "Design planning", "Shared workspace", "Updated today"],
-				["research", "User research", "Private workspace", "8 members"],
-				["archive", "Project archive", "Read-only workspace", "17 files"]
+				["design", "設計規劃", "共用工作區", "今天更新"],
+				["research", "使用者研究", "私人工作區", "8 位成員"],
+				["archive", "專案封存", "唯讀工作區", "17 個檔案"]
 			].map(([key, label, description, status]) => (
 				<CollectionItem key={key}>
 					<CollectionContent>
@@ -131,12 +134,13 @@ export const CollectionPrimitives: Story = {
 };
 
 export const ScrollableCollection: Story = {
+	name: "可捲動清單",
 	render: () => (
 		<ScrollArea className="lyds-story-stack--narrow">
-			<ScrollAreaViewport aria-label="Documents" role="region">
+			<ScrollAreaViewport aria-label="文件" role="region">
 				<ScrollAreaContent className="lyds-story-scroll-content">
 					{Array.from({ length: 10 }, (_, index) => (
-						<ListCell key={index} title={`Document ${index + 1}`} description="Shared document" metadata={`${index + 1} days ago`} />
+						<ListCell key={index} title={`文件 ${index + 1}`} description="共用文件" metadata={`${index + 1} 天前`} />
 					))}
 				</ScrollAreaContent>
 			</ScrollAreaViewport>
@@ -148,47 +152,48 @@ export const ScrollableCollection: Story = {
 };
 
 export const DataTableComposition: Story = {
+	name: "資料表格",
 	render: () => (
 		<DataTable>
 			<DataTableHeader>
 				<div>
-					<DataTableTitle>Workspace members</DataTableTitle>
-					<DataTableDescription>Presentation and semantic structure only; sorting, filtering, and data loading remain application-owned.</DataTableDescription>
+					<DataTableTitle>工作區成員</DataTableTitle>
+					<DataTableDescription>成員與存取權限。</DataTableDescription>
 				</div>
-				<DataTableStatus className="lyds-story-readout">Updated at 14:32</DataTableStatus>
+				<DataTableStatus className="lyds-story-readout">14:32 更新</DataTableStatus>
 			</DataTableHeader>
-			<DataTableRegion label="Workspace member records" className="lyds-story-table-wrap">
+			<DataTableRegion label="工作區成員紀錄" className="lyds-story-table-wrap">
 				<Table>
-					<TableCaption>Current members and access levels</TableCaption>
+					<TableCaption>目前成員與存取權限</TableCaption>
 					<TableHeader>
 						<TableRow>
-							<TableHead>Name</TableHead>
-							<TableHead>Email</TableHead>
-							<TableHead>Role</TableHead>
-							<TableHead textAlign="end">Last active</TableHead>
-							<TableHead>Status</TableHead>
+							<TableHead>姓名</TableHead>
+							<TableHead>電子郵件</TableHead>
+							<TableHead>角色</TableHead>
+							<TableHead textAlign="end">最近活動</TableHead>
+							<TableHead>狀態</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
 						<TableRow>
-							<TableCell>Alex Chen</TableCell>
+							<TableCell>陳柏宇</TableCell>
 							<TableCell>alex@example.com</TableCell>
-							<TableCell>Editor</TableCell>
-							<TableCell textAlign="end">Today</TableCell>
+							<TableCell>編輯者</TableCell>
+							<TableCell textAlign="end">今天</TableCell>
 							<TableCell>
 								<Badge size="sm" variant="success">
-									Active
+									使用中
 								</Badge>
 							</TableCell>
 						</TableRow>
 						<TableRow>
-							<TableCell>Mina Lin</TableCell>
+							<TableCell>林怡君</TableCell>
 							<TableCell>mina@example.com</TableCell>
-							<TableCell>Viewer</TableCell>
-							<TableCell textAlign="end">3 days ago</TableCell>
+							<TableCell>檢視者</TableCell>
+							<TableCell textAlign="end">3 天前</TableCell>
 							<TableCell>
 								<Badge size="sm" variant="warning">
-									Invited
+									已邀請
 								</Badge>
 							</TableCell>
 						</TableRow>
@@ -200,11 +205,12 @@ export const DataTableComposition: Story = {
 };
 
 export const DarkTheme: Story = {
+	name: "深色主題",
 	globals: { theme: "dark" },
 	render: () => (
 		<Card variant="material" className="lyds-story-stack lyds-story-stack--narrow">
-			<SectionHeading annotation="Dark theme">Workspace summary</SectionHeading>
-			<ListCell title="Design team" description="12 members" metadata="Updated today" />
+			<SectionHeading annotation="深色主題">工作區摘要</SectionHeading>
+			<ListCell title="設計團隊" description="12 位成員" metadata="今天更新" />
 		</Card>
 	)
 };

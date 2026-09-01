@@ -5,7 +5,7 @@ import { useState } from "react";
 import "../story-layout.css";
 
 const meta = {
-	title: "Components/Overlays/State Matrix",
+	title: "元件/浮層/狀態",
 	parameters: { layout: "padded" }
 } satisfies Meta;
 
@@ -17,77 +17,83 @@ function SettingsAccordion({ values = [], multiple = false }: { values?: string[
 		<Accordion.Root defaultValue={values} multiple={multiple} className="lyds-story-stack--narrow">
 			<Accordion.Item value="account">
 				<Accordion.Header>
-					<Accordion.Trigger>Account details</Accordion.Trigger>
+					<Accordion.Trigger>帳號資料</Accordion.Trigger>
 				</Accordion.Header>
-				<Accordion.Panel>Update your profile, email address, and sign-in preferences.</Accordion.Panel>
+				<Accordion.Panel>更新個人資料、電子郵件地址與登入設定。</Accordion.Panel>
 			</Accordion.Item>
 			<Accordion.Item value="security">
 				<Accordion.Header>
-					<Accordion.Trigger>Security</Accordion.Trigger>
+					<Accordion.Trigger>安全性</Accordion.Trigger>
 				</Accordion.Header>
-				<Accordion.Panel>Review active sessions, recovery methods, and authentication policies.</Accordion.Panel>
+				<Accordion.Panel>查看使用中的工作階段、復原方式與驗證原則。</Accordion.Panel>
 			</Accordion.Item>
 			<Accordion.Item value="billing" disabled>
 				<Accordion.Header>
-					<Accordion.Trigger>Billing</Accordion.Trigger>
+					<Accordion.Trigger>帳務</Accordion.Trigger>
 				</Accordion.Header>
-				<Accordion.Panel>Billing settings are unavailable for this account.</Accordion.Panel>
+				<Accordion.Panel>此帳號無法使用帳務設定。</Accordion.Panel>
 			</Accordion.Item>
 		</Accordion.Root>
 	);
 }
 
 export const AccordionAllCollapsed: Story = {
+	name: "手風琴：全部收合",
 	render: () => <SettingsAccordion />
 };
 
 export const AccordionMultipleOpen: Story = {
+	name: "手風琴：多個展開",
 	render: () => <SettingsAccordion values={["account", "security"]} multiple />
 };
 
 export const AccordionLongContent: Story = {
+	name: "手風琴：長內容",
 	render: () => (
 		<Accordion.Root defaultValue={["policy"]} className="lyds-story-stack--narrow">
 			<Accordion.Item value="policy">
 				<Accordion.Header>
-					<Accordion.Trigger>Workspace retention and recovery policy</Accordion.Trigger>
+					<Accordion.Trigger>工作區資料保留與復原原則</Accordion.Trigger>
 				</Accordion.Header>
 				<Accordion.Panel>
 					<div className="lyds-story-stack">
-						<p>Workspace activity is retained for the period selected by the account owner. Existing exports remain available until their expiration date.</p>
-						<p>Recovery requests require an administrator review and a second confirmation before archived records are restored.</p>
+						<p>工作區活動會依帳號擁有者設定的期限保留。既有匯出檔案在到期前仍可使用。</p>
+						<p>封存資料必須經過管理員審核與再次確認後才能復原。</p>
 					</div>
 				</Accordion.Panel>
 			</Accordion.Item>
 			<Accordion.Item value="notifications">
 				<Accordion.Header>
-					<Accordion.Trigger>Notification delivery</Accordion.Trigger>
+					<Accordion.Trigger>通知傳送方式</Accordion.Trigger>
 				</Accordion.Header>
-				<Accordion.Panel>Choose which operational updates should be delivered by email.</Accordion.Panel>
+				<Accordion.Panel>選擇要透過電子郵件接收的更新通知。</Accordion.Panel>
 			</Accordion.Item>
 		</Accordion.Root>
 	)
 };
 
 export const AccordionDark: Story = {
+	name: "手風琴：深色主題",
 	globals: { theme: "dark" },
 	render: () => <SettingsAccordion values={["security"]} />
 };
 
 export const CollapsibleOpen: Story = {
+	name: "可收合內容：展開",
 	render: () => (
 		<Collapsible.Root defaultOpen className="lyds-story-stack--narrow">
-			<Collapsible.Trigger>Additional information</Collapsible.Trigger>
-			<Collapsible.Panel>No additional issues were found during the last review.</Collapsible.Panel>
+			<Collapsible.Trigger>其他資訊</Collapsible.Trigger>
+			<Collapsible.Panel>上次檢查沒有發現其他問題。</Collapsible.Panel>
 		</Collapsible.Root>
 	)
 };
 
 export const CollapsibleDisabled: Story = {
+	name: "可收合內容：停用",
 	render: () => (
 		<Collapsible.Root defaultOpen disabled className="lyds-story-stack--narrow">
-			<Collapsible.Trigger>Archived information</Collapsible.Trigger>
-			<Collapsible.Panel>This information is visible but cannot be collapsed while the archive is being prepared.</Collapsible.Panel>
+			<Collapsible.Trigger>封存資料</Collapsible.Trigger>
+			<Collapsible.Panel>封存資料準備期間無法收合此內容。</Collapsible.Panel>
 		</Collapsible.Root>
 	)
 };
@@ -98,36 +104,40 @@ function AccountTabs({ controlled = false, vertical = false }: { controlled?: bo
 
 	return (
 		<Tabs.Root {...rootProps} orientation={vertical ? "vertical" : "horizontal"}>
-			<Tabs.List aria-label="Account settings sections" activateOnFocus>
-				<Tabs.Tab value="overview">Overview</Tabs.Tab>
-				<Tabs.Tab value="members">Members</Tabs.Tab>
-				<Tabs.Tab value="activity">Activity</Tabs.Tab>
+			<Tabs.List aria-label="帳號設定分類" activateOnFocus>
+				<Tabs.Tab value="overview">總覽</Tabs.Tab>
+				<Tabs.Tab value="members">成員</Tabs.Tab>
+				<Tabs.Tab value="activity">活動</Tabs.Tab>
 			</Tabs.List>
 			<Tabs.Panel value="overview">
-				<div className="lyds-story-panel">Review workspace identity, ownership, and default sharing settings.</div>
+				<div className="lyds-story-panel">查看工作區識別資料、擁有者與預設分享設定。</div>
 			</Tabs.Panel>
 			<Tabs.Panel value="members">
-				<div className="lyds-story-panel">Twelve members currently have access to this workspace.</div>
+				<div className="lyds-story-panel">目前有 12 位成員可以存取此工作區。</div>
 			</Tabs.Panel>
 			<Tabs.Panel value="activity">
-				<div className="lyds-story-panel">Recent changes and sign-in activity appear here.</div>
+				<div className="lyds-story-panel">近期變更與登入活動會顯示在這裡。</div>
 			</Tabs.Panel>
 		</Tabs.Root>
 	);
 }
 
 export const TabsVertical: Story = {
+	name: "分頁：垂直",
 	render: () => <AccountTabs vertical />
 };
 
 export const TabsControlled: Story = {
+	name: "分頁：受控",
 	render: () => <AccountTabs controlled />
 };
 
 function OpenTooltip({ children, side = "top" }: { children: string; side?: "top" | "right" | "bottom" | "left" }) {
+	const sideLabels = { top: "上方", right: "右側", bottom: "下方", left: "左側" } as const;
+
 	return (
 		<Tooltip.Root defaultOpen>
-			<Tooltip.Trigger>{side.charAt(0).toUpperCase() + side.slice(1)}</Tooltip.Trigger>
+			<Tooltip.Trigger>{sideLabels[side]}</Tooltip.Trigger>
 			<Tooltip.Portal>
 				<Tooltip.Positioner side={side}>
 					<Tooltip.Popup>
@@ -141,15 +151,17 @@ function OpenTooltip({ children, side = "top" }: { children: string; side?: "top
 }
 
 export const TooltipLongText: Story = {
+	name: "工具提示：長文字",
 	parameters: { layout: "centered" },
 	render: () => (
 		<Tooltip.Provider delay={0}>
-			<OpenTooltip side="top">Changes are saved to this workspace after every required field has passed validation.</OpenTooltip>
+			<OpenTooltip side="top">所有必填欄位通過驗證後，變更會儲存至此工作區。</OpenTooltip>
 		</Tooltip.Provider>
 	)
 };
 
 export const TooltipPlacements: Story = {
+	name: "工具提示：位置",
 	parameters: { layout: "fullscreen" },
 	render: () => (
 		<div
@@ -163,32 +175,33 @@ export const TooltipPlacements: Story = {
 			}}
 		>
 			<Tooltip.Provider delay={0}>
-				<OpenTooltip side="top">Top placement</OpenTooltip>
+				<OpenTooltip side="top">顯示於上方</OpenTooltip>
 			</Tooltip.Provider>
 			<Tooltip.Provider delay={0}>
-				<OpenTooltip side="right">Right placement</OpenTooltip>
+				<OpenTooltip side="right">顯示於右側</OpenTooltip>
 			</Tooltip.Provider>
 			<Tooltip.Provider delay={0}>
-				<OpenTooltip side="left">Left placement</OpenTooltip>
+				<OpenTooltip side="left">顯示於左側</OpenTooltip>
 			</Tooltip.Provider>
 			<Tooltip.Provider delay={0}>
-				<OpenTooltip side="bottom">Bottom placement</OpenTooltip>
+				<OpenTooltip side="bottom">顯示於下方</OpenTooltip>
 			</Tooltip.Provider>
 		</div>
 	)
 };
 
 export const TooltipDisabled: Story = {
+	name: "工具提示：停用",
 	parameters: { layout: "centered" },
 	render: () => (
 		<Tooltip.Provider delay={0}>
 			<Tooltip.Root>
 				<Tooltip.Trigger disabled aria-disabled="true">
-					Unavailable help
+					無法使用的說明
 				</Tooltip.Trigger>
 				<Tooltip.Portal>
 					<Tooltip.Positioner side="top">
-						<Tooltip.Popup>This tooltip remains closed while its trigger is disabled.</Tooltip.Popup>
+						<Tooltip.Popup>觸發按鈕停用時不會開啟工具提示。</Tooltip.Popup>
 					</Tooltip.Positioner>
 				</Tooltip.Portal>
 			</Tooltip.Root>
@@ -197,18 +210,19 @@ export const TooltipDisabled: Story = {
 };
 
 export const PopoverOpen: Story = {
+	name: "彈出內容：開啟",
 	parameters: { layout: "centered" },
 	render: () => (
 		<Popover.Root defaultOpen>
-			<Popover.Trigger>Member details</Popover.Trigger>
+			<Popover.Trigger>成員資料</Popover.Trigger>
 			<Popover.Portal>
 				<Popover.Positioner>
 					<Popover.Popup>
-						<Popover.Title>Alex Chen</Popover.Title>
-						<Popover.Description>Editor · Joined 14 August 2026.</Popover.Description>
+						<Popover.Title>陳怡安</Popover.Title>
+						<Popover.Description>編輯者 · 2026 年 8 月 14 日加入</Popover.Description>
 						<div className="lyds-story-row">
-							<Button size="sm">View profile</Button>
-							<Popover.Close>Close</Popover.Close>
+							<Button size="sm">查看個人資料</Button>
+							<Popover.Close>關閉</Popover.Close>
 						</div>
 						<Popover.Arrow />
 					</Popover.Popup>
@@ -219,25 +233,26 @@ export const PopoverOpen: Story = {
 };
 
 export const DialogLongOpen: Story = {
+	name: "對話框：長內容",
 	parameters: { layout: "centered" },
 	render: () => (
 		<Dialog.Root defaultOpen>
-			<Dialog.Trigger>Review workspace policy</Dialog.Trigger>
+			<Dialog.Trigger>查看工作區原則</Dialog.Trigger>
 			<Dialog.Portal>
 				<Dialog.Backdrop />
 				<Dialog.Viewport>
 					<Dialog.Popup hasCustomClose>
 						<Dialog.Header>
-							<Dialog.Title>Review workspace retention and recovery policy before applying changes</Dialog.Title>
-							<Dialog.Description>Changes affect archived activity, existing exports, and future recovery requests for every member of this workspace.</Dialog.Description>
+							<Dialog.Title>工作區資料保留與復原原則</Dialog.Title>
+							<Dialog.Description>變更會影響所有成員的封存活動、既有匯出檔案與後續復原要求。</Dialog.Description>
 						</Dialog.Header>
 						<Dialog.Body className="lyds-story-stack">
-							<p>Existing exports remain available until their current expiration date.</p>
-							<p>New recovery requests require an administrator review and a second confirmation.</p>
+							<p>既有匯出檔案在到期前仍可使用。</p>
+							<p>新的復原要求必須經過管理員審核與再次確認。</p>
 						</Dialog.Body>
 						<Dialog.Footer>
-							<Dialog.Close>Cancel</Dialog.Close>
-							<Button>Apply policy</Button>
+							<Dialog.Close>取消</Dialog.Close>
+							<Button>套用原則</Button>
 						</Dialog.Footer>
 					</Dialog.Popup>
 				</Dialog.Viewport>
@@ -247,21 +262,22 @@ export const DialogLongOpen: Story = {
 };
 
 export const AlertDialogOpen: Story = {
+	name: "警示對話框：開啟",
 	parameters: { layout: "centered" },
 	render: () => (
 		<AlertDialog.Root defaultOpen>
-			<AlertDialog.Trigger>Delete workspace</AlertDialog.Trigger>
+			<AlertDialog.Trigger>刪除工作區</AlertDialog.Trigger>
 			<AlertDialog.Portal>
 				<AlertDialog.Backdrop />
 				<AlertDialog.Viewport>
 					<AlertDialog.Popup hasCustomClose>
 						<AlertDialog.Header>
-							<AlertDialog.Title>Delete workspace?</AlertDialog.Title>
-							<AlertDialog.Description>This action permanently removes the workspace and its shared content.</AlertDialog.Description>
+							<AlertDialog.Title>刪除工作區？</AlertDialog.Title>
+							<AlertDialog.Description>工作區及其中的分享內容將永久刪除。</AlertDialog.Description>
 						</AlertDialog.Header>
 						<AlertDialog.Actions>
-							<AlertDialog.Close>Cancel</AlertDialog.Close>
-							<Button variant="danger">Delete workspace</Button>
+							<AlertDialog.Close>取消</AlertDialog.Close>
+							<Button variant="danger">刪除工作區</Button>
 						</AlertDialog.Actions>
 					</AlertDialog.Popup>
 				</AlertDialog.Viewport>
@@ -271,21 +287,22 @@ export const AlertDialogOpen: Story = {
 };
 
 export const DrawerOpen: Story = {
+	name: "抽屜：開啟",
 	parameters: { layout: "centered" },
 	render: () => (
 		<Drawer.Root defaultOpen>
-			<Drawer.Trigger>Open profile drawer</Drawer.Trigger>
+			<Drawer.Trigger>開啟個人資料</Drawer.Trigger>
 			<Drawer.Portal>
 				<Drawer.Backdrop />
 				<Drawer.Viewport>
 					<Drawer.Popup>
 						<Drawer.Header>
-							<Drawer.Title>Profile settings</Drawer.Title>
-							<Drawer.Description>Review information shared with other members.</Drawer.Description>
+							<Drawer.Title>個人資料設定</Drawer.Title>
+							<Drawer.Description>查看與其他成員分享的資料。</Drawer.Description>
 						</Drawer.Header>
 						<Drawer.Body className="lyds-story-stack">
-							<p>Your profile is visible to members of three workspaces.</p>
-							<Button>Open profile settings</Button>
+							<p>三個工作區的成員可以查看你的個人資料。</p>
+							<Button>前往個人資料設定</Button>
 						</Drawer.Body>
 					</Drawer.Popup>
 				</Drawer.Viewport>
@@ -297,20 +314,20 @@ export const DrawerOpen: Story = {
 function OpenBottomSheet({ narrow = false }: { narrow?: boolean }) {
 	return (
 		<BottomSheet.Root defaultOpen>
-			<BottomSheet.Trigger>Open sharing options</BottomSheet.Trigger>
+			<BottomSheet.Trigger>開啟分享選項</BottomSheet.Trigger>
 			<BottomSheet.Portal>
 				<BottomSheet.Backdrop />
 				<BottomSheet.Viewport>
 					<BottomSheet.Popup hasCustomClose style={narrow ? { maxWidth: "22rem", marginInline: "auto" } : undefined}>
 						<BottomSheet.Handle />
 						<BottomSheet.Header>
-							<BottomSheet.Title>Share document</BottomSheet.Title>
-							<BottomSheet.Description>Choose how you would like to share this document.</BottomSheet.Description>
+							<BottomSheet.Title>分享文件</BottomSheet.Title>
+							<BottomSheet.Description>選擇文件的分享方式。</BottomSheet.Description>
 						</BottomSheet.Header>
-						<BottomSheet.Body>Quarterly planning notes</BottomSheet.Body>
+						<BottomSheet.Body>季度規劃筆記</BottomSheet.Body>
 						<BottomSheet.Footer>
-							<Button>Copy share link</Button>
-							<BottomSheet.Close>Cancel</BottomSheet.Close>
+							<Button>複製分享連結</Button>
+							<BottomSheet.Close>取消</BottomSheet.Close>
 						</BottomSheet.Footer>
 					</BottomSheet.Popup>
 				</BottomSheet.Viewport>
@@ -320,17 +337,20 @@ function OpenBottomSheet({ narrow = false }: { narrow?: boolean }) {
 }
 
 export const BottomSheetOpen: Story = {
+	name: "底部面板：開啟",
 	parameters: { layout: "fullscreen" },
 	render: () => <OpenBottomSheet />
 };
 
 export const BottomSheetDark: Story = {
+	name: "底部面板：深色主題",
 	globals: { theme: "dark" },
 	parameters: { layout: "fullscreen" },
 	render: () => <OpenBottomSheet />
 };
 
 export const BottomSheetNarrow: Story = {
+	name: "底部面板：窄螢幕",
 	parameters: { layout: "fullscreen" },
 	render: () => <OpenBottomSheet narrow />
 };

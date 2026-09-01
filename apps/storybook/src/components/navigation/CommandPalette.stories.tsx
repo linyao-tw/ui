@@ -18,10 +18,10 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import "../story-layout.css";
 
-const commands = ["Open settings", "Create a new document", "Switch to dark theme", "Move selected item to archive"];
+const commands = ["開啟設定", "建立文件", "切換為深色主題", "封存選取項目"];
 
 const meta = {
-	title: "Components/Navigation/Command Palette",
+	title: "元件/導覽/指令選單",
 	parameters: { layout: "centered" }
 } satisfies Meta;
 
@@ -31,14 +31,14 @@ type Story = StoryObj<typeof meta>;
 function Palette({ defaultOpen = false }: { defaultOpen?: boolean }) {
 	return (
 		<CommandPalette<string> defaultOpen={defaultOpen} items={commands}>
-			<CommandPaletteTrigger>Open command menu</CommandPaletteTrigger>
+			<CommandPaletteTrigger>開啟指令選單</CommandPaletteTrigger>
 			<CommandPalettePortal>
 				<CommandPaletteBackdrop />
 				<CommandPaletteViewport>
 					<CommandPalettePopup>
-						<CommandPaletteTitle>Command menu</CommandPaletteTitle>
-						<CommandPaletteDescription>Search or use the arrow keys to choose an operation.</CommandPaletteDescription>
-						<CommandPaletteInput aria-label="Search commands" />
+						<CommandPaletteTitle>指令選單</CommandPaletteTitle>
+						<CommandPaletteDescription>搜尋指令，或使用方向鍵選擇。</CommandPaletteDescription>
+						<CommandPaletteInput aria-label="搜尋指令" />
 						<CommandPaletteList>
 							{(command: string, index: number) => (
 								<CommandPaletteItem key={command} value={command}>
@@ -48,7 +48,7 @@ function Palette({ defaultOpen = false }: { defaultOpen?: boolean }) {
 								</CommandPaletteItem>
 							)}
 						</CommandPaletteList>
-						<CommandPaletteEmpty>No matching command</CommandPaletteEmpty>
+						<CommandPaletteEmpty>找不到指令</CommandPaletteEmpty>
 					</CommandPalettePopup>
 				</CommandPaletteViewport>
 			</CommandPalettePortal>
@@ -57,9 +57,11 @@ function Palette({ defaultOpen = false }: { defaultOpen?: boolean }) {
 }
 
 export const Default: Story = {
+	name: "預設",
 	render: () => <Palette />
 };
 
 export const Open: Story = {
+	name: "展開",
 	render: () => <Palette defaultOpen />
 };

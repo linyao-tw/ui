@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import "../story-layout.css";
 
 const meta = {
-	title: "Components/Selection/Menus",
+	title: "元件/選擇/選單",
 	parameters: { layout: "padded" }
 } satisfies Meta;
 
@@ -12,20 +12,21 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Dropdown: Story = {
+	name: "下拉選單",
 	render: () => (
 		<DropdownMenu.Root>
-			<MenuTrigger>Actions</MenuTrigger>
+			<MenuTrigger>操作</MenuTrigger>
 			<DropdownMenu.Portal>
 				<MenuPositioner>
 					<MenuPopup>
-						<MenuItem>Open details</MenuItem>
-						<MenuItem>Duplicate item</MenuItem>
+						<MenuItem>查看詳細資料</MenuItem>
+						<MenuItem>複製項目</MenuItem>
 						<MenuSeparator />
 						<MenuCheckboxItem defaultChecked>
 							<MenuCheckboxItemIndicator />
-							Show descriptions
+							顯示說明
 						</MenuCheckboxItem>
-						<MenuItem disabled>Archive unavailable</MenuItem>
+						<MenuItem disabled>無法封存</MenuItem>
 					</MenuPopup>
 				</MenuPositioner>
 			</DropdownMenu.Portal>
@@ -34,18 +35,19 @@ export const Dropdown: Story = {
 };
 
 export const Contextual: Story = {
+	name: "快顯選單",
 	render: () => (
 		<ContextMenu.Root>
 			<ContextMenu.Trigger aria-haspopup="menu" className="lyds-story-context-area" role="button" tabIndex={0}>
-				Right-click or press Shift+F10 on this item
+				在此項目按滑鼠右鍵或 Shift+F10
 			</ContextMenu.Trigger>
 			<ContextMenu.Portal>
 				<ContextMenu.Positioner>
 					<ContextMenu.Popup>
-						<ContextMenu.Item>Open details</ContextMenu.Item>
-						<ContextMenu.Item>Copy link</ContextMenu.Item>
+						<ContextMenu.Item>查看詳細資料</ContextMenu.Item>
+						<ContextMenu.Item>複製連結</ContextMenu.Item>
 						<ContextMenu.Separator />
-						<ContextMenu.Item>Move to archive</ContextMenu.Item>
+						<ContextMenu.Item>移至封存</ContextMenu.Item>
 					</ContextMenu.Popup>
 				</ContextMenu.Positioner>
 			</ContextMenu.Portal>

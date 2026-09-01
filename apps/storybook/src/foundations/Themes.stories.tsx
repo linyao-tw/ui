@@ -5,12 +5,12 @@ import "./foundations.css";
 import { FoundationHero, FoundationSection } from "./story-primitives";
 
 const themeSamples = [
-	{ theme: "light", name: "Light theme", code: "Limestone in daylight" },
-	{ theme: "dark", name: "Dark theme", code: "Charcoal in low light" }
+	{ theme: "light", name: "淺色主題", code: "Limestone 基底" },
+	{ theme: "dark", name: "深色主題", code: "Charcoal 基底" }
 ] as const;
 
 const meta = {
-	title: "Foundations/Themes",
+	title: "基礎/主題",
 	parameters: {
 		layout: "fullscreen"
 	}
@@ -20,15 +20,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const LightAndDark: Story = {
+	name: "淺色與深色",
 	render: () => (
 		<main className="foundation-page">
-			<FoundationHero
-				eyebrow="LYDS themes"
-				title="One semantic system in two themes."
-				description="Light and dark themes preserve the same surface hierarchy and Vermilion action role. Dark mode is a complete semantic mapping, not a mathematical inversion."
-			/>
+			<FoundationHero eyebrow="Linyao Design System" title="主題" description="淺色與深色主題共用相同的語意設計變數與元件層級。" />
 
-			<FoundationSection title="Theme comparison">
+			<FoundationSection title="主題比較">
 				<div className="foundation-theme-grid">
 					{themeSamples.map(sample => (
 						<section className="foundation-theme-sample" data-lyds-theme={sample.theme} key={sample.theme}>
@@ -37,20 +34,20 @@ export const LightAndDark: Story = {
 									<span className="foundation-theme-code">{sample.code}</span>
 									<h3>{sample.name}</h3>
 								</div>
-								<Badge variant="accent">Accent role</Badge>
+								<Badge variant="accent">強調色</Badge>
 							</header>
 							<Card variant="material">
 								<CardHeader>
-									<CardTitle>Account settings</CardTitle>
-									<CardDescription>Semantic roles preserve the hierarchy across both material conditions.</CardDescription>
+									<CardTitle>帳號設定</CardTitle>
+									<CardDescription>語意 token 在不同主題中維持相同層級。</CardDescription>
 								</CardHeader>
 								<CardBody>
 									<div className="foundation-theme-sample__panel">
-										<span className="foundation-label">Preferences</span>
-										<p>Primary text stays readable while surface values and structural dividers preserve the hierarchy.</p>
+										<span className="foundation-label">偏好設定</span>
+										<p>文字、背景與分隔線依主題切換色值，並維持相同的資訊層級。</p>
 										<div className="foundation-theme-sample__controls">
-											<Switch defaultChecked aria-label={`${sample.name} power control`} />
-											<Button size="sm">Save preferences</Button>
+											<Switch defaultChecked aria-label={`${sample.name}通知設定`} />
+											<Button size="sm">儲存設定</Button>
 										</div>
 									</div>
 								</CardBody>
@@ -60,22 +57,22 @@ export const LightAndDark: Story = {
 				</div>
 			</FoundationSection>
 
-			<FoundationSection title="Theme authoring contract">
+			<FoundationSection title="主題設定規則">
 				<div className="foundation-principle-grid">
 					<article className="foundation-principle">
-						<span className="foundation-kicker">Set</span>
-						<h3>One explicit attribute</h3>
-						<p>Set data-lyds-theme to light or dark on a root element. Nested themed regions work because tokens are scoped by the nearest theme attribute.</p>
+						<span className="foundation-kicker">設定</span>
+						<h3>指定主題屬性</h3>
+						<p>在根元素設定 data-lyds-theme="light" 或 data-lyds-theme="dark"。巢狀區域使用最近的主題屬性。</p>
 					</article>
 					<article className="foundation-principle">
-						<span className="foundation-kicker">Use</span>
-						<h3>Consume semantic roles</h3>
-						<p>Application and component CSS should use roles such as Background/Main and Text/Title, serialized as deterministic custom properties.</p>
+						<span className="foundation-kicker">使用</span>
+						<h3>使用語意 token</h3>
+						<p>應用程式與元件 CSS 使用 Background/Main、Text/Title 等語意角色，不直接使用實際色值。</p>
 					</article>
 					<article className="foundation-principle">
-						<span className="foundation-kicker">Extend</span>
-						<h3>Override complete pairs</h3>
-						<p>When creating a product theme, update foreground, background, border, focus, and state pairs together. A single accent override is not a complete theme.</p>
+						<span className="foundation-kicker">擴充</span>
+						<h3>完整設定色彩配對</h3>
+						<p>建立產品主題時，須一併設定前景、背景、邊框、focus 與狀態 token。</p>
 					</article>
 				</div>
 			</FoundationSection>

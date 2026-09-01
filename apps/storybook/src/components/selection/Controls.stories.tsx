@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import "../story-layout.css";
 
 const meta = {
-	title: "Components/Selection/Controls",
+	title: "元件/選擇/控制項",
 	parameters: { layout: "padded" }
 } satisfies Meta;
 
@@ -12,128 +12,136 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Checkbox: Story = {
+	name: "核取方塊",
 	render: () => (
-		<CheckboxGroup aria-label="Notification channels" defaultValue={["email", "in-app"]}>
-			<CheckboxItem value="email" label="Email notifications" description="Receive important updates by email." />
-			<CheckboxItem value="in-app" label="In-app notifications" description="Show updates while the application is open." />
-			<CheckboxItem value="sms" label="SMS notifications" description="Unavailable for this account." disabled />
+		<CheckboxGroup aria-label="通知方式" defaultValue={["email", "in-app"]}>
+			<CheckboxItem value="email" label="電子郵件通知" description="以電子郵件接收重要通知。" />
+			<CheckboxItem value="in-app" label="應用程式內通知" description="在使用應用程式時顯示通知。" />
+			<CheckboxItem value="sms" label="簡訊通知" description="此帳號無法使用。" disabled />
 		</CheckboxGroup>
 	)
 };
 
 export const CheckboxStates: Story = {
+	name: "核取方塊狀態",
 	render: () => (
 		<div className="lyds-story-row">
-			<CheckboxItem label="Unchecked" />
-			<CheckboxItem defaultChecked label="Checked" />
-			<CheckboxItem indeterminate label="Indeterminate" />
-			<CheckboxItem disabled label="Disabled unchecked" />
-			<CheckboxItem disabled defaultChecked label="Disabled checked" />
+			<CheckboxItem label="未勾選" />
+			<CheckboxItem defaultChecked label="已勾選" />
+			<CheckboxItem indeterminate label="部分勾選" />
+			<CheckboxItem disabled label="停用且未勾選" />
+			<CheckboxItem disabled defaultChecked label="停用且已勾選" />
 		</div>
 	)
 };
 
 export const Switch: Story = {
+	name: "開關",
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
 			<div className="lyds-story-row">
 				<LydsSwitch aria-labelledby="manual-save-label" />
-				<span id="manual-save-label">Save changes manually</span>
+				<span id="manual-save-label">手動儲存變更</span>
 			</div>
 			<div className="lyds-story-row">
 				<LydsSwitch defaultChecked aria-labelledby="automatic-regulation-label" />
-				<span id="automatic-regulation-label">Save changes automatically</span>
+				<span id="automatic-regulation-label">自動儲存變更</span>
 			</div>
 			<div className="lyds-story-row">
 				<LydsSwitch aria-labelledby="emergency-uplink-label" disabled />
-				<span id="emergency-uplink-label">Offline access unavailable</span>
+				<span id="emergency-uplink-label">無法使用離線存取</span>
 			</div>
 		</div>
 	)
 };
 
 export const DarkControlStates: Story = {
+	name: "深色主題狀態",
 	globals: { theme: "dark" },
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<CheckboxItem label="Unchecked in dark theme" />
-			<RadioGroup aria-label="Dark theme radio states" defaultValue="selected">
-				<RadioItem value="unselected" label="Unselected option" />
-				<RadioItem value="selected" label="Selected option" />
+			<CheckboxItem label="未勾選" />
+			<RadioGroup aria-label="深色主題單選狀態" defaultValue="selected">
+				<RadioItem value="unselected" label="未選取" />
+				<RadioItem value="selected" label="已選取" />
 			</RadioGroup>
 			<div className="lyds-story-row">
 				<LydsSwitch aria-labelledby="dark-switch-label" />
-				<span id="dark-switch-label">Off in dark theme</span>
+				<span id="dark-switch-label">關閉</span>
 			</div>
 		</div>
 	)
 };
 
 export const RadioChoices: Story = {
+	name: "單選項目",
 	render: () => (
-		<RadioGroup aria-label="Update frequency" defaultValue="daily">
-			<RadioItem value="weekly" label="Weekly" description="A summary every Monday." />
-			<RadioItem value="daily" label="Daily" description="Recommended for most teams." />
-			<RadioItem value="realtime" label="As changes happen" description="Immediate updates throughout the day." />
+		<RadioGroup aria-label="更新頻率" defaultValue="daily">
+			<RadioItem value="weekly" label="每週" description="每週一提供摘要。" />
+			<RadioItem value="daily" label="每日" description="每天提供摘要。" />
+			<RadioItem value="realtime" label="即時" description="有變更時立即通知。" />
 		</RadioGroup>
 	)
 };
 
 export const SliderControl: Story = {
-	name: "Slider",
+	name: "滑桿",
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<Slider aria-label="Volume" defaultValue={64} min={0} max={100} showValue />
-			<Slider aria-label="Preferred price range" defaultValue={[18, 27]} min={0} max={50} showValue getAriaLabel={index => (index === 0 ? "Minimum price" : "Maximum price")} />
+			<Slider aria-label="音量" defaultValue={64} min={0} max={100} showValue />
+			<Slider aria-label="價格範圍" defaultValue={[18, 27]} min={0} max={50} showValue getAriaLabel={index => (index === 0 ? "最低價格" : "最高價格")} />
 		</div>
 	)
 };
 
 export const ToggleControls: Story = {
+	name: "切換按鈕",
 	render: () => (
 		<div className="lyds-story-stack">
 			<div className="lyds-story-row">
-				<Toggle defaultPressed>Preview pane</Toggle>
-				<Toggle variant="quiet">Descriptions</Toggle>
-				<Toggle disabled>Archived items</Toggle>
+				<Toggle defaultPressed>預覽面板</Toggle>
+				<Toggle variant="quiet">說明</Toggle>
+				<Toggle disabled>封存項目</Toggle>
 			</div>
-			<ToggleGroup aria-label="View options" defaultValue={["diagram"]}>
-				<Toggle value="diagram">Cards</Toggle>
-				<Toggle value="list">List</Toggle>
-				<Toggle value="history">Timeline</Toggle>
+			<ToggleGroup aria-label="檢視方式" defaultValue={["diagram"]}>
+				<Toggle value="diagram">卡片</Toggle>
+				<Toggle value="list">清單</Toggle>
+				<Toggle value="history">時間軸</Toggle>
 			</ToggleGroup>
 		</div>
 	)
 };
 
 export const Segmented: Story = {
+	name: "分段控制項",
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<SegmentedControl aria-label="Medium time horizon" defaultValue="day" size="md">
-				<SegmentedControlItem value="hour">1 H</SegmentedControlItem>
-				<SegmentedControlItem value="day">24 H</SegmentedControlItem>
-				<SegmentedControlItem value="week">7 D</SegmentedControlItem>
+			<SegmentedControl aria-label="中型時間範圍" defaultValue="day" size="md">
+				<SegmentedControlItem value="hour">1 小時</SegmentedControlItem>
+				<SegmentedControlItem value="day">24 小時</SegmentedControlItem>
+				<SegmentedControlItem value="week">7 天</SegmentedControlItem>
 			</SegmentedControl>
-			<SegmentedControl aria-label="Small time horizon" defaultValue="day" size="sm">
-				<SegmentedControlItem value="hour">1 H</SegmentedControlItem>
-				<SegmentedControlItem value="day">24 H</SegmentedControlItem>
-				<SegmentedControlItem value="week">7 D</SegmentedControlItem>
+			<SegmentedControl aria-label="小型時間範圍" defaultValue="day" size="sm">
+				<SegmentedControlItem value="hour">1 小時</SegmentedControlItem>
+				<SegmentedControlItem value="day">24 小時</SegmentedControlItem>
+				<SegmentedControlItem value="week">7 天</SegmentedControlItem>
 			</SegmentedControl>
-			<p className="lyds-story-note">Use arrow keys to move between options. LYDS keeps the single-selection behavior separate from product filtering logic.</p>
+			<p className="lyds-story-note">使用方向鍵切換選項。篩選規則由應用程式處理。</p>
 		</div>
 	)
 };
 
 export const DarkTheme: Story = {
+	name: "深色主題",
 	globals: { theme: "dark" },
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<CheckboxItem defaultChecked label="Email notifications" />
+			<CheckboxItem defaultChecked label="電子郵件通知" />
 			<div className="lyds-story-row">
 				<LydsSwitch defaultChecked aria-labelledby="low-light-controls-label" />
-				<span id="low-light-controls-label">Dark theme</span>
+				<span id="low-light-controls-label">深色主題</span>
 			</div>
-			<Slider aria-label="Interface contrast" defaultValue={38} showValue />
+			<Slider aria-label="介面對比" defaultValue={38} showValue />
 		</div>
 	)
 };

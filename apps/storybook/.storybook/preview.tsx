@@ -6,13 +6,13 @@ import type { Preview } from "@storybook/react-vite";
 const preview: Preview = {
 	globalTypes: {
 		theme: {
-			description: "LYDS color theme",
+			description: "Linyao Design System 色彩主題",
 			defaultValue: "light",
 			toolbar: {
 				icon: "mirror",
 				items: [
-					{ value: "light", title: "Light" },
-					{ value: "dark", title: "Dark" }
+					{ value: "light", title: "淺色" },
+					{ value: "dark", title: "深色" }
 				],
 				dynamicTitle: true
 			}
@@ -22,6 +22,7 @@ const preview: Preview = {
 		(Story, context) => {
 			const theme = context.globals.theme === "dark" ? "dark" : "light";
 			const fullscreen = context.parameters.layout === "fullscreen";
+			document.documentElement.lang = "zh-TW";
 			document.documentElement.dataset.lydsTheme = theme;
 
 			return (
@@ -45,7 +46,7 @@ const preview: Preview = {
 		layout: "padded",
 		options: {
 			storySort: {
-				order: ["Foundations", "Components", "Date & Time", "Patterns"]
+				order: ["基礎", "元件", "日期與時間", "使用範例"]
 			}
 		}
 	}

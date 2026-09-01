@@ -2,7 +2,6 @@
 	display: grid;
 	gap: var(--space-16);
 	min-height: 100dvh;
-	margin: calc(var(--space-6) * -1);
 	padding: var(--space-16) clamp(var(--space-6), 7vw, var(--space-24));
 	color: var(--text-main);
 	background: var(--background-main);

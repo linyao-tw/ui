@@ -4,25 +4,34 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import "../story-layout.css";
 
 const meta = {
-	title: "Components/Feedback/Status & Progress",
+	title: "元件/回饋/狀態與進度",
 	parameters: { layout: "padded" }
 } satisfies Meta;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const statusLabels = {
+	neutral: "一般通知",
+	info: "資訊通知",
+	success: "成功通知",
+	warning: "警告通知",
+	danger: "錯誤通知"
+} as const;
+
 export const Alerts: Story = {
+	name: "警示",
 	render: () => (
 		<div className="lyds-story-stack">
 			{(["neutral", "info", "success", "warning", "danger"] as const).map(status => (
 				<Alert key={status} status={status}>
 					<AlertContent>
-						<AlertTitle>{status === "danger" ? "Payment method needs attention" : `${status[0]?.toUpperCase()}${status.slice(1)} notice`}</AlertTitle>
-						<AlertDescription>Feedback surfaces use semantic status tokens and remain quiet to assistive technology unless dynamically introduced.</AlertDescription>
+						<AlertTitle>{statusLabels[status]}</AlertTitle>
+						<AlertDescription>顯示目前狀態與可執行的操作。</AlertDescription>
 					</AlertContent>
 					<AlertActions>
 						<Button size="sm" variant="secondary">
-							Inspect
+							查看
 						</Button>
 					</AlertActions>
 				</Alert>
@@ -32,28 +41,31 @@ export const Alerts: Story = {
 };
 
 export const BannerNotice: Story = {
-	render: () => <Banner status="warning">Scheduled maintenance begins at 21:30. Existing sessions will continue, but new sessions may be delayed.</Banner>
+	name: "橫幅",
+	render: () => <Banner status="warning">系統維護將於 21:30 開始。既有工作階段不受影響，新工作階段可能延遲。</Banner>
 };
 
 export const ProgressAndMeter: Story = {
+	name: "進度與計量",
 	render: () => (
 		<div className="lyds-story-grid">
-			<Progress label="File upload" value={68} />
-			<Progress label="Preparing report" value={null} status="info" />
-			<Meter label="Storage used" value={7.4} min={0} max={10} format={{ style: "unit", unit: "gigabyte" }} status="warning" />
-			<Meter label="Signal quality" value={92} min={0} max={100} status="success" />
+			<Progress label="檔案上傳" value={68} />
+			<Progress label="正在產生報表" value={null} status="info" />
+			<Meter label="儲存空間用量" value={7.4} min={0} max={10} format={{ style: "unit", unit: "gigabyte" }} status="warning" />
+			<Meter label="訊號品質" value={92} min={0} max={100} status="success" />
 		</div>
 	)
 };
 
 export const Loading: Story = {
+	name: "載入",
 	render: () => (
 		<div className="lyds-story-stack">
 			<div className="lyds-story-row">
-				<Spinner size="sm" label="Loading small record" />
-				<Spinner size="md" label="Loading record" />
-				<Spinner size="lg" label="Loading large record" status="info" />
-				<Loader label="Synchronizing settings" />
+				<Spinner size="sm" label="正在載入少量資料" />
+				<Spinner size="md" label="正在載入資料" />
+				<Spinner size="lg" label="正在載入大量資料" status="info" />
+				<Loader label="正在同步設定" />
 			</div>
 			<div className="lyds-story-grid">
 				<Skeleton shape="rectangular" />
@@ -68,16 +80,18 @@ export const Loading: Story = {
 };
 
 export const EmptyCollection: Story = {
-	render: () => <EmptyState title="No saved reports" description="Create a report or import an existing file to get started." actions={<Button>Create report</Button>} />
+	name: "空狀態",
+	render: () => <EmptyState title="尚無報表" description="建立報表或匯入現有檔案。" actions={<Button>建立報表</Button>} />
 };
 
 export const DarkTheme: Story = {
+	name: "深色主題",
 	globals: { theme: "dark" },
 	render: () => (
 		<div className="lyds-story-stack">
-			<Banner status="info">Dark theme is active for this example.</Banner>
-			<Progress label="Archive indexing" value={43} />
-			<EmptyState title="No pending requests" description="New requests will appear here when they are submitted." />
+			<Banner status="info">此範例使用深色主題。</Banner>
+			<Progress label="封存資料索引" value={43} />
+			<EmptyState title="尚無待處理要求" description="收到新要求後會顯示在這裡。" />
 		</div>
 	)
 };

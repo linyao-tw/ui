@@ -17,7 +17,7 @@ const taipeiDateTime = parseZonedDateTime("2026-08-31T14:30:45[Asia/Taipei]");
 const newYorkDateTime = parseZonedDateTime("2026-08-31T14:30:45[America/New_York]");
 
 const meta = {
-	title: "Date & Time/DateTimeFields",
+	title: "日期與時間/欄位狀態",
 	component: DateField,
 	parameters: {
 		layout: "padded"
@@ -28,61 +28,67 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const DateFieldSizes: Story = {
+	name: "日期欄位尺寸",
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<DateField label="Small inspection date" defaultValue={defaultDate} locale="en-GB" size="sm" />
-			<DateField label="Medium inspection date" defaultValue={defaultDate} locale="en-GB" size="md" />
-			<DateField label="Large inspection date" defaultValue={defaultDate} locale="en-GB" size="lg" />
+			<DateField label="小型日期欄位" defaultValue={defaultDate} locale="en-GB" size="sm" />
+			<DateField label="中型日期欄位" defaultValue={defaultDate} locale="en-GB" size="md" />
+			<DateField label="大型日期欄位" defaultValue={defaultDate} locale="en-GB" size="lg" />
 		</div>
 	)
 };
 
 export const DateFieldStates: Story = {
+	name: "日期欄位狀態",
 	render: () => (
 		<div className="lyds-story-grid">
-			<DateField label="Managed date" defaultValue={defaultDate} disabled description="This value is synchronized by the service." />
-			<DateField label="Published date" defaultValue={defaultDate} readOnly description="Read-only values remain available to assistive technology." />
-			<DateField label="Required audit date" required invalid error="Enter the audit completion date." />
+			<DateField label="已停用日期" defaultValue={defaultDate} disabled description="此欄位無法編輯。" />
+			<DateField label="唯讀日期" defaultValue={defaultDate} readOnly description="此欄位只顯示目前值。" />
+			<DateField label="必填日期" required invalid error="請輸入日期。" />
 		</div>
 	)
 };
 
 export const TimeFieldSizes: Story = {
+	name: "時間欄位尺寸",
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<TimeField label="Small start time" defaultValue={defaultTime} locale="zh-TW" hourCycle={24} size="sm" />
-			<TimeField label="Medium start time" defaultValue={defaultTime} locale="zh-TW" hourCycle={24} size="md" />
-			<TimeField label="Large start time" defaultValue={defaultTime} locale="zh-TW" hourCycle={24} size="lg" />
+			<TimeField label="小型時間欄位" defaultValue={defaultTime} locale="zh-TW" hourCycle={24} size="sm" />
+			<TimeField label="中型時間欄位" defaultValue={defaultTime} locale="zh-TW" hourCycle={24} size="md" />
+			<TimeField label="大型時間欄位" defaultValue={defaultTime} locale="zh-TW" hourCycle={24} size="lg" />
 		</div>
 	)
 };
 
 export const TimeFieldStates: Story = {
+	name: "時間欄位狀態",
 	render: () => (
 		<div className="lyds-story-grid">
-			<TimeField label="Synchronized time" defaultValue={defaultTime} disabled granularity="second" />
-			<TimeField label="Recorded time" defaultValue={defaultTime} readOnly granularity="second" />
-			<TimeField label="Required activation time" required invalid error="Enter an activation time." />
+			<TimeField label="已停用時間" defaultValue={defaultTime} disabled granularity="second" />
+			<TimeField label="唯讀時間" defaultValue={defaultTime} readOnly granularity="second" />
+			<TimeField label="必填時間" required invalid error="請輸入時間。" />
 		</div>
 	)
 };
 
 export const DateTimePickerSizes: Story = {
+	name: "日期時間選擇器尺寸",
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<DateTimePicker label="Small maintenance window" defaultValue={defaultDateTime} locale="zh-TW" hourCycle={24} size="sm" />
-			<DateTimePicker label="Medium maintenance window" defaultValue={defaultDateTime} locale="zh-TW" hourCycle={24} size="md" />
-			<DateTimePicker label="Large maintenance window" defaultValue={defaultDateTime} locale="zh-TW" hourCycle={24} size="lg" />
+			<DateTimePicker label="小型日期時間選擇器" defaultValue={defaultDateTime} locale="zh-TW" hourCycle={24} size="sm" />
+			<DateTimePicker label="中型日期時間選擇器" defaultValue={defaultDateTime} locale="zh-TW" hourCycle={24} size="md" />
+			<DateTimePicker label="大型日期時間選擇器" defaultValue={defaultDateTime} locale="zh-TW" hourCycle={24} size="lg" />
 		</div>
 	)
 };
 
 export const DateTimePickerStates: Story = {
+	name: "日期時間選擇器狀態",
 	render: () => (
 		<div className="lyds-story-grid">
-			<DateTimePicker label="Synchronized schedule" defaultValue={defaultDateTime} disabled granularity="second" description="The operations service owns this schedule." />
-			<DateTimePicker label="Recorded schedule" defaultValue={defaultDateTime} readOnly granularity="second" description="This exact wall-clock value is retained for reference." />
-			<DateTimePicker label="Required maintenance schedule" required invalid error="Enter both the maintenance date and time." granularity="second" />
+			<DateTimePicker label="已停用日期與時間" defaultValue={defaultDateTime} disabled granularity="second" description="此欄位無法編輯。" />
+			<DateTimePicker label="唯讀日期與時間" defaultValue={defaultDateTime} readOnly granularity="second" description="此欄位只顯示目前值。" />
+			<DateTimePicker label="必填日期與時間" required invalid error="請輸入日期與時間。" granularity="second" />
 		</div>
 	)
 };
@@ -95,18 +101,19 @@ function ControlledFieldsExample() {
 	return (
 		<div className="lyds-story-stack">
 			<div className="lyds-story-grid">
-				<DateField label="Controlled date" value={date} onValueChange={value => value && setDate(value)} locale="en-GB" />
-				<TimeField label="Controlled time" value={time} onValueChange={value => value && setTime(value)} locale="en-GB" hourCycle={24} granularity="second" />
-				<DateTimePicker label="Controlled date and time" value={dateTime} onValueChange={value => value && setDateTime(value)} locale="en-GB" hourCycle={24} granularity="second" />
+				<DateField label="受控日期" value={date} onValueChange={value => value && setDate(value)} locale="en-GB" />
+				<TimeField label="受控時間" value={time} onValueChange={value => value && setTime(value)} locale="en-GB" hourCycle={24} granularity="second" />
+				<DateTimePicker label="受控日期與時間" value={dateTime} onValueChange={value => value && setDateTime(value)} locale="en-GB" hourCycle={24} granularity="second" />
 			</div>
 			<p className="lyds-story-readout" aria-live="polite">
-				Date: {date.toString()} · Time: {time.toString()} · Date and time: {dateTime.toString()}
+				日期：{date.toString()} · 時間：{time.toString()} · 日期與時間：{dateTime.toString()}
 			</p>
 		</div>
 	);
 }
 
 export const ControlledValues: Story = {
+	name: "受控值",
 	render: () => <ControlledFieldsExample />,
 	play: async ({ canvasElement }) => {
 		const daySegment = canvasElement.querySelector<HTMLElement>('.lyds-date-field:first-child .lyds-date-segment[data-type="day"]');
@@ -121,85 +128,61 @@ export const ControlledValues: Story = {
 		await userEvent.keyboard("{ArrowUp}");
 		await userEvent.click(minuteSegment!);
 		await userEvent.keyboard("{ArrowUp}");
-		await expect(canvasElement.querySelector(".lyds-story-readout")).toHaveTextContent("Date: 2026-08-16 · Time: 15:30:45 · Date and time: 2026-08-31T14:31:45");
+		await expect(canvasElement.querySelector(".lyds-story-readout")).toHaveTextContent("日期：2026-08-16 · 時間：15:30:45 · 日期與時間：2026-08-31T14:31:45");
 	}
 };
 
 export const LocalesAndSeconds: Story = {
+	name: "地區格式與秒數",
 	render: () => (
 		<div className="lyds-story-grid">
-			<DateField label="Traditional Chinese date" defaultValue={defaultDate} locale="zh-TW" />
-			<DateField label="British English date" defaultValue={defaultDate} locale="en-GB" />
-			<TimeField label="24-hour time with seconds" defaultValue={defaultTime} locale="zh-TW" hourCycle={24} granularity="second" />
-			<TimeField label="12-hour time with seconds" defaultValue={defaultTime} locale="en-US" hourCycle={12} granularity="second" />
-			<DateTimePicker label="Traditional Chinese date and time" defaultValue={defaultDateTime} locale="zh-TW" hourCycle={24} granularity="second" />
-			<DateTimePicker label="US date and time" defaultValue={defaultDateTime} locale="en-US" hourCycle={12} granularity="second" />
+			<DateField label="繁體中文日期" defaultValue={defaultDate} locale="zh-TW" />
+			<DateField label="英式英文日期" defaultValue={defaultDate} locale="en-GB" />
+			<TimeField label="含秒數的 24 小時制時間" defaultValue={defaultTime} locale="zh-TW" hourCycle={24} granularity="second" />
+			<TimeField label="含秒數的 12 小時制時間" defaultValue={defaultTime} locale="en-US" hourCycle={12} granularity="second" />
+			<DateTimePicker label="繁體中文日期與時間" defaultValue={defaultDateTime} locale="zh-TW" hourCycle={24} granularity="second" />
+			<DateTimePicker label="美式日期與時間" defaultValue={defaultDateTime} locale="en-US" hourCycle={12} granularity="second" />
 		</div>
 	)
 };
 
 export const ZonedDateTimes: Story = {
+	name: "時區值",
 	render: () => (
 		<div className="lyds-story-grid">
-			<DateField
-				label="Taipei zoned field value"
-				defaultValue={taipeiDateTime}
-				locale="zh-TW"
-				hourCycle={24}
-				granularity="second"
-				description="DateField preserves the supplied ZonedDateTime value without assigning another zone."
-			/>
-			<TimeField
-				label="Taipei zoned time value"
-				defaultValue={taipeiDateTime}
-				locale="zh-TW"
-				hourCycle={24}
-				granularity="second"
-				description="TimeField exposes the time and zone segments carried by the value."
-			/>
-			<DateTimePicker
-				label="Taipei operations schedule"
-				defaultValue={taipeiDateTime}
-				locale="zh-TW"
-				hourCycle={24}
-				granularity="second"
-				description="The value retains the Asia/Taipei time-zone identifier."
-			/>
-			<DateTimePicker
-				label="New York operations schedule"
-				defaultValue={newYorkDateTime}
-				locale="en-US"
-				hourCycle={12}
-				granularity="second"
-				description="The value retains the America/New_York time-zone identifier."
-			/>
+			<DateField label="台北時區日期" defaultValue={taipeiDateTime} locale="zh-TW" hourCycle={24} granularity="second" description="保留原始 ZonedDateTime 與時區。" />
+			<TimeField label="台北時區時間" defaultValue={taipeiDateTime} locale="zh-TW" hourCycle={24} granularity="second" description="顯示數值包含的時間與時區欄位。" />
+			<DateTimePicker label="台北時區日期與時間" defaultValue={taipeiDateTime} locale="zh-TW" hourCycle={24} granularity="second" description="保留 Asia/Taipei 時區識別碼。" />
+			<DateTimePicker label="紐約時區日期與時間" defaultValue={newYorkDateTime} locale="en-US" hourCycle={12} granularity="second" description="保留 America/New_York 時區識別碼。" />
 		</div>
 	)
 };
 
 export const CalendarAndRangeStates: Story = {
+	name: "行事曆與日期範圍狀態",
 	render: () => (
 		<div className="lyds-story-grid">
 			<div className="lyds-story-panel">
-				<p className="lyds-story-panel__heading">Disabled calendar</p>
-				<Calendar aria-label="Disabled maintenance calendar" defaultValue={defaultDate} disabled locale="en-GB" firstDayOfWeek="mon" />
+				<p className="lyds-story-panel__heading">已停用行事曆</p>
+				<Calendar aria-label="已停用行事曆" defaultValue={defaultDate} disabled locale="en-GB" firstDayOfWeek="mon" />
 			</div>
 			<div className="lyds-story-stack lyds-story-stack--narrow">
-				<DateRangePicker label="Disabled reporting period" defaultValue={defaultRange} disabled description="The reporting service owns this period." />
-				<DateRangePicker label="Read-only reporting period" defaultValue={defaultRange} readOnly description="The selected dates remain available for review." />
+				<DateRangePicker label="已停用日期範圍" defaultValue={defaultRange} disabled description="此欄位無法編輯。" />
+				<DateRangePicker label="唯讀日期範圍" defaultValue={defaultRange} readOnly description="此欄位只顯示目前值。" />
 			</div>
 		</div>
 	)
 };
 
 export const DarkTheme: Story = {
+	name: "深色主題",
 	globals: { theme: "dark" },
 	render: () => (
 		<div className="lyds-story-grid">
-			<DateField label="Dark date field" defaultValue={defaultDate} locale="zh-TW" />
-			<TimeField label="Dark time field" defaultValue={defaultTime} locale="zh-TW" hourCycle={24} granularity="second" />
-			<DateTimePicker label="Dark date and time" defaultValue={taipeiDateTime} locale="zh-TW" hourCycle={24} granularity="second" />
-			<DateTimePicker label="Dark invalid schedule" required invalid error="Enter a date and time." granularity="second" />
+			<DateField label="深色主題日期欄位" defaultValue={defaultDate} locale="zh-TW" />
+			<TimeField label="深色主題時間欄位" defaultValue={defaultTime} locale="zh-TW" hourCycle={24} granularity="second" />
+			<DateTimePicker label="深色主題日期與時間" defaultValue={taipeiDateTime} locale="zh-TW" hourCycle={24} granularity="second" />
+			<DateTimePicker label="深色主題錯誤狀態" required invalid error="請輸入日期與時間。" granularity="second" />
 		</div>
 	)
 };

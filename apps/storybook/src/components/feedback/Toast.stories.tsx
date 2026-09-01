@@ -5,7 +5,7 @@ import { useEffect, useMemo } from "react";
 import "../story-layout.css";
 
 const meta = {
-	title: "Components/Feedback/Toast",
+	title: "元件/回饋/通知",
 	parameters: { layout: "padded" }
 } satisfies Meta;
 
@@ -16,10 +16,18 @@ function ToastDemo({ automatic = false }: { automatic?: boolean }) {
 	const manager: ToastManager = useMemo(() => createToastManager(), []);
 
 	const addToast = (status: "neutral" | "info" | "success" | "warning" | "danger") => {
+		const titles = {
+			neutral: "一般通知",
+			info: "資訊通知",
+			success: "儲存成功",
+			warning: "警告通知",
+			danger: "儲存失敗"
+		} as const;
+
 		manager.add({
 			data: { status },
-			description: status === "danger" ? "The changes could not be saved. Check your connection and try again." : "The latest changes are now available to everyone in the workspace.",
-			title: status === "danger" ? "Save failed" : `${status[0]?.toUpperCase()}${status.slice(1)} notification`,
+			description: status === "danger" ? "無法儲存變更，請檢查網路連線後重試。" : "變更已儲存。",
+			title: titles[status],
 			timeout: 7000
 		});
 	};
@@ -27,17 +35,17 @@ function ToastDemo({ automatic = false }: { automatic?: boolean }) {
 	return (
 		<ToastProvider toastManager={manager} timeout={automatic ? 7000 : 0}>
 			<div className="lyds-story-stack">
-				<p className="lyds-story-note">Toasts are manager-driven so products can trigger them without embedding application state in the visual component.</p>
+				<p className="lyds-story-note">按下按鈕可顯示不同狀態的通知。</p>
 				<div className="lyds-story-row">
-					<Button onClick={() => addToast("success")}>Show success toast</Button>
+					<Button onClick={() => addToast("success")}>顯示成功通知</Button>
 					<Button variant="secondary" onClick={() => addToast("info")}>
-						Show information toast
+						顯示資訊通知
 					</Button>
 					<Button variant="secondary" onClick={() => addToast("warning")}>
-						Show warning toast
+						顯示警告通知
 					</Button>
 					<Button variant="danger" onClick={() => addToast("danger")}>
-						Show error toast
+						顯示錯誤通知
 					</Button>
 				</div>
 			</div>
@@ -52,32 +60,36 @@ function VisibleToast() {
 		manager.add({
 			id: "storybook-visible-toast",
 			data: { status: "success" },
-			description: "The latest changes are now available to everyone in the workspace.",
-			title: "Configuration saved",
+			description: "變更已儲存。",
+			title: "設定已儲存",
 			timeout: 0
 		});
 	}, [manager]);
 
 	return (
 		<ToastProvider toastManager={manager} timeout={0}>
-			<p className="lyds-story-note">A persistent review state for color, spacing, announcement content, and the dismiss control.</p>
+			<p className="lyds-story-note">顯示通知的顏色、間距、內容與關閉按鈕。</p>
 		</ToastProvider>
 	);
 }
 
 export const Default: Story = {
+	name: "預設",
 	render: () => <VisibleToast />
 };
 
 export const Interactive: Story = {
+	name: "互動",
 	render: () => <ToastDemo />
 };
 
 export const AutoDismiss: Story = {
+	name: "自動關閉",
 	render: () => <ToastDemo automatic />
 };
 
 export const DarkTheme: Story = {
+	name: "深色主題",
 	globals: { theme: "dark" },
 	render: () => <ToastDemo />
 };

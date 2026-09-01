@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import "../story-layout.css";
 
 const meta = {
-	title: "Components/Overlays/Dialog",
+	title: "元件/浮層/對話框",
 	parameters: { layout: "centered" }
 } satisfies Meta;
 
@@ -14,25 +14,21 @@ type Story = StoryObj<typeof meta>;
 function ConfigurationDialog({ defaultOpen = false, longText = false }: { defaultOpen?: boolean; longText?: boolean }) {
 	return (
 		<Dialog.Root defaultOpen={defaultOpen}>
-			<Dialog.Trigger>Edit profile</Dialog.Trigger>
+			<Dialog.Trigger>編輯個人資料</Dialog.Trigger>
 			<Dialog.Portal>
 				<Dialog.Backdrop />
 				<Dialog.Viewport>
 					<Dialog.Popup>
 						<Dialog.Header>
-							<Dialog.Title>{longText ? "Update profile information shown to everyone in the workspace" : "Edit profile"}</Dialog.Title>
-							<Dialog.Description>
-								{longText
-									? "Changes are applied after validation. Existing activity and shared links continue to use the previous information until the update is complete."
-									: "Update the name shown to other members of the workspace."}
-							</Dialog.Description>
+							<Dialog.Title>{longText ? "更新工作區成員可見的個人資料" : "編輯個人資料"}</Dialog.Title>
+							<Dialog.Description>{longText ? "資料驗證通過後才會更新。更新完成前，既有活動與分享連結會沿用原本資料。" : "更新工作區成員看到的名稱。"}</Dialog.Description>
 						</Dialog.Header>
 						<Dialog.Body>
-							<TextField label="Display name" defaultValue="Alex Chen" />
+							<TextField label="顯示名稱" defaultValue="陳怡安" />
 						</Dialog.Body>
 						<Dialog.Footer>
-							<Dialog.Close>Cancel</Dialog.Close>
-							<Button>Save profile</Button>
+							<Dialog.Close>取消</Dialog.Close>
+							<Button>儲存</Button>
 						</Dialog.Footer>
 					</Dialog.Popup>
 				</Dialog.Viewport>
@@ -42,32 +38,36 @@ function ConfigurationDialog({ defaultOpen = false, longText = false }: { defaul
 }
 
 export const Default: Story = {
+	name: "預設",
 	render: () => <ConfigurationDialog />
 };
 
 export const Open: Story = {
+	name: "開啟",
 	render: () => <ConfigurationDialog defaultOpen />
 };
 
 export const LongText: Story = {
+	name: "長文字",
 	render: () => <ConfigurationDialog longText />
 };
 
 export const DestructiveConfirmation: Story = {
+	name: "刪除確認",
 	render: () => (
 		<AlertDialog.Root>
-			<AlertDialog.Trigger>Delete workspace</AlertDialog.Trigger>
+			<AlertDialog.Trigger>刪除工作區</AlertDialog.Trigger>
 			<AlertDialog.Portal>
 				<AlertDialog.Backdrop />
 				<AlertDialog.Viewport>
 					<AlertDialog.Popup>
 						<AlertDialog.Header>
-							<AlertDialog.Title>Delete workspace?</AlertDialog.Title>
-							<AlertDialog.Description>This action permanently removes the workspace and its shared content.</AlertDialog.Description>
+							<AlertDialog.Title>刪除工作區？</AlertDialog.Title>
+							<AlertDialog.Description>工作區及其中的分享內容將永久刪除。</AlertDialog.Description>
 						</AlertDialog.Header>
 						<AlertDialog.Actions>
-							<AlertDialog.Close>Cancel</AlertDialog.Close>
-							<Button variant="danger">Delete workspace</Button>
+							<AlertDialog.Close>取消</AlertDialog.Close>
+							<Button variant="danger">刪除工作區</Button>
 						</AlertDialog.Actions>
 					</AlertDialog.Popup>
 				</AlertDialog.Viewport>
@@ -77,6 +77,7 @@ export const DestructiveConfirmation: Story = {
 };
 
 export const DarkTheme: Story = {
+	name: "深色主題",
 	globals: { theme: "dark" },
 	render: () => <ConfigurationDialog />
 };

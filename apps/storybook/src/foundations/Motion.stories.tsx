@@ -9,27 +9,27 @@ type FoundationStyle = CSSProperties & Record<`--foundation-${string}`, string>;
 const easingCurves = [
 	{
 		name: "Out",
-		description: "Entrances and responsive settling",
+		description: "進入與停止",
 		value: "var(--motion-ease-out)"
 	},
 	{
 		name: "InOut",
-		description: "Reversible layout changes",
+		description: "可逆的版面變化",
 		value: "var(--motion-ease-in-out)"
 	},
 	{
 		name: "In",
-		description: "Short exits that clear the stage",
+		description: "短距離離開",
 		value: "var(--motion-ease-in)"
 	},
 	{
 		name: "Snap",
-		description: "Tiny toggles and confirmations only",
+		description: "小型切換與確認",
 		value: "var(--motion-ease-snap)"
 	},
 	{
 		name: "Mechanical",
-		description: "Decorative indicators, never essential motion",
+		description: "非必要的裝飾指示",
 		value: "var(--motion-ease-mechanical)"
 	}
 ] as const;
@@ -42,7 +42,7 @@ const durations = [
 ] as const;
 
 const meta = {
-	title: "Foundations/Motion",
+	title: "基礎/動態效果",
 	parameters: {
 		layout: "fullscreen"
 	}
@@ -74,16 +74,13 @@ function MotionCurveDemo({ description, name, value }: (typeof easingCurves)[num
 }
 
 export const MotionVocabulary: Story = {
+	name: "動態效果",
 	render: () => (
 		<main className="foundation-page">
-			<FoundationHero
-				eyebrow="LYDS motion"
-				title="A small, predictable motion vocabulary."
-				description="A compact motion vocabulary creates continuity without turning the interface into spectacle. Timing belongs to the system, and reduced-motion preferences remove nonessential travel."
-			/>
+			<FoundationHero eyebrow="Linyao Design System" title="動態效果" description="定義元件共用的時間長度、緩動與減少動態效果規則。" />
 
-			<FoundationSection title="Easing curves">
-				<p className="foundation-section-copy">Activate any track with pointer or keyboard to compare how the same distance feels under each tokenized curve.</p>
+			<FoundationSection title="緩動曲線">
+				<p className="foundation-section-copy">使用滑鼠或鍵盤啟動軌道，比較各緩動變數在相同距離下的效果。</p>
 				<div className="foundation-motion-list">
 					{easingCurves.map(curve => (
 						<MotionCurveDemo {...curve} key={curve.name} />
@@ -91,7 +88,7 @@ export const MotionVocabulary: Story = {
 				</div>
 			</FoundationSection>
 
-			<FoundationSection title="Duration scale">
+			<FoundationSection title="時間長度">
 				<div className="foundation-duration-grid">
 					{durations.map(duration => (
 						<article className="foundation-duration" data-instant={duration.instant} key={duration.name} style={{ "--foundation-motion-duration": duration.duration } as FoundationStyle}>
@@ -105,22 +102,22 @@ export const MotionVocabulary: Story = {
 				</div>
 			</FoundationSection>
 
-			<FoundationSection title="Application rules">
+			<FoundationSection title="使用規則">
 				<div className="foundation-principle-grid">
 					<article className="foundation-principle">
-						<span className="foundation-kicker">Default</span>
-						<h3>Fast, direct feedback</h3>
-						<p>Hover, press, focus, and compact selection feedback should resolve quickly. Use ordinary CSS transitions and a named duration/easing pair.</p>
+						<span className="foundation-kicker">一般互動</span>
+						<h3>使用短時間回饋</h3>
+						<p>停留、按下、聚焦與小型選取狀態使用 CSS 轉場，並指定時間長度與緩動變數。</p>
 					</article>
 					<article className="foundation-principle">
-						<span className="foundation-kicker">Scale</span>
-						<h3>Overshoot stays small</h3>
-						<p>Snap belongs to knobs, toggles, and tiny confirmations. Dialogs, drawers, and reading surfaces use restrained non-overshooting curves.</p>
+						<span className="foundation-kicker">超出終點</span>
+						<h3>僅用於小型元件</h3>
+						<p>Snap 只用於旋鈕、切換與小型確認。對話框、抽屜與閱讀區域不得使用超出終點的動態效果。</p>
 					</article>
 					<article className="foundation-principle">
-						<span className="foundation-kicker">Access</span>
-						<h3>Preference is authoritative</h3>
-						<p>Under reduced motion, remove travel and repetition that is not necessary to understand state. Never hide state changes themselves.</p>
+						<span className="foundation-kicker">減少動態效果</span>
+						<h3>移除非必要移動</h3>
+						<p>使用者偏好減少動態效果時，移除非必要的位移與重複動畫，但仍須清楚呈現狀態變化。</p>
 					</article>
 				</div>
 			</FoundationSection>

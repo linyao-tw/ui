@@ -5,71 +5,67 @@ import { FoundationHero, FoundationSection } from "./story-primitives";
 
 const principles = [
 	{
-		label: "Semantic tokens",
-		title: "Meaning survives the theme",
-		copy: "Components consume category, role, and state tokens instead of physical color names. The same API can move between warm daylight and low-light conditions without changing its intent."
+		label: "語意變數",
+		title: "依用途命名",
+		copy: "元件使用類別、角色與狀態變數，不直接使用實際色名。切換主題時，元件用途維持不變。"
 	},
 	{
-		label: "Composition",
-		title: "Parts assemble into systems",
-		copy: "Small controls compose into grouped fields, list cells, overlays, and application patterns. Consumers should extend through slots and render APIs before forking component internals."
+		label: "元件組合",
+		title: "優先組合既有元件",
+		copy: "透過插槽與 render API 組合欄位、清單、浮動介面與頁面結構，避免複製元件內部實作。"
 	},
 	{
-		label: "Interaction states",
-		title: "Behavior is visible",
-		copy: "Hover, pressed, selected, open, disabled, invalid, loading, and focus-visible states remain distinct. Decorative geometry never obscures a state change or target."
+		label: "互動狀態",
+		title: "明確呈現狀態",
+		copy: "停留、按下、選取、開啟、停用、無效、載入與鍵盤聚焦狀態必須清楚可辨識。"
 	},
 	{
-		label: "Reference fidelity",
-		title: "Anatomy before decoration",
-		copy: "Verified Modulor dimensions, surfaces, type hierarchy, and state organization define the component. LYDS changes the palette without adding unrelated ornament."
+		label: "設計參考",
+		title: "遵循元件結構",
+		copy: "依照 Modulor 的元件結構、尺寸、背景層級、文字層級與狀態組織，並套用 Linyao Design System 色盤。"
 	},
 	{
-		label: "Accessibility",
-		title: "Accessibility is structural",
-		copy: "Base UI and React Aria provide interaction semantics where appropriate. Focus, keyboard navigation, announcements, and reduced motion are designed into the component contract."
+		label: "無障礙",
+		title: "保留語意與操作方式",
+		copy: "使用 Base UI 與 React Aria 提供的語意、焦點管理、鍵盤操作、狀態通知與減少動態效果支援。"
 	},
 	{
-		label: "Product ownership",
-		title: "Products own business logic",
-		copy: "LYDS exposes controlled and uncontrolled primitives. Data fetching, routing, analytics, persistence, validation policy, and final date formatting stay with the consuming product."
+		label: "產品邏輯",
+		title: "由產品端負責",
+		copy: "Linyao Design System 提供受控與非受控元件。資料請求、路由、分析、儲存、驗證規則與日期格式由產品端處理。"
 	}
 ] as const;
 
 const inventory = [
 	{
-		category: "Foundations",
-		items: ["Button and IconButton", "Link and Badge", "Avatar and Separator", "Card and CloudBox", "SectionHeading and ListCell"]
+		category: "基礎元件",
+		items: ["Button、IconButton", "Link、Badge", "Avatar、Separator", "Card、CloudBox", "SectionHeading、ListCell"]
 	},
 	{
-		category: "Forms and selection",
+		category: "表單與選擇",
 		items: [
-			"Text, search, password, code, phone, and number fields",
-			"OTP, file upload, and drop zone",
-			"Checkbox, radio, switch, slider, and toggles",
-			"Select, Combobox, Autocomplete, Menu, and Context Menu"
+			"TextField、SearchField、PasswordField、CodeField、PhoneField、NumberField",
+			"OTPField、FileUpload、DropZone",
+			"Checkbox、Radio、Switch、Slider、Toggle",
+			"Select、Combobox、Autocomplete、Menu、ContextMenu"
 		]
 	},
 	{
-		category: "Structure and overlays",
-		items: ["Accordion, Collapsible, and Tabs", "Tooltip, Popover, and Preview Card", "Dialog, AlertDialog, Drawer, and BottomSheet"]
+		category: "結構與浮動介面",
+		items: ["Accordion、Collapsible、Tabs", "Tooltip、Popover、PreviewCard", "Dialog、AlertDialog、Drawer、BottomSheet"]
 	},
 	{
-		category: "Feedback and navigation",
-		items: [
-			"Toast, Alert, Banner, Progress, Meter, and loaders",
-			"Breadcrumb, Pagination, Navigation Menu, Menubar, and Toolbar",
-			"Header, Tab Bar, Table, Collection, Scroll Area, and Command Palette"
-		]
+		category: "回饋與導覽",
+		items: ["Toast、Alert、Banner、Progress、Meter、Loader", "Breadcrumb、Pagination、NavigationMenu、Menubar、Toolbar", "Header、TabBar、Table、Collection、ScrollArea、CommandPalette"]
 	},
 	{
-		category: "Date and time",
-		items: ["Calendar and DateField", "DatePicker and DateRangePicker", "TimeField and TimePicker", "DateTimePicker with locale-aware segmented input"]
+		category: "日期與時間",
+		items: ["Calendar、DateField", "DatePicker、DateRangePicker", "TimeField、TimePicker", "DateTimePicker 與依 locale 分段的輸入欄位"]
 	}
 ] as const;
 
 const meta = {
-	title: "Foundations/Design Principles",
+	title: "基礎/設計原則",
 	parameters: {
 		layout: "fullscreen"
 	}
@@ -79,15 +75,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const SystemPrinciplesAndInventory: Story = {
+	name: "設計原則與元件清單",
 	render: () => (
 		<main className="foundation-page">
-			<FoundationHero
-				eyebrow="LYDS system overview"
-				title="A consistent language for application interfaces."
-				description="LYDS follows Modulor’s verified component anatomy, semantic-token structure, explicit states, and compositional discipline, then remaps those roles to the LYDS palette."
-			/>
+			<FoundationHero eyebrow="Linyao Design System" title="設計原則" description="說明元件結構、語意變數、互動狀態、無障礙與產品邏輯的分工。" />
 
-			<FoundationSection title="Design principles">
+			<FoundationSection title="設計原則">
 				<div className="foundation-principle-grid">
 					{principles.map(principle => (
 						<article className="foundation-principle" key={principle.label}>
@@ -99,7 +92,7 @@ export const SystemPrinciplesAndInventory: Story = {
 				</div>
 			</FoundationSection>
 
-			<FoundationSection title="Component inventory">
+			<FoundationSection title="元件清單">
 				<div className="foundation-inventory-grid">
 					{inventory.map(group => (
 						<article className="foundation-inventory" key={group.category}>

@@ -40,7 +40,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import "../story-layout.css";
 
 const meta = {
-	title: "Components/Navigation/Navigation Primitives",
+	title: "元件/導覽/導覽元件",
 	parameters: { layout: "padded" }
 } satisfies Meta;
 
@@ -48,22 +48,23 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const HeaderPattern: Story = {
+	name: "頁首",
 	render: () => (
 		<Header>
 			<HeaderRail>
-				<HeaderBrand href="#">LYDS</HeaderBrand>
+				<HeaderBrand href="#">Linyao Design System</HeaderBrand>
 				<HeaderNav>
-					<a href="#guides">Guides</a>
-					<a href="#components">Components</a>
-					<a href="#resources">Resources</a>
+					<a href="#guides">指南</a>
+					<a href="#components">元件</a>
+					<a href="#resources">資源</a>
 				</HeaderNav>
 				<HeaderActions>
 					<HeaderStatus>
 						<Badge size="sm" variant="success">
-							All services available
+							所有服務正常
 						</Badge>
 					</HeaderStatus>
-					<Button size="sm">Get started</Button>
+					<Button size="sm">開始使用</Button>
 				</HeaderActions>
 			</HeaderRail>
 		</Header>
@@ -71,27 +72,28 @@ export const HeaderPattern: Story = {
 };
 
 export const BreadcrumbAndPagination: Story = {
+	name: "麵包屑與分頁",
 	render: () => (
 		<div className="lyds-story-stack">
-			<Breadcrumb label="Documentation location">
+			<Breadcrumb label="文件位置">
 				<BreadcrumbList>
 					<BreadcrumbItem>
-						<BreadcrumbLink href="#components">Components</BreadcrumbLink>
+						<BreadcrumbLink href="#components">元件</BreadcrumbLink>
 						<BreadcrumbSeparator />
 					</BreadcrumbItem>
 					<BreadcrumbItem>
-						<BreadcrumbLink href="#inputs">Inputs</BreadcrumbLink>
+						<BreadcrumbLink href="#inputs">輸入</BreadcrumbLink>
 						<BreadcrumbSeparator />
 					</BreadcrumbItem>
 					<BreadcrumbItem>
-						<BreadcrumbPage>Text field</BreadcrumbPage>
+						<BreadcrumbPage>文字欄位</BreadcrumbPage>
 					</BreadcrumbItem>
 				</BreadcrumbList>
 			</Breadcrumb>
-			<Pagination label="Search result pages">
+			<Pagination label="搜尋結果頁面">
 				<PaginationList>
 					<PaginationItem>
-						<PaginationPrevious href="#previous" disabled aria-label="Previous page" />
+						<PaginationPrevious href="#previous" disabled aria-label="上一頁" />
 					</PaginationItem>
 					<PaginationItem>
 						<PaginationButton>1</PaginationButton>
@@ -103,10 +105,10 @@ export const BreadcrumbAndPagination: Story = {
 						<PaginationButton>3</PaginationButton>
 					</PaginationItem>
 					<PaginationItem>
-						<PaginationEllipsis />
+						<PaginationEllipsis aria-label="更多頁面" />
 					</PaginationItem>
 					<PaginationItem>
-						<PaginationNext href="#next" aria-label="Next page" />
+						<PaginationNext href="#next" aria-label="下一頁" />
 					</PaginationItem>
 				</PaginationList>
 			</Pagination>
@@ -115,25 +117,26 @@ export const BreadcrumbAndPagination: Story = {
 };
 
 export const ApplicationNavigation: Story = {
+	name: "應用程式導覽",
 	render: () => (
 		<NavigationMenu>
 			<NavigationMenuList>
 				<NavigationMenuItem value="products">
 					<NavigationMenuTrigger>
-						Products <NavigationMenuIcon />
+						產品 <NavigationMenuIcon />
 					</NavigationMenuTrigger>
 					<NavigationMenuContent>
-						<NavigationMenuLink href="#platform">Platform</NavigationMenuLink>
-						<NavigationMenuLink href="#mobile">Mobile applications</NavigationMenuLink>
+						<NavigationMenuLink href="#platform">平台</NavigationMenuLink>
+						<NavigationMenuLink href="#mobile">行動應用程式</NavigationMenuLink>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 				<NavigationMenuItem value="resources">
 					<NavigationMenuTrigger>
-						Resources <NavigationMenuIcon />
+						資源 <NavigationMenuIcon />
 					</NavigationMenuTrigger>
 					<NavigationMenuContent>
-						<NavigationMenuLink href="#guides">Guides</NavigationMenuLink>
-						<NavigationMenuLink href="#support">Support</NavigationMenuLink>
+						<NavigationMenuLink href="#guides">指南</NavigationMenuLink>
+						<NavigationMenuLink href="#support">支援</NavigationMenuLink>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 			</NavigationMenuList>
@@ -149,15 +152,16 @@ export const ApplicationNavigation: Story = {
 };
 
 export const ToolbarRovingFocus: Story = {
+	name: "工具列鍵盤操作",
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<Toolbar aria-label="Editor controls">
-				<ToolbarButton>Undo</ToolbarButton>
-				<ToolbarButton>Redo</ToolbarButton>
+			<Toolbar aria-label="編輯工具">
+				<ToolbarButton>復原</ToolbarButton>
+				<ToolbarButton>重做</ToolbarButton>
 				<ToolbarSeparator />
-				<ToolbarButton disabled>Publish</ToolbarButton>
+				<ToolbarButton disabled>發布</ToolbarButton>
 			</Toolbar>
-			<p className="lyds-story-note">Tab into the toolbar once, then use arrow keys to move through enabled controls.</p>
+			<p className="lyds-story-note">按 Tab 進入工具列，再使用方向鍵移動。</p>
 		</div>
 	)
 };
