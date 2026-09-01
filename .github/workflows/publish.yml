@@ -1,4 +1,4 @@
-name: Publish npm package
+name: 發佈 npm 套件
 
 on:
   push:
@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   preflight:
-    name: Validate and package ${{ github.ref_name }}
+    name: 驗證並封裝 ${{ github.ref_name }}
     if: ${{ vars.NPM_PUBLISH_ENABLED == 'true' }}
     permissions:
       contents: read
@@ -29,27 +29,27 @@ jobs:
       integrity: ${{ steps.artifact.outputs.integrity }}
       artifact_name: ${{ steps.artifact_name.outputs.name }}
     steps:
-      - name: Check out release commit
+      - name: 取得發佈 commit
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Verify tagged commit is reachable from main
+      - name: 驗證標籤 commit 可由 main 追溯
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
         shell: bash
         run: |
           set -euo pipefail
           git show-ref --verify --quiet refs/remotes/origin/main || {
-            echo "The full checkout did not fetch origin/main." >&2
+            echo "完整 checkout 未取得 origin/main。" >&2
             exit 1
           }
           git merge-base --is-ancestor "${GITHUB_SHA}^{commit}" refs/remotes/origin/main || {
-            echo "Release tag ${GITHUB_REF_NAME} does not point to a commit reachable from main." >&2
+            echo "發佈標籤 ${GITHUB_REF_NAME} 指向的 commit 無法由 main 追溯。" >&2
             exit 1
           }
 
-      - name: Set up pnpm and Node.js
+      - name: 設定 pnpm 與 Node.js
         uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
         with:
           version: 11.24.0
@@ -57,39 +57,39 @@ jobs:
           cache: false
           install: false
 
-      - name: Install dependencies from lockfile
+      - name: 依 lockfile 安裝相依套件
         run: pnpm install --frozen-lockfile
 
-      - name: Install Chromium for Storybook tests
+      - name: 安裝 Storybook 測試用 Chromium
         run: pnpm --filter @lyds/storybook exec playwright install --with-deps chromium
 
-      - name: Derive and validate release plan
+      - name: 產生並驗證發佈計畫
         id: plan
         run: node scripts/release/release.mjs plan --event "$GITHUB_EVENT_NAME" --ref "$GITHUB_REF" --sha "$GITHUB_SHA" --output "$GITHUB_OUTPUT"
 
-      - name: Test release policy
+      - name: 測試發佈規則
         run: pnpm test:release
 
-      - name: Run complete quality suite
+      - name: 執行完整品質檢查
         run: pnpm check
 
-      - name: Verify checkout remains clean
+      - name: 確認 checkout 維持乾淨
         shell: bash
         run: |
           set -euo pipefail
           if [[ -n "$(git status --porcelain --untracked-files=all)" ]]; then
             git status --short
-            echo "Quality checks changed the clean release checkout." >&2
+            echo "品質檢查修改了原本乾淨的發佈 checkout。" >&2
             exit 1
           fi
 
-      - name: Set CI-only package version
+      - name: 設定僅供 CI 使用的套件版本
         run: node scripts/release/release.mjs set-version --file packages/ui/package.json --version "${{ steps.plan.outputs.version }}"
 
-      - name: Build versioned package
+      - name: 建置指定版本套件
         run: pnpm build:package
 
-      - name: Pack release artifact once
+      - name: 封裝單一發佈檔案
         id: pack
         shell: bash
         run: |
@@ -100,24 +100,24 @@ jobs:
           shopt -s nullglob
           tarballs=("$pack_directory"/*.tgz)
           if [[ ${#tarballs[@]} -ne 1 ]]; then
-            echo "Expected exactly one release tarball, found ${#tarballs[@]}." >&2
+            echo "應只有一個發佈 tarball，實際找到 ${#tarballs[@]} 個。" >&2
             exit 1
           fi
           echo "tarball=${tarballs[0]}" >> "$GITHUB_OUTPUT"
 
-      - name: Validate exact release tarball contents and consumption
+      - name: 驗證發佈 tarball 內容與安裝結果
         run: node scripts/verify-package.mjs --tarball "${{ steps.pack.outputs.tarball }}"
 
-      - name: Verify final artifact identity and integrity
+      - name: 驗證發佈檔案識別與完整性
         id: artifact
         run: >-
           node scripts/release/release.mjs publish --kind "${{ steps.plan.outputs.kind }}" --version "${{ steps.plan.outputs.version }}" --dist-tag "${{ steps.plan.outputs.dist_tag }}" --tarball "${{ steps.pack.outputs.tarball }}" --dry-run --output "$GITHUB_OUTPUT"
 
-      - name: Record rerun-stable artifact name
+      - name: 記錄重跑時不衝突的檔案名稱
         id: artifact_name
         run: echo "name=lyds-ui-release-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" >> "$GITHUB_OUTPUT"
 
-      - name: Upload verified release artifact
+      - name: 上傳已驗證的發佈檔案
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: ${{ steps.artifact_name.outputs.name }}
@@ -127,7 +127,7 @@ jobs:
           retention-days: 1
 
   publish:
-    name: Publish ${{ needs.preflight.outputs.version }}
+    name: 發佈 ${{ needs.preflight.outputs.version }}
     if: ${{ vars.NPM_PUBLISH_ENABLED == 'true' }}
     needs: preflight
     permissions:
@@ -136,13 +136,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Check out verified release commit
+      - name: 取得已驗證的發佈 commit
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Set up npm runtime without installing project dependencies
+      - name: 設定 npm 執行環境
         uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
         with:
           version: 11.24.0
@@ -150,13 +150,13 @@ jobs:
           cache: false
           install: false
 
-      - name: Download verified release artifact
+      - name: 下載已驗證的發佈檔案
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: ${{ needs.preflight.outputs.artifact_name }}
           path: ${{ runner.temp }}/lyds-release
 
-      - name: Locate unique release tarball
+      - name: 取得唯一的發佈 tarball
         id: artifact
         shell: bash
         run: |
@@ -164,17 +164,17 @@ jobs:
           shopt -s nullglob
           tarballs=("${RUNNER_TEMP}/lyds-release"/*.tgz)
           if [[ ${#tarballs[@]} -ne 1 ]]; then
-            echo "Expected exactly one downloaded release tarball, found ${#tarballs[@]}." >&2
+            echo "應只有一個下載的發佈 tarball，實際找到 ${#tarballs[@]} 個。" >&2
             exit 1
           fi
           echo "tarball=${tarballs[0]}" >> "$GITHUB_OUTPUT"
 
-      - name: Reverify artifact and publish through npm trusted publishing
+      - name: 重新驗證並透過 npm Trusted Publishing 發佈
         id: npm
         run: >-
           node scripts/release/release.mjs publish --kind "${{ needs.preflight.outputs.kind }}" --version "${{ needs.preflight.outputs.version }}" --dist-tag "${{ needs.preflight.outputs.dist_tag }}" --tarball "${{ steps.artifact.outputs.tarball }}" --expected-integrity "${{ needs.preflight.outputs.integrity }}" --output "$GITHUB_OUTPUT"
 
-      - name: Summarize publication
+      - name: 彙整發佈結果
         env:
           RELEASE_KIND: ${{ needs.preflight.outputs.kind }}
           RELEASE_VERSION: ${{ needs.preflight.outputs.version }}
@@ -183,14 +183,14 @@ jobs:
           RELEASE_INTEGRITY: ${{ steps.npm.outputs.integrity }}
         run: |
           {
-            echo "### npm publication"
+            echo "### npm 發佈結果"
             echo
-            echo "- Package: \`@lyds/ui@${RELEASE_VERSION}\`"
-            echo "- Kind: \`${RELEASE_KIND}\`"
-            echo "- Dist-tag: \`${RELEASE_DIST_TAG}\`"
-            echo "- Result: \`${RELEASE_STATUS}\`"
-            echo "- Integrity: \`${RELEASE_INTEGRITY}\`"
+            echo "- 套件：\`@lyds/ui@${RELEASE_VERSION}\`"
+            echo "- 類型：\`${RELEASE_KIND}\`"
+            echo "- Dist-tag：\`${RELEASE_DIST_TAG}\`"
+            echo "- 結果：\`${RELEASE_STATUS}\`"
+            echo "- 完整性：\`${RELEASE_INTEGRITY}\`"
             if [[ "$RELEASE_STATUS" == "skipped" ]]; then
-              echo "- Detail: Exact snapshot version already exists with identical integrity; safely skipped."
+              echo "- 說明：相同 snapshot 版本已存在，且完整性一致，已安全略過。"
             fi
           } >> "$GITHUB_STEP_SUMMARY"
