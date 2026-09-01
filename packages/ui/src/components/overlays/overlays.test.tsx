@@ -159,7 +159,7 @@ describe("modal overlays", () => {
 		await user.keyboard("{Enter}");
 
 		expect(screen.getByRole("dialog", { name: "Diagnostics" })).toHaveAttribute("data-open", "");
-		expect(screen.getByRole("button", { name: "Close dialog" })).toBeInTheDocument();
+		expect(screen.getByRole("button", { name: "關閉對話框" })).toBeInTheDocument();
 		await waitFor(() => {
 			expect(screen.getByRole("button", { name: "Inside action" })).toHaveFocus();
 		});
@@ -231,7 +231,7 @@ describe("modal overlays", () => {
 		await user.click(screen.getByRole("button", { name: "Open panel" }));
 		expect(screen.getByRole("dialog", { name: "Panel controls" })).toBeVisible();
 
-		await user.click(screen.getByRole("button", { name: "Close drawer" }));
+		await user.click(screen.getByRole("button", { name: "關閉側欄" }));
 		await waitFor(() => {
 			expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 		});
@@ -262,7 +262,7 @@ describe("modal overlays", () => {
 		await user.click(screen.getByRole("button", { name: "Open sheet" }));
 		expect(screen.getByRole("dialog", { name: "Sheet controls" })).toBeVisible();
 
-		await user.click(screen.getByRole("button", { name: "Close bottom sheet" }));
+		await user.click(screen.getByRole("button", { name: "關閉底部面板" }));
 		await waitFor(() => {
 			expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 		});

@@ -88,7 +88,7 @@ function SelectComponent<Value>({
 	className,
 	invalid = false,
 	options,
-	placeholder = "Select an option",
+	placeholder = "請選擇",
 	popupProps,
 	positionerProps,
 	triggerProps,

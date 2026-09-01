@@ -6,13 +6,13 @@ export type FieldSize = "sm" | "md" | "lg";
 export type FieldValidationProps = Pick<BaseField.Root.Props, "actionsRef" | "dirty" | "touched" | "validate" | "validationDebounceTime" | "validationMode">;
 
 export interface FieldAnatomyProps extends FieldValidationProps {
-	/** The visible field label. Supply an aria-label on the control if this is omitted. */
+	/** 欄位的可見標籤。省略時，請在控制項提供 `aria-label`。 */
 	label?: React.ReactNode;
-	/** Supporting copy associated with the control through Base UI Field. */
+	/** 透過 Base UI Field 與控制項關聯的補充說明。 */
 	description?: React.ReactNode;
-	/** Validation feedback associated with the control through Base UI Field. */
+	/** 透過 Base UI Field 與控制項關聯的驗證訊息。 */
 	error?: React.ReactNode;
-	/** Marks externally validated fields as invalid. */
+	/** 將經外部驗證的欄位標記為無效。 */
 	invalid?: boolean | undefined;
 	disabled?: boolean | undefined;
 	readOnly?: boolean | undefined;
@@ -21,7 +21,7 @@ export interface FieldAnatomyProps extends FieldValidationProps {
 	size?: FieldSize | undefined;
 	className?: string | undefined;
 	style?: React.CSSProperties | undefined;
-	/** Optional localized annotation displayed after the label. */
+	/** 顯示於標籤後方的選用在地化註記。 */
 	requiredIndicator?: React.ReactNode;
 }
 

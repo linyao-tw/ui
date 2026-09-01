@@ -5,15 +5,15 @@ import "./forms.css";
 import { withStateClassName, type FieldSize } from "./internal";
 
 export interface InputProps extends Omit<BaseInput.Props, "size"> {
-	/** LYDS control size. Use `inputSize` for the native HTML size attribute. */
+	/** Linyao Design System 的控制項尺寸。原生 HTML `size` 屬性請使用 `inputSize`。 */
 	size?: FieldSize;
 	inputSize?: number;
 	invalid?: boolean;
 }
 
 /**
- * A low-level text input with LYDS styling and Base UI value-change details.
- * Use TextField when a visible label, description, or error is needed.
+ * 使用 Linyao Design System 樣式與 Base UI 值變更資訊的基礎文字輸入元件。
+ * 需要可見標籤、說明或錯誤訊息時，請使用 TextField。
  */
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Input(
 	{ size = "md", inputSize, invalid, className, disabled, readOnly, required, name, "aria-invalid": ariaInvalid, ...props },

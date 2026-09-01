@@ -31,8 +31,8 @@ const datePickerPropContract: DatePickerPropContract = true;
 void datePickerPropContract;
 
 /**
- * Date-time values intentionally carry their own semantics. Use `CalendarDateTime` for a wall-clock value or
- * `ZonedDateTime` for an exact time-zone-aware value. LYDS never silently converts between the two.
+ * 日期時間值保留自身語意。不含時區的日期時間請使用 `CalendarDateTime`；
+ * 具明確時區的時間點請使用 `ZonedDateTime`。Linyao Design System 不會在兩者之間自動轉換。
  */
 export type DateTimeValue = CalendarDateTime | ZonedDateTime;
 

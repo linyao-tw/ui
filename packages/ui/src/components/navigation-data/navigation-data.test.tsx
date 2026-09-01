@@ -1,5 +1,5 @@
-// Base UI portals own their transition teardown. The pure entry lets each test
-// unmount explicitly instead of registering a second global cleanup pass.
+// Base UI Portal 自行處理轉場清理。使用 `pure` 入口可讓每個測試明確卸載，
+// 不必註冊第二次全域清理。
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react/pure";
 import userEvent from "@testing-library/user-event";
 import { useRef, useState } from "react";
@@ -60,7 +60,7 @@ function MenubarFixture() {
 					<MenubarPositioner>
 						<MenubarPopup
 							finalFocus={() => {
-								// JSDOM cannot reliably evaluate the visibility of a portalled trigger.
+								// JSDOM 無法可靠判斷 Portal 內觸發按鈕的可見性。
 								triggerRef.current?.focus();
 								return triggerRef.current;
 							}}

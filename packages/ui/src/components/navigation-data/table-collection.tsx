@@ -57,7 +57,7 @@ export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(functi
 	return <td ref={ref} className={cx("lyds-table__cell", className)} data-align={textAlign} data-numeric={numeric ? "" : undefined} {...props} />;
 });
 
-/** Presentational shell. Data fetching, sorting, filtering, and pagination stay with the consumer. */
+/** 純呈現用結構。資料擷取、排序、篩選與分頁由使用端負責。 */
 export const DataTable = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function DataTable({ className, ...props }, ref) {
 	return <section ref={ref} className={cx("lyds-data-table", className)} {...props} />;
 });

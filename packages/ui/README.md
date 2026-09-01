@@ -1,24 +1,24 @@
 # @lyds/ui
 
-LYDS 是一套 React component design system，以 Base UI 為主要 behavior primitive，並以 warm retro-industrial technology 為視覺方向。套件提供 React components、TypeScript declarations、semantic tokens、Light/Dark themes 與完整 component CSS。
+Linyao Design System 是麟曜數位工作室的設計系統。`@lyds/ui` 提供 React 元件、TypeScript 型別、語意設計變數、亮色與深色主題，以及元件樣式。
 
-> Pre-release status：此 repository 已準備 package，但本次工作不會發佈到 npm。取得 owner 明確批准前，不要假設 registry package 可用。
+> 此套件尚未發佈至 npm。取得專案負責人明確批准前，不得發佈套件。
 
-## Install
+## 安裝
 
-公開發佈啟用後：
+套件公開發佈後，可使用 pnpm 安裝：
 
 ```sh
 pnpm add @lyds/ui @phosphor-icons/react
 ```
 
-在 application entry 匯入一次 CSS：
+在應用程式入口匯入一次樣式：
 
 ```tsx
 import "@lyds/ui/styles.css";
 ```
 
-## Use
+## 使用
 
 ```tsx
 import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";
@@ -27,22 +27,24 @@ import { Button, TextField } from "@lyds/ui";
 export function ProfileForm() {
 	return (
 		<form>
-			<TextField label="Display name" name="displayName" required />
+			<TextField label="顯示名稱" name="displayName" required />
 			<Button type="submit" startIcon={<FloppyDiskIcon weight="bold" />}>
-				Save
+				儲存
 			</Button>
 		</form>
 	);
 }
 ```
 
-Switch theme with a semantic scope:
+## 主題
+
+以 `data-lyds-theme` 切換亮色或深色主題：
 
 ```html
 <html data-lyds-theme="dark"></html>
 ```
 
-Customize semantic roles, not component raw colors：
+自訂主題時應覆寫語意角色，不要直接修改元件顏色：
 
 ```css
 .product-theme {
@@ -53,31 +55,31 @@ Customize semantic roles, not component raw colors：
 }
 ```
 
-## Design boundaries
+## 設計邊界
 
-- LYDS components 不進行 API calls、routing、analytics、storage 或 business validation。
-- DataTable 不內建 sorting、filtering 或 data fetching。
-- FileUpload/DropZone 不內建 upload transport 或 security validation。
-- Date & Time 使用 structured values；不把 locale、timezone 或格式寫死。
-- 一般互動使用 Base UI；Date & Time 是 React Aria Components + `@internationalized/date` 的限定例外，視覺仍完全由 LYDS tokens/CSS 控制。
+- 元件不包含 API 呼叫、路由、分析、儲存或業務驗證。
+- `DataTable` 不內建排序、篩選或資料擷取。
+- `FileUpload` 與 `DropZone` 不內建上傳傳輸或安全驗證。
+- 日期與時間元件使用結構化值，不預設地區、時區或顯示格式。
+- 一般互動以 Base UI 實作；日期與時間元件使用 React Aria Components 與 `@internationalized/date`。
 
-## Public contract
+## 公開介面
 
-只依賴 package `exports`：
+請從套件公開匯出項目匯入：
 
 ```tsx
 import { Button, DatePicker } from "@lyds/ui";
 import "@lyds/ui/styles.css";
 ```
 
-不要匯入 `@lyds/ui/src/**`、`@lyds/ui/dist/**` 或 internal helpers。Public symbols 以 shipped `dist/index.d.ts` 為準。
+不要匯入 `@lyds/ui/src/**`、`@lyds/ui/dist/**` 或內部工具。公開介面以套件提供的 `dist/index.d.ts` 為準。
 
-## Accessibility
+## 無障礙
 
-LYDS 以 WCAG 2.2 AA 為目標，提供 keyboard/focus behavior、清楚 `focus-visible`、semantic error/status、minimum control target 與 reduced-motion response。Consumer 仍必須提供正確 labels、內容、focus order、contrast-safe custom theme 與真實流程測試。
+Linyao Design System 以 WCAG 2.2 AA 為目標，提供鍵盤操作、焦點樣式、錯誤與狀態語意、最小操作尺寸及降低動態效果支援。使用端仍須提供正確標籤、內容、焦點順序、符合對比要求的自訂主題與實際流程測試。
 
-## Repository documentation
+## 文件
 
-完整安裝、Storybook、開發、元件、tokens、theming 與發佈合約位於 [repository README](https://github.com/linyao-tw/ui#readme) 與 [docs](https://github.com/linyao-tw/ui/tree/main/docs)。
+完整的安裝、Storybook、開發、元件、設計變數、主題與發佈規範請參閱 [專案 README](https://github.com/linyao-tw/ui#readme) 與 [文件目錄](https://github.com/linyao-tw/ui/tree/main/docs)。
 
-License metadata：Apache-2.0。發佈前須確認 tarball 內授權檔與 repository 一致。
+授權：Apache-2.0。發佈前須確認套件內容中的授權檔與專案一致。

@@ -5,7 +5,7 @@ import { getLiveRegionProps, mergeClassNames, type FeedbackLiveMode, type Feedba
 
 export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
 	status?: FeedbackStatus;
-	/** Use polite/assertive only when this banner is dynamically introduced. */
+	/** 僅在 Banner 動態出現時使用 `polite` 或 `assertive`。 */
 	live?: FeedbackLiveMode;
 }
 

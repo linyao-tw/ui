@@ -22,7 +22,7 @@ export interface HeaderNavProps extends HTMLAttributes<HTMLElement> {
 	label?: string;
 }
 
-export const HeaderNav = forwardRef<HTMLElement, HeaderNavProps>(function HeaderNav({ className, label = "Primary navigation", ...props }, ref) {
+export const HeaderNav = forwardRef<HTMLElement, HeaderNavProps>(function HeaderNav({ className, label = "主要導覽", ...props }, ref) {
 	return <nav ref={ref} aria-label={label} className={cx("lyds-header__nav", className)} {...props} />;
 });
 
@@ -38,7 +38,7 @@ export interface TabBarProps extends HTMLAttributes<HTMLElement> {
 	label?: string;
 }
 
-export const TabBar = forwardRef<HTMLElement, TabBarProps>(function TabBar({ className, label = "Application sections", ...props }, ref) {
+export const TabBar = forwardRef<HTMLElement, TabBarProps>(function TabBar({ className, label = "應用程式區段", ...props }, ref) {
 	return <nav ref={ref} aria-label={label} className={cx("lyds-tab-bar", className)} {...props} />;
 });
 

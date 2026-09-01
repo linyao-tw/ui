@@ -54,7 +54,7 @@ export function TooltipProvider(props: TooltipProviderProps): JSX.Element {
 }
 
 export interface TooltipRootProps<Payload = unknown> extends BaseTooltipRootProps<Payload> {
-	/** Stable id used to associate the trigger with its tooltip description. */
+	/** 將觸發項目與 Tooltip 說明關聯的穩定 id。 */
 	descriptionId?: string;
 }
 
@@ -146,7 +146,7 @@ export const PopoverDescription = forwardRef<HTMLParagraphElement, PopoverDescri
 });
 
 export interface PopoverCloseProps extends BasePopoverCloseProps {
-	/** Icon controls sit in the panel corner; action controls participate in layout. */
+	/** 圖示控制項位於面板角落；動作控制項則參與內容排版。 */
 	variant?: "icon" | "action";
 }
 
@@ -158,7 +158,7 @@ export const PopoverClose = forwardRef<HTMLButtonElement, PopoverCloseProps>(fun
 		<BasePopover.Close
 			{...props}
 			ref={ref}
-			aria-label={ariaLabel ?? (children == null ? "Close popover" : undefined)}
+			aria-label={ariaLabel ?? (children == null ? "關閉彈出視窗" : undefined)}
 			className={mergeClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
 		>
 			{children ?? <CloseGlyph />}
@@ -202,7 +202,7 @@ export const PreviewCardPositioner = forwardRef<HTMLDivElement, PreviewCardPosit
 	return <BasePreviewCard.Positioner {...props} ref={ref} sideOffset={sideOffset} className={mergeClassName("lyds-previewCard__positioner", className)} />;
 });
 
-/** Preview cards only supplement their trigger; essential content belongs in-page. */
+/** PreviewCard 僅補充觸發項目的資訊；必要內容仍應顯示於頁面中。 */
 export const PreviewCardPopup = forwardRef<HTMLDivElement, PreviewCardPopupProps>(function PreviewCardPopup({ className, ...props }, ref) {
 	return <BasePreviewCard.Popup {...props} ref={ref} className={mergeClassName("lyds-previewCard__popup", className)} />;
 });

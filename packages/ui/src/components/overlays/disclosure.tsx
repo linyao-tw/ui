@@ -99,7 +99,7 @@ export const TabsTab = forwardRef<HTMLElement, TabsTabProps>(function TabsTab({ 
 	return <BaseTabs.Tab {...props} ref={ref} className={mergeClassName("lyds-tabs__tab", className)} />;
 });
 
-/** Base UI indicator escape hatch. LYDS hides it by default because active tabs use their own pill surface. */
+/** Base UI 指示器的進階自訂介面。作用中的分頁已有自身選取樣式，因此 Linyao Design System 預設隱藏此元件。 */
 export const TabsIndicator = forwardRef<HTMLSpanElement, TabsIndicatorProps>(function TabsIndicator({ className, ...props }, ref) {
 	return <BaseTabs.Indicator {...props} ref={ref} className={mergeClassName("lyds-tabs__indicator", className)} />;
 });

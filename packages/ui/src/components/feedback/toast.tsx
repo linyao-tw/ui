@@ -44,7 +44,7 @@ export interface ToastRootProps<Data extends object = ToastData> extends Omit<Ba
 type ToastRootComponent = <Data extends object = ToastData>(props: ToastRootProps<Data> & RefAttributes<HTMLDivElement>) => ReactElement;
 
 export const ToastRoot = forwardRef(function ToastRoot<Data extends object = ToastData>(
-	{ className, closeLabel = "Dismiss notification", toast, ...props }: ToastRootProps<Data>,
+	{ className, closeLabel = "關閉通知", toast, ...props }: ToastRootProps<Data>,
 	ref: ForwardedRef<HTMLDivElement>
 ) {
 	const actionProps = toast.actionProps;

@@ -44,15 +44,15 @@ export const DialogViewport = forwardRef<HTMLDivElement, DialogViewportProps>(fu
 });
 
 export interface DialogPopupProps extends BaseDialogPopupProps {
-	/** Accessible label for the built-in close control. */
+	/** 內建關閉控制項的無障礙標籤。 */
 	closeLabel?: string;
-	/** Props for the built-in close control. */
+	/** 傳給內建關閉控制項的屬性。 */
 	closeProps?: Omit<DialogCloseProps, "children">;
-	/** Set only when rendering another accessible Dialog.Close in the popup. */
+	/** 僅在彈出內容另有可存取的 Dialog.Close 時設定。 */
 	hasCustomClose?: boolean;
 }
 
-export const DialogPopup = forwardRef<HTMLDivElement, DialogPopupProps>(function DialogPopup({ children, className, closeLabel = "Close dialog", closeProps, hasCustomClose = false, ...props }, ref) {
+export const DialogPopup = forwardRef<HTMLDivElement, DialogPopupProps>(function DialogPopup({ children, className, closeLabel = "關閉對話框", closeProps, hasCustomClose = false, ...props }, ref) {
 	return (
 		<BaseDialog.Popup {...props} ref={ref} className={mergeClassName("lyds-dialog__popup", className)}>
 			{children}
@@ -70,7 +70,7 @@ export const DialogDescription = forwardRef<HTMLParagraphElement, DialogDescript
 });
 
 export interface DialogCloseProps extends BaseDialogCloseProps {
-	/** Icon controls sit in the panel corner; action controls participate in layout. */
+	/** 圖示控制項位於面板角落；動作控制項則參與內容排版。 */
 	variant?: "icon" | "action";
 }
 
@@ -82,7 +82,7 @@ export const DialogClose = forwardRef<HTMLButtonElement, DialogCloseProps>(funct
 		<BaseDialog.Close
 			{...props}
 			ref={ref}
-			aria-label={ariaLabel ?? (children == null ? "Close dialog" : undefined)}
+			aria-label={ariaLabel ?? (children == null ? "關閉對話框" : undefined)}
 			className={mergeClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
 		>
 			{children ?? <CloseGlyph />}
@@ -125,7 +125,7 @@ export const Dialog = {
 	Handle: BaseDialog.Handle
 } as const;
 
-/** Dialog is modal by default in Base UI; Modal is its explicit application alias. */
+/** Base UI 的 Dialog 預設為強制回應；Modal 是用途明確的別名。 */
 export const Modal = Dialog;
 
 export function AlertDialogRoot<Payload = unknown>(props: AlertDialogRootProps<Payload>): JSX.Element {
@@ -137,16 +137,16 @@ export function AlertDialogTrigger<Payload = unknown>({ className, ...props }: A
 }
 
 export interface AlertDialogPopupProps extends BaseDialogPopupProps {
-	/** Accessible label for the built-in cancel/close control. */
+	/** 內建取消／關閉控制項的無障礙標籤。 */
 	closeLabel?: string;
-	/** Props for the built-in cancel/close control. */
+	/** 傳給內建取消／關閉控制項的屬性。 */
 	closeProps?: Omit<DialogCloseProps, "children">;
-	/** Set only when rendering another accessible AlertDialog.Close in the popup. */
+	/** 僅在彈出內容另有可存取的 AlertDialog.Close 時設定。 */
 	hasCustomClose?: boolean;
 }
 
 export const AlertDialogPopup = forwardRef<HTMLDivElement, AlertDialogPopupProps>(function AlertDialogPopup(
-	{ children, className, closeLabel = "Cancel and close alert", closeProps, hasCustomClose = false, ...props },
+	{ children, className, closeLabel = "取消並關閉警示", closeProps, hasCustomClose = false, ...props },
 	ref
 ) {
 	return (
@@ -165,7 +165,7 @@ export const AlertDialogClose = forwardRef<HTMLButtonElement, DialogCloseProps>(
 		<BaseAlertDialog.Close
 			{...props}
 			ref={ref}
-			aria-label={ariaLabel ?? (children == null ? "Cancel and close alert" : undefined)}
+			aria-label={ariaLabel ?? (children == null ? "取消並關閉警示" : undefined)}
 			className={mergeClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
 		>
 			{children ?? <CloseGlyph />}

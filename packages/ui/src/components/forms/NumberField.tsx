@@ -16,7 +16,7 @@ export interface NumberFieldProps extends NumberRootProps, FieldAnatomyProps {
 	decrementLabel?: string;
 }
 
-/** Locale-aware numeric input powered by Base UI Number Field. */
+/** 以 Base UI Number Field 實作、支援地區格式的數字輸入元件。 */
 export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(function NumberField(
 	{
 		label,
@@ -41,8 +41,8 @@ export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(fu
 		inputStyle,
 		groupClassName,
 		showSteppers = true,
-		incrementLabel = "Increase value",
-		decrementLabel = "Decrease value",
+		incrementLabel = "增加數值",
+		decrementLabel = "減少數值",
 		...numberProps
 	},
 	ref

@@ -6,22 +6,20 @@ import type { OTPFieldProps } from "./OTPField";
 
 export interface CodeFieldProps extends Omit<OTPFieldProps, "length" | "separator" | "separatorAfter"> {
 	/**
-	 * Number of code characters. Values are constrained to the Modulor-supported
-	 * range of 2–12.
+	 * 驗證碼字元數。數值限制為 2 至 12。
 	 * @default 6
 	 */
 	length?: number;
 	/**
-	 * Number of characters rendered inside one visual group. Lengths from 9–12
-	 * default to groups of four; shorter codes default to individual cells.
-	 * Set to 1 to force individual cells.
+	 * 每個視覺群組顯示的字元數。長度為 9 至 12 時預設每四個字元一組；
+	 * 較短的驗證碼預設各自獨立。設為 1 可強制使用獨立輸入格。
 	 */
 	groupSize?: number;
 	groupClassName?: string;
 	groupStyle?: React.CSSProperties;
 	/**
-	 * Optional empty-cell hint. A string is distributed one character per slot;
-	 * use a function to localize or customize each slot independently.
+	 * 空白輸入格的選用提示。字串會依序將每個字元分配至各輸入格；
+	 * 需要個別在地化或自訂時可使用函式。
 	 */
 	placeholder?: string | ((index: number) => string | undefined);
 }
@@ -31,7 +29,7 @@ function constrainInteger(value: number, minimum: number, maximum: number): numb
 	return Math.min(maximum, Math.max(minimum, Math.trunc(value)));
 }
 
-/** A Base UI OTP-backed, multi-cell verification code control. */
+/** 以 Base UI OTP Field 實作的多格驗證碼控制項。 */
 export const CodeField = React.forwardRef<HTMLDivElement, CodeFieldProps>(function CodeField(
 	{
 		label,
@@ -82,7 +80,7 @@ export const CodeField = React.forwardRef<HTMLDivElement, CodeFieldProps>(functi
 			className={withStateClassName<BaseOTPField.Input.State>(cx("lyds-otp-field__input", "lyds-code-field__input", insideGroup && "lyds-code-field__group-input"), inputClassName)}
 			style={inputStyle}
 			placeholder={typeof placeholder === "function" ? placeholder(index) : placeholderCharacters?.[index]}
-			aria-label={index > 0 ? (getSlotLabel?.(index) ?? `Character ${index + 1} of ${length}`) : undefined}
+			aria-label={index > 0 ? (getSlotLabel?.(index) ?? `第 ${index + 1} 個字元，共 ${length} 個`) : undefined}
 		/>
 	);
 

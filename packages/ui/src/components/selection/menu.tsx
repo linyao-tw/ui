@@ -102,10 +102,10 @@ const menuParts = {
 	createHandle: BaseMenu.createHandle
 } as const;
 
-/** A button-triggered application menu. */
+/** 由按鈕觸發的應用程式選單。 */
 export const DropdownMenu = menuParts;
 
-/** Alias for DropdownMenu, matching the Base UI glossary name. */
+/** DropdownMenu 的別名，名稱與 Base UI 詞彙一致。 */
 export const Menu = menuParts;
 
 export const ContextMenuTrigger = forwardRef<HTMLDivElement, ContextMenuTriggerProps>(function ContextMenuTrigger({ className, onKeyDown, ...props }, ref) {

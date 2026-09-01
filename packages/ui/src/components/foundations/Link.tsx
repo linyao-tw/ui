@@ -31,8 +31,8 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link
 	return useRender<LinkState, HTMLAnchorElement>({
 		defaultTagName: "a",
 		ref,
-		// A polymorphic render function or router component can reintroduce navigation.
-		// Render a native, inert anchor whenever disabled so the contract is enforceable.
+		// 多型 `render` 函式或路由元件可能重新加入導覽行為。
+		// 停用時改用無互動的原生連結，確保元件契約成立。
 		render: disabled ? undefined : render,
 		state,
 		props: {

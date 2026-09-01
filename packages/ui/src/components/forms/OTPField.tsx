@@ -8,13 +8,13 @@ type OTPRootProps = Omit<BaseOTPField.Root.Props, "className" | "disabled" | "na
 export interface OTPFieldProps extends OTPRootProps, FieldAnatomyProps {
 	inputClassName?: BaseOTPField.Input.Props["className"];
 	inputStyle?: React.CSSProperties;
-	/** Optional localized accessible label for slots after the first. */
+	/** 第一格之後各輸入格的選用在地化無障礙標籤。 */
 	getSlotLabel?: (index: number) => string;
 	separator?: React.ReactNode;
 	separatorAfter?: readonly number[];
 }
 
-/** Multi-slot verification input powered by Base UI OTP Field. */
+/** 以 Base UI OTP Field 實作的多格驗證碼輸入元件。 */
 export const OTPField = React.forwardRef<HTMLDivElement, OTPFieldProps>(function OTPField(
 	{
 		label,
@@ -72,7 +72,7 @@ export const OTPField = React.forwardRef<HTMLDivElement, OTPFieldProps>(function
 						<BaseOTPField.Input
 							className={withStateClassName<BaseOTPField.Input.State>("lyds-otp-field__input", inputClassName)}
 							style={inputStyle}
-							aria-label={index > 0 ? (getSlotLabel?.(index) ?? `Character ${index + 1} of ${length}`) : undefined}
+							aria-label={index > 0 ? (getSlotLabel?.(index) ?? `第 ${index + 1} 個字元，共 ${length} 個`) : undefined}
 						/>
 						{separatorAfter.includes(index + 1) && index < length - 1 ? <span className="lyds-otp-field__separator">{separator}</span> : null}
 					</React.Fragment>

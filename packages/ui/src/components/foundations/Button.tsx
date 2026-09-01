@@ -11,9 +11,9 @@ export interface ButtonProps extends Omit<BaseButtonProps, "children" | "classNa
 	size?: ButtonSize;
 	loading?: boolean;
 	loadingIndicator?: React.ReactNode;
-	/** Decorative leading icon. Use an @phosphor-icons/react icon; the text label remains the accessible name. */
+	/** 裝飾性的前置圖示。請使用 @phosphor-icons/react；按鈕文字仍是無障礙名稱。 */
 	startIcon?: React.ReactNode;
-	/** Decorative trailing icon. Use an @phosphor-icons/react icon; the text label remains the accessible name. */
+	/** 裝飾性的後置圖示。請使用 @phosphor-icons/react；按鈕文字仍是無障礙名稱。 */
 	endIcon?: React.ReactNode;
 	className?: string;
 	style?: React.CSSProperties;

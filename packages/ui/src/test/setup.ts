@@ -1,8 +1,7 @@
 import "@testing-library/jest-dom/vitest";
 
-// jsdom does not implement PointerEvent yet. Base UI intentionally dispatches
-// pointer-specific click events, so keep the test environment aligned with a
-// browser without weakening component interaction tests.
+// jsdom 尚未實作 PointerEvent。Base UI 會刻意派送指標裝置專用的點擊事件，
+// 因此讓測試環境與瀏覽器行為一致，同時保留元件互動測試的強度。
 if (!("PointerEvent" in window)) {
 	class TestPointerEvent extends MouseEvent {
 		readonly height = 1;

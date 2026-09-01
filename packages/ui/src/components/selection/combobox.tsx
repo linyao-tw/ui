@@ -127,8 +127,8 @@ function ComboboxComponent<Value>({
 	"aria-label": ariaLabel,
 	"aria-labelledby": ariaLabelledby,
 	className,
-	clearLabel = "Clear selection",
-	emptyMessage = "No matching options",
+	clearLabel = "清除選取",
+	emptyMessage = "找不到符合的選項",
 	inputProps,
 	invalid = false,
 	itemToStringLabel,
@@ -136,7 +136,7 @@ function ComboboxComponent<Value>({
 	placeholder,
 	popupProps,
 	positionerProps,
-	triggerLabel = "Show options",
+	triggerLabel = "顯示選項",
 	...rootProps
 }: ComboboxProps<Value>) {
 	const optionIndex = useMemo(() => createOptionIndex<Value, ComboboxOption<Value>>(options), [options]);
@@ -266,8 +266,8 @@ function AutocompleteComponent<ItemValue>({
 	"aria-label": ariaLabel,
 	"aria-labelledby": ariaLabelledby,
 	className,
-	clearLabel = "Clear query",
-	emptyMessage = "No suggestions",
+	clearLabel = "清除搜尋內容",
+	emptyMessage = "找不到建議項目",
 	inputProps,
 	invalid = false,
 	itemToStringValue,
@@ -275,7 +275,7 @@ function AutocompleteComponent<ItemValue>({
 	placeholder,
 	popupProps,
 	positionerProps,
-	triggerLabel = "Show suggestions",
+	triggerLabel = "顯示建議項目",
 	...rootProps
 }: AutocompleteProps<ItemValue>) {
 	const optionIndex = useMemo(() => createOptionIndex<ItemValue, AutocompleteOption<ItemValue>>(options), [options]);

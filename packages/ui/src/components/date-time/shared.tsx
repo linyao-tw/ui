@@ -9,13 +9,13 @@ import { Text } from "react-aria-components/Text";
 export type DateTimeSize = "sm" | "md" | "lg";
 
 export interface DateTimeFieldChromeProps {
-	/** Visible field label. Supply an `aria-label` instead when a visible label is not appropriate. */
+	/** 欄位的可見標籤。不適合顯示可見標籤時，請改用 `aria-label`。 */
 	label?: ReactNode;
-	/** Supporting text connected to the control through React Aria. */
+	/** 透過 React Aria 與控制項關聯的補充說明。 */
 	description?: ReactNode;
-	/** Validation feedback associated with the control. */
+	/** 與控制項關聯的驗證訊息。 */
 	error?: ReactNode;
-	/** BCP 47 locale used for segment order, labels, and numbering. Inherits the nearest provider when omitted. */
+	/** 用於區段順序、標籤與數字格式的 BCP 47 地區設定。省略時沿用最近的 `I18nProvider`。 */
 	locale?: string | undefined;
 	size?: DateTimeSize;
 	className?: string;

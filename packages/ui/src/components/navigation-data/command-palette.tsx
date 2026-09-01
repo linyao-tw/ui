@@ -16,8 +16,8 @@ export interface CommandPaletteProps<Value> extends Omit<BaseCombobox.Root.Props
 export type CommandPaletteOpenChangeDetails = BaseDialog.Root.ChangeEventDetails | BaseCombobox.Root.ChangeEventDetails;
 
 /**
- * Dialog and inline combobox composition for command interfaces.
- * LYDS owns focus/open behavior only: consumers own command data, filtering, and execution.
+ * 用於指令介面的 Dialog 與行內 Combobox 組合。
+ * Linyao Design System 僅管理焦點與開啟狀態；指令資料、篩選及執行由使用端負責。
  */
 export function CommandPalette<Value>({ children, defaultOpen = false, modal = true, onOpenChange, open, ...comboboxProps }: CommandPaletteProps<Value>) {
 	const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
@@ -86,7 +86,7 @@ export const CommandPaletteDescription = forwardRef<ComponentRef<typeof BaseDial
 });
 
 export const CommandPaletteClose = forwardRef<ComponentRef<typeof BaseDialog.Close>, BaseDialog.Close.Props>(function CommandPaletteClose(props, ref) {
-	const { className, children = "Close", ...closeProps } = props;
+	const { className, children = "關閉", ...closeProps } = props;
 	return (
 		<BaseDialog.Close ref={ref} className={withBaseClass<BaseDialog.Close.State>("lyds-command-palette__close", className)} {...closeProps}>
 			{children}
@@ -100,7 +100,7 @@ export const CommandPaletteLabel = forwardRef<ComponentRef<typeof BaseCombobox.L
 });
 
 export const CommandPaletteInput = forwardRef<ComponentRef<typeof BaseCombobox.Input>, BaseCombobox.Input.Props>(function CommandPaletteInput(props, ref) {
-	const { className, placeholder = "Type a command…", ...inputProps } = props;
+	const { className, placeholder = "輸入指令…", ...inputProps } = props;
 	return <BaseCombobox.Input ref={ref} className={withBaseClass<BaseCombobox.Input.State>("lyds-command-palette__input", className)} placeholder={placeholder} {...inputProps} />;
 });
 

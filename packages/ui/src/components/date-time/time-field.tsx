@@ -60,7 +60,7 @@ function TimePickerImpl<T extends LydsTimeValue>(props: TimePickerProps<T>, ref:
 export const TimeField = forwardRef(TimeFieldImpl) as <T extends LydsTimeValue = Time>(props: TimeFieldProps<T> & RefAttributes<HTMLDivElement>) => ReactElement | null;
 
 /**
- * A locale-aware segmented time picker. Unlike menu-based time selectors, it does not invent a finite list of times;
- * `minValue`, `maxValue`, `granularity`, and `hourCycle` remain consumer-controlled React Aria semantics.
+ * 支援地區格式的區段式時間選擇器。此元件不預設有限的時間選項；
+ * `minValue`、`maxValue`、`granularity` 與 `hourCycle` 仍由使用端依 React Aria 語意控制。
  */
 export const TimePicker = forwardRef(TimePickerImpl) as <T extends LydsTimeValue = Time>(props: TimePickerProps<T> & RefAttributes<HTMLDivElement>) => ReactElement | null;

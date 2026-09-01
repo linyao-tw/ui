@@ -5,13 +5,13 @@ import { mergeClassNames, type FeedbackStatus } from "./feedback.types";
 
 type SpinnerAccessibilityProps =
 	| {
-			/** Hides the spinner from assistive technology when nearby text already describes loading. */
+			/** 附近已有載入說明文字時，對輔助科技隱藏 Spinner。 */
 			decorative: true;
 			label?: never;
 	  }
 	| {
 			decorative?: false;
-			/** Accessible name announced by the status region. */
+			/** 由狀態區域播報的無障礙名稱。 */
 			label: string;
 	  };
 

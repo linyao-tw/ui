@@ -73,12 +73,12 @@ describe("specialized fields", () => {
 		render(<PasswordField label="Password" defaultValue="signal-42" />);
 
 		const input = screen.getByLabelText("Password");
-		const reveal = screen.getByRole("button", { name: "Show password" });
+		const reveal = screen.getByRole("button", { name: "顯示密碼" });
 		expect(input).toHaveAttribute("type", "password");
 
 		await user.click(reveal);
 		expect(input).toHaveAttribute("type", "text");
-		expect(screen.getByRole("button", { name: "Hide password" })).toHaveAttribute("aria-pressed", "true");
+		expect(screen.getByRole("button", { name: "隱藏密碼" })).toHaveAttribute("aria-pressed", "true");
 	});
 });
 
@@ -107,7 +107,7 @@ describe("OTPField", () => {
 
 		const group = screen.getByRole("group", { name: "Verification code" });
 		const inputs = group.querySelectorAll("input");
-		expect(inputs[1]).toHaveAccessibleName("Character 2 of 6");
+		expect(inputs[1]).toHaveAccessibleName("第 2 個字元，共 6 個");
 		fireEvent.paste(inputs[0] as HTMLInputElement, {
 			clipboardData: { getData: () => "123456" }
 		});
@@ -128,7 +128,7 @@ describe("CodeField", () => {
 		const inputs = group.querySelectorAll("input");
 		expect(inputs).toHaveLength(6);
 		expect(group.querySelector(".lyds-code-field__group")).toBeNull();
-		expect(inputs[1]).toHaveAccessibleName("Character 2 of 6");
+		expect(inputs[1]).toHaveAccessibleName("第 2 個字元，共 6 個");
 
 		fireEvent.paste(inputs[0] as HTMLInputElement, {
 			clipboardData: { getData: () => "123456" }
@@ -255,7 +255,7 @@ describe("file controls", () => {
 		const file = new File(["diagnostic"], "diagnostic.txt", { type: "text/plain" });
 		render(<FileUpload label="Diagnostic file" description="Attach the exported diagnostic report." onFilesChange={onFilesChange} />);
 
-		const input = screen.getByLabelText<HTMLInputElement>("Diagnostic file Choose file", { selector: "input" });
+		const input = screen.getByLabelText<HTMLInputElement>("Diagnostic file 選擇檔案", { selector: "input" });
 		expect(input).toHaveAccessibleDescription("Attach the exported diagnostic report.");
 		expect(screen.queryAllByRole("button")).toHaveLength(0);
 		await user.upload(input, file);
@@ -272,7 +272,7 @@ describe("file controls", () => {
 		const file = new File(["telemetry"], "telemetry.csv", { type: "text/csv" });
 		const { container } = render(<DropZone label="Attachments" onChange={onChange} onDrop={onDrop} onFilesChange={onFilesChange} />);
 		const zone = container.querySelector<HTMLDivElement>(".lyds-drop-zone");
-		const input = screen.getByLabelText<HTMLInputElement>("Attachments Choose files", { selector: "input" });
+		const input = screen.getByLabelText<HTMLInputElement>("Attachments 選擇檔案", { selector: "input" });
 
 		expect(zone).not.toBeNull();
 		fireEvent.drop(zone as HTMLDivElement, { dataTransfer: { files: [file] } });
@@ -282,7 +282,7 @@ describe("file controls", () => {
 
 		await user.tab();
 		expect(input).toHaveFocus();
-		expect(screen.getByText("Choose files").closest("label")).toHaveAttribute("for", input.id);
+		expect(screen.getByText("選擇檔案").closest("label")).toHaveAttribute("for", input.id);
 	});
 
 	it("locks picker and drop interactions when read-only", () => {
@@ -296,10 +296,10 @@ describe("file controls", () => {
 			</>
 		);
 
-		expect(screen.getByLabelText("Locked picker Choose file", { selector: "input" })).toBeDisabled();
-		expect(screen.getByText("Choose file").closest("label")).toHaveAttribute("data-disabled");
-		expect(screen.getByLabelText("Locked drop zone Choose files", { selector: "input" })).toBeDisabled();
-		expect(screen.getByText("Choose files").closest("label")).toHaveAttribute("data-disabled");
+		expect(screen.getByLabelText("Locked picker 選擇檔案", { selector: "input" })).toBeDisabled();
+		expect(screen.getAllByText("選擇檔案")[0]?.closest("label")).toHaveAttribute("data-disabled");
+		expect(screen.getByLabelText("Locked drop zone 選擇檔案", { selector: "input" })).toBeDisabled();
+		expect(screen.getAllByText("選擇檔案")[1]?.closest("label")).toHaveAttribute("data-disabled");
 
 		const zone = container.querySelector<HTMLDivElement>(".lyds-drop-zone");
 		expect(zone).not.toBeNull();

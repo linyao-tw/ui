@@ -44,15 +44,15 @@ export const DrawerViewport = forwardRef<HTMLDivElement, DrawerViewportProps>(fu
 });
 
 export interface DrawerPopupProps extends BaseDrawerPopupProps {
-	/** Accessible label for the built-in close control. */
+	/** 內建關閉控制項的無障礙標籤。 */
 	closeLabel?: string;
-	/** Props for the built-in close control. */
+	/** 傳給內建關閉控制項的屬性。 */
 	closeProps?: Omit<DrawerCloseProps, "children">;
-	/** Set only when rendering another accessible Drawer.Close in the popup. */
+	/** 僅在彈出內容另有可存取的 Drawer.Close 時設定。 */
 	hasCustomClose?: boolean;
 }
 
-export const DrawerPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(function DrawerPopup({ children, className, closeLabel = "Close drawer", closeProps, hasCustomClose = false, ...props }, ref) {
+export const DrawerPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(function DrawerPopup({ children, className, closeLabel = "關閉側欄", closeProps, hasCustomClose = false, ...props }, ref) {
 	return (
 		<BaseDrawer.Popup {...props} ref={ref} className={mergeClassName("lyds-drawer__popup", className)}>
 			{children}
@@ -74,7 +74,7 @@ export const DrawerDescription = forwardRef<HTMLParagraphElement, DrawerDescript
 });
 
 export interface DrawerCloseProps extends BaseDrawerCloseProps {
-	/** Icon controls sit in the panel corner; action controls participate in layout. */
+	/** 圖示控制項位於面板角落；動作控制項則參與內容排版。 */
 	variant?: "icon" | "action";
 }
 
@@ -86,7 +86,7 @@ export const DrawerClose = forwardRef<HTMLButtonElement, DrawerCloseProps>(funct
 		<BaseDrawer.Close
 			{...props}
 			ref={ref}
-			aria-label={ariaLabel ?? (children == null ? "Close drawer" : undefined)}
+			aria-label={ariaLabel ?? (children == null ? "關閉側欄" : undefined)}
 			className={mergeClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
 		>
 			{children ?? <CloseGlyph />}
@@ -142,9 +142,9 @@ export const Drawer = {
 export type BottomSheetSnapPoint = number | `${number}rem`;
 
 export interface BottomSheetRootProps<Payload = unknown> extends Omit<DrawerRootProps<Payload>, "snapPoints" | "swipeDirection"> {
-	/** Fractions (0–1) and rem lengths are recommended for responsive sheets. */
+	/** 響應式面板建議使用 0 至 1 的比例值或 rem 長度。 */
 	snapPoints?: BottomSheetSnapPoint[];
-	/** Bottom sheets always dismiss downward. */
+	/** 底部面板一律向下關閉。 */
 	swipeDirection?: "down";
 }
 
@@ -156,7 +156,7 @@ export function BottomSheetRoot<Payload = unknown>({ snapPoints = defaultBottomS
 }
 
 export const BottomSheetPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(function BottomSheetPopup(
-	{ children, className, closeLabel = "Close bottom sheet", closeProps, hasCustomClose = false, ...props },
+	{ children, className, closeLabel = "關閉底部面板", closeProps, hasCustomClose = false, ...props },
 	ref
 ) {
 	return (
@@ -169,7 +169,7 @@ export const BottomSheetPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(fun
 
 export type BottomSheetHandleProps = HTMLAttributes<HTMLDivElement>;
 
-/** Decorative, touch-sized affordance; swipe behavior remains owned by Base UI. */
+/** 符合觸控尺寸的裝飾性操作提示；滑動行為仍由 Base UI 負責。 */
 export const BottomSheetHandle = forwardRef<HTMLDivElement, BottomSheetHandleProps>(function BottomSheetHandle({ className, ...props }, ref) {
 	return (
 		<div {...props} ref={ref} aria-hidden="true" className={className ? `lyds-bottomSheet__handle ${className}` : "lyds-bottomSheet__handle"}>

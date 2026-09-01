@@ -114,7 +114,7 @@ describe("foundation actions", () => {
 			<Link
 				href="/internal"
 				disabled
-				// Link supplies the anchor content after composition.
+				// Link 在組合完成後提供連結內容。
 				// eslint-disable-next-line jsx-a11y/anchor-has-content
 				render={<a href="/external" />}
 			>

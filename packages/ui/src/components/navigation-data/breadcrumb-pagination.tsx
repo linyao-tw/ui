@@ -7,11 +7,11 @@ import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type 
 import { cx } from "./utils.js";
 
 export interface BreadcrumbProps extends HTMLAttributes<HTMLElement> {
-	/** Accessible name for the breadcrumb landmark. */
+	/** 麵包屑導覽區域的無障礙名稱。 */
 	label?: string;
 }
 
-export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(function Breadcrumb({ className, label = "Breadcrumb", ...props }, ref) {
+export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(function Breadcrumb({ className, label = "麵包屑導覽", ...props }, ref) {
 	return <nav ref={ref} aria-label={label} className={cx("lyds-breadcrumb", className)} {...props} />;
 });
 
@@ -48,7 +48,7 @@ export const BreadcrumbSeparator = forwardRef<HTMLSpanElement, BreadcrumbSeparat
 });
 
 export const BreadcrumbEllipsis = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement>>(function BreadcrumbEllipsis(
-	{ "aria-label": ariaLabel = "More pages", className, children, ...props },
+	{ "aria-label": ariaLabel = "更多頁面", className, children, ...props },
 	ref
 ) {
 	return (
@@ -60,11 +60,11 @@ export const BreadcrumbEllipsis = forwardRef<HTMLSpanElement, HTMLAttributes<HTM
 });
 
 export interface PaginationProps extends HTMLAttributes<HTMLElement> {
-	/** Accessible name for the pagination landmark. */
+	/** 分頁導覽區域的無障礙名稱。 */
 	label?: string;
 }
 
-export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagination({ className, label = "Pagination", ...props }, ref) {
+export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagination({ className, label = "分頁導覽", ...props }, ref) {
 	return <nav ref={ref} aria-label={label} className={cx("lyds-pagination", className)} {...props} />;
 });
 
@@ -122,7 +122,7 @@ export const PaginationButton = forwardRef<HTMLButtonElement, PaginationButtonPr
 	return <button ref={ref} aria-current={current ? "page" : undefined} className={cx("lyds-pagination__control", className)} data-current={current ? "" : undefined} type={type} {...props} />;
 });
 
-export const PaginationPrevious = forwardRef<HTMLAnchorElement, PaginationLinkProps>(function PaginationPrevious({ "aria-label": ariaLabel = "Previous page", children, ...props }, ref) {
+export const PaginationPrevious = forwardRef<HTMLAnchorElement, PaginationLinkProps>(function PaginationPrevious({ "aria-label": ariaLabel = "上一頁", children, ...props }, ref) {
 	return (
 		<PaginationLink ref={ref} aria-label={ariaLabel} {...props}>
 			{children ?? <ArrowLeftIcon aria-hidden="true" weight="bold" />}
@@ -130,7 +130,7 @@ export const PaginationPrevious = forwardRef<HTMLAnchorElement, PaginationLinkPr
 	);
 });
 
-export const PaginationNext = forwardRef<HTMLAnchorElement, PaginationLinkProps>(function PaginationNext({ "aria-label": ariaLabel = "Next page", children, ...props }, ref) {
+export const PaginationNext = forwardRef<HTMLAnchorElement, PaginationLinkProps>(function PaginationNext({ "aria-label": ariaLabel = "下一頁", children, ...props }, ref) {
 	return (
 		<PaginationLink ref={ref} aria-label={ariaLabel} {...props}>
 			{children ?? <ArrowRightIcon aria-hidden="true" weight="bold" />}
@@ -139,7 +139,7 @@ export const PaginationNext = forwardRef<HTMLAnchorElement, PaginationLinkProps>
 });
 
 export const PaginationEllipsis = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement>>(function PaginationEllipsis(
-	{ "aria-label": ariaLabel = "More pages", children, className, ...props },
+	{ "aria-label": ariaLabel = "更多頁面", children, className, ...props },
 	ref
 ) {
 	return (

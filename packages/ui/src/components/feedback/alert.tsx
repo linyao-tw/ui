@@ -5,13 +5,13 @@ import { getLiveRegionProps, mergeClassNames, type FeedbackLiveMode, type Feedba
 
 export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
 	/**
-	 * Controls the semantic status palette. This does not make the alert a live
-	 * region; set `live` only when content is inserted or updated dynamically.
+	 * 控制語意狀態色盤。此屬性不會讓 Alert 成為即時區域；
+	 * 僅在內容動態加入或更新時設定 `live`。
 	 */
 	status?: FeedbackStatus;
 	/**
-	 * Announcement behavior for dynamic feedback. Static alerts default to
-	 * `off` so page-load content is not unnecessarily announced.
+	 * 動態回饋的播報方式。靜態 Alert 預設為 `off`，
+	 * 避免頁面載入時不必要的播報。
 	 */
 	live?: FeedbackLiveMode;
 }
@@ -31,7 +31,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert({ "ar
 	);
 });
 
-/** Modulor-compatible name for the same composable alert surface. */
+/** Alert 元件的別名。 */
 export const AlertView = Alert;
 
 export const AlertContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function AlertContent({ className, ...props }, ref) {

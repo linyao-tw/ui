@@ -39,7 +39,7 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(fu
 		actionsRef,
 		inputClassName,
 		inputStyle,
-		triggerLabel = "Choose file",
+		triggerLabel = "選擇檔案",
 		onChange,
 		onFilesChange,
 		id: idProp,
@@ -149,9 +149,9 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 		touched,
 		actionsRef,
 		inputClassName,
-		primaryLabel = "Drop files here",
-		secondaryLabel = "or choose from your device",
-		browseLabel = "Choose files",
+		primaryLabel = "將檔案拖曳至此",
+		secondaryLabel = "或從裝置選擇檔案",
+		browseLabel = "選擇檔案",
 		onChange,
 		onFilesChange,
 		onDragEnter,
@@ -233,8 +233,8 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 			try {
 				inputRef.current.files = event.dataTransfer.files;
 			} catch {
-				// Some browsers expose a read-only FileList. The callback remains authoritative,
-				// while the dispatched change still refreshes native validity.
+				// 部分瀏覽器會提供唯讀的 FileList。回呼仍是檔案狀態的主要來源，
+				// 觸發 change 事件則可同步更新原生驗證狀態。
 			}
 
 			const drop = { event, files, handled: false };
@@ -298,10 +298,6 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 				onDragLeave={handleDragLeave}
 				onDrop={handleDrop}
 			>
-				<span className="lyds-drop-zone__plate" aria-hidden="true">
-					<span>FILE</span>
-					<span>IN</span>
-				</span>
 				<span className="lyds-drop-zone__copy">
 					<span className="lyds-drop-zone__primary">{primaryLabel}</span>
 					<span className="lyds-drop-zone__secondary">{secondaryLabel}</span>

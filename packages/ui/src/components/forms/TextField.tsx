@@ -12,11 +12,11 @@ type TextFieldInputProps = Omit<BaseInput.Props, "className" | "disabled" | "nam
 export interface TextFieldProps extends TextFieldInputProps, FieldAnatomyProps {
 	inputClassName?: BaseInput.Props["className"];
 	inputStyle?: React.CSSProperties;
-	/** The native HTML size attribute, not the LYDS visual size. */
+	/** 原生 HTML `size` 屬性，並非 Linyao Design System 的視覺尺寸。 */
 	inputSize?: number;
 	startAdornment?: React.ReactNode;
 	endAdornment?: React.ReactNode;
-	/** Uses technical tabular/monospace typography without changing the input value. */
+	/** 使用等寬或表格數字排版，不會修改輸入值。 */
 	technical?: boolean;
 }
 
@@ -154,7 +154,7 @@ const TextareaControl = React.forwardRef<HTMLTextAreaElement, TextareaProps>(fun
 	);
 });
 
-/** A standalone, Base UI-backed multiline control. */
+/** 以 Base UI 實作的獨立多行輸入控制項。 */
 export const Textarea = TextareaControl;
 
 export interface TextViewProps extends Omit<TextareaProps, "className" | "disabled" | "invalid" | "name" | "readOnly" | "required" | "size" | "style">, FieldAnatomyProps {
@@ -162,7 +162,7 @@ export interface TextViewProps extends Omit<TextareaProps, "className" | "disabl
 	textareaStyle?: React.CSSProperties;
 }
 
-/** A complete multiline field using the same anatomy as TextField. */
+/** 使用與 TextField 相同結構的完整多行欄位。 */
 export const TextView = React.forwardRef<HTMLTextAreaElement, TextViewProps>(function TextView(
 	{
 		label,
@@ -257,7 +257,7 @@ export interface PasswordFieldProps extends Omit<TextFieldProps, "endAdornment" 
 }
 
 export const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldProps>(function PasswordField(
-	{ visible: visibleProp, defaultVisible = false, onVisibilityChange, showPasswordLabel = "Show password", hidePasswordLabel = "Hide password", autoComplete, ...props },
+	{ visible: visibleProp, defaultVisible = false, onVisibilityChange, showPasswordLabel = "顯示密碼", hidePasswordLabel = "隱藏密碼", autoComplete, ...props },
 	ref
 ) {
 	const [uncontrolledVisible, setUncontrolledVisible] = React.useState(defaultVisible);
@@ -296,21 +296,21 @@ export const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldPro
 export interface PhoneFieldCountrySelectorState {
 	disabled: boolean;
 	readOnly: boolean;
-	/** Reflects the externally controlled `invalid` prop, not validator-derived Base UI state. */
+	/** 反映由外部控制的 `invalid` 屬性，不代表 Base UI 驗證器產生的狀態。 */
 	externallyInvalid: boolean;
 }
 
 export interface PhoneFieldProps extends Omit<TextFieldProps, "technical" | "type"> {
 	/**
-	 * Consumer-owned country picker or selector trigger. Supplying this slot
-	 * switches PhoneField to the Modulor two-segment composition.
+	 * 由使用端提供的國家選擇器或其觸發按鈕。提供此插槽後，
+	 * PhoneField 會使用雙區段結構。
 	 */
 	countrySelector?: React.ReactNode | ((state: PhoneFieldCountrySelectorState) => React.ReactNode);
 	countrySelectorClassName?: string;
 	countrySelectorStyle?: React.CSSProperties;
 }
 
-/** A format-agnostic telephone field. Country selection and validation belong to the consumer. */
+/** 不預設格式的電話欄位。國家選擇與驗證規則由使用端負責。 */
 export const PhoneField = React.forwardRef<HTMLInputElement, PhoneFieldProps>(function PhoneField(
 	{ countrySelector, countrySelectorClassName, countrySelectorStyle, autoComplete, inputMode, ...props },
 	ref
