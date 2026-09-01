@@ -1,6 +1,7 @@
 import {
 	CommandPalette,
 	CommandPaletteBackdrop,
+	CommandPaletteClose,
 	CommandPaletteDescription,
 	CommandPaletteEmpty,
 	CommandPaletteInput,
@@ -14,7 +15,9 @@ import {
 	CommandPaletteTrigger,
 	CommandPaletteViewport
 } from "@lyds/ui";
+import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -28,9 +31,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function Palette({ defaultOpen = false }: { defaultOpen?: boolean }) {
+function Palette({ defaultOpen = false, defaultValue }: { defaultOpen?: boolean; defaultValue?: string }) {
 	return (
-		<CommandPalette<string> defaultOpen={defaultOpen} items={commands}>
+		<CommandPalette<string> autoHighlight defaultOpen={defaultOpen} defaultValue={defaultValue} items={commands}>
 			<CommandPaletteTrigger>開啟指令選單</CommandPaletteTrigger>
 			<CommandPalettePortal>
 				<CommandPaletteBackdrop />
@@ -38,6 +41,9 @@ function Palette({ defaultOpen = false }: { defaultOpen?: boolean }) {
 					<CommandPalettePopup>
 						<CommandPaletteTitle>指令選單</CommandPaletteTitle>
 						<CommandPaletteDescription>搜尋指令，或使用方向鍵選擇。</CommandPaletteDescription>
+						<CommandPaletteClose aria-label="關閉指令選單">
+							<XIcon aria-hidden="true" weight="bold" />
+						</CommandPaletteClose>
 						<CommandPaletteInput aria-label="搜尋指令" />
 						<CommandPaletteList>
 							{(command: string, index: number) => (
@@ -58,10 +64,28 @@ function Palette({ defaultOpen = false }: { defaultOpen?: boolean }) {
 
 export const Default: Story = {
 	name: "預設",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const body = within(document.body);
+		const trigger = canvas.getByRole("button", { name: "開啟指令選單" });
+
+		await userEvent.click(trigger);
+		const dialog = await body.findByRole("dialog", { name: "指令選單" });
+		await waitFor(() => expect(dialog).toBeVisible());
+		await waitFor(() => expect(body.getByRole("combobox", { name: "搜尋指令" })).toHaveFocus());
+		await userEvent.click(body.getByRole("button", { name: "關閉指令選單" }));
+		await waitFor(() => expect(trigger).toHaveFocus());
+	},
 	render: () => <Palette />
 };
 
 export const Open: Story = {
 	name: "展開",
-	render: () => <Palette defaultOpen />
+	play: async () => {
+		const body = within(document.body);
+		const selected = await body.findByRole("option", { name: /開啟設定/ });
+		await expect(selected).toHaveAttribute("aria-selected", "true");
+		await expect(selected.querySelector(".lyds-command-palette__indicator svg")).toHaveAttribute("aria-hidden", "true");
+	},
+	render: () => <Palette defaultOpen defaultValue="開啟設定" />
 };

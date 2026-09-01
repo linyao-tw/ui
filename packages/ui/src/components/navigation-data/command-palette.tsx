@@ -1,7 +1,7 @@
 import { Combobox as BaseCombobox } from "@base-ui/react/combobox";
 import { Dialog as BaseDialog } from "@base-ui/react/dialog";
-import { CircleIcon } from "@phosphor-icons/react/dist/csr/Circle";
-import { forwardRef, useCallback, useState, type ComponentRef, type HTMLAttributes, type ReactNode } from "react";
+import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
+import { forwardRef, useCallback, useImperativeHandle, useRef, useState, type ComponentRef, type HTMLAttributes, type ReactNode } from "react";
 
 import { cx, withBaseClass } from "./utils.js";
 
@@ -71,8 +71,24 @@ export const CommandPaletteViewport = forwardRef<ComponentRef<typeof BaseDialog.
 });
 
 export const CommandPalettePopup = forwardRef<ComponentRef<typeof BaseDialog.Popup>, BaseDialog.Popup.Props>(function CommandPalettePopup(props, ref) {
-	const { className, ...popupProps } = props;
-	return <BaseDialog.Popup ref={ref} className={withBaseClass<BaseDialog.Popup.State>("lyds-command-palette__popup", className)} {...popupProps} />;
+	const { className, initialFocus, ...popupProps } = props;
+	const popupRef = useRef<ComponentRef<typeof BaseDialog.Popup>>(null);
+	useImperativeHandle(ref, () => popupRef.current as ComponentRef<typeof BaseDialog.Popup>);
+
+	return (
+		<BaseDialog.Popup
+			ref={popupRef}
+			className={withBaseClass<BaseDialog.Popup.State>("lyds-command-palette__popup", className)}
+			initialFocus={
+				initialFocus ??
+				(openType => {
+					if (openType === "touch") return true;
+					return popupRef.current?.querySelector<HTMLElement>(".lyds-command-palette__input") ?? true;
+				})
+			}
+			{...popupProps}
+		/>
+	);
 });
 
 export const CommandPaletteTitle = forwardRef<ComponentRef<typeof BaseDialog.Title>, BaseDialog.Title.Props>(function CommandPaletteTitle(props, ref) {
@@ -118,7 +134,7 @@ export const CommandPaletteItemIndicator = forwardRef<ComponentRef<typeof BaseCo
 	const { className, children, ...indicatorProps } = props;
 	return (
 		<BaseCombobox.ItemIndicator ref={ref} className={withBaseClass<BaseCombobox.ItemIndicator.State>("lyds-command-palette__indicator", className)} {...indicatorProps}>
-			{children ?? <CircleIcon aria-hidden="true" weight="fill" />}
+			{children ?? <CheckIcon aria-hidden="true" weight="bold" />}
 		</BaseCombobox.ItemIndicator>
 	);
 });

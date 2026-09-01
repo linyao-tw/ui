@@ -84,6 +84,7 @@ import { WarningIcon } from "@phosphor-icons/react/dist/csr/Warning";
 import { WrenchIcon } from "@phosphor-icons/react/dist/csr/Wrench";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useMemo, useState, type FormEvent } from "react";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import "./operations-workspace.css";
 
@@ -259,7 +260,7 @@ function ChangeDialog({ manager, onSaved }: { manager: ToastManager; onSaved: ()
 
 	return (
 		<Dialog.Root open={open} onOpenChange={setOpen}>
-			<Dialog.Trigger>新增變更</Dialog.Trigger>
+			<Dialog.Trigger render={<Button>新增變更</Button>} />
 			<Dialog.Portal>
 				<Dialog.Backdrop />
 				<Dialog.Viewport>
@@ -282,7 +283,7 @@ function ChangeDialog({ manager, onSaved }: { manager: ToastManager; onSaved: ()
 								</div>
 							</Dialog.Body>
 							<Dialog.Footer>
-								<Dialog.Close>取消</Dialog.Close>
+								<Dialog.Close render={<Button variant="secondary">取消</Button>}>取消</Dialog.Close>
 								<Button type="submit" startIcon={<CheckCircleIcon weight="bold" />}>
 									儲存變更
 								</Button>
@@ -298,7 +299,14 @@ function ChangeDialog({ manager, onSaved }: { manager: ToastManager; onSaved: ()
 function ServiceDrawer({ service }: { service: ServiceRecord }) {
 	return (
 		<Drawer.Root swipeDirection="right">
-			<Drawer.Trigger aria-label={`查看${service.name}`}>查看</Drawer.Trigger>
+			<Drawer.Trigger
+				aria-label={`查看${service.name}`}
+				render={
+					<Button size="sm" variant="quiet">
+						查看
+					</Button>
+				}
+			/>
 			<Drawer.Portal>
 				<Drawer.Backdrop />
 				<Drawer.Viewport>
@@ -329,7 +337,7 @@ function ServiceDrawer({ service }: { service: ServiceRecord }) {
 								</dl>
 							</Drawer.Body>
 							<Drawer.Footer>
-								<Drawer.Close>完成</Drawer.Close>
+								<Drawer.Close render={<Button variant="secondary">完成</Button>}>完成</Drawer.Close>
 							</Drawer.Footer>
 						</Drawer.Content>
 					</Drawer.Popup>
@@ -344,7 +352,13 @@ function RetirementConfirmation({ manager }: { manager: ToastManager }) {
 
 	return (
 		<AlertDialog.Root open={open} onOpenChange={setOpen}>
-			<AlertDialog.Trigger>停用舊版監測</AlertDialog.Trigger>
+			<AlertDialog.Trigger
+				render={
+					<Button variant="danger" startIcon={<TrashIcon weight="bold" />}>
+						停用舊版監測
+					</Button>
+				}
+			/>
 			<AlertDialog.Portal>
 				<AlertDialog.Backdrop />
 				<AlertDialog.Viewport>
@@ -354,7 +368,7 @@ function RetirementConfirmation({ manager }: { manager: ToastManager }) {
 							<AlertDialog.Description>停用後不再顯示新資料，歷史紀錄仍會保留。</AlertDialog.Description>
 						</AlertDialog.Header>
 						<AlertDialog.Actions>
-							<AlertDialog.Close>保留監測</AlertDialog.Close>
+							<AlertDialog.Close render={<Button variant="secondary">保留監測</Button>}>保留監測</AlertDialog.Close>
 							<Button
 								variant="danger"
 								startIcon={<TrashIcon weight="bold" />}
@@ -837,6 +851,28 @@ function OperationsWorkspace({ empty = false, initialSaved = false, layout = "wi
 
 export const InteractiveOverview: Story = {
 	name: "完整頁面",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const body = within(document.body);
+		const trigger = canvas.getByRole("button", { name: "新增變更" });
+
+		await expect(trigger).toHaveClass("lyds-button");
+		await userEvent.click(trigger);
+		const dialog = await body.findByRole("dialog", { name: "新增服務變更" });
+		await waitFor(() => expect(dialog).toBeVisible());
+
+		const cancel = body.getByRole("button", { name: "取消" });
+		const save = body.getByRole("button", { name: "儲存變更" });
+		await expect(cancel).toHaveClass("lyds-button");
+		await expect(save).toHaveClass("lyds-button");
+		await expect(Math.abs(cancel.getBoundingClientRect().width - save.getBoundingClientRect().width)).toBeLessThanOrEqual(1);
+		await expect(Math.abs(cancel.getBoundingClientRect().height - save.getBoundingClientRect().height)).toBeLessThanOrEqual(1);
+		await expect(getComputedStyle(cancel).borderStyle).toBe("none");
+
+		await userEvent.click(cancel);
+		await waitFor(() => expect(trigger).toHaveFocus());
+		await expect(canvas.getAllByRole("button", { name: /^查看/ })[0]).toHaveClass("lyds-button");
+	},
 	render: () => <OperationsWorkspace />
 };
 
