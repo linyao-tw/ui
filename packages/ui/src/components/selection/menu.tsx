@@ -15,7 +15,6 @@ import {
 } from "@base-ui/react/menu";
 import { Separator as BaseSeparator, type SeparatorProps } from "@base-ui/react/separator";
 import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
-import { CircleIcon } from "@phosphor-icons/react/dist/csr/Circle";
 import { forwardRef } from "react";
 
 import { mergeStateClassName } from "./classnames";
@@ -60,7 +59,7 @@ export const MenuRadioItem = forwardRef<HTMLElement, MenuRadioItemProps>(functio
 export const MenuRadioItemIndicator = forwardRef<HTMLSpanElement, MenuRadioItemIndicatorProps>(function MenuRadioItemIndicator({ children, className, ...props }, ref) {
 	return (
 		<BaseMenu.RadioItemIndicator {...props} className={mergeStateClassName(styles.menuItemIndicator, className)} ref={ref}>
-			{children ?? <CircleIcon aria-hidden="true" weight="fill" />}
+			{children ?? <CheckIcon aria-hidden="true" data-lyds-glyph="check" weight="bold" />}
 		</BaseMenu.RadioItemIndicator>
 	);
 });

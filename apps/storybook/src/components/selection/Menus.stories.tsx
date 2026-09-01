@@ -1,5 +1,6 @@
 import { ContextMenu, DropdownMenu, MenuCheckboxItem, MenuCheckboxItemIndicator, MenuItem, MenuPopup, MenuPositioner, MenuSeparator, MenuTrigger } from "@lyds/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -13,6 +14,15 @@ type Story = StoryObj<typeof meta>;
 
 export const Dropdown: Story = {
 	name: "下拉選單",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const body = within(document.body);
+		await userEvent.click(canvas.getByRole("button", { name: "操作" }));
+
+		expect(getComputedStyle(await body.findByRole("menuitem", { name: "查看詳細資料" })).cursor).toBe("pointer");
+		expect(getComputedStyle(body.getByRole("menuitem", { name: "無法封存" })).cursor).toBe("not-allowed");
+		expect(body.getByRole("menuitemcheckbox", { name: "顯示說明" })).toHaveAttribute("aria-checked", "true");
+	},
 	render: () => (
 		<DropdownMenu.Root>
 			<MenuTrigger>操作</MenuTrigger>
@@ -36,9 +46,19 @@ export const Dropdown: Story = {
 
 export const Contextual: Story = {
 	name: "快顯選單",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const body = within(document.body);
+		const target = canvas.getByText("在此項目按滑鼠右鍵或 Shift+F10");
+		target.focus();
+		await userEvent.pointer([{ keys: "[MouseRight]", target }]);
+		expect(getComputedStyle(await body.findByRole("menuitem", { name: "查看詳細資料" })).cursor).toBe("pointer");
+		await userEvent.keyboard("{Escape}");
+		expect(target).toHaveFocus();
+	},
 	render: () => (
 		<ContextMenu.Root>
-			<ContextMenu.Trigger aria-haspopup="menu" className="lyds-story-context-area" role="button" tabIndex={0}>
+			<ContextMenu.Trigger className="lyds-story-context-area" tabIndex={0}>
 				在此項目按滑鼠右鍵或 Shift+F10
 			</ContextMenu.Trigger>
 			<ContextMenu.Portal>

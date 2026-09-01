@@ -256,6 +256,13 @@ export const SearchableDarkTheme: Story = {
 
 export const MenuOpenWithRadioAndLink: Story = {
 	name: "展開的選單",
+	play: async () => {
+		const body = within(document.body);
+		const selected = await body.findByRole("menuitemradio", { name: "寬鬆" });
+
+		expect(selected).toHaveAttribute("aria-checked", "true");
+		expect(selected.querySelector('[data-lyds-glyph="check"]')).toBeInTheDocument();
+	},
 	render: () => (
 		<DropdownMenu.Root defaultOpen>
 			<MenuTrigger>檢視設定</MenuTrigger>

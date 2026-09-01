@@ -1,7 +1,17 @@
 import { CheckboxGroup, CheckboxItem, Switch as LydsSwitch, RadioGroup, RadioItem, SegmentedControl, SegmentedControlItem, Slider, Toggle, ToggleGroup } from "@lyds/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "storybook/test";
 
 import "../story-layout.css";
+
+function resolveBackgroundColor(container: HTMLElement, customProperty: string) {
+	const probe = document.createElement("span");
+	probe.style.backgroundColor = `var(${customProperty})`;
+	container.append(probe);
+	const color = getComputedStyle(probe).backgroundColor;
+	probe.remove();
+	return color;
+}
 
 const meta = {
 	title: "元件/選擇/控制項",
@@ -24,6 +34,15 @@ export const Checkbox: Story = {
 
 export const CheckboxStates: Story = {
 	name: "核取方塊狀態",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const checked = canvas.getByRole("checkbox", { name: "已勾選" });
+		const checkedColor = resolveBackgroundColor(canvasElement, "--control-primary");
+
+		expect(getComputedStyle(checked).backgroundColor).toBe(checkedColor);
+		await userEvent.click(checked);
+		expect(checked).toHaveAttribute("data-unchecked");
+	},
 	render: () => (
 		<div className="lyds-story-row">
 			<CheckboxItem label="未勾選" />
@@ -37,6 +56,15 @@ export const CheckboxStates: Story = {
 
 export const Switch: Story = {
 	name: "開關",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const checked = canvas.getByRole("switch", { name: "自動儲存變更" });
+		const checkedColor = resolveBackgroundColor(canvasElement, "--control-primary");
+
+		expect(getComputedStyle(checked).backgroundColor).toBe(checkedColor);
+		await userEvent.click(checked);
+		expect(checked).toHaveAttribute("data-unchecked");
+	},
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
 			<div className="lyds-story-row">
@@ -90,6 +118,17 @@ export const RadioChoices: Story = {
 
 export const SliderControl: Story = {
 	name: "滑桿",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const input = canvas.getByRole("slider", { name: "音量" });
+		const track = input.parentElement?.parentElement;
+		const indicator = track?.firstElementChild;
+
+		expect(track).not.toBeNull();
+		expect(indicator).not.toBeNull();
+		expect(getComputedStyle(track!).backgroundColor).toBe(resolveBackgroundColor(canvasElement, "--control-border-hover"));
+		expect(getComputedStyle(indicator!).backgroundColor).toBe(resolveBackgroundColor(canvasElement, "--control-selected"));
+	},
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
 			<Slider aria-label="音量" defaultValue={64} min={0} max={100} showValue />

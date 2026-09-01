@@ -44,6 +44,18 @@
 	background-color: var(--control-primary);
 }
 
+.checkbox[data-checked]:hover:not([data-disabled]):not([data-readonly]),
+.checkbox[data-indeterminate]:hover:not([data-disabled]):not([data-readonly]),
+.radio[data-checked]:hover:not([data-disabled]):not([data-readonly]) {
+	background-color: var(--control-primary-hover);
+}
+
+.checkbox[data-checked]:active:not([data-disabled]):not([data-readonly]),
+.checkbox[data-indeterminate]:active:not([data-disabled]):not([data-readonly]),
+.radio[data-checked]:active:not([data-disabled]):not([data-readonly]) {
+	background-color: var(--control-primary-pressed);
+}
+
 .checkbox:active:not([data-disabled]):not([data-readonly]),
 .radio:active:not([data-disabled]):not([data-readonly]) {
 	transform: scale(var(--motion-press-scale));
@@ -198,11 +210,15 @@
 }
 
 .switch[data-checked] {
-	background: var(--control-track-checked);
+	background: var(--control-primary);
 }
 
 .switch[data-checked]:hover:not([data-disabled]):not([data-readonly]) {
-	background: var(--control-track-checked-hover);
+	background: var(--control-primary-hover);
+}
+
+.switch[data-checked]:active:not([data-disabled]):not([data-readonly]) {
+	background: var(--control-primary-pressed);
 }
 
 .switchSignal {
@@ -265,7 +281,7 @@
 	position: relative;
 	width: 100%;
 	height: 0.25rem;
-	background: var(--control-track);
+	background: var(--control-border-hover);
 	border: 0;
 	border-radius: var(--radius-round);
 }
@@ -276,7 +292,7 @@
 }
 
 .sliderIndicator {
-	background: var(--control-range-indicator);
+	background: var(--control-selected);
 	border-radius: inherit;
 }
 
@@ -636,6 +652,10 @@
 	user-select: none;
 }
 
+.menuItem:not([data-disabled]) {
+	cursor: pointer;
+}
+
 .option[data-highlighted],
 .menuItem[data-highlighted] {
 	color: var(--text-title);
@@ -752,8 +772,16 @@
 
 	.checkbox[data-checked],
 	.checkbox[data-indeterminate],
+	.checkbox[data-checked]:hover,
+	.checkbox[data-indeterminate]:hover,
+	.checkbox[data-checked]:active,
+	.checkbox[data-indeterminate]:active,
 	.radio[data-checked],
+	.radio[data-checked]:hover,
+	.radio[data-checked]:active,
 	.switch[data-checked],
+	.switch[data-checked]:hover,
+	.switch[data-checked]:active,
 	.sliderIndicator,
 	.toggle[data-pressed] {
 		background: Highlight;

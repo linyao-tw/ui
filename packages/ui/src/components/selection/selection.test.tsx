@@ -71,6 +71,38 @@ describe("selection controls", () => {
 		expect(results.violations).toHaveLength(0);
 	});
 
+	it("keeps a checked checkbox selected until the press completes", () => {
+		render(<CheckboxItem defaultChecked label="Enable notifications" />);
+		const checkbox = screen.getByRole("checkbox", { name: "Enable notifications" });
+
+		fireEvent.pointerDown(checkbox);
+		expect(checkbox).toHaveAttribute("data-checked");
+		fireEvent.pointerUp(checkbox);
+		expect(checkbox).toHaveAttribute("data-checked");
+
+		fireEvent.click(checkbox);
+		expect(checkbox).toHaveAttribute("data-unchecked");
+	});
+
+	it("does not change read-only or disabled checkbox states", async () => {
+		const user = userEvent.setup();
+		render(
+			<>
+				<CheckboxItem defaultChecked readOnly label="Read-only selection" />
+				<CheckboxItem defaultChecked disabled label="Disabled selection" />
+			</>
+		);
+
+		const readOnly = screen.getByRole("checkbox", { name: "Read-only selection" });
+		const disabled = screen.getByRole("checkbox", { name: "Disabled selection" });
+		await user.click(readOnly);
+		await user.click(disabled);
+
+		expect(readOnly).toHaveAttribute("aria-checked", "true");
+		expect(disabled).toHaveAttribute("aria-disabled", "true");
+		expect(disabled).toHaveAttribute("aria-checked", "true");
+	});
+
 	it("moves radio selection with arrow keys", async () => {
 		const user = userEvent.setup();
 		render(
@@ -303,6 +335,34 @@ describe("selection popups", () => {
 
 		expect(onOpenChange).toHaveBeenLastCalledWith(false, expect.objectContaining({ reason: "escape-key" }));
 		expect(trigger).toHaveFocus();
+	});
+
+	it("uses a check glyph for a selected menu radio item", () => {
+		render(
+			<DropdownMenu.Root defaultOpen modal={false}>
+				<DropdownMenu.Trigger>View options</DropdownMenu.Trigger>
+				<DropdownMenu.Portal>
+					<DropdownMenu.Positioner>
+						<DropdownMenu.Popup>
+							<DropdownMenu.RadioGroup defaultValue="comfortable">
+								<DropdownMenu.RadioItem value="compact">
+									<DropdownMenu.RadioItemIndicator />
+									Compact
+								</DropdownMenu.RadioItem>
+								<DropdownMenu.RadioItem value="comfortable">
+									<DropdownMenu.RadioItemIndicator />
+									Comfortable
+								</DropdownMenu.RadioItem>
+							</DropdownMenu.RadioGroup>
+						</DropdownMenu.Popup>
+					</DropdownMenu.Positioner>
+				</DropdownMenu.Portal>
+			</DropdownMenu.Root>
+		);
+
+		const selected = screen.getByRole("menuitemradio", { name: "Comfortable" });
+		expect(selected).toHaveAttribute("aria-checked", "true");
+		expect(selected.querySelector('[data-lyds-glyph="check"]')).toBeInTheDocument();
 	});
 
 	it("opens a context menu from the native contextmenu gesture", () => {
