@@ -5,7 +5,7 @@ import axe from "axe-core";
 import { useState } from "react";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
-import { CheckboxGroup, CheckboxItem, ContextMenu, DropdownMenu, RadioGroup, RadioItem, SegmentedControl, SegmentedControlItem, Select, Slider, Switch } from "./index";
+import { Autocomplete, CheckboxGroup, CheckboxItem, Combobox, ContextMenu, DropdownMenu, RadioGroup, RadioItem, SegmentedControl, SegmentedControlItem, Select, Slider, Switch } from "./index";
 
 beforeAll(() => {
 	document.documentElement.style.setProperty("--motion-duration-fast", "0ms");
@@ -178,6 +178,53 @@ describe("selection controls", () => {
 });
 
 describe("selection popups", () => {
+	it("indexes combobox options once and preserves item identity while filtering", () => {
+		const valueReads = vi.fn();
+		const options = Array.from({ length: 12 }, (_, index) => {
+			const option = { label: `Option ${index}` } as { label: string; value: string };
+			Object.defineProperty(option, "value", {
+				enumerable: true,
+				get() {
+					valueReads();
+					return `option-${index}`;
+				}
+			});
+			return option;
+		});
+
+		render(<Combobox aria-label="Indexed options" defaultOpen modal={false} options={options} />);
+		const targetBeforeFilter = screen.getByRole("option", { name: "Option 11" });
+		expect(valueReads).toHaveBeenCalledTimes(options.length);
+
+		fireEvent.change(screen.getByRole("combobox", { name: "Indexed options" }), { target: { value: "11" } });
+
+		expect(screen.getByRole("option", { name: "Option 11" })).toBe(targetBeforeFilter);
+		expect(valueReads).toHaveBeenCalledTimes(options.length);
+	});
+
+	it("indexes autocomplete options once while filtering suggestions", () => {
+		const valueReads = vi.fn();
+		const options = Array.from({ length: 12 }, (_, index) => {
+			const option = { label: `Suggestion ${index}` } as { label: string; value: string };
+			Object.defineProperty(option, "value", {
+				enumerable: true,
+				get() {
+					valueReads();
+					return `suggestion-${index}`;
+				}
+			});
+			return option;
+		});
+
+		render(<Autocomplete aria-label="Indexed suggestions" defaultOpen modal={false} options={options} />);
+		expect(valueReads).toHaveBeenCalledTimes(options.length);
+
+		fireEvent.change(screen.getByRole("combobox", { name: "Indexed suggestions" }), { target: { value: "11" } });
+
+		expect(screen.getByRole("option", { name: "Suggestion 11" })).toBeInTheDocument();
+		expect(valueReads).toHaveBeenCalledTimes(options.length);
+	});
+
 	it("puts consumer labels on the actual select trigger", () => {
 		render(
 			<>

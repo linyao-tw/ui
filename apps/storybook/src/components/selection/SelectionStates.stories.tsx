@@ -28,6 +28,7 @@ import {
 import { CaretRightIcon } from "@phosphor-icons/react/dist/csr/CaretRight";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { expect, userEvent, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -286,6 +287,18 @@ export const MenuDisabledTrigger: Story = {
 };
 
 export const MenuSubmenu: Story = {
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const body = within(document.body);
+		await canvas.findByRole("button", { name: "Share" });
+		const submenuTrigger = await body.findByRole("menuitem", { name: "Send to" });
+		submenuTrigger.focus();
+		await userEvent.keyboard("{ArrowRight}");
+		await body.findByRole("menuitem", { name: "Design review" });
+
+		const parentMenu = body.getByRole("menuitem", { name: "Copy link" }).closest('[role="menu"]');
+		await expect(parentMenu?.querySelector("span[aria-owns]")).toHaveAttribute("role", "group");
+	},
 	render: () => (
 		<DropdownMenu.Root defaultOpen>
 			<MenuTrigger>Share</MenuTrigger>
@@ -339,7 +352,7 @@ export const ContextMenuKeyboard: Story = {
 	render: () => (
 		<div className="lyds-story-stack">
 			<ContextMenu.Root>
-				<ContextMenu.Trigger aria-haspopup="menu" className="lyds-story-context-area" role="button" tabIndex={0}>
+				<ContextMenu.Trigger className="lyds-story-context-area" tabIndex={0}>
 					Focused report row
 				</ContextMenu.Trigger>
 				<ContextMenu.Portal>

@@ -755,7 +755,7 @@
 }
 
 .lyds-bottomSheet__body {
-	padding: 0;
+	padding: var(--space-4);
 }
 
 .lyds-bottomSheet__footer {
@@ -769,6 +769,30 @@
 .lyds-bottomSheet__footer > :where(.lyds-button, .lyds-overlayCloseAction) {
 	width: 100%;
 	min-height: var(--control-height-lg);
+}
+
+@media (forced-colors: active) {
+	.lyds-tabs__tab[data-active]::after {
+		position: absolute;
+		inset-inline: var(--space-2);
+		inset-block-end: 0;
+		border-block-end: var(--border-width-strong) solid ButtonText;
+		content: "";
+		pointer-events: none;
+	}
+
+	.lyds-tabs__list[data-orientation="vertical"] .lyds-tabs__tab[data-active]::after {
+		inset-block: var(--space-1);
+		inset-inline-start: 0;
+		inset-inline-end: auto;
+		border-block-end: 0;
+		border-inline-start: var(--border-width-strong) solid ButtonText;
+	}
+
+	.lyds-tabs__tab:focus-visible {
+		outline: var(--border-width-strong) solid Highlight;
+		outline-offset: 0.125rem;
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {

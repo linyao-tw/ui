@@ -54,3 +54,5 @@ pnpm pack:check
 ```
 
 Inspecting a tarball or using a non-publishing dry run does not authorize `npm publish`. Do not manually publish snapshots or tag releases, enable `NPM_PUBLISH_ENABLED`, create release tags, or alter npm dist-tags without explicit user authorization.
+
+Before publication, verify that the installed Base UI release contains upstream fix [#5058](https://github.com/mui/base-ui/pull/5058) for nested-menu portal ownership. The repository may temporarily patch Base UI 1.7.0 so Storybook can validate the merged fix, but a pnpm workspace patch does not propagate through the `@lyds/ui` npm tarball to consumers. Remove the temporary patch only after upgrading to an official fixed release, then rerun submenu open-state axe, Arrow keys, Tab/Shift+Tab, Escape, return-focus, and Safari VoiceOver checks against an isolated packed consumer. Treat this as a publication blocker, not a rule to disable or work around in consumer DOM.

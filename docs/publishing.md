@@ -223,6 +223,7 @@ Value: true
 - [ ] `pnpm check` 成功。
 - [ ] `pnpm pack:check` 成功且人工檢查 tarball。
 - [ ] `@lyds/ui` version/exports/types/styles/license/repository metadata 正確。
+- [ ] Base UI 正式 release 已包含 #5058 submenu portal-owner 修正，workspace temporary patch 已移除，consumer tarball 的 submenu open-state axe／keyboard／VoiceOver 驗證已通過。
 - [ ] npm exact version read-only query 符合 snapshot/production policy。
 - [ ] npm Trusted Publisher exact fields 正確。
 - [ ] Workflow 使用 GitHub-hosted runner、`contents: read`、`id-token: write`。

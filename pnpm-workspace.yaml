@@ -4,3 +4,6 @@ packages:
 
 allowBuilds:
   esbuild: true
+
+patchedDependencies:
+  "@base-ui/react@1.7.0": patches/@base-ui__react@1.7.0.patch

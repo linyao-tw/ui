@@ -429,21 +429,30 @@ button.lyds-pagination__control {
 }
 
 .lyds-tab-bar {
+	max-width: 100%;
+	overflow-x: auto;
+	overscroll-behavior-inline: contain;
+	padding: var(--space-1);
 	background: var(--background-transparent);
+	scroll-padding-inline: var(--space-1);
 }
 
 .lyds-tab-bar__list {
+	width: max-content;
+	min-width: 100%;
 	display: flex;
 	align-items: center;
 	gap: 0.25rem;
 }
 
 .lyds-tab-bar__item {
+	flex: 0 0 auto;
 	min-width: 0;
 }
 
 .lyds-tab-bar__link {
-	height: 2rem;
+	position: relative;
+	min-height: var(--control-target-min);
 	border-radius: 999rem;
 	display: inline-flex;
 	align-items: center;
@@ -457,6 +466,7 @@ button.lyds-pagination__control {
 	line-height: 1.0625rem;
 	text-align: center;
 	text-decoration: none;
+	white-space: nowrap;
 	transition:
 		background-color var(--motion-duration-fast) var(--motion-ease-out),
 		color var(--motion-duration-fast) var(--motion-ease-out);
@@ -481,6 +491,16 @@ button.lyds-pagination__control {
 	font-size: inherit;
 	font-weight: inherit;
 	line-height: inherit;
+}
+
+@media (forced-colors: active) {
+	.lyds-tab-bar__link[data-selected]::after {
+		position: absolute;
+		inset-inline: 0.75rem;
+		inset-block-end: 0.25rem;
+		border-block-end: 0.125rem solid currentColor;
+		content: "";
+	}
 }
 
 .lyds-table-frame,

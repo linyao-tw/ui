@@ -158,6 +158,13 @@
 		box-shadow var(--motion-duration-fast) var(--motion-ease-out);
 }
 
+.lyds-date-segment[role="spinbutton"] {
+	align-self: center;
+	min-inline-size: 1.5rem;
+	min-block-size: 1.5rem;
+	text-align: center;
+}
+
 .lyds-date-segment[data-placeholder] {
 	color: var(--control-placeholder);
 }
@@ -249,7 +256,7 @@
 
 .lyds-date-popover {
 	z-index: var(--z-popover);
-	max-inline-size: calc(100vw - var(--space-4));
+	inline-size: min(21.25rem, calc(100vw - var(--space-4)));
 	overflow: auto;
 	border: 1px solid var(--divider-subtle);
 	border-radius: var(--radius-md);
@@ -459,8 +466,31 @@
 		padding-inline: 0;
 	}
 
+	.lyds-date-picker .lyds-date-segment[data-type="literal"],
+	.lyds-date-range-picker .lyds-date-segment[data-type="literal"] {
+		min-inline-size: 0;
+	}
+
 	.lyds-date-time-picker .lyds-date-input {
 		font-size: var(--font-size-200);
+	}
+
+	.lyds-date-input:has(.lyds-date-segment[data-type="day"]):has(.lyds-date-segment[data-type="hour"]) {
+		flex-wrap: wrap;
+		align-content: center;
+	}
+
+	.lyds-date-input:has(.lyds-date-segment[data-type="day"]):has(.lyds-date-segment[data-type="hour"]) > .lyds-date-segment[data-type="literal"]:has(+ .lyds-date-segment[data-type="hour"]) {
+		flex-basis: 100%;
+		min-inline-size: 100%;
+		block-size: 0;
+		padding: 0;
+		overflow: hidden;
+	}
+
+	.lyds-date-input:has(.lyds-date-segment[data-type="day"]):has(.lyds-date-segment[data-type="hour"])
+		> .lyds-date-segment[data-type="literal"]:has(+ .lyds-date-segment[data-type="literal"] + .lyds-date-segment[data-type="hour"]) {
+		display: none;
 	}
 
 	.lyds-date-range-separator {

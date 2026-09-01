@@ -25,12 +25,12 @@ import {
 } from "@base-ui/react/preview-card";
 import {
 	Tooltip as BaseTooltip,
+	type TooltipPopupProps as BaseTooltipPopupProps,
+	type TooltipRootProps as BaseTooltipRootProps,
 	type TooltipArrowProps,
-	type TooltipPopupProps,
 	type TooltipPortalProps,
 	type TooltipPositionerProps,
 	type TooltipProviderProps,
-	type TooltipRootProps,
 	type TooltipTriggerProps,
 	type TooltipViewportProps
 } from "@base-ui/react/tooltip";
@@ -53,12 +53,14 @@ export function TooltipProvider(props: TooltipProviderProps): JSX.Element {
 	return <BaseTooltip.Provider {...props} />;
 }
 
-export interface LydsTooltipRootProps<Payload = unknown> extends TooltipRootProps<Payload> {
+export interface TooltipRootProps<Payload = unknown> extends BaseTooltipRootProps<Payload> {
 	/** Stable id used to associate the trigger with its tooltip description. */
 	descriptionId?: string;
 }
 
-export function TooltipRoot<Payload = unknown>({ descriptionId, ...props }: LydsTooltipRootProps<Payload>): JSX.Element {
+export type TooltipPopupProps = Omit<BaseTooltipPopupProps, "id" | "role">;
+
+export function TooltipRoot<Payload = unknown>({ descriptionId, ...props }: TooltipRootProps<Payload>): JSX.Element {
 	const generatedId = useId();
 	return (
 		<TooltipDescriptionContext.Provider value={descriptionId ?? `lyds-tooltip-${generatedId}`}>

@@ -417,7 +417,9 @@
 @media (max-width: 48rem) {
 	.foundation-page {
 		gap: var(--space-12);
+		margin-inline: 0;
 		padding-block: var(--space-10);
+		padding-inline: 0;
 	}
 
 	.foundation-hero,

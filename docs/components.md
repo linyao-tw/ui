@@ -105,6 +105,8 @@ Field family 共用 label、description、error、required/invalid/disabled/read
 
 High-level `Select` / `Combobox` 適合一般 options。需要 group、separator、rich item 或特殊 render 時使用同一 component 的 anatomy parts，不要繞過 LYDS 直接混搭 unstyled primitives。
 
+> [!IMPORTANT] Base UI 1.7.0 原始 release 在 nested submenu 展開時會產生不合法的 portal owner。LYDS workspace 暫時套用官方已合併但尚未發版的 [Base UI #5058](https://github.com/mui/base-ui/pull/5058) exact patch，為 constrained menu owner 加上 `role="group"`；對應 Storybook open-state axe regression test 必須保持啟用。pnpm workspace patch 不會由 `@lyds/ui` npm tarball自動傳遞給 consumer，因此在正式 publication 前，必須升級到已包含 #5058 的 Base UI release 並移除 patch。升級後需確認 package source，再重跑 submenu 的 Arrow keys、Tab／Shift+Tab、Escape、return-focus、axe 與 Safari VoiceOver。Base UI 的 focus guards 是 portal tab-order routing 的一部分，不得由 consumer 刪除、設為 inert 或以 MutationObserver 改寫。
+
 ### Disclosure and structure
 
 - `Accordion` family。

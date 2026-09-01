@@ -537,13 +537,15 @@
 
 .lyds-code-field[data-grouped] {
 	align-items: stretch;
+	overflow-x: auto;
+	overflow-y: visible;
 }
 
 .lyds-code-field__group {
 	display: flex;
-	min-inline-size: 0;
+	min-inline-size: max-content;
 	block-size: var(--lyds-field-control-height);
-	flex: 1 1 0;
+	flex: 0 0 auto;
 	align-items: stretch;
 	overflow: hidden;
 }
@@ -554,6 +556,10 @@
 	outline-offset: 0.125rem;
 }
 
+.lyds-code-field[data-grouped] .lyds-code-field__group:focus-within {
+	outline-offset: calc(var(--border-width-strong) * -1);
+}
+
 .lyds-field[data-invalid] .lyds-code-field__group:focus-within {
 	border-color: var(--border-invalid);
 }
@@ -561,10 +567,10 @@
 .lyds-code-field__group-input,
 .lyds-code-field__group-input:hover:not(:disabled):not(:read-only),
 .lyds-code-field__group-input:focus-visible {
-	inline-size: 0;
-	min-inline-size: 0;
+	inline-size: 1.5rem;
+	min-inline-size: 1.5rem;
 	block-size: 100%;
-	flex: 1 1 0;
+	flex: 0 0 1.5rem;
 	padding-inline: 0;
 	border: 0;
 	border-radius: 0;
@@ -745,6 +751,47 @@
 
 	.lyds-drop-zone__button {
 		justify-self: start;
+	}
+}
+
+@media (max-width: 24.375rem) {
+	.lyds-field:has(> .lyds-field__control-frame, > .lyds-textarea, > .lyds-number-field, > .lyds-phone-field) > .lyds-field__label {
+		position: static;
+		max-inline-size: 100%;
+		flex-wrap: wrap;
+		overflow: visible;
+		color: var(--text-secondary);
+		font-size: 0.75rem;
+		line-height: 1rem;
+		pointer-events: auto;
+		white-space: normal;
+	}
+
+	.lyds-field:has(> .lyds-field__control-frame > .lyds-field__adornment--start) > .lyds-field__label {
+		max-inline-size: 100%;
+	}
+
+	.lyds-field[data-invalid] > .lyds-field__label,
+	.lyds-field__required {
+		color: var(--status-danger-foreground);
+	}
+
+	.lyds-field[data-disabled] > .lyds-field__label {
+		color: var(--text-disabled);
+	}
+
+	.lyds-field:is([data-focused], [data-filled], [data-invalid]) > .lyds-field__control-frame .lyds-field__input,
+	.lyds-field:is([data-focused], [data-filled], [data-invalid]) > .lyds-number-field .lyds-number-field__input,
+	.lyds-field:is([data-focused], [data-filled], [data-invalid]) > .lyds-phone-field .lyds-field__input {
+		padding-block: var(--lyds-field-rest-padding-block);
+	}
+
+	.lyds-field:is([data-focused], [data-filled], [data-invalid]) > .lyds-textarea {
+		padding-block: 1.125rem;
+	}
+
+	.lyds-field:has(> .lyds-field__label):not([data-focused]):not([data-filled]):not([data-invalid]) :is(.lyds-field__input, .lyds-textarea, .lyds-number-field__input)::placeholder {
+		color: var(--control-placeholder);
 	}
 }
 

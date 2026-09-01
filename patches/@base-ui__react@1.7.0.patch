@@ -1,0 +1,124 @@
+diff --git a/floating-ui-react/components/FloatingPortal.d.mts b/floating-ui-react/components/FloatingPortal.d.mts
+index 0a2f19cda1575eabd6a6cae919d24e60e11e7139..a73b917b29460dcc3a48955c5f26646c38732451 100644
+--- a/floating-ui-react/components/FloatingPortal.d.mts
++++ b/floating-ui-react/components/FloatingPortal.d.mts
+@@ -43,6 +43,11 @@ export declare namespace FloatingPortal {
+      * A parent element to render the portal element into.
+      */
+     container?: UseFloatingPortalNodeProps['container'] | undefined;
++    /**
++     * @ignore
++     * The role for the hidden `aria-owns` owner element.
++     */
++    portalOwnerRole?: React.AriaRole | undefined;
+   }
+ }
+ export {};
+diff --git a/floating-ui-react/components/FloatingPortal.d.ts b/floating-ui-react/components/FloatingPortal.d.ts
+index 079b3ddd6410a4f0fbea743199733f95754c6bef..be5d91a00354a482cd3ef8e147e5ccb1a332007c 100644
+--- a/floating-ui-react/components/FloatingPortal.d.ts
++++ b/floating-ui-react/components/FloatingPortal.d.ts
+@@ -43,6 +43,11 @@ export declare namespace FloatingPortal {
+      * A parent element to render the portal element into.
+      */
+     container?: UseFloatingPortalNodeProps['container'] | undefined;
++    /**
++     * @ignore
++     * The role for the hidden `aria-owns` owner element.
++     */
++    portalOwnerRole?: React.AriaRole | undefined;
+   }
+ }
+ export {};
+diff --git a/floating-ui-react/components/FloatingPortal.js b/floating-ui-react/components/FloatingPortal.js
+index 11133fb7bf4c29e404d6f7c63dd54239b2360d5a..9252198335d4f183cfcf6eaa7080b0c7862fa7a8 100644
+--- a/floating-ui-react/components/FloatingPortal.js
++++ b/floating-ui-react/components/FloatingPortal.js
+@@ -112,6 +112,7 @@ const FloatingPortal = exports.FloatingPortal = /*#__PURE__*/React.forwardRef(fu
+     style,
+     children,
+     container,
++    portalOwnerRole,
+     ...elementProps
+   } = componentProps;
+   const {
+@@ -194,6 +195,7 @@ const FloatingPortal = exports.FloatingPortal = /*#__PURE__*/React.forwardRef(fu
+           }
+         }
+       }), shouldRenderGuards && portalNode && /*#__PURE__*/(0, _jsxRuntime.jsx)("span", {
++        role: portalOwnerRole,
+         "aria-owns": portalNodeId,
+         style: _constants.ownerVisuallyHidden
+       }), portalNode && /*#__PURE__*/ReactDOM.createPortal(children, portalNode), shouldRenderGuards && portalNode && /*#__PURE__*/(0, _jsxRuntime.jsx)(_FocusGuard.FocusGuard, {
+diff --git a/floating-ui-react/components/FloatingPortal.mjs b/floating-ui-react/components/FloatingPortal.mjs
+index 869d2f92cfb937015cd7e3ebca905dd73bfc0d61..8eeaf2a77ddab1d66d539e828012956da798400c 100644
+--- a/floating-ui-react/components/FloatingPortal.mjs
++++ b/floating-ui-react/components/FloatingPortal.mjs
+@@ -103,6 +103,7 @@ export const FloatingPortal = /*#__PURE__*/React.forwardRef(function FloatingPor
+     style,
+     children,
+     container,
++    portalOwnerRole,
+     ...elementProps
+   } = componentProps;
+   const {
+@@ -185,6 +186,7 @@ export const FloatingPortal = /*#__PURE__*/React.forwardRef(function FloatingPor
+           }
+         }
+       }), shouldRenderGuards && portalNode && /*#__PURE__*/_jsx("span", {
++        role: portalOwnerRole,
+         "aria-owns": portalNodeId,
+         style: ownerVisuallyHidden
+       }), portalNode && /*#__PURE__*/ReactDOM.createPortal(children, portalNode), shouldRenderGuards && portalNode && /*#__PURE__*/_jsx(FocusGuard, {
+diff --git a/menu/portal/MenuPortal.js b/menu/portal/MenuPortal.js
+index c797a3464f28b949d4d1bcf29346a8bd0e72a6ad..8a93d84fb0f88f9a4b44e41555c7c1282f9b016f 100644
+--- a/menu/portal/MenuPortal.js
++++ b/menu/portal/MenuPortal.js
+@@ -24,17 +24,20 @@ const MenuPortal = exports.MenuPortal = /*#__PURE__*/React.forwardRef(function M
+     ...portalProps
+   } = props;
+   const {
+-    store
++    store,
++    parent
+   } = (0, _MenuRootContext.useMenuRootContext)();
+   const mounted = store.useState('mounted');
+   const shouldRender = mounted || keepMounted;
+   if (!shouldRender) {
+     return null;
+   }
++  const portalOwnerRole = parent.type === 'menu' || parent.type === 'menubar' ? 'group' : undefined;
+   return /*#__PURE__*/(0, _jsxRuntime.jsx)(_MenuPortalContext.MenuPortalContext.Provider, {
+     value: keepMounted,
+     children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_floatingUiReact.FloatingPortal, {
+       ref: forwardedRef,
++      portalOwnerRole: portalOwnerRole,
+       ...portalProps
+     })
+   });
+diff --git a/menu/portal/MenuPortal.mjs b/menu/portal/MenuPortal.mjs
+index 256d4e5897059b7f4f18bcfd4b70d3d0c2b78f8a..c7d659be8524160c4f89a41a5bff1c2dddd67211 100644
+--- a/menu/portal/MenuPortal.mjs
++++ b/menu/portal/MenuPortal.mjs
+@@ -19,17 +19,20 @@ export const MenuPortal = /*#__PURE__*/React.forwardRef(function MenuPortal(prop
+     ...portalProps
+   } = props;
+   const {
+-    store
++    store,
++    parent
+   } = useMenuRootContext();
+   const mounted = store.useState('mounted');
+   const shouldRender = mounted || keepMounted;
+   if (!shouldRender) {
+     return null;
+   }
++  const portalOwnerRole = parent.type === 'menu' || parent.type === 'menubar' ? 'group' : undefined;
+   return /*#__PURE__*/_jsx(MenuPortalContext.Provider, {
+     value: keepMounted,
+     children: /*#__PURE__*/_jsx(FloatingPortal, {
+       ref: forwardedRef,
++      portalOwnerRole: portalOwnerRole,
+       ...portalProps
+     })
+   });

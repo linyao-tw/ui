@@ -16,7 +16,7 @@ import {
 import { CaretDownIcon } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
-import { forwardRef, type Key, type ReactNode } from "react";
+import { forwardRef, useMemo, type Key, type ReactNode } from "react";
 
 import { mergeStateClassName } from "./classnames";
 import styles from "./selection.module.css";
@@ -70,6 +70,42 @@ export interface ComboboxOption<Value> {
 	value: Value;
 }
 
+interface IndexedOption<Option> {
+	option: Option;
+	sourceIndex: number;
+}
+
+function createOptionIndex<Value, Option extends { value: Value }>(options: readonly Option[]) {
+	const values: Value[] = [];
+	const lookup = new Map<Value, IndexedOption<Option>>();
+	let negativeZero: IndexedOption<Option> | undefined;
+	let positiveZero: IndexedOption<Option> | undefined;
+
+	options.forEach((option, sourceIndex) => {
+		const value = option.value;
+		const indexed = { option, sourceIndex };
+		values.push(value);
+
+		if (typeof value === "number" && value === 0) {
+			if (Object.is(value, -0)) negativeZero ??= indexed;
+			else positiveZero ??= indexed;
+			return;
+		}
+
+		if (!lookup.has(value)) lookup.set(value, indexed);
+	});
+
+	return {
+		values,
+		get(value: Value) {
+			if (typeof value === "number" && value === 0) {
+				return Object.is(value, -0) ? negativeZero : positiveZero;
+			}
+			return lookup.get(value);
+		}
+	};
+}
+
 export interface ComboboxProps<Value> extends Omit<ComboboxRootProps<Value, false>, "children" | "items" | "multiple"> {
 	"aria-describedby"?: string;
 	"aria-label"?: string;
@@ -103,16 +139,19 @@ function ComboboxComponent<Value>({
 	triggerLabel = "Show options",
 	...rootProps
 }: ComboboxProps<Value>) {
-	const values = options.map(option => option.value);
-	const stringify =
-		itemToStringLabel ??
-		((itemValue: Value) => {
-			const option = options.find(candidate => Object.is(candidate.value, itemValue));
-			return option?.textValue ?? (typeof option?.label === "string" ? option.label : String(itemValue));
-		});
+	const optionIndex = useMemo(() => createOptionIndex<Value, ComboboxOption<Value>>(options), [options]);
+	const stringify = useMemo(
+		() =>
+			itemToStringLabel ??
+			((itemValue: Value) => {
+				const option = optionIndex.get(itemValue)?.option;
+				return option?.textValue ?? (typeof option?.label === "string" ? option.label : String(itemValue));
+			}),
+		[itemToStringLabel, optionIndex]
+	);
 
 	return (
-		<BaseCombobox.Root {...rootProps} itemToStringLabel={stringify} items={values}>
+		<BaseCombobox.Root {...rootProps} itemToStringLabel={stringify} items={optionIndex.values}>
 			<ComboboxInputGroup className={className}>
 				<ComboboxInput
 					{...inputProps}
@@ -135,10 +174,11 @@ function ComboboxComponent<Value>({
 					<ComboboxPopup {...popupProps}>
 						<ComboboxList>
 							{(value: Value, index: number) => {
-								const option = options.find(candidate => Object.is(candidate.value, value));
-								if (!option) return null;
+								const indexed = optionIndex.get(value);
+								if (!indexed) return null;
+								const { option, sourceIndex } = indexed;
 								return (
-									<ComboboxItem disabled={option.disabled} index={index} key={option.key ?? option.textValue ?? index} value={value}>
+									<ComboboxItem disabled={option.disabled} index={index} key={option.key ?? option.textValue ?? sourceIndex} value={value}>
 										<ComboboxItemIndicator>
 											<CheckIcon aria-hidden="true" weight="bold" />
 										</ComboboxItemIndicator>
@@ -238,16 +278,19 @@ function AutocompleteComponent<ItemValue>({
 	triggerLabel = "Show suggestions",
 	...rootProps
 }: AutocompleteProps<ItemValue>) {
-	const values = options.map(option => option.value);
-	const stringify =
-		itemToStringValue ??
-		((itemValue: ItemValue) => {
-			const option = options.find(candidate => Object.is(candidate.value, itemValue));
-			return option?.textValue ?? (typeof option?.label === "string" ? option.label : String(itemValue));
-		});
+	const optionIndex = useMemo(() => createOptionIndex<ItemValue, AutocompleteOption<ItemValue>>(options), [options]);
+	const stringify = useMemo(
+		() =>
+			itemToStringValue ??
+			((itemValue: ItemValue) => {
+				const option = optionIndex.get(itemValue)?.option;
+				return option?.textValue ?? (typeof option?.label === "string" ? option.label : String(itemValue));
+			}),
+		[itemToStringValue, optionIndex]
+	);
 
 	return (
-		<BaseAutocomplete.Root {...rootProps} itemToStringValue={stringify} items={values}>
+		<BaseAutocomplete.Root {...rootProps} itemToStringValue={stringify} items={optionIndex.values}>
 			<AutocompleteInputGroup className={className}>
 				<ComboboxInput
 					{...inputProps}
@@ -270,10 +313,11 @@ function AutocompleteComponent<ItemValue>({
 					<ComboboxPopup {...popupProps}>
 						<ComboboxList>
 							{(value: ItemValue, index: number) => {
-								const option = options.find(candidate => Object.is(candidate.value, value));
-								if (!option) return null;
+								const indexed = optionIndex.get(value);
+								if (!indexed) return null;
+								const { option, sourceIndex } = indexed;
 								return (
-									<AutocompleteItem disabled={option.disabled} index={index} key={option.key ?? option.textValue ?? index} value={value}>
+									<AutocompleteItem disabled={option.disabled} index={index} key={option.key ?? option.textValue ?? sourceIndex} value={value}>
 										<span className={styles.optionText}>{option.label}</span>
 									</AutocompleteItem>
 								);
