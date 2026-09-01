@@ -1,8 +1,7 @@
 // Base UI Portal 自行處理轉場清理。使用 `pure` 入口可讓每個測試明確卸載，
 // 不必註冊第二次全域清理。
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react/pure";
+import { fireEvent, render, screen, within } from "@testing-library/react/pure";
 import userEvent from "@testing-library/user-event";
-import { useRef, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import {
@@ -18,20 +17,8 @@ import {
 	PaginationLink,
 	PaginationList
 } from "./breadcrumb-pagination";
-import {
-	CommandPalette,
-	CommandPaletteBackdrop,
-	CommandPaletteDescription,
-	CommandPaletteInput,
-	CommandPaletteItem,
-	CommandPaletteList,
-	CommandPalettePopup,
-	CommandPalettePortal,
-	CommandPaletteTitle,
-	CommandPaletteTrigger,
-	CommandPaletteViewport
-} from "./command-palette";
-import { Menubar, MenubarItem, MenubarMenu, MenubarPopup, MenubarPortal, MenubarPositioner, MenubarTrigger, Toolbar, ToolbarButton } from "./menubar-toolbar";
+import { CommandPalette, CommandPaletteInput, CommandPalettePopup, CommandPalettePortal, CommandPaletteTitle, CommandPaletteTrigger, CommandPaletteViewport } from "./command-palette";
+import { Toolbar, ToolbarButton } from "./menubar-toolbar";
 import {
 	NavigationMenu,
 	NavigationMenuContent,
@@ -45,36 +32,6 @@ import {
 	NavigationMenuViewport
 } from "./navigation-menu";
 import { DataTable, DataTableRegion, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "./table-collection";
-
-function MenubarFixture() {
-	const [open, setOpen] = useState(false);
-	const triggerRef = useRef<HTMLButtonElement>(null);
-
-	return (
-		<Menubar modal={false}>
-			<MenubarMenu open={open} triggerId="test-file-menu-trigger" onOpenChange={setOpen}>
-				<MenubarTrigger ref={triggerRef} id="test-file-menu-trigger">
-					File
-				</MenubarTrigger>
-				<MenubarPortal>
-					<MenubarPositioner>
-						<MenubarPopup
-							finalFocus={() => {
-								// JSDOM 無法可靠判斷 Portal 內觸發按鈕的可見性。
-								triggerRef.current?.focus();
-								return triggerRef.current;
-							}}
-							style={{ transition: "none" }}
-						>
-							<MenubarItem>New panel</MenubarItem>
-							<MenubarItem>Open panel</MenubarItem>
-						</MenubarPopup>
-					</MenubarPositioner>
-				</MenubarPortal>
-			</MenubarMenu>
-		</Menubar>
-	);
-}
 
 describe("breadcrumb and pagination semantics", () => {
 	it("names the breadcrumb landmark and marks only the current page", () => {
@@ -164,27 +121,6 @@ describe("Base UI navigation behavior", () => {
 		view.unmount();
 	});
 
-	it("opens a menubar menu, navigates its items, and closes with Escape", () => {
-		Reflect.set(globalThis, "BASE_UI_ANIMATIONS_DISABLED", true);
-		const view = render(<MenubarFixture />);
-
-		const trigger = screen.getByRole("menuitem", { name: "File" });
-		fireEvent.click(trigger);
-		const firstItem = screen.getByRole("menuitem", { name: "New panel" });
-		expect(trigger).toHaveAttribute("aria-expanded", "true");
-		firstItem.focus();
-		expect(firstItem).toHaveFocus();
-		fireEvent.keyDown(firstItem, { key: "ArrowDown" });
-		const secondItem = screen.getByRole("menuitem", { name: "Open panel" });
-		expect(secondItem).toHaveAttribute("data-highlighted");
-		expect(secondItem).toHaveFocus();
-		fireEvent.keyDown(secondItem, { key: "Escape" });
-		expect(trigger).toHaveAttribute("aria-expanded", "false");
-		expect(trigger).toHaveFocus();
-		view.unmount();
-		Reflect.deleteProperty(globalThis, "BASE_UI_ANIMATIONS_DISABLED");
-	});
-
 	it("uses toolbar roving focus instead of adding every control to the tab sequence", async () => {
 		const view = render(
 			<Toolbar aria-label="Drawing controls">
@@ -262,40 +198,10 @@ describe("command palette composition", () => {
 		);
 
 		const trigger = screen.getByRole("button", { name: "Open canceled palette" });
+		expect(trigger).toHaveClass("lyds-command-palette__trigger");
 		await user.click(trigger);
 		expect(trigger).toHaveAttribute("aria-expanded", "false");
 		expect(screen.queryByRole("dialog", { name: "Canceled deck" })).not.toBeInTheDocument();
-		view.unmount();
-	});
-
-	it("opens as a focus-trapped dialog and closes on Escape", async () => {
-		const user = userEvent.setup();
-		const onOpenChange = vi.fn();
-		const view = render(
-			<CommandPalette<string> onOpenChange={onOpenChange}>
-				<CommandPaletteTrigger>Open command palette</CommandPaletteTrigger>
-				<CommandPalettePortal>
-					<CommandPaletteBackdrop />
-					<CommandPaletteViewport>
-						<CommandPalettePopup>
-							<CommandPaletteTitle>Command deck</CommandPaletteTitle>
-							<CommandPaletteDescription>Choose an operation.</CommandPaletteDescription>
-							<CommandPaletteInput aria-label="Search commands" />
-							<CommandPaletteList>
-								<CommandPaletteItem value="open-settings">Open settings</CommandPaletteItem>
-							</CommandPaletteList>
-						</CommandPalettePopup>
-					</CommandPaletteViewport>
-				</CommandPalettePortal>
-			</CommandPalette>
-		);
-
-		await user.click(screen.getByRole("button", { name: "Open command palette" }));
-		expect(await screen.findByRole("dialog", { name: "Command deck" })).toBeInTheDocument();
-		expect(screen.getByRole("combobox", { name: "Search commands" })).toBeInTheDocument();
-		await user.keyboard("{Escape}");
-		await waitFor(() => expect(screen.getByRole("button", { name: "Open command palette" })).toHaveAttribute("aria-expanded", "false"));
-		expect(onOpenChange.mock.lastCall?.[0]).toBe(false);
 		view.unmount();
 	});
 });

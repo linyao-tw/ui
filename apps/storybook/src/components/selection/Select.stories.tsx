@@ -1,6 +1,7 @@
 import { Autocomplete, Combobox, Select } from "@lyds/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -25,7 +26,21 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = { name: "預設" };
+export const Default: Story = {
+	name: "預設",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const body = within(document.body);
+		const trigger = canvas.getByRole("combobox", { name: "辦公室" });
+
+		trigger.focus();
+		await userEvent.keyboard("{ArrowDown}");
+		await expect(await body.findByRole("option", { name: /台北辦公室/ })).toHaveAttribute("data-highlighted");
+		await userEvent.keyboard("{Enter}");
+		await expect(trigger).toHaveTextContent("台北辦公室");
+		await expect(trigger).toHaveAttribute("aria-expanded", "false");
+	}
+};
 
 export const Disabled: Story = {
 	name: "停用",
@@ -57,6 +72,21 @@ export const ControlledValue: Story = {
 
 export const SearchableSelection: Story = {
 	name: "可搜尋選擇器",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const body = within(document.body);
+		const combobox = canvas.getByRole("combobox", { name: "搜尋辦公室" });
+		const getVisibleListbox = () => body.queryAllByRole("listbox").find(listbox => listbox.checkVisibility() && listbox.closest("[data-ending-style]") == null);
+
+		await userEvent.click(canvas.getByRole("button", { name: "顯示選項" }));
+		await waitFor(() => expect(getVisibleListbox()).toBeDefined());
+		const harborBeforeFilter = within(getVisibleListbox()!).getByRole("option", { name: /高雄辦公室/ });
+		await userEvent.type(combobox, "高雄");
+		await expect(within(getVisibleListbox()!).getByRole("option", { name: /高雄辦公室/ })).toBe(harborBeforeFilter);
+		await expect(within(getVisibleListbox()!).queryByRole("option", { name: /台北辦公室/ })).not.toBeInTheDocument();
+		await userEvent.keyboard("{Escape}");
+		await waitFor(() => expect(getVisibleListbox()).toBeUndefined());
+	},
 	render: () => (
 		<div className="lyds-story-grid">
 			<div className="lyds-story-panel">

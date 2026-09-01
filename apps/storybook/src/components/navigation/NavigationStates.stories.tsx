@@ -70,6 +70,7 @@ import { GearIcon } from "@phosphor-icons/react/dist/csr/Gear";
 import { HouseIcon } from "@phosphor-icons/react/dist/csr/House";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -250,6 +251,20 @@ function CommandPaletteSpecimen({ empty = false }: { empty?: boolean }) {
 
 export const MenubarStates: Story = {
 	name: "選單列狀態",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const body = within(document.body);
+		const trigger = canvas.getByRole("menuitem", { name: "檢視" });
+
+		trigger.focus();
+		await userEvent.keyboard("{ArrowDown}");
+		await waitFor(() => expect(trigger).toHaveAttribute("aria-expanded", "true"));
+		const firstItem = await body.findByRole("menuitem", { name: "開啟活動面板" });
+		await expect(firstItem).toHaveFocus();
+		await userEvent.keyboard("{Escape}");
+		await waitFor(() => expect(trigger).toHaveAttribute("aria-expanded", "false"));
+		await expect(trigger).toHaveFocus();
+	},
 	render: () => (
 		<div className="lyds-story-stack">
 			<p className="lyds-story-note">開啟「檢視」可查看群組、停用、核取與單選狀態。</p>
