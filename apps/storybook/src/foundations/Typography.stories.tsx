@@ -9,21 +9,21 @@ const specimens = [
 		scale: "display",
 		label: "展示／黑體",
 		meta: "GenKiGothicTW · 粗體",
-		copy: "Linyao Design System"
+		copy: "南去經三國，東來過五湖"
 	},
 	{
 		family: "serif",
-		scale: "heading",
-		label: "標題／明體",
+		scale: "display",
+		label: "展示／明體",
 		meta: "GenKiMinTW · 半粗體",
-		copy: "元件標題與內容層級"
+		copy: "南去經三國，東來過五湖"
 	},
 	{
 		family: "sans",
 		scale: "body",
-		label: "介面／黑體",
+		label: "內文／黑體",
 		meta: "GenKiGothicTW · 一般",
-		copy: "介面文字使用清楚的層級與行距，確保按鈕、表單、說明與長篇內容容易閱讀。"
+		copy: "我個人認為義大利麵就應該拌 42 號混泥土，因為這個螺絲釘的長度很容易直接影響到挖掘機的扭矩。"
 	},
 	{
 		family: "mono",
@@ -55,7 +55,7 @@ export const TypeSystem: Story = {
 	name: "字體系統",
 	render: () => (
 		<main className="foundation-page">
-			<FoundationHero eyebrow="Linyao Design System" title="字體" description="定義繁體中文黑體、明體與等寬字體的用途、字級與數字格式。" />
+			<FoundationHero title="字體" description="定義繁體中文黑體、明體與等寬字體的用途、字級與數字格式。" />
 
 			<FoundationSection title="字體範例">
 				<div>
@@ -88,18 +88,15 @@ export const TypeSystem: Story = {
 			<FoundationSection title="使用規則">
 				<div className="foundation-principle-grid">
 					<article className="foundation-principle">
-						<span className="foundation-kicker">介面文字</span>
-						<h3>使用 GenKiGothicTW</h3>
+						<h3>介面文字</h3>
 						<p>用於控制項、導覽、內文與資料密集的介面。繁體中文與英文皆以正常大小寫呈現。</p>
 					</article>
 					<article className="foundation-principle">
-						<span className="foundation-kicker">標題文字</span>
-						<h3>選擇性使用 GenKiMinTW</h3>
+						<h3>標題文字</h3>
 						<p>用於內容標題與引文，不取代主要介面字體。</p>
 					</article>
 					<article className="foundation-principle">
-						<span className="foundation-kicker">結構化數值</span>
-						<h3>使用 Geist Mono</h3>
+						<h3>結構化數值</h3>
 						<p>用於代碼、時間戳記、序號與變動數值，不用於段落內文。</p>
 					</article>
 				</div>

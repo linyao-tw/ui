@@ -381,16 +381,7 @@ function ServiceTable({ records }: { records: readonly ServiceRecord[] }) {
 	const visibleRows = records.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
 	if (records.length === 0) {
-		return (
-			<EmptyStateComponent
-				className="ops-empty-state"
-				eyebrow="服務清單"
-				headingLevel={3}
-				icon={<WrenchIcon weight="regular" />}
-				title="沒有符合條件的服務"
-				description="請調整搜尋、地區或狀態條件。"
-			/>
-		);
+		return <EmptyStateComponent className="ops-empty-state" headingLevel={3} icon={<WrenchIcon weight="regular" />} title="沒有符合條件的服務" description="請調整搜尋、地區或狀態條件。" />;
 	}
 
 	return (

@@ -23,7 +23,7 @@ export const LightAndDark: Story = {
 	name: "淺色與深色",
 	render: () => (
 		<main className="foundation-page">
-			<FoundationHero eyebrow="Linyao Design System" title="主題" description="淺色與深色主題共用相同的語意設計變數與元件層級。" />
+			<FoundationHero title="主題" description="淺色與深色主題共用相同的語意設計變數與元件層級。" />
 
 			<FoundationSection title="主題比較">
 				<div className="foundation-theme-grid">
@@ -60,18 +60,15 @@ export const LightAndDark: Story = {
 			<FoundationSection title="主題設定規則">
 				<div className="foundation-principle-grid">
 					<article className="foundation-principle">
-						<span className="foundation-kicker">設定</span>
-						<h3>指定主題屬性</h3>
+						<h3>主題屬性</h3>
 						<p>在根元素設定 data-lyds-theme="light" 或 data-lyds-theme="dark"。巢狀區域使用最近的主題屬性。</p>
 					</article>
 					<article className="foundation-principle">
-						<span className="foundation-kicker">使用</span>
-						<h3>使用語意 token</h3>
+						<h3>語意變數</h3>
 						<p>應用程式與元件 CSS 使用 Background/Main、Text/Title 等語意角色，不直接使用實際色值。</p>
 					</article>
 					<article className="foundation-principle">
-						<span className="foundation-kicker">擴充</span>
-						<h3>完整設定色彩配對</h3>
+						<h3>自訂主題</h3>
 						<p>建立產品主題時，須一併設定前景、背景、邊框、focus 與狀態 token。</p>
 					</article>
 				</div>

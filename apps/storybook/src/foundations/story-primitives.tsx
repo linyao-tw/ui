@@ -1,16 +1,14 @@
 import type { ReactNode } from "react";
 
 interface FoundationHeroProps {
-	eyebrow: string;
 	title: string;
 	description: string;
 }
 
-export function FoundationHero({ eyebrow, title, description }: FoundationHeroProps) {
+export function FoundationHero({ title, description }: FoundationHeroProps) {
 	return (
 		<header className="foundation-hero">
 			<div className="foundation-hero__copy">
-				<span className="foundation-eyebrow">{eyebrow}</span>
 				<h1>{title}</h1>
 				<p>{description}</p>
 			</div>

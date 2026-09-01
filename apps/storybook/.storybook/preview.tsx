@@ -46,7 +46,7 @@ const preview: Preview = {
 		layout: "padded",
 		options: {
 			storySort: {
-				order: ["基礎", "元件", "日期與時間", "使用範例"]
+				order: ["首頁", "基礎", "元件", "日期與時間", "使用範例"]
 			}
 		}
 	}

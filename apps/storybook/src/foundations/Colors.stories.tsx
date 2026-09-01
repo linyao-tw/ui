@@ -109,11 +109,18 @@ const contrastPairs = [
 		copy: "Text/Main on Background/Main"
 	},
 	{
-		name: "主要操作",
+		name: "品牌強調",
 		foreground: "var(--text-on-accent)",
 		background: "var(--background-accent)",
 		border: "var(--text-on-accent)",
 		copy: "Text/On_Accent on Background/Accent"
+	},
+	{
+		name: "主要控制項",
+		foreground: "var(--control-on-primary)",
+		background: "var(--control-primary)",
+		border: "var(--control-primary-pressed)",
+		copy: "Control/On_Primary on Control/Primary"
 	},
 	{
 		name: "內嵌控制項",
@@ -154,7 +161,7 @@ export const SemanticColorSystem: Story = {
 	name: "語意色彩",
 	render: () => (
 		<main className="foundation-page">
-			<FoundationHero eyebrow="Linyao Design System" title="色彩" description="品牌色透過語意變數對應至背景、文字、控制項與狀態。" />
+			<FoundationHero title="色彩" description="品牌色透過語意變數對應至背景、文字、控制項與狀態。" />
 
 			<FoundationSection title="品牌基礎色">
 				<p className="foundation-section-copy">Limestone、Charcoal 與 Vermilion 供主題設定使用。元件不得直接使用基礎色變數。</p>
