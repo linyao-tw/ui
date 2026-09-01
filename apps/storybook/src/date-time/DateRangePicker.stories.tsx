@@ -1,6 +1,7 @@
 import { CalendarDate, DateRangePicker } from "@lyds/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { expect } from "storybook/test";
 
 import "../components/story-layout.css";
 
@@ -63,6 +64,39 @@ export const ConstraintsAndInvalid: Story = {
 			<DateRangePicker label="必填日期範圍" invalid required error="所選範圍包含不可選日期。" />
 		</div>
 	)
+};
+
+export const CompactWidths: Story = {
+	name: "窄寬版面",
+	render: () => (
+		<div className="lyds-story-stack">
+			<section aria-labelledby="date-range-width-320" data-layout-width="320" style={{ display: "grid", gap: "var(--space-2)", inlineSize: "min(100%, 20rem)" }}>
+				<p className="lyds-story-panel__heading" id="date-range-width-320">
+					320 像素
+				</p>
+				<DateRangePicker label="日期範圍" defaultValue={defaultRange} locale="zh-TW" />
+			</section>
+			<section aria-labelledby="date-range-width-390" data-layout-width="390" style={{ display: "grid", gap: "var(--space-2)", inlineSize: "min(100%, 24.375rem)" }}>
+				<p className="lyds-story-panel__heading" id="date-range-width-390">
+					390 像素
+				</p>
+				<DateRangePicker label="日期範圍" defaultValue={defaultRange} locale="zh-TW" />
+			</section>
+		</div>
+	),
+	play: async ({ canvasElement }) => {
+		for (const sample of canvasElement.querySelectorAll<HTMLElement>("[data-layout-width]")) {
+			const group = sample.querySelector<HTMLElement>(".lyds-date-picker-group");
+			const inputs = sample.querySelectorAll<HTMLElement>(".lyds-date-picker-group > .lyds-date-input");
+			await expect(group).not.toBeNull();
+			await expect(inputs).toHaveLength(2);
+			await expect(group!.scrollWidth).toBeLessThanOrEqual(group!.clientWidth);
+			for (const input of inputs) {
+				await expect(getComputedStyle(input).borderInlineStartWidth).toBe("0px");
+				await expect(getComputedStyle(input).boxShadow).toBe("none");
+			}
+		}
+	}
 };
 
 export const DarkTheme: Story = {

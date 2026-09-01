@@ -37,7 +37,7 @@
 }
 
 .lyds-date-range-picker {
-	inline-size: min(100%, 32rem);
+	inline-size: fit-content;
 }
 
 .lyds-date-label {
@@ -86,6 +86,7 @@
 	align-items: center;
 	gap: var(--space-1);
 	min-inline-size: 12rem;
+	max-inline-size: 100%;
 	padding-inline: var(--space-3);
 	line-height: 1;
 }
@@ -93,13 +94,17 @@
 .lyds-date-input-shell {
 	display: flex;
 	align-items: stretch;
+	max-inline-size: 100%;
+	overflow: hidden;
 }
 
 .lyds-date-input-shell > .lyds-date-input {
 	flex: 1;
 	min-block-size: 0;
 	border: 0;
+	border-radius: 0;
 	background: var(--background-transparent);
+	box-shadow: none;
 }
 
 .lyds-date-input-affordance {
@@ -160,6 +165,7 @@
 
 .lyds-date-segment[role="spinbutton"] {
 	align-self: center;
+	flex: 0 0 auto;
 	min-inline-size: 1.5rem;
 	min-block-size: 1.5rem;
 	text-align: center;
@@ -178,11 +184,27 @@
 	box-shadow: 0 0 0 0.125rem var(--focus-ring);
 }
 
+.lyds-date-input:has(.lyds-date-segment[data-type="timeZoneName"]) {
+	flex-wrap: wrap;
+	align-content: center;
+	column-gap: 0;
+	padding-inline: var(--space-2);
+}
+
+.lyds-date-input:has(.lyds-date-segment[data-type="timeZoneName"]) .lyds-date-segment {
+	padding-inline: 0;
+}
+
+.lyds-date-segment[data-type="timeZoneName"] {
+	white-space: nowrap;
+}
+
 .lyds-date-picker-group {
 	display: flex;
 	align-items: stretch;
 	inline-size: 100%;
 	max-inline-size: 100%;
+	overflow: hidden;
 }
 
 .lyds-date-picker-group > .lyds-date-input {
@@ -190,7 +212,20 @@
 	min-inline-size: 0;
 	min-block-size: 0;
 	border: 0;
+	border-radius: 0;
 	background: var(--background-transparent);
+	box-shadow: none;
+}
+
+.lyds-date-range-picker .lyds-date-picker-group {
+	display: grid;
+	grid-template-columns: minmax(0, max-content) auto minmax(0, max-content) var(--lyds-date-control-height);
+	inline-size: fit-content;
+}
+
+.lyds-date-range-picker .lyds-date-picker-group > .lyds-date-input {
+	inline-size: max-content;
+	max-inline-size: 100%;
 }
 
 .lyds-date-picker-button,

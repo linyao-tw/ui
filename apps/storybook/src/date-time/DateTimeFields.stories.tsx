@@ -158,6 +158,48 @@ export const ZonedDateTimes: Story = {
 	)
 };
 
+export const ZonedDateTimesAtCompactWidths: Story = {
+	name: "時區值窄寬版面",
+	render: () => (
+		<div className="lyds-story-stack">
+			<section aria-labelledby="zoned-date-time-width-320" data-layout-width="320" style={{ display: "grid", gap: "var(--space-2)", inlineSize: "min(100%, 20rem)" }}>
+				<p className="lyds-story-panel__heading" id="zoned-date-time-width-320">
+					320 像素
+				</p>
+				<div className="lyds-story-stack">
+					<DateField label="含時區日期" defaultValue={taipeiDateTime} locale="zh-TW" hourCycle={24} granularity="second" />
+					<TimeField label="含時區時間" defaultValue={taipeiDateTime} locale="zh-TW" hourCycle={24} granularity="second" />
+					<DateTimePicker label="含時區日期與時間" defaultValue={newYorkDateTime} locale="en-US" hourCycle={12} granularity="second" />
+				</div>
+			</section>
+			<section aria-labelledby="zoned-date-time-width-390" data-layout-width="390" style={{ display: "grid", gap: "var(--space-2)", inlineSize: "min(100%, 24.375rem)" }}>
+				<p className="lyds-story-panel__heading" id="zoned-date-time-width-390">
+					390 像素
+				</p>
+				<div className="lyds-story-stack">
+					<DateField label="含時區日期" defaultValue={taipeiDateTime} locale="zh-TW" hourCycle={24} granularity="second" />
+					<TimeField label="含時區時間" defaultValue={taipeiDateTime} locale="zh-TW" hourCycle={24} granularity="second" />
+					<DateTimePicker label="含時區日期與時間" defaultValue={newYorkDateTime} locale="en-US" hourCycle={12} granularity="second" />
+				</div>
+			</section>
+		</div>
+	),
+	play: async ({ canvasElement }) => {
+		for (const sample of canvasElement.querySelectorAll<HTMLElement>("[data-layout-width]")) {
+			for (const control of sample.querySelectorAll<HTMLElement>(".lyds-date-input, .lyds-date-input-shell, .lyds-date-picker-group")) {
+				await expect(control.scrollWidth).toBeLessThanOrEqual(control.clientWidth);
+			}
+
+			for (const timeZone of sample.querySelectorAll<HTMLElement>('.lyds-date-segment[data-type="timeZoneName"]')) {
+				const bounds = timeZone.getBoundingClientRect();
+				const controlBounds = timeZone.closest<HTMLElement>(".lyds-date-input")!.getBoundingClientRect();
+				await expect(bounds.right).toBeLessThanOrEqual(controlBounds.right);
+				await expect(bounds.left).toBeGreaterThanOrEqual(controlBounds.left);
+			}
+		}
+	}
+};
+
 export const CalendarAndRangeStates: Story = {
 	name: "行事曆與日期範圍狀態",
 	render: () => (
