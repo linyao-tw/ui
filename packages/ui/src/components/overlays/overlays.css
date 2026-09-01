@@ -128,7 +128,7 @@
 .lyds-alertDialog__trigger:focus-visible,
 .lyds-drawer__trigger:focus-visible,
 .lyds-overlayClose:focus-visible,
-.lyds-overlayCloseAction:focus-visible {
+.lyds-overlayCloseAction:not(.lyds-button):focus-visible {
 	outline: var(--border-width-strong) solid var(--focus-ring);
 	outline-offset: 0.125rem;
 }
@@ -229,7 +229,7 @@
 
 .lyds-tabs__list[data-orientation="vertical"] {
 	flex-direction: column;
-	overflow: hidden;
+	overflow: visible;
 }
 
 .lyds-tabs__tab {
@@ -240,9 +240,9 @@
 	height: 2rem;
 	flex: 0 0 auto;
 	align-items: center;
-	justify-content: flex-start;
+	justify-content: center;
 	border: 0;
-	border-radius: var(--radius-md);
+	border-radius: var(--radius-round);
 	background: var(--background-transparent);
 	color: var(--text-main);
 	cursor: pointer;
@@ -252,7 +252,7 @@
 	letter-spacing: var(--letter-spacing-body);
 	line-height: 1.0625rem;
 	overflow-wrap: normal;
-	padding: var(--space-1) var(--space-3) var(--space-1) var(--space-2);
+	padding: var(--space-1) var(--space-3);
 	white-space: nowrap;
 	transition:
 		color var(--motion-duration-fast) var(--motion-ease-out),
@@ -270,7 +270,6 @@
 }
 
 .lyds-tabs__tab[data-active] {
-	border-radius: 1.3125rem;
 	background: var(--control-quaternary);
 	color: var(--text-title);
 }
@@ -288,9 +287,6 @@
 	min-width: 0;
 	color: var(--text-main);
 	outline: none;
-	transition:
-		opacity var(--motion-duration-normal) var(--motion-ease-out),
-		transform var(--motion-duration-normal) var(--motion-ease-out);
 }
 
 .lyds-tabs__panel:focus-visible {
@@ -299,10 +295,8 @@
 	outline-offset: 0.25rem;
 }
 
-.lyds-tabs__panel[data-starting-style],
 .lyds-tabs__panel[data-ending-style] {
-	opacity: 0;
-	transform: translateY(var(--motion-distance-sm));
+	display: none;
 }
 
 .lyds-tooltip__positioner,
@@ -338,7 +332,23 @@
 .lyds-previewCard__popup[data-starting-style],
 .lyds-previewCard__popup[data-ending-style] {
 	opacity: 0;
+	transform: scale(0.98);
+}
+
+:where(.lyds-tooltip__popup, .lyds-popover__popup, .lyds-previewCard__popup)[data-side="top"]:is([data-starting-style], [data-ending-style]) {
 	transform: translateY(var(--motion-distance-sm)) scale(0.98);
+}
+
+:where(.lyds-tooltip__popup, .lyds-popover__popup, .lyds-previewCard__popup)[data-side="right"]:is([data-starting-style], [data-ending-style]) {
+	transform: translateX(calc(-1 * var(--motion-distance-sm))) scale(0.98);
+}
+
+:where(.lyds-tooltip__popup, .lyds-popover__popup, .lyds-previewCard__popup)[data-side="bottom"]:is([data-starting-style], [data-ending-style]) {
+	transform: translateY(calc(-1 * var(--motion-distance-sm))) scale(0.98);
+}
+
+:where(.lyds-tooltip__popup, .lyds-popover__popup, .lyds-previewCard__popup)[data-side="left"]:is([data-starting-style], [data-ending-style]) {
+	transform: translateX(var(--motion-distance-sm)) scale(0.98);
 }
 
 .lyds-tooltip__popup {
@@ -360,15 +370,58 @@
 	padding: var(--space-5);
 }
 
+.lyds-popover__description + :where(div, form, footer, button, a) {
+	margin-block-start: var(--space-5);
+}
+
+.lyds-previewCard__popup > p + :where(.lyds-button, button, a) {
+	margin-block-start: var(--space-4);
+}
+
 .lyds-tooltip__arrow,
 .lyds-popover__arrow,
 .lyds-previewCard__arrow {
-	z-index: -1;
+	--overlay-arrow-border: var(--divider-main);
+
+	z-index: 1;
 	width: 0.625rem;
 	height: 0.625rem;
-	border: var(--border-width-hairline) solid var(--divider-strong);
+	border: 0;
 	background: var(--background-elevated);
+	pointer-events: none;
 	transform: rotate(45deg);
+}
+
+.lyds-tooltip__arrow {
+	--overlay-arrow-border: var(--divider-strong);
+}
+
+:where(.lyds-tooltip__arrow, .lyds-popover__arrow, .lyds-previewCard__arrow)[data-side="top"] {
+	inset-block-end: 0;
+	border-inline-end: var(--border-width-hairline) solid var(--overlay-arrow-border);
+	border-block-end: var(--border-width-hairline) solid var(--overlay-arrow-border);
+	translate: 0 50%;
+}
+
+:where(.lyds-tooltip__arrow, .lyds-popover__arrow, .lyds-previewCard__arrow)[data-side="right"] {
+	inset-inline-start: 0;
+	border-inline-start: var(--border-width-hairline) solid var(--overlay-arrow-border);
+	border-block-end: var(--border-width-hairline) solid var(--overlay-arrow-border);
+	translate: -50% 0;
+}
+
+:where(.lyds-tooltip__arrow, .lyds-popover__arrow, .lyds-previewCard__arrow)[data-side="bottom"] {
+	inset-block-start: 0;
+	border-inline-start: var(--border-width-hairline) solid var(--overlay-arrow-border);
+	border-block-start: var(--border-width-hairline) solid var(--overlay-arrow-border);
+	translate: 0 -50%;
+}
+
+:where(.lyds-tooltip__arrow, .lyds-popover__arrow, .lyds-previewCard__arrow)[data-side="left"] {
+	inset-inline-end: 0;
+	border-inline-end: var(--border-width-hairline) solid var(--overlay-arrow-border);
+	border-block-start: var(--border-width-hairline) solid var(--overlay-arrow-border);
+	translate: 50% 0;
 }
 
 .lyds-popover__backdrop,
@@ -420,7 +473,14 @@
 	z-index: var(--z-modal);
 	inset: 0;
 	background: var(--background-backdrop);
+}
+
+.lyds-dialog__backdrop {
 	transition: opacity var(--motion-duration-normal) var(--motion-ease-out);
+}
+
+.lyds-drawer__backdrop {
+	transition: opacity calc(var(--drawer-swipe-strength, 1) * var(--motion-duration-slow)) var(--motion-ease-out);
 }
 
 .lyds-dialog__backdrop[data-starting-style],
@@ -481,6 +541,10 @@
 	transition-timing-function: var(--motion-ease-in);
 }
 
+.lyds-dialog__backdrop[data-ending-style] {
+	transition-timing-function: var(--motion-ease-in);
+}
+
 .lyds-dialog__header,
 .lyds-drawer__header {
 	border-block-end: var(--border-width-hairline) solid var(--divider-main);
@@ -495,9 +559,10 @@
 
 .lyds-dialog__footer,
 .lyds-drawer__footer {
-	display: flex;
+	display: grid;
+	grid-auto-columns: minmax(0, 1fr);
+	grid-auto-flow: column;
 	align-items: center;
-	justify-content: flex-end;
 	gap: var(--space-3);
 	border-block-start: var(--border-width-hairline) solid var(--divider-main);
 	background: var(--background-modal);
@@ -561,7 +626,7 @@
 	height: var(--icon-size-sm);
 }
 
-.lyds-overlayCloseAction {
+.lyds-overlayCloseAction:not(.lyds-button) {
 	display: inline-flex;
 	min-height: var(--control-target-min);
 	align-items: center;
@@ -583,29 +648,32 @@
 		transform var(--motion-duration-fast) var(--motion-ease-out);
 }
 
-.lyds-overlayCloseAction:hover {
+.lyds-overlayCloseAction:not(.lyds-button):hover {
 	border-color: var(--control-border-hover);
 	background: var(--control-secondary-hover);
 }
 
-.lyds-overlayCloseAction:active {
+.lyds-overlayCloseAction:not(.lyds-button):active {
 	background: var(--control-secondary-pressed);
 	transform: scale(var(--motion-press-scale));
 }
 
-.lyds-overlayCloseAction[data-disabled] {
+.lyds-overlayCloseAction:not(.lyds-button)[data-disabled] {
 	border-color: var(--control-border-disabled);
 	background: var(--control-secondary-disabled);
 	color: var(--text-disabled);
 	cursor: not-allowed;
 }
 
-.lyds-alertDialog__popup {
-	border-color: var(--status-danger-border);
+.lyds-dialog__footer > :where(.lyds-button, .lyds-overlayCloseAction),
+.lyds-drawer__footer:not(.lyds-bottomSheet__footer) > :where(.lyds-button, .lyds-overlayCloseAction) {
+	width: 100%;
+	min-inline-size: 0;
+	min-block-size: var(--control-height-lg);
 }
 
-.lyds-alertDialog__actions {
-	justify-content: space-between;
+.lyds-alertDialog__popup {
+	border-color: var(--status-danger-border);
 }
 
 .lyds-drawer__viewport {
@@ -624,7 +692,7 @@
 	pointer-events: auto;
 	transition:
 		transform calc(var(--drawer-swipe-strength, 1) * var(--motion-duration-slow)) var(--motion-ease-out),
-		opacity var(--motion-duration-normal) var(--motion-ease-out);
+		opacity calc(var(--drawer-swipe-strength, 1) * var(--motion-duration-slow)) var(--motion-ease-out);
 }
 
 .lyds-drawer__popup[data-swipe-direction="right"] {
@@ -682,6 +750,10 @@
 }
 
 .lyds-drawer__popup[data-ending-style] {
+	transition-timing-function: var(--motion-ease-in);
+}
+
+.lyds-drawer__backdrop[data-ending-style] {
 	transition-timing-function: var(--motion-ease-in);
 }
 
@@ -759,6 +831,7 @@
 }
 
 .lyds-bottomSheet__footer {
+	display: flex;
 	align-items: stretch;
 	flex-direction: column;
 	gap: var(--space-2);
@@ -802,6 +875,7 @@
 	.lyds-collapsible__indicator,
 	.lyds-accordion__panel,
 	.lyds-collapsible__panel,
+	.lyds-tabs__tab,
 	.lyds-tooltip__popup,
 	.lyds-popover__popup,
 	.lyds-previewCard__popup,

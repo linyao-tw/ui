@@ -1,5 +1,6 @@
 import { Accordion, BottomSheet, Button, Collapsible, Drawer } from "@lyds/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -51,6 +52,25 @@ export const CollapsibleDetails: Story = {
 
 export const DrawerPanel: Story = {
 	name: "抽屜",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const body = within(document.body);
+		const trigger = canvas.getByRole("button", { name: "開啟個人資料" });
+
+		await userEvent.click(trigger);
+		const popup = await body.findByRole("dialog", { name: "個人資料設定" });
+		const backdrop = document.body.querySelector<HTMLElement>(".lyds-drawer__backdrop");
+		await expect(backdrop).not.toBeNull();
+
+		if (!backdrop) return;
+		const popupStyle = getComputedStyle(popup);
+		const backdropStyle = getComputedStyle(backdrop);
+		await expect(popupStyle.transitionDuration).toBe(`${backdropStyle.transitionDuration}, ${backdropStyle.transitionDuration}`);
+		await expect(popupStyle.transitionTimingFunction).toBe(`${backdropStyle.transitionTimingFunction}, ${backdropStyle.transitionTimingFunction}`);
+
+		await userEvent.click(body.getByRole("button", { name: "關閉側欄" }));
+		await waitFor(() => expect(trigger).toHaveFocus());
+	},
 	render: () => (
 		<Drawer.Root>
 			<Drawer.Trigger>開啟個人資料</Drawer.Trigger>
@@ -75,6 +95,24 @@ export const DrawerPanel: Story = {
 
 export const BottomSheetPanel: Story = {
 	name: "底部面板",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const body = within(document.body);
+		const trigger = canvas.getByRole("button", { name: "開啟分享選項" });
+
+		await userEvent.click(trigger);
+		const popup = await body.findByRole("dialog", { name: "分享文件" });
+		const backdrop = document.body.querySelector<HTMLElement>(".lyds-drawer__backdrop");
+		await expect(backdrop).not.toBeNull();
+		if (backdrop) {
+			const popupStyle = getComputedStyle(popup);
+			const backdropStyle = getComputedStyle(backdrop);
+			await expect(popupStyle.transitionDuration).toBe(`${backdropStyle.transitionDuration}, ${backdropStyle.transitionDuration}`);
+		}
+
+		await userEvent.click(body.getByRole("button", { name: "取消" }));
+		await waitFor(() => expect(trigger).toHaveFocus());
+	},
 	render: () => (
 		<BottomSheet.Root>
 			<BottomSheet.Trigger>開啟分享選項</BottomSheet.Trigger>

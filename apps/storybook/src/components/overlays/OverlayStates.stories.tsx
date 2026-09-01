@@ -1,6 +1,7 @@
 import { Accordion, AlertDialog, BottomSheet, Button, Collapsible, Dialog, Drawer, Popover, Tabs, Tooltip } from "@lyds/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { expect, userEvent, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -124,11 +125,40 @@ function AccountTabs({ controlled = false, vertical = false }: { controlled?: bo
 
 export const TabsVertical: Story = {
 	name: "分頁：垂直",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const membersTab = canvas.getByRole("tab", { name: "成員" });
+		const overviewTab = canvas.getByRole("tab", { name: "總覽" });
+
+		await userEvent.hover(membersTab);
+		await expect(getComputedStyle(membersTab).borderRadius).toBe(getComputedStyle(overviewTab).borderRadius);
+		await expect(getComputedStyle(membersTab).paddingInlineStart).toBe(getComputedStyle(membersTab).paddingInlineEnd);
+
+		await userEvent.click(membersTab);
+		await expect(canvas.getAllByRole("tabpanel")).toHaveLength(1);
+		await expect(canvas.getByRole("tabpanel")).toHaveTextContent("目前有 12 位成員");
+		await expect(getComputedStyle(canvas.getByRole("tabpanel")).transitionDuration).toBe("0s");
+
+		await userEvent.keyboard("{ArrowDown}");
+		const activityTab = canvas.getByRole("tab", { name: "活動" });
+		await expect(activityTab).toHaveFocus();
+		await expect(activityTab.matches(":focus-visible")).toBe(true);
+		await expect(getComputedStyle(activityTab).outlineStyle).not.toBe("none");
+	},
 	render: () => <AccountTabs vertical />
 };
 
 export const TabsControlled: Story = {
 	name: "分頁：受控",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const activityTab = canvas.getByRole("tab", { name: "活動" });
+
+		await userEvent.click(activityTab);
+		await expect(activityTab).toHaveAttribute("aria-selected", "true");
+		await expect(canvas.getAllByRole("tabpanel")).toHaveLength(1);
+		await expect(canvas.getByRole("tabpanel")).toHaveTextContent("近期變更與登入活動");
+	},
 	render: () => <AccountTabs controlled />
 };
 
@@ -163,6 +193,42 @@ export const TooltipLongText: Story = {
 export const TooltipPlacements: Story = {
 	name: "工具提示：位置",
 	parameters: { layout: "fullscreen" },
+	play: async () => {
+		const body = within(document.body);
+		const tooltips = await body.findAllByRole("tooltip");
+		await expect(tooltips).toHaveLength(4);
+
+		for (const side of ["top", "right", "bottom", "left"] as const) {
+			const popup = tooltips.find(candidate => candidate.dataset.side === side);
+			await expect(popup).toBeDefined();
+			const arrow = popup?.querySelector<HTMLElement>(`.lyds-tooltip__arrow[data-side="${side}"]`);
+			await expect(arrow).not.toBeNull();
+
+			if (!popup || !arrow) continue;
+			const popupRect = popup.getBoundingClientRect();
+			const arrowRect = arrow.getBoundingClientRect();
+			const arrowStyle = getComputedStyle(arrow);
+			await expect(arrowStyle.backgroundColor).toBe(getComputedStyle(popup).backgroundColor);
+
+			if (side === "top") {
+				await expect(arrowRect.top).toBeLessThan(popupRect.bottom);
+				await expect(arrowRect.bottom).toBeGreaterThan(popupRect.bottom);
+				await expect(arrowStyle.borderBottomWidth).not.toBe("0px");
+			} else if (side === "right") {
+				await expect(arrowRect.left).toBeLessThan(popupRect.left);
+				await expect(arrowRect.right).toBeGreaterThan(popupRect.left);
+				await expect(arrowStyle.borderLeftWidth).not.toBe("0px");
+			} else if (side === "bottom") {
+				await expect(arrowRect.top).toBeLessThan(popupRect.top);
+				await expect(arrowRect.bottom).toBeGreaterThan(popupRect.top);
+				await expect(arrowStyle.borderTopWidth).not.toBe("0px");
+			} else {
+				await expect(arrowRect.left).toBeLessThan(popupRect.right);
+				await expect(arrowRect.right).toBeGreaterThan(popupRect.right);
+				await expect(arrowStyle.borderRightWidth).not.toBe("0px");
+			}
+		}
+	},
 	render: () => (
 		<div
 			style={{

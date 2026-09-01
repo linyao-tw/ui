@@ -1,5 +1,6 @@
 import { AlertDialog, Button, Dialog, TextField } from "@lyds/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -27,7 +28,7 @@ function ConfigurationDialog({ defaultOpen = false, longText = false }: { defaul
 							<TextField label="顯示名稱" defaultValue="陳怡安" />
 						</Dialog.Body>
 						<Dialog.Footer>
-							<Dialog.Close>取消</Dialog.Close>
+							<Dialog.Close render={<Button variant="secondary">取消</Button>}>取消</Dialog.Close>
 							<Button>儲存</Button>
 						</Dialog.Footer>
 					</Dialog.Popup>
@@ -39,6 +40,26 @@ function ConfigurationDialog({ defaultOpen = false, longText = false }: { defaul
 
 export const Default: Story = {
 	name: "預設",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const body = within(document.body);
+
+		await userEvent.click(canvas.getByRole("button", { name: "編輯個人資料" }));
+		const popup = await body.findByRole("dialog", { name: "編輯個人資料" });
+		const backdrop = document.body.querySelector<HTMLElement>(".lyds-dialog__backdrop");
+		await expect(backdrop).not.toBeNull();
+
+		if (!backdrop) return;
+		const popupStyle = getComputedStyle(popup);
+		const backdropStyle = getComputedStyle(backdrop);
+		await expect(popupStyle.transitionDuration).toBe(`${backdropStyle.transitionDuration}, ${backdropStyle.transitionDuration}`);
+		await expect(popupStyle.transitionTimingFunction).toBe(`${backdropStyle.transitionTimingFunction}, ${backdropStyle.transitionTimingFunction}`);
+
+		const cancelButton = body.getByRole("button", { name: "取消" });
+		const saveButton = body.getByRole("button", { name: "儲存" });
+		await expect(Math.abs(cancelButton.getBoundingClientRect().width - saveButton.getBoundingClientRect().width)).toBeLessThan(1);
+		await expect(Math.abs(cancelButton.getBoundingClientRect().height - saveButton.getBoundingClientRect().height)).toBeLessThan(1);
+	},
 	render: () => <ConfigurationDialog />
 };
 

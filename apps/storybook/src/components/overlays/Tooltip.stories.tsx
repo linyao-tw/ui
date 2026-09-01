@@ -1,5 +1,6 @@
 import { Button, Popover, PreviewCard, Tooltip } from "@lyds/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -41,6 +42,18 @@ export const Open: Story = {
 
 export const PopoverPanel: Story = {
 	name: "彈出內容",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const body = within(document.body);
+
+		await userEvent.click(canvas.getByRole("button", { name: "成員資料" }));
+		const description = await body.findByText("編輯者 · 2026 年 8 月 14 日加入");
+		const actions = description.nextElementSibling;
+		await expect(actions).not.toBeNull();
+		if (actions instanceof HTMLElement) {
+			await expect(Number.parseFloat(getComputedStyle(actions).marginBlockStart)).toBeGreaterThan(0);
+		}
+	},
 	render: () => (
 		<Popover.Root>
 			<Popover.Trigger>成員資料</Popover.Trigger>

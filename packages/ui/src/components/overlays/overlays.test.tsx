@@ -50,6 +50,7 @@ describe("disclosure components", () => {
 
 		await user.keyboard("{Enter}");
 		expect(telemetryTab).toHaveAttribute("aria-selected", "true");
+		expect(screen.getAllByRole("tabpanel")).toHaveLength(1);
 		expect(screen.getByRole("tabpanel")).toHaveTextContent("Telemetry panel");
 	});
 
