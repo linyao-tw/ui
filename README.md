@@ -12,14 +12,14 @@ LYDS 是一套給 React 應用使用的設計系統，預計以 `@lyds/ui` 發�
 - Light／Dark 完整語意色彩、尺寸、字體、形狀、陰影與 motion tokens。
 - 標準 CSS；元件只取用 semantic variables，不把品牌色或產品邏輯寫死。
 - Storybook 是主要的人類審閱、狀態展示與 accessibility 檢查介面。
-- ESM、TypeScript declarations 與獨立 `styles.css`，最終只需安裝一個 npm package。
+- Components、tokens、themes 與 CSS 都由單一 `@lyds/ui` package 提供；icon peer 統一使用 `@phosphor-icons/react`。
 
 ## 安裝
 
 公開發佈啟用後，consumer 可安裝：
 
 ```sh
-pnpm add @lyds/ui
+pnpm add @lyds/ui @phosphor-icons/react
 ```
 
 目前請從此 workspace 開發與審閱，不要預期 npm registry 已存在 `@lyds/ui`。
@@ -33,6 +33,7 @@ import "@lyds/ui/styles.css";
 接著從 package root 使用 public API：
 
 ```tsx
+import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";
 import { Button, Card, CardBody, CardTitle, TextField } from "@lyds/ui";
 
 export function AccountPanel() {
@@ -41,7 +42,9 @@ export function AccountPanel() {
 			<CardTitle>Account settings</CardTitle>
 			<CardBody>
 				<TextField label="Display name" description="Shown to collaborators." name="displayName" required />
-				<Button variant="primary">Save changes</Button>
+				<Button variant="primary" startIcon={<FloppyDiskIcon weight="bold" />}>
+					Save changes
+				</Button>
 			</CardBody>
 		</Card>
 	);

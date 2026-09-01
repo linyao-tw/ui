@@ -1,4 +1,5 @@
 import { Toast as BaseToast } from "@base-ui/react/toast";
+import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { Fragment, forwardRef, type ComponentPropsWithoutRef, type ForwardedRef, type ReactElement, type ReactNode, type RefAttributes } from "react";
 
 import styles from "./feedback.module.css";
@@ -59,7 +60,7 @@ export const ToastRoot = forwardRef(function ToastRoot<Data extends object = Toa
 			</BaseToast.Content>
 			{actionProps ? <BaseToast.Action {...actionProps} className={mergeClassNames(styles.toastAction, actionClassName)} /> : null}
 			<BaseToast.Close aria-label={closeLabel} className={styles.toastClose}>
-				<span aria-hidden="true">×</span>
+				<XIcon aria-hidden="true" weight="bold" />
 			</BaseToast.Close>
 		</BaseToast.Root>
 	);

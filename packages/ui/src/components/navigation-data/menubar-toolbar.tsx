@@ -1,6 +1,8 @@
 import { Menu as BaseMenu } from "@base-ui/react/menu";
 import { Menubar as BaseMenubar } from "@base-ui/react/menubar";
 import { Toolbar as BaseToolbar } from "@base-ui/react/toolbar";
+import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
+import { CircleIcon } from "@phosphor-icons/react/dist/csr/Circle";
 import { forwardRef, type ComponentRef, type ForwardedRef, type ReactElement, type RefAttributes } from "react";
 
 import { withBaseClass } from "./utils.js";
@@ -49,10 +51,10 @@ export const MenubarCheckboxItem = forwardRef<ComponentRef<typeof BaseMenu.Check
 });
 
 export const MenubarCheckboxItemIndicator = forwardRef<ComponentRef<typeof BaseMenu.CheckboxItemIndicator>, BaseMenu.CheckboxItemIndicator.Props>(function MenubarCheckboxItemIndicator(props, ref) {
-	const { className, children = "✓", ...indicatorProps } = props;
+	const { className, children, ...indicatorProps } = props;
 	return (
 		<BaseMenu.CheckboxItemIndicator ref={ref} className={withBaseClass<BaseMenu.CheckboxItemIndicator.State>("lyds-menubar__indicator", className)} {...indicatorProps}>
-			{children}
+			{children ?? <CheckIcon aria-hidden="true" weight="bold" />}
 		</BaseMenu.CheckboxItemIndicator>
 	);
 });
@@ -65,10 +67,10 @@ export const MenubarRadioItem = forwardRef<ComponentRef<typeof BaseMenu.RadioIte
 });
 
 export const MenubarRadioItemIndicator = forwardRef<ComponentRef<typeof BaseMenu.RadioItemIndicator>, BaseMenu.RadioItemIndicator.Props>(function MenubarRadioItemIndicator(props, ref) {
-	const { className, children = "●", ...indicatorProps } = props;
+	const { className, children, ...indicatorProps } = props;
 	return (
 		<BaseMenu.RadioItemIndicator ref={ref} className={withBaseClass<BaseMenu.RadioItemIndicator.State>("lyds-menubar__indicator", className)} {...indicatorProps}>
-			{children}
+			{children ?? <CircleIcon aria-hidden="true" weight="fill" />}
 		</BaseMenu.RadioItemIndicator>
 	);
 });

@@ -9,6 +9,7 @@ const isExternal = (id: string) =>
 	id.startsWith("react-dom/") ||
 	id.startsWith("@base-ui/react") ||
 	id.startsWith("@internationalized/date") ||
+	id.startsWith("@phosphor-icons/react") ||
 	id.startsWith("react-aria-components");
 
 const addJavaScriptExtension = (specifier: string) => (/\.(?:[cm]?js|json|css)$/i.test(specifier) ? specifier : `${specifier}.js`);

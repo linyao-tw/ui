@@ -1,4 +1,6 @@
 import { NumberField as BaseNumberField } from "@base-ui/react/number-field";
+import { MinusIcon } from "@phosphor-icons/react/dist/csr/Minus";
+import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
 import * as React from "react";
 import "./forms.css";
 import { cx, FieldFrame, withStateClassName, type FieldAnatomyProps } from "./internal";
@@ -72,10 +74,10 @@ export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(fu
 					{showSteppers ? (
 						<span className="lyds-number-field__steppers">
 							<BaseNumberField.Decrement className={cx("lyds-number-field__stepper", "lyds-number-field__stepper--decrement")} aria-label={decrementLabel}>
-								<span aria-hidden="true">−</span>
+								<MinusIcon aria-hidden="true" weight="bold" />
 							</BaseNumberField.Decrement>
 							<BaseNumberField.Increment className={cx("lyds-number-field__stepper", "lyds-number-field__stepper--increment")} aria-label={incrementLabel}>
-								<span aria-hidden="true">+</span>
+								<PlusIcon aria-hidden="true" weight="bold" />
 							</BaseNumberField.Increment>
 						</span>
 					) : null}

@@ -1,4 +1,8 @@
 import { Badge, Button, Card, CardBody, CardDescription, CardFooter, CardHeader, CardTitle, IconButton } from "@lyds/ui";
+import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
+import { EyeIcon } from "@phosphor-icons/react/dist/csr/Eye";
+import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";
+import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import "../story-layout.css";
@@ -34,9 +38,27 @@ export const Variants: Story = {
 export const Sizes: Story = {
 	render: () => (
 		<div className="lyds-story-row">
-			<Button size="sm">Small button</Button>
-			<Button size="md">Medium button</Button>
-			<Button size="lg">Large button</Button>
+			<Button size="sm" startIcon={<FloppyDiskIcon weight="bold" />}>
+				Small button
+			</Button>
+			<Button size="md" startIcon={<FloppyDiskIcon weight="bold" />}>
+				Medium button
+			</Button>
+			<Button size="lg" startIcon={<FloppyDiskIcon weight="bold" />}>
+				Large button
+			</Button>
+		</div>
+	)
+};
+
+export const WithIcons: Story = {
+	render: () => (
+		<div className="lyds-story-row">
+			<Button startIcon={<FloppyDiskIcon weight="bold" />}>Save changes</Button>
+			<Button endIcon={<ArrowRightIcon weight="bold" />}>Continue</Button>
+			<Button variant="secondary" startIcon={<EyeIcon weight="bold" />} endIcon={<ArrowRightIcon weight="bold" />}>
+				Review details
+			</Button>
 		</div>
 	)
 };
@@ -49,7 +71,7 @@ export const BusyAndDisabled: Story = {
 				Unavailable
 			</Button>
 			<IconButton aria-label="Add item" variant="secondary">
-				<span aria-hidden="true">＋</span>
+				<PlusIcon weight="bold" />
 			</IconButton>
 		</div>
 	)

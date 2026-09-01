@@ -22,7 +22,7 @@ export const Dropdown: Story = {
 						<MenuItem>Duplicate item</MenuItem>
 						<MenuSeparator />
 						<MenuCheckboxItem defaultChecked>
-							<MenuCheckboxItemIndicator>✓</MenuCheckboxItemIndicator>
+							<MenuCheckboxItemIndicator />
 							Show descriptions
 						</MenuCheckboxItem>
 						<MenuItem disabled>Archive unavailable</MenuItem>

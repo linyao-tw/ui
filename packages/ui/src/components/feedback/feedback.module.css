@@ -364,8 +364,12 @@
 	place-items: center;
 	background: var(--background-transparent);
 	border-radius: var(--radius-round);
-	font-size: var(--font-size-lg);
 	line-height: var(--line-height-tight);
+}
+
+.toastClose > svg {
+	inline-size: var(--icon-size-sm);
+	block-size: var(--icon-size-sm);
 }
 
 .toastAction:hover,

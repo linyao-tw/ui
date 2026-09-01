@@ -1,4 +1,6 @@
 import type { CalendarDate } from "@internationalized/date";
+import { CaretLeftIcon } from "@phosphor-icons/react/dist/csr/CaretLeft";
+import { CaretRightIcon } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { forwardRef, type ReactElement, type RefAttributes } from "react";
 import { Button } from "react-aria-components/Button";
 import {
@@ -43,11 +45,11 @@ export function CalendarNavigation({ showMonthYearPickers = true, disabled }: Pi
 		<>
 			<div className="lyds-calendar-navigation">
 				<Button slot="previous" className="lyds-calendar-navigation-button">
-					<span aria-hidden="true">‹</span>
+					<CaretLeftIcon aria-hidden="true" className="lyds-date-glyph" weight="bold" />
 				</Button>
 				<CalendarHeading className="lyds-calendar-heading" />
 				<Button slot="next" className="lyds-calendar-navigation-button">
-					<span aria-hidden="true">›</span>
+					<CaretRightIcon aria-hidden="true" className="lyds-date-glyph" weight="bold" />
 				</Button>
 			</div>
 			{showMonthYearPickers ? (

@@ -11,7 +11,9 @@ export interface ButtonProps extends Omit<BaseButtonProps, "children" | "classNa
 	size?: ButtonSize;
 	loading?: boolean;
 	loadingIndicator?: React.ReactNode;
+	/** Decorative leading icon. Use an @phosphor-icons/react icon; the text label remains the accessible name. */
 	startIcon?: React.ReactNode;
+	/** Decorative trailing icon. Use an @phosphor-icons/react icon; the text label remains the accessible name. */
 	endIcon?: React.ReactNode;
 	className?: string;
 	style?: React.CSSProperties;
@@ -48,7 +50,7 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>(function Button
 				</span>
 			) : null}
 			<span className="lyds-button__label">{children}</span>
-			{endIcon ? (
+			{!loading && endIcon ? (
 				<span className="lyds-button__icon" aria-hidden="true">
 					{endIcon}
 				</span>

@@ -14,6 +14,8 @@ import {
 	type MenuTriggerProps
 } from "@base-ui/react/menu";
 import { Separator as BaseSeparator, type SeparatorProps } from "@base-ui/react/separator";
+import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
+import { CircleIcon } from "@phosphor-icons/react/dist/csr/Circle";
 import { forwardRef } from "react";
 
 import { mergeStateClassName } from "./classnames";
@@ -43,16 +45,24 @@ export const MenuCheckboxItem = forwardRef<HTMLElement, MenuCheckboxItemProps>(f
 	return <BaseMenu.CheckboxItem {...props} className={mergeStateClassName(styles.menuItem, className)} ref={ref} />;
 });
 
-export const MenuCheckboxItemIndicator = forwardRef<HTMLSpanElement, MenuCheckboxItemIndicatorProps>(function MenuCheckboxItemIndicator({ className, ...props }, ref) {
-	return <BaseMenu.CheckboxItemIndicator {...props} className={mergeStateClassName(styles.menuItemIndicator, className)} ref={ref} />;
+export const MenuCheckboxItemIndicator = forwardRef<HTMLSpanElement, MenuCheckboxItemIndicatorProps>(function MenuCheckboxItemIndicator({ children, className, ...props }, ref) {
+	return (
+		<BaseMenu.CheckboxItemIndicator {...props} className={mergeStateClassName(styles.menuItemIndicator, className)} ref={ref}>
+			{children ?? <CheckIcon aria-hidden="true" weight="bold" />}
+		</BaseMenu.CheckboxItemIndicator>
+	);
 });
 
 export const MenuRadioItem = forwardRef<HTMLElement, MenuRadioItemProps>(function MenuRadioItem({ className, ...props }, ref) {
 	return <BaseMenu.RadioItem {...props} className={mergeStateClassName(styles.menuItem, className)} ref={ref} />;
 });
 
-export const MenuRadioItemIndicator = forwardRef<HTMLSpanElement, MenuRadioItemIndicatorProps>(function MenuRadioItemIndicator({ className, ...props }, ref) {
-	return <BaseMenu.RadioItemIndicator {...props} className={mergeStateClassName(styles.menuItemIndicator, className)} ref={ref} />;
+export const MenuRadioItemIndicator = forwardRef<HTMLSpanElement, MenuRadioItemIndicatorProps>(function MenuRadioItemIndicator({ children, className, ...props }, ref) {
+	return (
+		<BaseMenu.RadioItemIndicator {...props} className={mergeStateClassName(styles.menuItemIndicator, className)} ref={ref}>
+			{children ?? <CircleIcon aria-hidden="true" weight="fill" />}
+		</BaseMenu.RadioItemIndicator>
+	);
 });
 
 export const MenuGroupLabel = forwardRef<HTMLDivElement, MenuGroupLabelProps>(function MenuGroupLabel({ className, ...props }, ref) {

@@ -9,7 +9,7 @@ LYDS 是一套 React component design system，以 Base UI 為主要 behavior pr
 公開發佈啟用後：
 
 ```sh
-pnpm add @lyds/ui
+pnpm add @lyds/ui @phosphor-icons/react
 ```
 
 在 application entry 匯入一次 CSS：
@@ -21,13 +21,16 @@ import "@lyds/ui/styles.css";
 ## Use
 
 ```tsx
+import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";
 import { Button, TextField } from "@lyds/ui";
 
 export function ProfileForm() {
 	return (
 		<form>
 			<TextField label="Display name" name="displayName" required />
-			<Button type="submit">Save</Button>
+			<Button type="submit" startIcon={<FloppyDiskIcon weight="bold" />}>
+				Save
+			</Button>
 		</form>
 	);
 }

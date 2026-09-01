@@ -35,5 +35,32 @@ export default tseslint.config(
 		languageOptions: {
 			globals: globals.node
 		}
+	},
+	{
+		files: ["packages/ui/src/**/*.tsx", "apps/storybook/src/**/*.tsx"],
+		rules: {
+			"no-restricted-imports": [
+				"error",
+				{
+					paths: [
+						{
+							name: "phosphor-react",
+							message: "Use @phosphor-icons/react; the legacy package no longer receives upstream icons."
+						},
+						{
+							name: "@phosphor-icons/react",
+							message: "Import the individual CSR icon subpath to avoid eagerly processing the full icon barrel."
+						}
+					]
+				}
+			],
+			"no-restricted-syntax": [
+				"error",
+				{
+					selector: "JSXOpeningElement[name.name='svg']",
+					message: "Use an @phosphor-icons/react icon instead of hand-authored SVG markup."
+				}
+			]
+		}
 	}
 );

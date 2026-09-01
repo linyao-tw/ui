@@ -12,6 +12,7 @@ import {
 	type DrawerTriggerProps,
 	type DrawerViewportProps
 } from "@base-ui/react/drawer";
+import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, type HTMLAttributes, type JSX, type RefAttributes } from "react";
 
 import { mergeClassName } from "./class-names";
@@ -19,11 +20,7 @@ import { mergeClassName } from "./class-names";
 export type { DrawerRootChangeEventDetails } from "@base-ui/react/drawer";
 
 function CloseGlyph(): JSX.Element {
-	return (
-		<svg className="lyds-overlayClose__glyph" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-			<path d="M3 3l10 10M13 3L3 13" />
-		</svg>
-	);
+	return <XIcon aria-hidden="true" className="lyds-overlayClose__glyph" weight="bold" />;
 }
 
 export function DrawerRoot<Payload = unknown>({ swipeDirection = "right", ...props }: DrawerRootProps<Payload>): JSX.Element {

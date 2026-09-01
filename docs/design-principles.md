@@ -69,6 +69,10 @@ Vermilion 用於 primary action、selected/checked state、必要 indicator 與�
 - SectionHeading 的 uppercase 是 reference 中明確存在的 12/16 caption；其他元件不泛用 uppercase。
 - Dates、times 與 numeric fields 使用 tabular numerals。
 
+### Phosphor is the icon grammar
+
+LYDS 的介面圖示統一使用 Phosphor。Button、field affordance、menu indicator、calendar navigation 等 icon 由 component anatomy 決定尺寸，並繼承相同 semantic foreground；不以 raw color、多色 duotone 或任意大小增加裝飾。預設採 regular／bold 線條，只有 checked／selected state 在 Figma 與語意需要時使用 fill。Icon 不取代 visible state label，也不以手寫 SVG、Unicode 字元或 CSS 圖形製造額外「科技感」。
+
 ### Tactile through state, not ornament
 
 觸感來自 hover/pressed surface、selected plate、knob position、短促 motion 與 focus feedback。元件不靠厚邊框、硬陰影、位移刻線或 skeuomorphic panel details 表達可操作性。

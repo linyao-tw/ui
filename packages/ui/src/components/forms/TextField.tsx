@@ -1,5 +1,8 @@
 import { Field as BaseField } from "@base-ui/react/field";
 import { Input as BaseInput } from "@base-ui/react/input";
+import { EyeIcon } from "@phosphor-icons/react/dist/csr/Eye";
+import { EyeSlashIcon } from "@phosphor-icons/react/dist/csr/EyeSlash";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import * as React from "react";
 import "./forms.css";
 import { cx, FieldFrame, withStateClassName, type FieldAnatomyProps } from "./internal";
@@ -230,12 +233,7 @@ export const TextView = React.forwardRef<HTMLTextAreaElement, TextViewProps>(fun
 });
 
 function SearchIcon() {
-	return (
-		<svg className="lyds-field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
-			<circle cx="10.75" cy="10.75" r="6.25" />
-			<path d="m15.5 15.5 4 4" />
-		</svg>
-	);
+	return <MagnifyingGlassIcon aria-hidden="true" className="lyds-field__icon" weight="regular" />;
 }
 
 export interface SearchFieldProps extends Omit<TextFieldProps, "startAdornment" | "type"> {
@@ -247,16 +245,7 @@ export const SearchField = React.forwardRef<HTMLInputElement, SearchFieldProps>(
 });
 
 function VisibilityIcon({ visible }: { visible: boolean }) {
-	return visible ? (
-		<svg className="lyds-field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
-			<path d="M3.5 12s3-5 8.5-5 8.5 5 8.5 5-3 5-8.5 5-8.5-5-8.5-5Z" />
-			<circle cx="12" cy="12" r="2.25" />
-		</svg>
-	) : (
-		<svg className="lyds-field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
-			<path d="m4 4 16 16M9.6 7.35A8.8 8.8 0 0 1 12 7c5.5 0 8.5 5 8.5 5a13.5 13.5 0 0 1-2.3 2.85M14.2 14.2A3.1 3.1 0 0 1 9.8 9.8M6.1 9.1A14.7 14.7 0 0 0 3.5 12s3 5 8.5 5c.85 0 1.63-.12 2.35-.32" />
-		</svg>
-	);
+	return visible ? <EyeIcon aria-hidden="true" className="lyds-field__icon" weight="regular" /> : <EyeSlashIcon aria-hidden="true" className="lyds-field__icon" weight="regular" />;
 }
 
 export interface PasswordFieldProps extends Omit<TextFieldProps, "endAdornment" | "type"> {

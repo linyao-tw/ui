@@ -62,6 +62,12 @@ Base UI 不提供完整 calendar/date input stack。Date & Time family 因此限
 
 這是範圍明確的例外，不是第二套視覺系統。所有可見 UI、tokens、spacing 與 states 仍由 LYDS 控制。其他元件不應僅為方便而引入 React Aria Components。
 
+### Iconography
+
+`@phosphor-icons/react` 是 LYDS 唯一標準 UI icon family，提供一致 vocabulary、typed React components、weight variants、`currentColor`、tree shaking 與不依賴 Context 的 SSR exports。它是 `@lyds/ui` 的 consumer-facing peer dependency，也是 package build/test 的 dev dependency；Storybook 因直接使用 icon 而持有自己的 dependency。UI build 將 Phosphor externalize，不把 icon library 內嵌進套件。
+
+Library source、Storybook 與一般 client component 使用 individual `/dist/csr/<Name>` export，避免部分 bundler 在開發時處理 root barrel 的大量 modules；React Server Components 使用官方 `/ssr` module。品牌 logo、illustration 與 data visualization 不屬於 icon family，但需要明確設計審核，不能成為隨手寫 JSX SVG、Unicode glyph 或 CSS pseudo-icon 的後門。
+
 ## State and API architecture
 
 LYDS API 採一致 vocabulary：

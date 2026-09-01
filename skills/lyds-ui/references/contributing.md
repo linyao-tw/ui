@@ -6,6 +6,14 @@ Inventory `packages/ui/src/index.ts`, existing component sources, public declara
 
 Use Base UI as the primary behavior/accessibility layer when it provides the primitive. Date/time controls may use the repository's existing internationalized date and React Aria logic. Do not add another styled component system or duplicate keyboard, focus, selection, or dismissal logic already supplied by those libraries. Justify any new nontrivial runtime dependency.
 
+## Iconography
+
+- Search the Phosphor catalog before adding an interface icon. Use `@phosphor-icons/react` in package source, stories, and tests; client TSX imports individual `/dist/csr/<Name>` exports.
+- Do not hand-write JSX `<svg>`, use Unicode glyphs as control icons, redraw catalog icons with CSS pseudo-elements or borders, or use legacy `phosphor-react`. A brand mark, illustration, or data visualization needs explicit design review and is not an icon-system escape hatch.
+- Let component anatomy and `--icon-size-*` tokens own size. Icons inherit `currentColor`; never assign raw color values. Use consistent regular/bold weights from the Figma context, and reserve `fill` for meaningful selected/checked states.
+- `Button` uses `startIcon`/`endIcon`; `IconButton` carries one visual child and a required accessible name. Decorative icons are hidden from assistive technology; essential status is also expressed with text.
+- Stories for an icon-bearing component show relevant sizes and loading/disabled states. Tests verify Button text remains the accessible name, IconButton is named, and loading does not render competing start/end icons.
+
 ## Component contract
 
 - Export precise props and forward the appropriate ref.

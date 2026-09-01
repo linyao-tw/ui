@@ -142,30 +142,24 @@
 
 .lyds-accordion__indicator,
 .lyds-collapsible__indicator {
-	position: relative;
+	display: grid;
+	place-items: center;
 	width: 1rem;
 	height: 1rem;
 	flex: 0 0 1rem;
 	color: var(--icon-main);
-}
-
-.lyds-accordion__indicator::before,
-.lyds-collapsible__indicator::before {
-	position: absolute;
-	inset-block-start: 0.1875rem;
-	inset-inline-start: 0.25rem;
-	width: 0.5rem;
-	height: 0.5rem;
-	border-block-end: var(--border-width-strong) solid currentColor;
-	border-inline-end: var(--border-width-strong) solid currentColor;
-	content: "";
-	transform: rotate(45deg);
 	transition: transform var(--motion-duration-normal) var(--motion-ease-out);
 }
 
-.lyds-accordion__trigger[data-open] .lyds-accordion__indicator::before,
-.lyds-collapsible__trigger[data-open] .lyds-collapsible__indicator::before {
-	transform: translateY(0.25rem) rotate(225deg);
+.lyds-accordion__indicator > svg,
+.lyds-collapsible__indicator > svg {
+	width: 100%;
+	height: 100%;
+}
+
+.lyds-accordion__trigger[data-open] .lyds-accordion__indicator,
+.lyds-collapsible__trigger[data-open] .lyds-collapsible__indicator {
+	transform: rotate(180deg);
 }
 
 .lyds-accordion__panel,
@@ -558,9 +552,6 @@
 .lyds-overlayClose__glyph {
 	width: var(--icon-size-sm);
 	height: var(--icon-size-sm);
-	stroke: currentColor;
-	stroke-linecap: square;
-	stroke-width: 1.5;
 }
 
 .lyds-overlayCloseAction {
@@ -775,8 +766,8 @@
 @media (prefers-reduced-motion: reduce) {
 	.lyds-accordion__trigger,
 	.lyds-collapsible__trigger,
-	.lyds-accordion__indicator::before,
-	.lyds-collapsible__indicator::before,
+	.lyds-accordion__indicator,
+	.lyds-collapsible__indicator,
 	.lyds-accordion__panel,
 	.lyds-collapsible__panel,
 	.lyds-tooltip__popup,

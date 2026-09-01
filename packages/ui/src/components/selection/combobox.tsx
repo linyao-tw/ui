@@ -13,6 +13,9 @@ import {
 	type ComboboxRootProps,
 	type ComboboxTriggerProps
 } from "@base-ui/react/combobox";
+import { CaretDownIcon } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
+import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, type Key, type ReactNode } from "react";
 
 import { mergeStateClassName } from "./classnames";
@@ -119,8 +122,12 @@ function ComboboxComponent<Value>({
 					aria-labelledby={ariaLabelledby ?? inputProps?.["aria-labelledby"]}
 					placeholder={placeholder}
 				/>
-				<ComboboxClear aria-label={clearLabel}>×</ComboboxClear>
-				<ComboboxTrigger aria-label={triggerLabel}>⌄</ComboboxTrigger>
+				<ComboboxClear aria-label={clearLabel}>
+					<XIcon aria-hidden="true" weight="bold" />
+				</ComboboxClear>
+				<ComboboxTrigger aria-label={triggerLabel}>
+					<CaretDownIcon aria-hidden="true" weight="bold" />
+				</ComboboxTrigger>
 			</ComboboxInputGroup>
 			<BaseCombobox.Portal>
 				<ComboboxPositioner {...positionerProps}>
@@ -128,7 +135,9 @@ function ComboboxComponent<Value>({
 						<ComboboxList>
 							{options.map((option, index) => (
 								<ComboboxItem disabled={option.disabled} index={index} key={option.key ?? option.textValue ?? index} value={option.value}>
-									<ComboboxItemIndicator>✓</ComboboxItemIndicator>
+									<ComboboxItemIndicator>
+										<CheckIcon aria-hidden="true" weight="bold" />
+									</ComboboxItemIndicator>
 									<span className={styles.optionText}>
 										<span>{option.label}</span>
 										{option.description ? <span className={styles.optionDescription}>{option.description}</span> : null}
@@ -243,9 +252,11 @@ function AutocompleteComponent<ItemValue>({
 					aria-labelledby={ariaLabelledby ?? inputProps?.["aria-labelledby"]}
 					placeholder={placeholder}
 				/>
-				<ComboboxClear aria-label={clearLabel}>×</ComboboxClear>
+				<ComboboxClear aria-label={clearLabel}>
+					<XIcon aria-hidden="true" weight="bold" />
+				</ComboboxClear>
 				<BaseAutocomplete.Trigger aria-label={triggerLabel} className={styles.comboboxTrigger}>
-					⌄
+					<CaretDownIcon aria-hidden="true" weight="bold" />
 				</BaseAutocomplete.Trigger>
 			</AutocompleteInputGroup>
 			<BaseAutocomplete.Portal>

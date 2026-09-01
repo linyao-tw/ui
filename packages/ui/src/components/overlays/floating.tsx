@@ -34,6 +34,7 @@ import {
 	type TooltipTriggerProps,
 	type TooltipViewportProps
 } from "@base-ui/react/tooltip";
+import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, type JSX, type RefAttributes } from "react";
 
 import { mergeClassName } from "./class-names";
@@ -43,11 +44,7 @@ export type { PreviewCardRootChangeEventDetails } from "@base-ui/react/preview-c
 export type { TooltipRootChangeEventDetails } from "@base-ui/react/tooltip";
 
 function CloseGlyph(): JSX.Element {
-	return (
-		<svg className="lyds-overlayClose__glyph" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-			<path d="M3 3l10 10M13 3L3 13" />
-		</svg>
-	);
+	return <XIcon aria-hidden="true" className="lyds-overlayClose__glyph" weight="bold" />;
 }
 
 export function TooltipProvider(props: TooltipProviderProps): JSX.Element {

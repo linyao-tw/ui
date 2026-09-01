@@ -1,4 +1,5 @@
 import { NavigationMenu as BaseNavigationMenu } from "@base-ui/react/navigation-menu";
+import { CaretDownIcon } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { forwardRef, type ComponentRef, type ForwardedRef, type ReactElement, type RefAttributes } from "react";
 
 import { withBaseClass } from "./utils.js";
@@ -23,10 +24,10 @@ export const NavigationMenuTrigger = forwardRef<ComponentRef<typeof BaseNavigati
 });
 
 export const NavigationMenuIcon = forwardRef<ComponentRef<typeof BaseNavigationMenu.Icon>, BaseNavigationMenu.Icon.Props>(function NavigationMenuIcon(props, ref) {
-	const { className, children = "⌄", ...iconProps } = props;
+	const { className, children, ...iconProps } = props;
 	return (
 		<BaseNavigationMenu.Icon ref={ref} className={withBaseClass<BaseNavigationMenu.Icon.State>("lyds-navigation-menu__icon", className)} {...iconProps}>
-			{children}
+			{children ?? <CaretDownIcon aria-hidden="true" weight="bold" />}
 		</BaseNavigationMenu.Icon>
 	);
 });

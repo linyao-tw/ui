@@ -1,4 +1,5 @@
 import { Input as BaseInput } from "@base-ui/react/input";
+import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
 import * as React from "react";
 import "./forms.css";
 import { cx, FieldFrame, type FieldAnatomyProps } from "./internal";
@@ -320,7 +321,7 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 					aria-describedby={[description != null ? descriptionId : null, errorId].filter(Boolean).join(" ")}
 					onClick={() => inputRef.current?.click()}
 				>
-					<span aria-hidden="true">+</span>
+					<PlusIcon aria-hidden="true" weight="bold" />
 					<span id={triggerId}>{browseLabel}</span>
 				</button>
 			</div>

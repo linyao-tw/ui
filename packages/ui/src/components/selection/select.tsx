@@ -12,6 +12,8 @@ import {
 	type SelectTriggerProps,
 	type SelectValueProps
 } from "@base-ui/react/select";
+import { CaretDownIcon } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { forwardRef, type Key, type ReactNode } from "react";
 
 import { combineStateClassNames, mergeStateClassName } from "./classnames";
@@ -106,7 +108,7 @@ function SelectComponent<Value>({
 			>
 				<SelectValue placeholder={placeholder} />
 				<BaseSelect.Icon aria-hidden="true" className={styles.selectIcon}>
-					⌄
+					<CaretDownIcon aria-hidden="true" weight="bold" />
 				</BaseSelect.Icon>
 			</SelectTrigger>
 			<BaseSelect.Portal>
@@ -115,7 +117,9 @@ function SelectComponent<Value>({
 						<SelectList>
 							{options.map((option, index) => (
 								<SelectItem disabled={option.disabled} key={option.key ?? option.textValue ?? index} label={option.textValue} value={option.value}>
-									<SelectItemIndicator>✓</SelectItemIndicator>
+									<SelectItemIndicator>
+										<CheckIcon aria-hidden="true" weight="bold" />
+									</SelectItemIndicator>
 									<SelectItemText>
 										<span>{option.label}</span>
 										{option.description ? <span className={styles.optionDescription}>{option.description}</span> : null}

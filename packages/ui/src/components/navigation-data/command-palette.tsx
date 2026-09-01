@@ -1,5 +1,6 @@
 import { Combobox as BaseCombobox } from "@base-ui/react/combobox";
 import { Dialog as BaseDialog } from "@base-ui/react/dialog";
+import { CircleIcon } from "@phosphor-icons/react/dist/csr/Circle";
 import { forwardRef, useCallback, useState, type ComponentRef, type HTMLAttributes, type ReactNode } from "react";
 
 import { cx, withBaseClass } from "./utils.js";
@@ -114,10 +115,10 @@ export const CommandPaletteItem = forwardRef<ComponentRef<typeof BaseCombobox.It
 });
 
 export const CommandPaletteItemIndicator = forwardRef<ComponentRef<typeof BaseCombobox.ItemIndicator>, BaseCombobox.ItemIndicator.Props>(function CommandPaletteItemIndicator(props, ref) {
-	const { className, children = "●", ...indicatorProps } = props;
+	const { className, children, ...indicatorProps } = props;
 	return (
 		<BaseCombobox.ItemIndicator ref={ref} className={withBaseClass<BaseCombobox.ItemIndicator.State>("lyds-command-palette__indicator", className)} {...indicatorProps}>
-			{children}
+			{children ?? <CircleIcon aria-hidden="true" weight="fill" />}
 		</BaseCombobox.ItemIndicator>
 	);
 });

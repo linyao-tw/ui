@@ -1,3 +1,7 @@
+import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
+import { DotsThreeIcon } from "@phosphor-icons/react/dist/csr/DotsThree";
+import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
+import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axe from "axe-core";
@@ -26,13 +30,14 @@ describe("foundation actions", () => {
 		const ref = React.createRef<HTMLElement>();
 
 		render(
-			<Button ref={ref} onClick={onClick} startIcon={<span>+</span>}>
+			<Button ref={ref} onClick={onClick} startIcon={<PlusIcon weight="bold" />} endIcon={<ArrowRightIcon weight="bold" />}>
 				Create record
 			</Button>
 		);
 
 		const button = screen.getByRole("button", { name: "Create record" });
 		expect(ref.current).toBe(button);
+		expect(button.querySelectorAll(".lyds-button__icon > svg")).toHaveLength(2);
 		await user.click(button);
 		expect(onClick).toHaveBeenCalledOnce();
 	});
@@ -42,7 +47,7 @@ describe("foundation actions", () => {
 		const onClick = vi.fn();
 
 		render(
-			<Button loading onClick={onClick}>
+			<Button loading startIcon={<PlusIcon weight="bold" />} endIcon={<ArrowRightIcon weight="bold" />} onClick={onClick}>
 				Calibrating
 			</Button>
 		);
@@ -51,6 +56,8 @@ describe("foundation actions", () => {
 		expect(button).toHaveAttribute("aria-disabled", "true");
 		expect(button).toHaveAttribute("aria-busy", "true");
 		expect(button).toHaveAttribute("tabindex", "0");
+		expect(button.querySelectorAll(".lyds-button__icon")).toHaveLength(0);
+		expect(button.querySelector(".lyds-button__spinner")).not.toBeNull();
 		await user.click(button);
 		expect(onClick).not.toHaveBeenCalled();
 	});
@@ -75,9 +82,13 @@ describe("foundation actions", () => {
 	});
 
 	it("requires and exposes an accessible icon-button name", () => {
-		render(<IconButton aria-label="Close panel">×</IconButton>);
+		render(
+			<IconButton aria-label="Close panel">
+				<XIcon weight="bold" />
+			</IconButton>
+		);
 		expect(screen.getByRole("button", { name: "Close panel" })).toBeVisible();
-		expect(screen.queryByText("×")).not.toBeNull();
+		expect(screen.getByRole("button", { name: "Close panel" }).querySelector("svg")).not.toBeNull();
 	});
 
 	it("removes disabled links from navigation and suppresses activation", async () => {
@@ -171,7 +182,15 @@ describe("foundation display primitives", () => {
 
 describe("ListCell composition", () => {
 	it("renders one interactive root with non-interactive slots", () => {
-		render(<ListCell action={{ href: "/modules/power", "aria-label": "Power module" }} leading="01" title="Power module" description="All rails nominal" trailing="→" />);
+		render(
+			<ListCell
+				action={{ href: "/modules/power", "aria-label": "Power module" }}
+				leading="01"
+				title="Power module"
+				description="All rails nominal"
+				trailing={<ArrowRightIcon aria-hidden weight="bold" />}
+			/>
+		);
 
 		const cell = screen.getByRole("link", { name: /Power module/ });
 		expect(cell).toHaveAttribute("href", "/modules/power");
@@ -201,7 +220,17 @@ describe("ListCell composition", () => {
 	});
 
 	it("keeps the whole-cell action and a trailing action as siblings", () => {
-		render(<ListCell action={{ href: "/module", "aria-label": "Power module" }} title="Power module" trailing={<IconButton aria-label="More options">•••</IconButton>} />);
+		render(
+			<ListCell
+				action={{ href: "/module", "aria-label": "Power module" }}
+				title="Power module"
+				trailing={
+					<IconButton aria-label="More options">
+						<DotsThreeIcon weight="bold" />
+					</IconButton>
+				}
+			/>
+		);
 		const cellAction = screen.getByRole("link", { name: "Power module" });
 		const trailingAction = screen.getByRole("button", { name: "More options" });
 		expect(cellAction.contains(trailingAction)).toBe(false);
@@ -233,7 +262,9 @@ describe("foundation accessibility", () => {
 				<Card render={<section aria-label="System status" />}>
 					<ListCell title="Thermal loop" description="Nominal" leading={<Avatar alt="Thermal controller" fallback="TC" />} trailing={<Badge variant="success">Online</Badge>} />
 					<Button>Run diagnostic</Button>
-					<IconButton aria-label="Open system options">•••</IconButton>
+					<IconButton aria-label="Open system options">
+						<DotsThreeIcon weight="bold" />
+					</IconButton>
 				</Card>
 			</main>
 		);

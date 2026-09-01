@@ -6,21 +6,15 @@ import { Slider as BaseSlider, type SliderRootProps } from "@base-ui/react/slide
 import { Switch as BaseSwitch, type SwitchRootProps } from "@base-ui/react/switch";
 import { Toggle as BaseToggle, type ToggleProps as BaseToggleProps } from "@base-ui/react/toggle";
 import { ToggleGroup as BaseToggleGroup, type ToggleGroupProps as BaseToggleGroupProps } from "@base-ui/react/toggle-group";
+import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
+import { MinusIcon } from "@phosphor-icons/react/dist/csr/Minus";
 import { forwardRef, useState, type ForwardedRef, type JSX, type ReactNode, type RefAttributes } from "react";
 
 import { cx, mergeStateClassName } from "./classnames";
 import styles from "./selection.module.css";
 
 function CheckGlyph({ indeterminate = false }: { indeterminate?: boolean }) {
-	return indeterminate ? (
-		<svg aria-hidden="true" viewBox="0 0 16 16">
-			<path d="M3 8h10" />
-		</svg>
-	) : (
-		<svg aria-hidden="true" viewBox="0 0 16 16">
-			<path d="m3 8 3 3 7-7" />
-		</svg>
-	);
+	return indeterminate ? <MinusIcon aria-hidden="true" weight="bold" /> : <CheckIcon aria-hidden="true" weight="bold" />;
 }
 
 export interface CheckboxProps extends CheckboxRootProps {

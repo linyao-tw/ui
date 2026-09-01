@@ -159,6 +159,13 @@ function assertPackageIdentity(manifest, packageJson, label) {
 	}
 }
 
+function assertPhosphorPeerContract(manifest, label) {
+	const peerRange = manifest.peerDependencies?.["@phosphor-icons/react"];
+	if (typeof peerRange !== "string" || peerRange.length === 0) {
+		throw new Error(`${label} must declare @phosphor-icons/react as a peer dependency.`);
+	}
+}
+
 function assertPackageFiles(files, label) {
 	const fileSet = new Set(files);
 	const missing = requiredFiles.filter(file => !fileSet.has(file));
@@ -264,6 +271,7 @@ async function verifyConsumer(tarballPath, temporaryRoot, packageJson) {
 		type: "module",
 		dependencies: {
 			"@lyds/ui": `file:${tarballPath}`,
+			"@phosphor-icons/react": dependencyVersion(packageJson, "@phosphor-icons/react"),
 			"@types/react": dependencyVersion(packageJson, "@types/react"),
 			"@types/react-dom": dependencyVersion(packageJson, "@types/react-dom"),
 			react: dependencyVersion(packageJson, "react"),
@@ -279,11 +287,12 @@ async function verifyConsumer(tarballPath, temporaryRoot, packageJson) {
 	const runtimeSmokePath = join(consumerDirectory, "smoke.mjs");
 	await writeFile(
 		runtimeSmokePath,
-		`import { readFile } from "node:fs/promises";
+		`import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
+import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { Button, CodeField, DatePicker } from "@lyds/ui";
 
-for (const [name, value] of Object.entries({ Button, CodeField, DatePicker })) {
+for (const [name, value] of Object.entries({ Button, CodeField, DatePicker, PlusIcon })) {
   if (value == null) throw new Error(\`@lyds/ui did not provide the named ESM export \${name}.\`);
 }
 
@@ -299,13 +308,13 @@ console.log(\`Named ESM imports work; CSS export resolves to \${cssPath}.\`);
 		cwd: consumerDirectory
 	});
 
-	const typeScriptSmokePath = join(consumerDirectory, "smoke.ts");
+	const typeScriptSmokePath = join(consumerDirectory, "smoke.tsx");
 	await writeFile(
 		typeScriptSmokePath,
-		`import type { ComponentProps } from "react";
+		`import { createElement, type ComponentProps } from "react";
 import { Button, CodeField, DatePicker } from "@lyds/ui";
 
-const buttonProps = { children: "Verify package" } satisfies ComponentProps<typeof Button>;
+const buttonProps = { children: "Verify package", startIcon: createElement("span") } satisfies ComponentProps<typeof Button>;
 const codeFieldProps = {
   length: 6,
   groupSize: 3,
@@ -324,6 +333,7 @@ void DatePicker;
 			{
 				compilerOptions: {
 					exactOptionalPropertyTypes: true,
+					jsx: "react-jsx",
 					lib: ["ES2022", "DOM", "DOM.Iterable"],
 					module: "NodeNext",
 					moduleResolution: "NodeNext",
@@ -333,7 +343,7 @@ void DatePicker;
 					target: "ES2022",
 					verbatimModuleSyntax: true
 				},
-				include: ["smoke.ts"]
+				include: ["smoke.tsx"]
 			},
 			null,
 			2
@@ -384,6 +394,7 @@ async function main() {
 	if (packageJson.name !== "@lyds/ui") {
 		throw new Error(`Expected packages/ui to be @lyds/ui, found ${JSON.stringify(packageJson.name)}.`);
 	}
+	assertPhosphorPeerContract(packageJson, "packages/ui/package.json");
 
 	const originalVersion = packageJson.version;
 	let failure;
@@ -437,6 +448,7 @@ async function main() {
 
 		const tarball = inspectTarball(tarballPath);
 		assertPackageIdentity(tarball.manifest, packageJson, "actual npm tarball");
+		assertPhosphorPeerContract(tarball.manifest, "actual npm tarball");
 		assertPackageFiles(tarball.files, "actual npm tarball");
 		assertSameFiles(tarball.files, npmDryRun.files, "actual npm tarball", "npm dry run");
 

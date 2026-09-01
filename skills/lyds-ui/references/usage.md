@@ -16,24 +16,24 @@ The helper targets `$CODEX_HOME/skills` when `CODEX_HOME` is set, otherwise `$HO
 Inspect the consumer before changing dependencies:
 
 ```sh
-rg -n --glob 'package.json' --glob '!node_modules/**' '"@lyds/ui"' .
-pnpm list @lyds/ui --depth 0
+rg -n --glob 'package.json' --glob '!node_modules/**' '"(@lyds/ui|@phosphor-icons/react)"' .
+pnpm list @lyds/ui @phosphor-icons/react --depth 0
 ```
 
 In a workspace, scope the query and installation to the consuming package when possible:
 
 ```sh
-pnpm --filter '<consumer-package>' list @lyds/ui --depth 0
-pnpm --filter '<consumer-package>' add @lyds/ui
+pnpm --filter '<consumer-package>' list @lyds/ui @phosphor-icons/react --depth 0
+pnpm --filter '<consumer-package>' add @lyds/ui @phosphor-icons/react
 ```
 
 For another package in the same pnpm workspace, use its workspace version instead of the npm registry:
 
 ```sh
-pnpm --filter '<consumer-package>' add '@lyds/ui@workspace:*'
+pnpm --filter '<consumer-package>' add '@lyds/ui@workspace:*' @phosphor-icons/react
 ```
 
-Do not reinstall or change a compatible existing version without a reason. Inspect the installed package's `exports`, declarations, and Storybook before using an unfamiliar component. Never import `src/`, `dist/`, or another private implementation path.
+Do not reinstall or change a compatible existing version without a reason. Inspect the installed package's `exports`, declarations, and Storybook before using an unfamiliar component. Never import `@lyds/ui/src/**`, `@lyds/ui/dist/**`, or another LYDS private implementation path. Phosphor's documented individual CSR exports are intentional public imports, not LYDS implementation paths.
 
 ## Styles and themes
 
@@ -68,6 +68,41 @@ Semantic variables are the customization boundary:
 Use the variables shipped by the installed version. Category/role/state names serialize deterministically from design-token names: `Text/Always_White` becomes `--text-always-white`. Product aliases may point to LYDS semantic tokens; do not redefine palette values or put hex, rgb, hsl, oklch, named colors, or color-bearing shadows in component CSS.
 
 Use LYDS spacing, typography, control, radius, elevation, and motion tokens where available. Otherwise use `rem` for fixed lengths and appropriate fluid units (`%`, `fr`, viewport units, unitless line-height). Only genuine ornamental hairlines may use `1px`.
+
+## Icons and actions
+
+LYDS standardizes interface icons on `@phosphor-icons/react`. Client components, Storybook stories, and browser-rendered library source import a single icon from its CSR file so development bundlers do not eagerly process the root barrel:
+
+```tsx
+import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
+import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";
+import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
+import { Button, IconButton } from "@lyds/ui";
+
+export function Actions() {
+	return (
+		<>
+			<Button startIcon={<FloppyDiskIcon weight="bold" />}>Save changes</Button>
+			<Button endIcon={<ArrowRightIcon weight="bold" />}>Continue</Button>
+			<IconButton aria-label="Add item">
+				<PlusIcon weight="bold" />
+			</IconButton>
+		</>
+	);
+}
+```
+
+The component name keeps its `Icon` suffix while the individual file path does not. Do not import client icons from the `@phosphor-icons/react` root barrel, legacy `phosphor-react`, or a hand-authored JSX `<svg>`. Do not use `×`, `✓`, `‹`, `›`, arrows, dots, or CSS pseudo-elements as substitute interface icons when Phosphor provides that concept.
+
+Button icon slots are decorative: the visible button text remains the accessible name, LYDS hides duplicate icon semantics, and loading replaces the leading icon while suppressing the trailing icon. Do not set a raw `color` or arbitrary `size` on slotted icons; they inherit `currentColor` and the Button size. `IconButton` requires `aria-label` or `aria-labelledby`; its icon never supplies the accessible name by itself. A decorative standalone icon needs `aria-hidden="true"`. Essential status still needs text or another accessible label and may not rely on shape or color alone.
+
+For a React Server Component or another environment that cannot use React Context, use Phosphor's public SSR module:
+
+```tsx
+import { FishIcon } from "@phosphor-icons/react/ssr";
+```
+
+The SSR variant does not use `IconContext`. Keep CSR and SSR imports at their environment boundary instead of mixing them in shared components.
 
 ## Select and compose components
 

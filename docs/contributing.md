@@ -56,6 +56,14 @@ command -v playwright
 - 不加入另一套 styled component system。
 - Base UI composition 使用 `render`，不是 `asChild`；render callback 必須把 primitive 提供的 props/ref 完整帶到實際 DOM。
 
+### Icons
+
+- 介面 icon 一律使用 `@phosphor-icons/react`；client source、Storybook 與 tests 採 individual `/dist/csr/<Name>` import。
+- 禁止手寫 JSX `<svg>`、legacy `phosphor-react`、Unicode control glyph，以及用 CSS pseudo-element／border 重畫 catalog icon。
+- Icon 繼承 `currentColor`，尺寸由 component anatomy 與 `--icon-size-*` tokens 控制，不指定 raw color 或任意固定大小。
+- Text Button 使用 `startIcon`／`endIcon`；icon-only action 使用 `IconButton` 並提供 `aria-label` 或 `aria-labelledby`。狀態不能只靠 icon 或顏色表達。
+- 新增 icon-bearing component 時，stories 展示適用尺寸與 disabled/loading；tests 驗證 accessible name 與 loading icon replacement。
+
 ### CSS
 
 - Component colors 全部使用 semantic tokens，包括 shadows、overlay、status、focus 與 disabled。

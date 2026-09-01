@@ -38,6 +38,7 @@ import {
 	TableHeader,
 	TableRow
 } from "@lyds/ui";
+import { CaretRightIcon } from "@phosphor-icons/react/dist/csr/CaretRight";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import "../story-layout.css";
@@ -85,7 +86,13 @@ export const ListCells: Story = {
 			<SectionHeading annotation="3 available" description="List cells preserve slots and semantic interactive rendering." action={<Badge variant="success">Current</Badge>}>
 				Recent workspaces
 			</SectionHeading>
-			<ListCell leading={<Avatar alt="Design team" fallback="DT" status="online" statusLabel="Online" />} title="Design team" description="12 members" metadata="Updated today" trailing="›" />
+			<ListCell
+				leading={<Avatar alt="Design team" fallback="DT" status="online" statusLabel="Online" />}
+				title="Design team"
+				description="12 members"
+				metadata="Updated today"
+				trailing={<CaretRightIcon aria-hidden weight="bold" />}
+			/>
 			<Separator spacing="none" variant="solid" />
 			<ListCell
 				action={{ href: "#research", "aria-label": "Open research workspace details" }}
@@ -93,7 +100,7 @@ export const ListCells: Story = {
 				title="Research workspace with an unusually long descriptive name"
 				description="Private workspace · 8 members"
 				metadata="Yesterday"
-				trailing="›"
+				trailing={<CaretRightIcon aria-hidden weight="bold" />}
 			/>
 			<ListCell disabled leading={<Avatar alt="Archived workspace" fallback="AW" status="offline" statusLabel="Archived" />} title="Archived workspace" description="Read only" metadata="Archived" />
 		</div>
@@ -114,7 +121,9 @@ export const CollectionPrimitives: Story = {
 						<CollectionDescription>{description}</CollectionDescription>
 					</CollectionContent>
 					<CollectionMeta className="lyds-story-readout">{status}</CollectionMeta>
-					<CollectionActions>›</CollectionActions>
+					<CollectionActions>
+						<CaretRightIcon aria-hidden weight="bold" />
+					</CollectionActions>
 				</CollectionItem>
 			))}
 		</Collection>

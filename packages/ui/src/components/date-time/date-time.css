@@ -237,11 +237,7 @@
 .lyds-date-glyph {
 	inline-size: var(--icon-size-md);
 	block-size: var(--icon-size-md);
-	fill: none;
-	stroke: currentColor;
-	stroke-linecap: round;
-	stroke-linejoin: round;
-	stroke-width: 1.5;
+	flex: 0 0 auto;
 }
 
 .lyds-date-range-separator {

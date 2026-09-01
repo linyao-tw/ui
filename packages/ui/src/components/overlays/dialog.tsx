@@ -11,6 +11,7 @@ import {
 	type DialogTriggerProps,
 	type DialogViewportProps
 } from "@base-ui/react/dialog";
+import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, type HTMLAttributes, type JSX, type ReactNode, type RefAttributes } from "react";
 
 import { mergeClassName } from "./class-names";
@@ -19,11 +20,7 @@ export type { AlertDialogRootChangeEventDetails } from "@base-ui/react/alert-dia
 export type { DialogRootChangeEventDetails } from "@base-ui/react/dialog";
 
 function CloseGlyph(): JSX.Element {
-	return (
-		<svg className="lyds-overlayClose__glyph" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-			<path d="M3 3l10 10M13 3L3 13" />
-		</svg>
-	);
+	return <XIcon aria-hidden="true" className="lyds-overlayClose__glyph" weight="bold" />;
 }
 
 export function DialogRoot<Payload = unknown>(props: DialogRootProps<Payload>): JSX.Element {

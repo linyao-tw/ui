@@ -61,6 +61,21 @@ Uncontrolled example：
 
 `Button` loading 會使 action disabled 並加上 `aria-busy`；consumer 仍須提供清楚 label，不能只靠 spinner。`IconButton` 的 visual child 會是 decorative，因此 accessible name 必須由 `aria-label` 或 `aria-labelledby` 提供。
 
+```tsx
+import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
+import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";
+import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
+import { Button, IconButton } from "@lyds/ui";
+
+<Button startIcon={<FloppyDiskIcon weight="bold" />}>Save changes</Button>;
+<Button endIcon={<ArrowRightIcon weight="bold" />}>Continue</Button>;
+<IconButton aria-label="Add item">
+	<PlusIcon weight="bold" />
+</IconButton>;
+```
+
+`startIcon`／`endIcon` 是 decorative `ReactNode` slots，尺寸與顏色由 Button anatomy 控制；loading 時 spinner 取代 start icon，end icon 同時隱藏，但 visible label 保留為 accessible name。Icon-only action 不使用 Button icon slots，而使用 `IconButton` 的唯一 visual child。Client code 採 Phosphor individual CSR import；不要手寫 SVG 或以 Unicode 字元代替 icon。
+
 ### Forms and input
 
 - Low-level `Input`。

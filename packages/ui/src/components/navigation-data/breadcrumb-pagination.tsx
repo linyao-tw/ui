@@ -1,3 +1,7 @@
+import { ArrowLeftIcon } from "@phosphor-icons/react/dist/csr/ArrowLeft";
+import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
+import { CaretRightIcon } from "@phosphor-icons/react/dist/csr/CaretRight";
+import { DotsThreeIcon } from "@phosphor-icons/react/dist/csr/DotsThree";
 import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type HTMLAttributes, type LiHTMLAttributes, type MouseEvent, type ReactNode } from "react";
 
 import { cx } from "./utils.js";
@@ -35,18 +39,22 @@ export interface BreadcrumbSeparatorProps extends HTMLAttributes<HTMLSpanElement
 	children?: ReactNode;
 }
 
-export const BreadcrumbSeparator = forwardRef<HTMLSpanElement, BreadcrumbSeparatorProps>(function BreadcrumbSeparator({ children = "/", className, ...props }, ref) {
+export const BreadcrumbSeparator = forwardRef<HTMLSpanElement, BreadcrumbSeparatorProps>(function BreadcrumbSeparator({ children, className, ...props }, ref) {
 	return (
 		<span ref={ref} aria-hidden="true" className={cx("lyds-breadcrumb__separator", className)} {...props}>
-			{children}
+			{children ?? <CaretRightIcon aria-hidden="true" weight="bold" />}
 		</span>
 	);
 });
 
-export const BreadcrumbEllipsis = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement>>(function BreadcrumbEllipsis({ className, children = "…", ...props }, ref) {
+export const BreadcrumbEllipsis = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement>>(function BreadcrumbEllipsis(
+	{ "aria-label": ariaLabel = "More pages", className, children, ...props },
+	ref
+) {
 	return (
-		<span ref={ref} aria-label="More pages" className={cx("lyds-breadcrumb__ellipsis", className)} {...props}>
-			{children}
+		<span ref={ref} className={cx("lyds-breadcrumb__ellipsis", className)} {...props}>
+			{children ? <span aria-hidden="true">{children}</span> : <DotsThreeIcon aria-hidden="true" weight="bold" />}
+			<span className="lyds-sr-only">{ariaLabel}</span>
 		</span>
 	);
 });
@@ -113,29 +121,30 @@ export const PaginationButton = forwardRef<HTMLButtonElement, PaginationButtonPr
 	return <button ref={ref} aria-current={current ? "page" : undefined} className={cx("lyds-pagination__control", className)} data-current={current ? "" : undefined} type={type} {...props} />;
 });
 
-export const PaginationPrevious = forwardRef<HTMLAnchorElement, PaginationLinkProps>(function PaginationPrevious({ "aria-label": ariaLabel = "Previous page", children = "←", ...props }, ref) {
+export const PaginationPrevious = forwardRef<HTMLAnchorElement, PaginationLinkProps>(function PaginationPrevious({ "aria-label": ariaLabel = "Previous page", children, ...props }, ref) {
 	return (
 		<PaginationLink ref={ref} aria-label={ariaLabel} {...props}>
-			{children}
+			{children ?? <ArrowLeftIcon aria-hidden="true" weight="bold" />}
 		</PaginationLink>
 	);
 });
 
-export const PaginationNext = forwardRef<HTMLAnchorElement, PaginationLinkProps>(function PaginationNext({ "aria-label": ariaLabel = "Next page", children = "→", ...props }, ref) {
+export const PaginationNext = forwardRef<HTMLAnchorElement, PaginationLinkProps>(function PaginationNext({ "aria-label": ariaLabel = "Next page", children, ...props }, ref) {
 	return (
 		<PaginationLink ref={ref} aria-label={ariaLabel} {...props}>
-			{children}
+			{children ?? <ArrowRightIcon aria-hidden="true" weight="bold" />}
 		</PaginationLink>
 	);
 });
 
 export const PaginationEllipsis = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement>>(function PaginationEllipsis(
-	{ "aria-label": ariaLabel = "More pages", children = "…", className, ...props },
+	{ "aria-label": ariaLabel = "More pages", children, className, ...props },
 	ref
 ) {
 	return (
-		<span ref={ref} aria-label={ariaLabel} className={cx("lyds-pagination__ellipsis", className)} {...props}>
-			{children}
+		<span ref={ref} className={cx("lyds-pagination__ellipsis", className)} {...props}>
+			{children ? <span aria-hidden="true">{children}</span> : <DotsThreeIcon aria-hidden="true" weight="bold" />}
+			<span className="lyds-sr-only">{ariaLabel}</span>
 		</span>
 	);
 });

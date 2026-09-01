@@ -447,6 +447,11 @@
 	cursor: not-allowed;
 }
 
+.lyds-number-field__stepper > svg {
+	inline-size: var(--icon-size-sm);
+	block-size: var(--icon-size-sm);
+}
+
 .lyds-phone-field {
 	display: flex;
 	inline-size: 100%;
@@ -680,6 +685,13 @@
 	transition:
 		border-color var(--motion-duration-fast) var(--motion-ease-out),
 		background-color var(--motion-duration-fast) var(--motion-ease-out);
+}
+
+.lyds-drop-zone__button > svg,
+.lyds-file-upload__trigger > svg {
+	inline-size: var(--icon-size-sm);
+	block-size: var(--icon-size-sm);
+	flex: none;
 }
 
 .lyds-drop-zone__button:hover:not(:disabled) {

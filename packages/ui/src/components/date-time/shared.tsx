@@ -1,3 +1,5 @@
+import { CalendarDotsIcon } from "@phosphor-icons/react/dist/csr/CalendarDots";
+import { ClockIcon } from "@phosphor-icons/react/dist/csr/Clock";
 import type { ReactNode } from "react";
 import { FieldError } from "react-aria-components/FieldError";
 import { I18nProvider } from "react-aria-components/I18nProvider";
@@ -49,18 +51,9 @@ export function FieldMessages({ description, error }: Pick<DateTimeFieldChromePr
 }
 
 export function CalendarGlyph() {
-	return (
-		<svg className="lyds-date-glyph" viewBox="0 0 20 20" aria-hidden="true">
-			<path d="M4.5 2.5v3m11-3v3M3 7.5h14M4 4h12a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Zm2.5 6h2v2h-2v-2Zm5 0h2v2h-2v-2Z" />
-		</svg>
-	);
+	return <CalendarDotsIcon aria-hidden="true" className="lyds-date-glyph" weight="regular" />;
 }
 
 export function ClockGlyph() {
-	return (
-		<svg className="lyds-date-glyph" viewBox="0 0 20 20" aria-hidden="true">
-			<circle cx="10" cy="10" r="7" />
-			<path d="M10 5.5V10l3 2" />
-		</svg>
-	);
+	return <ClockIcon aria-hidden="true" className="lyds-date-glyph" weight="regular" />;
 }

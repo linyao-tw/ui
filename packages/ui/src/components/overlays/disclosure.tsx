@@ -8,6 +8,7 @@ import {
 } from "@base-ui/react/accordion";
 import { Collapsible as BaseCollapsible, type CollapsiblePanelProps, type CollapsibleRootProps, type CollapsibleTriggerProps } from "@base-ui/react/collapsible";
 import { Tabs as BaseTabs, type TabsIndicatorProps, type TabsListProps, type TabsPanelProps, type TabsRootProps, type TabsTabProps } from "@base-ui/react/tabs";
+import { CaretDownIcon } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { forwardRef, type JSX } from "react";
 
 import { mergeClassName } from "./class-names";
@@ -34,7 +35,9 @@ export const AccordionTrigger = forwardRef<HTMLElement, AccordionTriggerProps>(f
 	return (
 		<BaseAccordion.Trigger {...props} ref={ref} className={mergeClassName("lyds-accordion__trigger", className)}>
 			<span className="lyds-accordion__label">{children}</span>
-			<span className="lyds-accordion__indicator" aria-hidden="true" />
+			<span className="lyds-accordion__indicator" aria-hidden="true">
+				<CaretDownIcon aria-hidden="true" weight="bold" />
+			</span>
 		</BaseAccordion.Trigger>
 	);
 });
@@ -63,7 +66,9 @@ export const CollapsibleTrigger = forwardRef<HTMLButtonElement, CollapsibleTrigg
 	return (
 		<BaseCollapsible.Trigger {...props} ref={ref} className={mergeClassName("lyds-collapsible__trigger", className)}>
 			<span className="lyds-collapsible__label">{children}</span>
-			<span className="lyds-collapsible__indicator" aria-hidden="true" />
+			<span className="lyds-collapsible__indicator" aria-hidden="true">
+				<CaretDownIcon aria-hidden="true" weight="bold" />
+			</span>
 		</BaseCollapsible.Trigger>
 	);
 });

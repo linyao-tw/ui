@@ -130,9 +130,20 @@
 }
 
 .lyds-button__icon > svg,
-.lyds-icon-button__icon > svg {
+.lyds-icon-button__icon > svg,
+.lyds-button__spinner > svg {
 	width: 100%;
 	height: 100%;
+}
+
+.lyds-button[data-size="sm"] :where(.lyds-button__icon, .lyds-icon-button__icon) {
+	width: var(--icon-size-sm);
+	height: var(--icon-size-sm);
+}
+
+.lyds-button[data-size="lg"] :where(.lyds-button__icon, .lyds-icon-button__icon) {
+	width: var(--icon-size-lg);
+	height: var(--icon-size-lg);
 }
 
 .lyds-button__label {
