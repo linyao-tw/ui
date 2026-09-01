@@ -405,7 +405,17 @@ function OpenBottomSheet({ narrow = false }: { narrow?: boolean }) {
 export const BottomSheetOpen: Story = {
 	name: "底部面板：開啟",
 	parameters: { layout: "fullscreen" },
-	render: () => <OpenBottomSheet />
+	render: () => <OpenBottomSheet />,
+	play: async () => {
+		const body = within(document.body);
+		const primaryAction = await body.findByRole("button", { name: "複製分享連結" });
+		const cancelAction = body.getByRole("button", { name: "取消" });
+		const primaryHeight = primaryAction.getBoundingClientRect().height;
+		const cancelHeight = cancelAction.getBoundingClientRect().height;
+
+		await expect(cancelHeight).toBe(primaryHeight);
+		await expect(cancelHeight).toBeGreaterThanOrEqual(56);
+	}
 };
 
 export const BottomSheetDark: Story = {

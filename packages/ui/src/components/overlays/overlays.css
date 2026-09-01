@@ -839,7 +839,8 @@
 	padding-block-end: calc(var(--space-4) + env(safe-area-inset-bottom));
 }
 
-.lyds-bottomSheet__footer > :where(.lyds-button, .lyds-overlayCloseAction) {
+.lyds-bottomSheet__footer > .lyds-button,
+.lyds-bottomSheet__footer > .lyds-overlayCloseAction:not(.lyds-button) {
 	width: 100%;
 	min-height: var(--control-height-lg);
 }
