@@ -18,12 +18,14 @@ type IconButtonBaseProps = Omit<ButtonProps, "aria-label" | "aria-labelledby" | 
 
 export type IconButtonProps = IconButtonBaseProps & AccessibleName;
 
-export const IconButton = React.forwardRef<HTMLElement, IconButtonProps>(function IconButton({ children, className, ...props }, ref) {
+export const IconButton = React.forwardRef<HTMLElement, IconButtonProps>(function IconButton({ children, className, loading = false, ...props }, ref) {
 	return (
-		<Button {...props} ref={ref} className={mergeClassNames("lyds-icon-button", className)}>
-			<span className="lyds-icon-button__icon" aria-hidden="true">
-				{children}
-			</span>
+		<Button {...props} ref={ref} className={mergeClassNames("lyds-icon-button", className)} loading={loading}>
+			{loading ? null : (
+				<span className="lyds-icon-button__icon" aria-hidden="true">
+					{children}
+				</span>
+			)}
 		</Button>
 	);
 });

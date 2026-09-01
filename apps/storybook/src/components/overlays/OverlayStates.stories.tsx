@@ -330,6 +330,14 @@ export const DialogLongOpen: Story = {
 export const AlertDialogOpen: Story = {
 	name: "警示對話框：開啟",
 	parameters: { layout: "centered" },
+	play: async () => {
+		const body = within(document.body);
+		const cancelButton = await body.findByRole("button", { name: "取消" });
+		const deleteButton = body.getByRole("button", { name: "刪除工作區" });
+
+		await expect(Math.abs(cancelButton.getBoundingClientRect().width - deleteButton.getBoundingClientRect().width)).toBeLessThan(1);
+		await expect(Math.abs(cancelButton.getBoundingClientRect().height - deleteButton.getBoundingClientRect().height)).toBeLessThan(1);
+	},
 	render: () => (
 		<AlertDialog.Root defaultOpen>
 			<AlertDialog.Trigger>刪除工作區</AlertDialog.Trigger>

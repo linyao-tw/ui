@@ -91,6 +91,20 @@ describe("foundation actions", () => {
 		expect(screen.getByRole("button", { name: "Close panel" }).querySelector("svg")).not.toBeNull();
 	});
 
+	it("replaces an icon with the loading indicator without changing its name", () => {
+		render(
+			<IconButton aria-label="Save panel" loading>
+				<DotsThreeIcon weight="bold" />
+			</IconButton>
+		);
+
+		const button = screen.getByRole("button", { name: "Save panel" });
+		expect(button).toHaveAttribute("aria-busy", "true");
+		expect(button.querySelector(".lyds-button__spinner")).not.toBeNull();
+		expect(button.querySelector(".lyds-icon-button__icon")).toBeNull();
+		expect(button.querySelector("svg")).toBeNull();
+	});
+
 	it("removes disabled links from navigation and suppresses activation", async () => {
 		const user = userEvent.setup();
 		const onClick = vi.fn();

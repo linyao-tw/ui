@@ -665,8 +665,10 @@
 	cursor: not-allowed;
 }
 
-.lyds-dialog__footer > :where(.lyds-button, .lyds-overlayCloseAction),
-.lyds-drawer__footer:not(.lyds-bottomSheet__footer) > :where(.lyds-button, .lyds-overlayCloseAction) {
+.lyds-dialog__footer > .lyds-button,
+.lyds-dialog__footer > .lyds-overlayCloseAction:not(.lyds-button),
+.lyds-drawer__footer:not(.lyds-bottomSheet__footer) > .lyds-button,
+.lyds-drawer__footer:not(.lyds-bottomSheet__footer) > .lyds-overlayCloseAction:not(.lyds-button) {
 	width: 100%;
 	min-inline-size: 0;
 	min-block-size: var(--control-height-lg);

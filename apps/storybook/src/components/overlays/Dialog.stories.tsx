@@ -75,6 +75,17 @@ export const LongText: Story = {
 
 export const DestructiveConfirmation: Story = {
 	name: "刪除確認",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const body = within(document.body);
+
+		await userEvent.click(canvas.getByRole("button", { name: "刪除工作區" }));
+		const cancelButton = await body.findByRole("button", { name: "取消" });
+		const deleteButton = body.getByRole("button", { name: "刪除工作區" });
+
+		await expect(Math.abs(cancelButton.getBoundingClientRect().width - deleteButton.getBoundingClientRect().width)).toBeLessThan(1);
+		await expect(Math.abs(cancelButton.getBoundingClientRect().height - deleteButton.getBoundingClientRect().height)).toBeLessThan(1);
+	},
 	render: () => (
 		<AlertDialog.Root>
 			<AlertDialog.Trigger>刪除工作區</AlertDialog.Trigger>

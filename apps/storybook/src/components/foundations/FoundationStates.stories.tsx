@@ -7,6 +7,7 @@ import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
 import { TrashIcon } from "@phosphor-icons/react/dist/csr/Trash";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ReactNode } from "react";
+import { expect, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -81,6 +82,13 @@ function MatrixCard({ label, children }: { label: string; children: ReactNode })
 
 export const IconButtonStates: Story = {
 	name: "圖示按鈕",
+	play: async ({ canvasElement }) => {
+		const loadingButton = within(canvasElement).getByRole("button", { name: "儲存項目" });
+
+		await expect(loadingButton).toHaveAttribute("aria-busy", "true");
+		await expect(loadingButton.querySelector(".lyds-button__spinner")).not.toBeNull();
+		await expect(loadingButton.querySelector(".lyds-icon-button__icon")).toBeNull();
+	},
 	render: () => (
 		<div className="lyds-story-stack">
 			<StateSection id="icon-button-variants" title="樣式">
