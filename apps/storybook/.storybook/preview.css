@@ -10,7 +10,12 @@ body {
 }
 
 .lyds-story-canvas {
+	min-height: 100dvh;
 	padding: clamp(1.5rem, 4vw, 4rem);
 	background: var(--background-main);
 	color: var(--text-main);
+}
+
+.lyds-story-canvas--fullscreen {
+	padding: 0;
 }

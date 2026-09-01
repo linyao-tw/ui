@@ -21,10 +21,11 @@ const preview: Preview = {
 	decorators: [
 		(Story, context) => {
 			const theme = context.globals.theme === "dark" ? "dark" : "light";
+			const fullscreen = context.parameters.layout === "fullscreen";
 			document.documentElement.dataset.lydsTheme = theme;
 
 			return (
-				<div className="lyds-story-canvas" data-lyds-theme={theme}>
+				<div className={`lyds-story-canvas${fullscreen ? " lyds-story-canvas--fullscreen" : ""}`} data-lyds-theme={theme}>
 					<Story />
 				</div>
 			);
