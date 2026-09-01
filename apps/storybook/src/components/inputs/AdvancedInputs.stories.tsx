@@ -1,5 +1,6 @@
 import { CodeField, DropZone, FileUpload, NumberField, OTPField, PhoneField } from "@lyds/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -10,6 +11,28 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+async function createPreviewImage() {
+	const canvas = document.createElement("canvas");
+	canvas.width = 120;
+	canvas.height = 80;
+	const context = canvas.getContext("2d");
+	if (context == null) throw new Error("無法建立預覽圖片。");
+
+	const styles = getComputedStyle(document.documentElement);
+	context.fillStyle = styles.getPropertyValue("--background-secondary").trim();
+	context.fillRect(0, 0, canvas.width, canvas.height);
+	context.fillStyle = styles.getPropertyValue("--control-primary").trim();
+	context.fillRect(0, 0, 44, canvas.height);
+	context.fillStyle = styles.getPropertyValue("--text-main").trim();
+	context.fillRect(60, 24, 44, 8);
+	context.fillRect(60, 44, 30, 8);
+
+	const blob = await new Promise<Blob>((resolve, reject) => {
+		canvas.toBlob(value => (value == null ? reject(new Error("無法輸出預覽圖片。")) : resolve(value)), "image/png");
+	});
+	return new File([blob], "版面預覽.png", { type: "image/png" });
+}
 
 export const NumericAndContact: Story = {
 	name: "數字與聯絡方式",
@@ -47,9 +70,17 @@ export const VerificationCode: Story = {
 
 export const FileSelection: Story = {
 	name: "選擇檔案",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const input = canvas.getByLabelText("設計附件 選擇檔案");
+		await userEvent.upload(input, [await createPreviewImage(), new File(["PDF"], "規格文件.pdf", { type: "application/pdf" })]);
+		await expect(canvas.getByText("已選擇 2 個檔案")).toBeVisible();
+		await expect(canvas.getByText("版面預覽.png")).toBeVisible();
+		await expect(canvas.getByText("規格文件.pdf")).toBeVisible();
+	},
 	render: () => (
 		<div className="lyds-story-grid">
-			<FileUpload label="專案壓縮檔" description="接受應用程式指定的檔案類型。" accept=".zip" />
+			<FileUpload label="設計附件" description="選擇圖片或 PDF 檔案。" accept="image/*,.pdf" multiple />
 			<FileUpload label="已簽署合約" disabled triggerLabel="檔案無法使用" />
 		</div>
 	)
@@ -57,6 +88,13 @@ export const FileSelection: Story = {
 
 export const DropZoneSurface: Story = {
 	name: "檔案拖放區",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const input = canvas.getByLabelText("附件 選擇檔案");
+		await userEvent.upload(input, [await createPreviewImage(), new File(["CSV"], "資料欄位.csv", { type: "text/csv" })]);
+		await expect(canvas.getByRole("status")).toHaveTextContent("已選擇 2 個檔案");
+		await expect(canvas.getByRole("list", { name: "已選擇的檔案" })).toBeVisible();
+	},
 	render: () => (
 		<div className="lyds-story-stack">
 			<DropZone label="附件" description="拖放一個或多個檔案，或開啟系統檔案選擇器。" primaryLabel="將檔案拖放至此" secondaryLabel="允許的檔案類型由應用程式設定" multiple />

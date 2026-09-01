@@ -1,6 +1,7 @@
 import { CodeField, DropZone, FileUpload, Input, NumberField, OTPField, PasswordField, PhoneField, SearchField, Textarea, TextView } from "@lyds/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ReactNode } from "react";
+import { expect, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -196,11 +197,30 @@ export const FileControls: Story = {
 
 export const LongAndNarrow: Story = {
 	name: "窄版長文字",
+	parameters: { viewport: { defaultViewport: "mobile1" } },
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const label = canvas.getByText("長於窄版面可用寬度且必須完整顯示的補充說明與聯絡資訊欄位標籤");
+		const codeField = canvasElement.querySelector<HTMLElement>(".lyds-code-field");
+		const codeInputs = Array.from(canvasElement.querySelectorAll<HTMLElement>(".lyds-code-field__group-input"));
+		const centerDistances = codeInputs.slice(1).map((input, index) => {
+			const current = input.getBoundingClientRect();
+			const previous = codeInputs[index]!.getBoundingClientRect();
+			return current.left + current.width / 2 - (previous.left + previous.width / 2);
+		});
+
+		await expect(getComputedStyle(label).whiteSpace).toBe("normal");
+		await expect(label.scrollWidth).toBeLessThanOrEqual(label.clientWidth);
+		await expect(label.getBoundingClientRect().height).toBeGreaterThan(parseFloat(getComputedStyle(label).lineHeight));
+		await expect(Math.min(...centerDistances)).toBeGreaterThanOrEqual(24);
+		await expect(codeField).not.toBeNull();
+		await expect(codeField!.scrollWidth).toBeGreaterThan(codeField!.clientWidth);
+	},
 	render: () => (
 		<div className="lyds-story-stack lyds-story-control">
 			<Input aria-label="長文字單行輸入" defaultValue="單行輸入中的長文字可水平編輯，不會撐開外層版面" />
 			<Textarea aria-label="長文字多行輸入" defaultValue="多行長文字會在窄版面中換行，並保留調整尺寸與鍵盤編輯功能。" />
-			<TextView label="長於窄版面可用寬度的備註欄位標籤" description="補充說明會在控制項下方換行。" defaultValue="多行長文字應保持可讀，且不會加寬頁面。" />
+			<TextView label="長於窄版面可用寬度且必須完整顯示的補充說明與聯絡資訊欄位標籤" description="補充說明會在控制項下方換行。" defaultValue="多行長文字應保持可讀，且不會加寬頁面。" />
 			<SearchField label="用於確認長文字換行的搜尋欄位標籤" defaultValue="長搜尋內容仍可水平編輯" />
 			<PasswordField label="窄版帳號設定表單中的長密碼欄位標籤" defaultValue="correct-horse-battery-staple" />
 			<PhoneField label="國際聯絡流程中的長電話欄位標籤" defaultValue="+886 912 345 678" />

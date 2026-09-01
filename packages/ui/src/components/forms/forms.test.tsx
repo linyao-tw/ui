@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axe from "axe-core";
 import * as React from "react";
@@ -262,6 +262,37 @@ describe("file controls", () => {
 
 		expect(input.files).toHaveLength(1);
 		expect(onFilesChange).toHaveBeenCalledWith([file], expect.any(Object));
+		expect(screen.getByRole("status")).toHaveTextContent("已選擇 1 個檔案");
+		expect(screen.getByRole("list", { name: "已選擇的檔案" })).toHaveTextContent("diagnostic.txt");
+		expect(input).toHaveAccessibleDescription(/已選擇 1 個檔案/);
+	});
+
+	it("previews image files and revokes their object URLs", async () => {
+		const user = userEvent.setup();
+		const createObjectURL = vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:layout-preview");
+		const revokeObjectURL = vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => undefined);
+		const image = new File(["image"], "layout.png", { type: "image/png" });
+		const document = new File(["document"], "requirements.pdf", { type: "application/pdf" });
+		const { container, unmount } = render(<FileUpload label="Project files" multiple />);
+
+		await user.upload(screen.getByLabelText<HTMLInputElement>("Project files 選擇檔案", { selector: "input" }), [image, document]);
+
+		expect(screen.getByRole("status")).toHaveTextContent("已選擇 2 個檔案");
+		expect(screen.getByText("layout.png")).toBeVisible();
+		expect(screen.getByText("requirements.pdf")).toBeVisible();
+		await waitFor(() => expect(container.querySelector("img")).toHaveAttribute("src", "blob:layout-preview"));
+		expect(container.querySelector("img")).toHaveAttribute("alt", "");
+		expect(createObjectURL).toHaveBeenCalledOnce();
+		expect(createObjectURL).toHaveBeenCalledWith(image);
+
+		await user.upload(screen.getByLabelText<HTMLInputElement>("Project files 選擇檔案", { selector: "input" }), document);
+		await waitFor(() => expect(revokeObjectURL).toHaveBeenCalledWith("blob:layout-preview"));
+		expect(container.querySelector("img")).not.toBeInTheDocument();
+
+		unmount();
+		expect(revokeObjectURL).toHaveBeenCalledOnce();
+		createObjectURL.mockRestore();
+		revokeObjectURL.mockRestore();
 	});
 
 	it("reports dropped files and exposes a keyboard-operable picker", async () => {
@@ -279,10 +310,45 @@ describe("file controls", () => {
 		expect(onDrop).toHaveBeenCalledOnce();
 		expect(onChange).toHaveBeenCalledOnce();
 		expect(onFilesChange).toHaveBeenCalledWith([file], expect.objectContaining({ source: "drop" }));
+		expect(screen.getByRole("status")).toHaveTextContent("已選擇 1 個檔案");
+		expect(screen.getByRole("list", { name: "已選擇的檔案" })).toHaveTextContent("telemetry.csv");
 
 		await user.tab();
 		expect(input).toHaveFocus();
 		expect(screen.getByText("選擇檔案").closest("label")).toHaveAttribute("for", input.id);
+	});
+
+	it("clears picker and drop-zone previews when their form resets", async () => {
+		const user = userEvent.setup();
+		const createObjectURL = vi.spyOn(URL, "createObjectURL").mockImplementation(file => `blob:${(file as File).name}`);
+		const revokeObjectURL = vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => undefined);
+		const uploadImage = new File(["upload"], "upload.png", { type: "image/png" });
+		const dropZoneImage = new File(["drop-zone"], "drop-zone.png", { type: "image/png" });
+		render(
+			<form aria-label="Attachments form">
+				<FileUpload label="Upload image" />
+				<DropZone label="Drop-zone image" />
+			</form>
+		);
+
+		await user.upload(screen.getByLabelText<HTMLInputElement>("Upload image 選擇檔案", { selector: "input" }), uploadImage);
+		await user.upload(screen.getByLabelText<HTMLInputElement>("Drop-zone image 選擇檔案", { selector: "input" }), dropZoneImage);
+		await waitFor(() => expect(document.querySelectorAll(".lyds-file-selection__thumbnail")).toHaveLength(2));
+		expect(screen.getAllByText("已選擇 1 個檔案")).toHaveLength(2);
+
+		const form = screen.getByRole<HTMLFormElement>("form", { name: "Attachments form" });
+		act(() => {
+			form.reset();
+		});
+
+		await waitFor(() => expect(screen.queryByRole("list", { name: "已選擇的檔案" })).not.toBeInTheDocument());
+		expect(screen.getAllByRole("status").every(status => status.textContent === "")).toBe(true);
+		expect(revokeObjectURL).toHaveBeenCalledWith("blob:upload.png");
+		expect(revokeObjectURL).toHaveBeenCalledWith("blob:drop-zone.png");
+		expect(revokeObjectURL).toHaveBeenCalledTimes(2);
+		expect(createObjectURL).toHaveBeenCalledTimes(2);
+		createObjectURL.mockRestore();
+		revokeObjectURL.mockRestore();
 	});
 
 	it("locks picker and drop interactions when read-only", () => {
@@ -306,6 +372,7 @@ describe("file controls", () => {
 		fireEvent.drop(zone as HTMLDivElement, { dataTransfer: { files: [file] } });
 		expect(onUploadFiles).not.toHaveBeenCalled();
 		expect(onDropFiles).not.toHaveBeenCalled();
+		expect(screen.getAllByRole("status").every(status => status.textContent === "")).toBe(true);
 	});
 });
 

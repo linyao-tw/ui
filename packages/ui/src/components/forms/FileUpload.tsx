@@ -1,4 +1,5 @@
 import { Input as BaseInput } from "@base-ui/react/input";
+import { FileIcon } from "@phosphor-icons/react/dist/csr/File";
 import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
 import * as React from "react";
 import "./forms.css";
@@ -8,6 +9,63 @@ type NativeFileInputProps = Omit<
 	React.InputHTMLAttributes<HTMLInputElement>,
 	"children" | "className" | "defaultValue" | "disabled" | "name" | "onChange" | "readOnly" | "required" | "size" | "style" | "type" | "value"
 >;
+
+function FileImagePreview({ file }: { file: File }) {
+	const [preview, setPreview] = React.useState<{ file: File; url: string } | null>(null);
+
+	React.useEffect(() => {
+		if (typeof URL.createObjectURL !== "function" || typeof URL.revokeObjectURL !== "function") return;
+
+		const previewUrl = URL.createObjectURL(file);
+		let disposed = false;
+		queueMicrotask(() => {
+			if (!disposed) {
+				setPreview({ file, url: previewUrl });
+			}
+		});
+
+		return () => {
+			disposed = true;
+			URL.revokeObjectURL(previewUrl);
+		};
+	}, [file]);
+
+	if (preview?.file !== file) return <FileIcon aria-hidden="true" weight="regular" />;
+	return <img className="lyds-file-selection__thumbnail" src={preview.url} alt="" loading="lazy" decoding="async" />;
+}
+
+function FileSelectionPreview({ files, summaryId }: { files: readonly File[]; summaryId: string }) {
+	return (
+		<div className={cx("lyds-file-selection", files.length === 0 && "lyds-sr-only")}>
+			<p id={summaryId} className="lyds-file-selection__summary" role="status" aria-live="polite" aria-atomic="true">
+				{files.length > 0 ? `已選擇 ${files.length} 個檔案` : null}
+			</p>
+			{files.length > 0 ? (
+				<ul className="lyds-file-selection__list" aria-label="已選擇的檔案">
+					{files.map((file, index) => (
+						<li className="lyds-file-selection__item" key={`${file.name}-${file.size}-${file.lastModified}-${index}`}>
+							<span className="lyds-file-selection__visual">{file.type.startsWith("image/") ? <FileImagePreview file={file} /> : <FileIcon aria-hidden="true" weight="regular" />}</span>
+							<span className="lyds-file-selection__name" title={file.name}>
+								{file.name}
+							</span>
+						</li>
+					))}
+				</ul>
+			) : null}
+		</div>
+	);
+}
+
+function useClearFileSelectionOnFormReset(inputRef: React.RefObject<HTMLInputElement | null>, formId: string | undefined, setSelectedFiles: React.Dispatch<React.SetStateAction<readonly File[]>>) {
+	React.useEffect(() => {
+		const form = inputRef.current?.form;
+		if (form == null) return;
+
+		const handleReset = () => setSelectedFiles([]);
+		form.addEventListener("reset", handleReset);
+		return () => form.removeEventListener("reset", handleReset);
+	}, [formId, inputRef, setSelectedFiles]);
+}
 
 export interface FileUploadProps extends NativeFileInputProps, FieldAnatomyProps {
 	inputClassName?: string;
@@ -53,14 +111,19 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(fu
 	const descriptionId = `${id}-description`;
 	const errorId = `${id}-error`;
 	const triggerId = `${id}-trigger-label`;
+	const selectionSummaryId = `${id}-selection-summary`;
 	const inputRef = React.useRef<HTMLInputElement>(null);
+	const [selectedFiles, setSelectedFiles] = React.useState<readonly File[]>([]);
+	useClearFileSelectionOnFormReset(inputRef, inputProps.form, setSelectedFiles);
 	React.useImperativeHandle(forwardedRef, () => inputRef.current as HTMLInputElement);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (disabled || readOnly) return;
 		onChange?.(event);
 		if (!event.defaultPrevented) {
-			onFilesChange?.(Array.from(event.currentTarget.files ?? []), event);
+			const files = Array.from(event.currentTarget.files ?? []);
+			setSelectedFiles(files);
+			onFilesChange?.(files, event);
 		}
 	};
 
@@ -101,13 +164,14 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(fu
 					required={required}
 					aria-invalid={invalid || undefined}
 					aria-labelledby={label != null ? `${labelId} ${triggerId}` : triggerId}
-					aria-describedby={[description != null ? descriptionId : null, errorId].filter(Boolean).join(" ")}
+					aria-describedby={[description != null ? descriptionId : null, selectedFiles.length > 0 ? selectionSummaryId : null, errorId].filter(Boolean).join(" ")}
 					onChange={handleChange}
 				/>
 				<label className="lyds-file-upload__trigger" data-disabled={disabled || readOnly || undefined} htmlFor={id}>
 					<span className="lyds-file-upload__signal" aria-hidden="true" />
 					<span id={triggerId}>{triggerLabel}</span>
 				</label>
+				<FileSelectionPreview files={selectedFiles} summaryId={selectionSummaryId} />
 			</div>
 		</FieldFrame>
 	);
@@ -169,10 +233,13 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 	const descriptionId = `${id}-description`;
 	const errorId = `${id}-error`;
 	const triggerId = `${id}-trigger-label`;
+	const selectionSummaryId = `${id}-selection-summary`;
 	const inputRef = React.useRef<HTMLInputElement>(null);
 	const [dragging, setDragging] = React.useState(false);
+	const [selectedFiles, setSelectedFiles] = React.useState<readonly File[]>([]);
 	const dragDepth = React.useRef(0);
 	const pendingDrop = React.useRef<{ event: React.DragEvent<HTMLDivElement>; files: readonly File[]; handled: boolean } | null>(null);
+	useClearFileSelectionOnFormReset(inputRef, inputProps.form, setSelectedFiles);
 
 	React.useImperativeHandle(forwardedRef, () => inputRef.current as HTMLInputElement);
 
@@ -184,11 +251,14 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 		const drop = pendingDrop.current;
 		if (drop != null) {
 			drop.handled = true;
+			setSelectedFiles(drop.files);
 			onFilesChange?.(drop.files, { source: "drop", event: drop.event });
 			return;
 		}
 
-		onFilesChange?.(Array.from(event.currentTarget.files ?? []), { source: "input", event });
+		const files = Array.from(event.currentTarget.files ?? []);
+		setSelectedFiles(files);
+		onFilesChange?.(files, { source: "input", event });
 	};
 
 	const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
@@ -242,10 +312,12 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 			inputRef.current.dispatchEvent(new Event("change", { bubbles: true }));
 			pendingDrop.current = null;
 			if (!drop.handled) {
+				setSelectedFiles(files);
 				onFilesChange?.(files, { source: "drop", event });
 			}
 			return;
 		}
+		setSelectedFiles(files);
 		onFilesChange?.(files, { source: "drop", event });
 	};
 
@@ -284,7 +356,7 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 				required={required}
 				aria-invalid={invalid || undefined}
 				aria-labelledby={label != null ? `${labelId} ${triggerId}` : triggerId}
-				aria-describedby={[description != null ? descriptionId : null, errorId].filter(Boolean).join(" ")}
+				aria-describedby={[description != null ? descriptionId : null, selectedFiles.length > 0 ? selectionSummaryId : null, errorId].filter(Boolean).join(" ")}
 				onChange={handleInputChange}
 			/>
 			<div
@@ -306,6 +378,7 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 					<PlusIcon aria-hidden="true" weight="bold" />
 					<span id={triggerId}>{browseLabel}</span>
 				</label>
+				<FileSelectionPreview files={selectedFiles} summaryId={selectionSummaryId} />
 			</div>
 		</FieldFrame>
 	);
