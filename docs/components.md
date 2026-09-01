@@ -1,65 +1,61 @@
-# Components
+# 元件
 
-本文件描述 LYDS 的 component families、共同 API 與 composition boundaries。專案仍在首次發佈前整合；**實際可匯入的符號一律以 `packages/ui/src/index.ts` 及 build 產生的 `dist/index.d.ts` 為準**。Source tree 中存在但尚未納入 public barrel 的檔案，不構成 release guarantee。
+本文件列出 Linyao Design System 的元件分類、共用 API 與組合邊界。實際可匯入項目以 `packages/ui/src/index.ts` 與建置產生的 `dist/index.d.ts` 為準。未列入公開匯出入口的原始檔不屬於公開 API。
 
-## Common API vocabulary
+## 共用 API
 
-不同 component semantics 需要不同 props，但相同概念使用相同名稱：
+| 概念       | API                                                            | 規則                                        |
+| ---------- | -------------------------------------------------------------- | ------------------------------------------- |
+| 視覺／語意 | `variant`                                                      | 不以 `intent`／`appearance` 表達相同概念    |
+| 尺寸       | `size="sm"`／`size="md"`／`size="lg"`                          | 元件只支援適用的範圍                        |
+| 方向       | `orientation`                                                  | 只用於有水平／垂直語意的元件                |
+| 狀態       | `disabled`, `readOnly`, `required`, `invalid`, `loading`       | 映射至原生、Base UI 或 RAC 語意             |
+| 值         | `value`, `defaultValue`, `onValueChange`                       | 受控／非受控，不混用兩種狀態所有權          |
+| 開啟狀態   | `open`, `defaultOpen`, `onOpenChange`                          | 彈出／展開元件的受控／非受控狀態            |
+| 表單語意   | `name`, `min`, `max`, `step`                                   | 底層基礎元件支援時傳遞                      |
+| 地區設定   | `locale`, `hourCycle`, `firstDayOfWeek`, structured value type | 只用於相關元件；時區由 `ZonedDateTime` 表示 |
+| 組合       | `children`, parts, `render`                                    | 優先組合，不分支修改原始碼                  |
+| 版面       | `className`, `style`                                           | 用於位置／尺寸；顏色使用設計變數            |
 
-| Concept          | API                                                            | Notes                                                      |
-| ---------------- | -------------------------------------------------------------- | ---------------------------------------------------------- |
-| 視覺／語意層級   | `variant`                                                      | 不使用 `intent` / `appearance` 表達同一件事                |
-| 尺寸             | `size="sm"` / `size="md"` / `size="lg"`                        | 某些 primitive 可只支援適用 subset                         |
-| Layout direction | `orientation`                                                  | 只在語意存在 horizontal/vertical 時使用                    |
-| State            | `disabled`, `readOnly`, `required`, `invalid`, `loading`       | 映射到 native/Base UI/RAC semantics                        |
-| Value            | `value`, `defaultValue`, `onValueChange`                       | controlled/uncontrolled；不混用兩種 ownership              |
-| Open             | `open`, `defaultOpen`, `onOpenChange`                          | popup/disclosure controlled/uncontrolled                   |
-| Form semantics   | `name`, `min`, `max`, `step`                                   | 在 underlying primitive 支援時穿透                         |
-| Localization     | `locale`, `hourCycle`, `firstDayOfWeek`, structured value type | 只在相關 component 使用；時區由 `ZonedDateTime` value 表達 |
-| Composition      | `children`, anatomy parts, `render`                            | 優先 compose，不 fork source                               |
-| Consumer layout  | `className`, `style`                                           | 用於 placement/size；顏色優先覆寫 tokens                   |
-
-Controlled example：
+受控：
 
 ```tsx
 const [value, setValue] = React.useState("line-a");
 
-<SegmentedControl value={value} onValueChange={next => next && setValue(next)} aria-label="Production line">
-	<SegmentedControlItem value="line-a">Line A</SegmentedControlItem>
-	<SegmentedControlItem value="line-b">Line B</SegmentedControlItem>
+<SegmentedControl value={value} onValueChange={next => next && setValue(next)} aria-label="生產線">
+	<SegmentedControlItem value="line-a">生產線 A</SegmentedControlItem>
+	<SegmentedControlItem value="line-b">生產線 B</SegmentedControlItem>
 </SegmentedControl>;
 ```
 
-Uncontrolled example：
+非受控：
 
 ```tsx
 <Select
 	defaultValue="normal"
 	options={[
-		{ value: "normal", label: "Normal" },
-		{ value: "priority", label: "Priority" }
+		{ value: "normal", label: "一般" },
+		{ value: "priority", label: "優先" }
 	]}
-	aria-label="Dispatch mode"
+	aria-label="派送模式"
 />
 ```
 
-不要同時傳 `value` 與 `defaultValue`。Consumer 若控制 value/open，亦負責同步更新 callback；LYDS 不在背後建立第二份 business state。
+不得同時傳入 `value` 與 `defaultValue`。使用者控制值或開啟狀態時，也必須在回呼中更新狀態。Linyao Design System 不建立另一份業務狀態。
 
-## Implementation inventory
+## 元件清單
 
-以下是首次 release candidate 的 source inventory，仍需在整合結束後與 public barrel、Storybook 及 tarball 逐項校對。
+### 基礎元件
 
-### Foundations and basic
-
-- `Button`：`primary`、`secondary`、`quiet`、`danger`；sizes、loading、start/end icon。
-- `IconButton`：強制 accessible name 的 icon-only action。
-- `Link`：保持 link/navigation semantics。
+- `Button`：`primary`、`secondary`、`quiet`、`danger`；尺寸、載入、起始／結尾圖示。
+- `IconButton`：只有圖示的操作，必須有可存取名稱。
+- `Link`：保留連結與導覽語意。
 - `Badge`、`Avatar`、`Separator`。
-- `Card` anatomy 與 `CloudBox` alias：material/elevated/inset/outline/cloud surfaces。
+- `Card` 與 `CloudBox` 別名：material／elevated／inset／outline／cloud 表面。
 - `SectionHeading`。
-- `ListCell` anatomy：leading、content、title、description、metadata、trailing。
+- `ListCell`：前置內容、主要內容、標題、說明、metadata、後置內容。
 
-`Button` loading 會使 action disabled 並加上 `aria-busy`；consumer 仍須提供清楚 label，不能只靠 spinner。`IconButton` 的 visual child 會是 decorative，因此 accessible name 必須由 `aria-label` 或 `aria-labelledby` 提供。
+`Button` 載入時會停用操作並設定 `aria-busy`。`IconButton` 的可見圖示屬於裝飾，可存取名稱必須由 `aria-label` 或 `aria-labelledby` 提供。
 
 ```tsx
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
@@ -67,81 +63,81 @@ import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";
 import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
 import { Button, IconButton } from "@lyds/ui";
 
-<Button startIcon={<FloppyDiskIcon weight="bold" />}>Save changes</Button>;
-<Button endIcon={<ArrowRightIcon weight="bold" />}>Continue</Button>;
-<IconButton aria-label="Add item">
+<Button startIcon={<FloppyDiskIcon weight="bold" />}>儲存變更</Button>;
+<Button endIcon={<ArrowRightIcon weight="bold" />}>繼續</Button>;
+<IconButton aria-label="新增項目">
 	<PlusIcon weight="bold" />
 </IconButton>;
 ```
 
-`startIcon`／`endIcon` 是 decorative `ReactNode` slots，尺寸與顏色由 Button anatomy 控制；loading 時 spinner 取代 start icon，end icon 同時隱藏，但 visible label 保留為 accessible name。Icon-only action 不使用 Button icon slots，而使用 `IconButton` 的唯一 visual child。Client code 採 Phosphor individual CSR import；不要手寫 SVG 或以 Unicode 字元代替 icon。
+`startIcon`／`endIcon` 是裝飾性的 `ReactNode` 插槽，尺寸與顏色由 Button 控制。載入時 spinner 取代起始圖示並隱藏結尾圖示，但可見標籤仍作為可存取名稱。只有圖示的操作應使用 `IconButton`。用戶端程式碼使用 Phosphor 個別 CSR 匯入；不得手寫 SVG 或以 Unicode 字元代替圖示。
 
-### Forms and input
+### 表單輸入
 
-- Low-level `Input`。
-- `TextField`、`Textarea` / `TextView`。
+- `Input`。
+- `TextField`、`Textarea`／`TextView`。
 - `SearchField`、`PasswordField`、`NumberField`。
 - `CodeField`、`PhoneField`、`OTPField`。
 - `FileUpload`、`DropZone`。
 
-Field family 共用 label、description、error、required/invalid/disabled/readOnly 與 `sm/md/lg` anatomy。省略 visible label 時必須在實際 control 提供 `aria-label` 或 `aria-labelledby`。
+欄位元件共用標籤、說明、錯誤、必填／無效／停用／唯讀狀態與 `sm`／`md`／`lg` 尺寸。沒有可見標籤時，實際控制項必須提供 `aria-label` 或 `aria-labelledby`。
 
-`PhoneField` 只設定適合的 input affordance，不解析國碼、不驗證電話號碼，也不綁定聯絡人資料。`CodeField` 不決定 verification protocol。`OTPField` 管理 multi-slot input interaction，但發送、重送、倒數與 server verification 屬於 application。
+`PhoneField` 不解析國碼或驗證電話號碼。`CodeField` 不決定驗證協定。`OTPField` 只處理多欄輸入；發送、重送、倒數與伺服器驗證由應用程式負責。
 
-`FileUpload` / `DropZone` 只回傳 browser `File` objects；upload transport、limits、MIME/content validation、retry、progress source 與 security scan 由 application 決定。`accept` 只是 browser hint，不是安全驗證。
+`FileUpload`／`DropZone` 只回傳瀏覽器 `File` 物件。上傳傳輸、限制、MIME／內容驗證、重試、進度來源與安全掃描由應用程式處理；`accept` 只提供瀏覽器提示。
 
-### Selection
+### 選取元件
 
-- `Checkbox`、`CheckboxGroup` 與 labeled `CheckboxItem`。
-- `RadioGroup`、`Radio` 與 labeled `RadioItem`。
+- `Checkbox`、`CheckboxGroup`、`CheckboxItem`。
+- `RadioGroup`、`Radio`、`RadioItem`。
 - `Switch`。
 - `Slider`。
-- `Toggle`、`ToggleGroup`、`SegmentedControl` / `SegmentedControlItem`。
-- `Select`，同時提供 high-level `options` API 與 compositional parts。
-- `Combobox`、`Autocomplete`，同時提供 high-level options 與 anatomy parts。
-- `DropdownMenu` / `Menu`、`ContextMenu`。
+- `Toggle`、`ToggleGroup`、`SegmentedControl`／`SegmentedControlItem`。
+- `Select`，提供 `options` API 與組合 parts。
+- `Combobox`、`Autocomplete`，提供選項與組合 parts。
+- `DropdownMenu`／`Menu`、`ContextMenu`。
 
-使用 `Switch` 表達立即生效的 binary setting；用 `Checkbox` 表達表單中的獨立 choice；用 `RadioGroup` 表達一組互斥 options；用 `SegmentedControl` 表達少量且並列的互斥 views/modes。不要只因外觀相近而交換 semantics。
+`Switch` 用於立即生效的二元設定；`Checkbox` 用於表單中的獨立選項；`RadioGroup` 用於互斥選項；`SegmentedControl` 用於少量並列的檢視／模式。不得因外觀相近而交換語意。
 
-High-level `Select` / `Combobox` 適合一般 options。需要 group、separator、rich item 或特殊 render 時使用同一 component 的 anatomy parts，不要繞過 LYDS 直接混搭 unstyled primitives。
+一般選項可使用高階 `Select`／`Combobox`。需要群組、分隔線、複合項目或特殊 render 時，使用同一元件的 parts，不直接混用未樣式化基礎元件。
 
-> [!IMPORTANT] Base UI 1.7.0 原始 release 在 nested submenu 展開時會產生不合法的 portal owner。LYDS workspace 暫時套用官方已合併但尚未發版的 [Base UI #5058](https://github.com/mui/base-ui/pull/5058) exact patch，為 constrained menu owner 加上 `role="group"`；對應 Storybook open-state axe regression test 必須保持啟用。pnpm workspace patch 不會由 `@lyds/ui` npm tarball自動傳遞給 consumer，因此在正式 publication 前，必須升級到已包含 #5058 的 Base UI release 並移除 patch。升級後需確認 package source，再重跑 submenu 的 Arrow keys、Tab／Shift+Tab、Escape、return-focus、axe 與 Safari VoiceOver。Base UI 的 focus guards 是 portal tab-order routing 的一部分，不得由 consumer 刪除、設為 inert 或以 MutationObserver 改寫。
+> [!IMPORTANT] Base UI 1.7.0 在展開巢狀子選單時會產生不合法的 portal owner。工作區暫時套用官方已合併但尚未發版的 [Base UI #5058](https://github.com/mui/base-ui/pull/5058) 原始 patch，為受限選單擁有者加上 `role="group"`；Storybook 的開啟狀態 axe 回歸測試必須保持啟用。pnpm 工作區 patch 不會由 `@lyds/ui` npm tarball 傳給使用者，因此正式發佈前必須升級到包含 #5058 的 Base UI 版本，移除 patch，並重新驗證子選單的方向鍵、Tab／Shift+Tab、Escape、焦點返回、axe 與 Safari VoiceOver。Base UI 焦點守衛用於 portal 的 Tab 順序導引，不得刪除、設為 inert 或以 MutationObserver 改寫。
 
-### Disclosure and structure
+### 展開與結構
 
-- `Accordion` family。
-- `Collapsible` family。
-- `Tabs` family：Root、List、Tab、Indicator 與 Panel；Indicator 預設隱藏，可由產品在確有需要時自行樣式化。
+- `Accordion`。
+- `Collapsible`。
+- `Tabs`：Root、List、Tab、Indicator 與 Panel。Indicator 預設隱藏。
 
-Accordion 是多 section disclosure；Collapsible 是單一 region；Tabs 是在同一 context 中切換 panels。Tabs 不應被拿來偽裝 route navigation；需要真正 URL/link semantics 時使用 navigation patterns。
+Accordion 用於多個展開區段；Collapsible 用於單一區域；Tabs 用於同一內容中切換面板。需要 URL／連結語意時，應使用導覽元件，不以 Tabs 代替路由。
 
-### Overlays
+### 浮層元件
 
 - `Tooltip`、`Popover`、`PreviewCard`。
-- `Dialog` / `Modal`。
+- `Dialog`／`Modal`。
 - `AlertDialog`。
 - `Drawer`。
-- `BottomSheet`，包含 handle、header/body/footer 與 snap points。
+- `BottomSheet`：把手、頁首／內容／頁尾與停駐點。
 
-Overlay family 採 anatomy composition，保留 Base UI 的 focus trapping、Escape、return focus、outside interaction 與 positioning semantics。最小 Dialog 結構：
+浮層元件保留 Base UI 的焦點限制、Escape、焦點返回、外部互動與定位。最小 Dialog：
 
 ```tsx
 <Dialog.Root>
-	<Dialog.Trigger render={triggerProps => <Button {...triggerProps}>Open settings</Button>} />
+	<Dialog.Trigger render={triggerProps => <Button {...triggerProps}>開啟設定</Button>} />
 	<Dialog.Portal>
 		<Dialog.Backdrop />
 		<Dialog.Viewport>
 			<Dialog.Popup hasCustomClose>
 				<Dialog.Header>
-					<Dialog.Title>Settings</Dialog.Title>
-					<Dialog.Description>Adjust this workstation.</Dialog.Description>
+					<Dialog.Title>設定</Dialog.Title>
+					<Dialog.Description>調整工作站設定。</Dialog.Description>
 				</Dialog.Header>
-				<Dialog.Body>{/* fields */}</Dialog.Body>
+				<Dialog.Body>{/* 欄位 */}</Dialog.Body>
 				<Dialog.Footer>
 					<Dialog.Close
 						render={closeProps => (
 							<Button {...closeProps} variant="secondary">
-								Done
+								完成
 							</Button>
 						)}
 					/>
@@ -152,56 +148,56 @@ Overlay family 採 anatomy composition，保留 Base UI 的 focus trapping、Esc
 </Dialog.Root>
 ```
 
-若 `Dialog.Popup` 中另外提供 accessible `Dialog.Close`，設定 `hasCustomClose`，避免重複內建 close。`AlertDialog` 用於需要明確確認的中斷式決策，不用於一般資訊。Tooltip 不能承載完成任務所必需、keyboard/touch 無法取得的唯一內容；trigger 的 accessible name 必須包含 visible label。需要 screen reader 與 touch 使用者主動探索內容時，改用 `Popover`。
+自行提供 `Dialog.Close` 時，在 `Dialog.Popup` 設定 `hasCustomClose`，避免重複關閉按鈕。`AlertDialog` 只用於需要明確確認的決策。Tooltip 不能承載完成任務所需的唯一資訊；需要螢幕閱讀器與觸控使用者主動探索內容時，使用 `Popover`。
 
-### Feedback
+### 回饋元件
 
-- `Alert` / `AlertView` anatomy 與 `Banner`。
-- `ToastProvider`、`ToastViewport`、`ToastRoot` 與 toast manager helpers。
+- `Alert`／`AlertView`、`Banner`。
+- `ToastProvider`、`ToastViewport`、`ToastRoot` 與 Toast 管理工具。
 - `Progress`、`Meter`。
-- `Spinner` / `Loader`。
+- `Spinner`／`Loader`。
 - `Skeleton`。
 - `EmptyState`。
 
-Feedback status vocabulary 為 `neutral`、`info`、`success`、`warning`、`danger`。Status 不能只靠 signal color，仍要有可理解 title/description 或 accessible label。
+狀態使用 `neutral`、`info`、`success`、`warning`、`danger`。狀態不能只靠顏色，必須提供可理解的標題／說明或可存取標籤。
 
-Toast queue 由 Base UI manager 管理；consumer 決定何時 enqueue、deduplicate、retry 或將 backend error 轉成文案。長時間、需要回顧或會影響 task completion 的訊息不應只放 transient toast。
+Toast 佇列由 Base UI 管理器處理。使用者決定加入佇列、去重複、重試與後端錯誤文案。需要長期保留或會影響任務完成的訊息，不應只使用短暫 Toast。
 
-`Progress` 表達 task completion；`Meter` 表達已知 range 中的 measurement。Indeterminate loading 使用 `Spinner` / `Loader`，並由 surrounding region 提供適當的 busy relationship。
+`Progress` 表示任務進度；`Meter` 表示已知範圍中的測量值。無確定進度的載入使用 `Spinner`／`Loader`，並由周圍區域提供適當的忙碌狀態關聯。
 
-### Navigation and application chrome
+### 導覽
 
 - `Breadcrumb`、`Pagination`。
 - `NavigationMenu`、`Menubar`、`Toolbar`。
-- `Header` composition primitives。
-- `TabBar` pattern。
-- `CommandPalette` composition。
+- `Header` 組合 parts。
+- `TabBar`。
+- `CommandPalette`。
 
-LYDS 不知道 application router。Link destination、active route、prefetch 與 navigation side effects 由 consumer 提供；可透過 render/composition API 接上 router link，但必須保留 anchor semantics、accessible name 與 keyboard behavior。
+路由由應用程式管理。連結目的地、目前路由、預先載入與導覽副作用都由使用者提供；接上路由連結時仍須保留錨點語意、可存取名稱與鍵盤行為。
 
-Pagination 只呈現 controls 與目前狀態，不取得資料也不決定 zero/one-based page model。CommandPalette 提供 dialog + combobox composition，不建立 command registry、hotkey policy、permissions 或 async search backend。
+Pagination 只呈現控制項與狀態，不取得資料或決定頁碼模型。CommandPalette 只提供 Dialog 與 Combobox 組合，不建立指令登錄、快捷鍵規則、權限或非同步搜尋後端。
 
-### Data and content
+### 資料與內容
 
-- Native-semantic `Table` anatomy、`TableFrame`。
-- `DataTable` presentation composition：header/title/description/controls/status/region。
-- `ScrollArea` anatomy。
-- `List`、`OrderedList`、`Collection` 與 item/content/actions/meta primitives。
+- 使用原生語意的 `Table`、`TableFrame`。
+- `DataTable`：頁首／標題／說明／控制項／狀態／區域。
+- `ScrollArea`。
+- `List`、`OrderedList`、`Collection` 與項目／內容／操作／metadata parts。
 
-`DataTable` 刻意不含 sorting algorithm、filter state、server pagination、row selection business rule、data fetching 或 column schema engine。Consumer 可用 native table semantics、buttons、checkboxes 與 status regions compose 自己的 data behavior。
+`DataTable` 不包含排序演算法、篩選狀態、伺服器分頁、列選取業務規則、資料取得或欄位 schema 引擎。
 
-`Collection` 是 presentation/composition primitive，不宣稱處理 large-data virtualization。超大型清單的 windowing、measurement 與 async loading 需由 product 選擇合適策略，再保持 LYDS semantics/tokens。
+`Collection` 不處理大量資料虛擬化。大型清單的視窗化、尺寸測量與非同步載入由應用程式選擇方案，再套用 Linyao Design System 語意與設計變數。
 
-### Date & Time
+### 日期與時間
 
-- `Calendar`，包含 month/year navigation、keyboard calendar grid、min/max 與 unavailable dates。
+- `Calendar`：月份／年份導覽、鍵盤日曆格線、最小／最大值與不可用日期。
 - `DateField`。
 - `DatePicker`。
 - `DateRangePicker`。
 - `TimeField`、`TimePicker`。
 - `DateTimePicker`。
 
-Date & Time 使用 React Aria Components 和 `@internationalized/date`。LYDS 從 package root re-export 常用 value classes/parsers，因此 consumer 不需穿透 internal dependency path：
+Linyao Design System 從套件根目錄重新匯出常用值類別與剖析器：
 
 ```tsx
 import { useState } from "react";
@@ -212,49 +208,40 @@ const [range, setRange] = useState({
 	end: new CalendarDate(2026, 9, 5)
 });
 
-<DateRangePicker
-	label="Maintenance window"
-	locale="zh-TW"
-	value={range}
-	onValueChange={next => next && setRange(next)}
-	minValue={new CalendarDate(2026, 9, 1)}
-	isDateUnavailable={date => date.day === 13}
-/>;
+<DateRangePicker label="維護期間" locale="zh-TW" value={range} onValueChange={next => next && setRange(next)} minValue={new CalendarDate(2026, 9, 1)} isDateUnavailable={date => date.day === 13} />;
 ```
 
-Value semantics：
+值型別：
 
-- `CalendarDate`：不帶時間／時區的曆日，例如生日或結算日。
-- `CalendarDateTime`：沒有具名時區的 wall-clock date/time。
-- `ZonedDateTime`：包含具名 IANA time zone 與 exact instant semantics。
-- `Time`：不帶日期的 wall-clock time。
+- `CalendarDate`：不含時間／時區的日期，例如生日或結算日。
+- `CalendarDateTime`：不含指定時區的當地日期與時間。
+- `ZonedDateTime`：包含 IANA 時區與確切時間點。
+- `Time`：不含日期的當地時間。
 
-`locale` 控制語言與 locale-sensitive segments；`hourCycle`、`granularity`、`firstDayOfWeek`、`minValue`、`maxValue` 與 `isDateUnavailable` 在相應 underlying API 支援時由 consumer 指定。不要把 `zh-TW`、`Asia/Taipei`、`YYYY/MM/DD` 或 24-hour clock 當作 library default。
+`locale` 控制語言與區段；`hourCycle`、`granularity`、`firstDayOfWeek`、`minValue`、`maxValue` 與 `isDateUnavailable` 由使用者指定。不得將 `zh-TW`、`Asia/Taipei`、`YYYY/MM/DD` 或 24 小時制設為套件預設值。
 
-LYDS 不靜默把 `CalendarDateTime` 轉成 `ZonedDateTime`。若產品需要 exact instant，必須在 boundary 明確提供 time zone，處理 DST/nonexistent/ambiguous wall time，並以 domain rule 決定序列化方式。
+Linyao Design System 不自動將 `CalendarDateTime` 轉為 `ZonedDateTime`。需要確切時間點時，應用程式必須提供時區、處理 DST／不存在／重複的當地時間，並決定序列化方式。
 
-## Intentionally not in the component layer
+## 不屬於元件層的功能
 
-首次 release candidate 刻意不內建：
+下列功能由應用程式處理：
 
-- DataTable sorting/filtering/data fetching/virtualization engine；
-- upload transport 或 cloud-provider adapter；
-- international phone parsing／country database；
-- command registry、global keyboard shortcut manager 或 router integration；
-- form-library-specific adapters；
-- analytics、persistence、permissions、API clients；
-- product-specific date formatting、holiday calendars、booking constraints 或 timezone conversion policy。
+- DataTable 排序／篩選／資料取得／虛擬化；
+- 上傳傳輸或雲端供應商轉接器；
+- 國際電話解析／國家資料庫；
+- 指令登錄、全域鍵盤快捷鍵管理器或路由整合；
+- 表單套件專用轉接器；
+- 分析、持久化、權限、API 用戶端；
+- 產品特定的日期格式、假日日曆、預約限制或時區轉換規則。
 
-這些不是「未完成的小功能」，而是 design system 與 application 的 ownership boundary。若未來出現跨產品、無 business assumptions、可維持 accessibility 的穩定需求，才評估新增 headless adapter 或 pattern。
+只有跨產品、沒有業務假設且可維持可存取性的需求，才評估新增 headless 轉接器或組合模式。
 
-## Choosing composition over forks
+## 新增元件的判斷
 
-新增 wrapper 前依序判斷：
+1. 現有 `variant`、`size` 或語意變數是否已支援？
+2. 是否可用現有 parts 組合？
+3. 差異是否只屬於使用者版面，可用 `className` 解決？
+4. 是否為應用程式業務邏輯？
+5. 只有共用、可重複且可存取的行為才新增元件。
 
-1. 現有 `variant` / `size` / semantic token 是否已涵蓋？
-2. 是否可用 anatomy parts 組合？
-3. 差異是否只是 consumer layout，可用 `className` 解決？
-4. 是否是 business logic，應留在 product？
-5. 只有 shared、repeatable、accessible behavior 才新增 LYDS component。
-
-Fork component 會切斷 future fixes、tokens、keyboard behavior 與 tests。若確實需要新 component，請依 [Contributing](contributing.md) 完成 API、states、stories、tests、a11y 與 package export。
+分支修改會失去後續修正、設計變數、鍵盤行為與測試。確定需要新元件時，依[貢獻指南](contributing.md)完成 API、狀態、Storybook stories、測試、可存取性與套件匯出。

@@ -1,28 +1,30 @@
-# LYDS
+# Linyao Design System
 
-LYDS 是一套給 React 應用使用的設計系統，預計以 `@lyds/ui` 發佈。元件 anatomy、尺寸、variant 組織與互動層級依循 Modulor Figma 中可驗證的設計；LYDS 以 Limestone、Charcoal、Vermilion 重新映射色盤，並為 Web、Dark theme 與 WCAG 2.2 AA 補齊必要狀態。沒有直接 reference 的元件，使用同一套表面、圓角、字級、間距與狀態語言延伸。
+Linyao Design System 是麟曜數位工作室的設計系統，提供 React 元件、設計變數、亮色／深色主題與共用樣式。預計以 npm 套件 `@lyds/ui` 發佈；`@lyds/ui` 與 `lyds-*` 僅為程式識別名稱，不是專案名稱。
 
-目前 repository 處於發佈前審閱階段。套件、Storybook、測試與發佈自動化都在此 monorepo 維護，但 **本次實作不會發佈任何 npm 版本**；npm 發佈預設由 `NPM_PUBLISH_ENABLED` repository variable 關閉。
+元件結構、尺寸、`variant` 與互動狀態以 Modulor Figma 可驗證的設計為依據，色盤改用 Limestone、Charcoal 與 Vermilion。Figma 未提供的元件沿用相同的表面、圓角、字級、間距與狀態規則。
 
-## 套件特色
+專案目前處於發佈前審閱階段。npm 發佈預設由儲存庫變數 `NPM_PUBLISH_ENABLED` 關閉；未取得明確批准前不會發佈任何版本。
 
-- React + strict TypeScript，React 與 ReactDOM 維持 peer dependencies。
-- Base UI 作為一般互動與可存取性 primitive 的主要基礎。
-- Date & Time 元件使用 React Aria Components 與 `@internationalized/date`，避免自行發明日曆、locale、鍵盤與時區邏輯。
-- Light／Dark 完整語意色彩、尺寸、字體、形狀、陰影與 motion tokens。
-- 標準 CSS；元件只取用 semantic variables，不把品牌色或產品邏輯寫死。
-- Storybook 是主要的人類審閱、狀態展示與 accessibility 檢查介面。
-- Components、tokens、themes 與 CSS 都由單一 `@lyds/ui` package 提供；icon peer 統一使用 `@phosphor-icons/react`。
+## 功能
+
+- React、strict TypeScript；React 與 ReactDOM 為同儕依賴。
+- Base UI 負責一般元件的互動與可存取行為。
+- Date & Time 元件使用 React Aria Components 與 `@internationalized/date`。
+- 提供完整的亮色／深色語意色彩、尺寸、字體、形狀、陰影與動態效果變數。
+- 元件 CSS 只使用語意變數，不包含產品邏輯或硬編碼品牌色。
+- Storybook 用於元件審閱、狀態展示與可存取性檢查。
+- 元件、設計變數、主題與 CSS 均由 `@lyds/ui` 提供；介面圖示統一使用 `@phosphor-icons/react`。
 
 ## 安裝
 
-公開發佈啟用後，consumer 可安裝：
+公開發佈後可安裝：
 
 ```sh
 pnpm add @lyds/ui @phosphor-icons/react
 ```
 
-目前請從此 workspace 開發與審閱，不要預期 npm registry 已存在 `@lyds/ui`。
+目前請從此工作區開發與審閱；不要假設 npm registry 已存在 `@lyds/ui`。
 
 在應用程式入口匯入一次樣式：
 
@@ -30,7 +32,7 @@ pnpm add @lyds/ui @phosphor-icons/react
 import "@lyds/ui/styles.css";
 ```
 
-接著從 package root 使用 public API：
+從套件根目錄使用公開 API：
 
 ```tsx
 import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";
@@ -39,11 +41,11 @@ import { Button, Card, CardBody, CardTitle, TextField } from "@lyds/ui";
 export function AccountPanel() {
 	return (
 		<Card variant="material">
-			<CardTitle>Account settings</CardTitle>
+			<CardTitle>帳號設定</CardTitle>
 			<CardBody>
-				<TextField label="Display name" description="Shown to collaborators." name="displayName" required />
+				<TextField label="顯示名稱" description="其他協作者會看到這個名稱。" name="displayName" required />
 				<Button variant="primary" startIcon={<FloppyDiskIcon weight="bold" />}>
-					Save changes
+					儲存變更
 				</Button>
 			</CardBody>
 		</Card>
@@ -51,18 +53,18 @@ export function AccountPanel() {
 }
 ```
 
-元件不包含 API call、routing、analytics、localStorage、表單框架或業務驗證。應用程式負責資料取得、提交、權限、錯誤映射與最終格式；LYDS 負責呈現、互動 primitive 與可存取狀態。
+元件不包含 API 呼叫、路由、分析、localStorage、表單框架或業務驗證。應用程式負責資料、權限、提交與格式；Linyao Design System 負責呈現、互動與可存取狀態。
 
-## Themes
+## 主題
 
-Light 是預設 theme。把 `data-lyds-theme` 設在 `html` 或需要隔離的容器上即可切換：
+亮色是預設主題。將 `data-lyds-theme` 設在 `html` 或需要隔離的容器即可切換：
 
 ```tsx
 document.documentElement.dataset.lydsTheme = "dark";
 // document.documentElement.dataset.lydsTheme = "light";
 ```
 
-也可在 React 內由產品自己的 theme state 控制：
+React 範例：
 
 ```tsx
 import type { PropsWithChildren } from "react";
@@ -72,20 +74,20 @@ export function ThemeSurface({ dark, children }: PropsWithChildren<{ dark: boole
 }
 ```
 
-一般 application 建議把 theme 設在 `document.documentElement`。Overlay 預設 portal 到 `body`；若只在 subtree 設 theme，請把 portal destination 放在同一 scope，或同步設定 destination，避免 popup 與 trigger 使用不同 theme。
+一般應用程式應將主題設在 `document.documentElement`。浮層元件預設透過 portal 呈現在 `body`；若只在子樹設定主題，portal 目的節點也必須位於相同主題範圍。
 
-LYDS 不自行持久化 theme，也不假設 system preference。若應用程式在 SSR／hydration 前決定 theme，應在首次 paint 前把相同的 `data-lyds-theme` 寫入文件，避免閃爍與 hydration 不一致。詳見 [Theming](docs/theming.md)。
+Linyao Design System 不保存主題偏好，也不預設跟隨系統。SSR 應在首次繪製前設定一致的 `data-lyds-theme`，避免閃爍或 hydration 不一致。詳見[主題](docs/theming.md)。
 
-## Tokens 與客製化
+## 設計變數與自訂主題
 
-元件層使用 role/state 名稱，例如 `--background-main`、`--text-main`、`--control-primary`、`--focus-ring`，而不是 `--orange` 或硬編碼 hex。Figma 名稱以固定規則序列化：
+元件使用 `--background-main`、`--text-main`、`--control-primary`、`--focus-ring` 等角色與狀態名稱，不使用色名或硬編碼十六進位色碼。Figma 名稱依固定規則轉為 CSS 變數：
 
 ```text
 Text/Always_White -> --text-always-white
 Motion/Ease/InOut -> --motion-ease-in-out
 ```
 
-在 theme scope 覆寫 semantic token，可調整品牌表現而不 fork 元件：
+可在主題範圍覆寫語意變數：
 
 ```css
 .customer-theme {
@@ -95,11 +97,11 @@ Motion/Ease/InOut -> --motion-ease-in-out
 }
 ```
 
-覆寫後必須重新驗證 normal text、interactive state、focus ring 與 disabled state 的對比；不要直接在 `.lyds-*` selector 上蓋 raw color。完整 vocabulary 與規則見 [Tokens](docs/tokens.md)。
+覆寫後必須重新驗證文字、互動狀態、焦點環與停用狀態的對比。不要直接在 `.lyds-*` 選擇器使用原始色值。詳見[設計變數](docs/tokens.md)。
 
-## Date & Time
+## 日期與時間
 
-Date & Time API 接受 `@internationalized/date` values，保留日期的語意，且不把 locale、格式、12/24 小時制或時區寫死：
+日期與時間 API 使用 `@internationalized/date` 的值，不預設地區設定、格式、12／24 小時制或時區：
 
 ```tsx
 import { useState } from "react";
@@ -108,51 +110,51 @@ import { CalendarDate, DatePicker } from "@lyds/ui";
 export function DeliveryDate() {
 	const [value, setValue] = useState<CalendarDate | null>(new CalendarDate(2026, 9, 1));
 
-	return <DatePicker label="Delivery date" locale="zh-TW" value={value} onValueChange={setValue} minValue={new CalendarDate(2026, 9, 1)} />;
+	return <DatePicker label="交付日期" locale="zh-TW" value={value} onValueChange={setValue} minValue={new CalendarDate(2026, 9, 1)} />;
 }
 ```
 
-`CalendarDate` 表示不帶時間的曆日、`CalendarDateTime` 表示 wall-clock date/time、`ZonedDateTime` 表示具名時區中的確切時間。LYDS 不會在三者之間靜默轉換；應用程式必須依資料語意選擇。請以實際 TypeScript exports 與 [Components](docs/components.md) 為準。
+`CalendarDate` 表示不含時間的日期；`CalendarDateTime` 表示不含指定時區的日期時間；`ZonedDateTime` 表示指定時區中的確切時間。Linyao Design System 不會在三者之間自動轉換。詳見[元件](docs/components.md)。
 
-## Storybook 與開發
+## 開發
 
-需求為 React 19、Node.js 22.13+ 與 repository 指定的 pnpm 版本。
+需求為 React 19、Node.js 22.13+ 與儲存庫指定的 pnpm 版本。
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm storybook
 ```
 
-Storybook 預設開在 `http://localhost:6006`。常用命令：
+Storybook 預設網址為 `http://localhost:6006`。常用命令：
 
 ```sh
-pnpm format:check       # Prettier
-pnpm lint               # ESLint
-pnpm typecheck          # workspace TypeScript
-pnpm test               # component / interaction tests
-pnpm build:package      # build @lyds/ui
-pnpm build:storybook    # production Storybook
-pnpm pack:check         # inspect and validate the npm tarball
-pnpm check              # full local quality gate
+pnpm format:check       # 檢查 Prettier 格式
+pnpm lint               # 執行 ESLint
+pnpm typecheck          # 檢查工作區 TypeScript
+pnpm test               # 執行元件與互動測試
+pnpm build:package      # 建置 @lyds/ui
+pnpm build:storybook    # 建置 Storybook
+pnpm pack:check         # 檢查 npm tarball
+pnpm check              # 執行完整本機檢查
 ```
 
-Storybook 使用 `@lyds/ui` 的 workspace package API，而非複製元件來源，藉此盡早發現 exports 與 CSS packaging 問題。
+Storybook 透過 `@lyds/ui` 的工作區套件 API 使用元件，以驗證匯出項目與 CSS 封裝。
 
 ### 線上 Storybook
 
-通過完整 CI 的 `main` push 會把 production Storybook 部署至 `https://linyao-tw.github.io/ui/`。Pull requests 與其他 branches 只執行驗證，不會更新公開網站；GitHub Pages deployment 與 npm publishing 完全獨立，不需要啟用 `NPM_PUBLISH_ENABLED`。
+通過完整 CI 的 `main` push 會將 Storybook 部署至 `https://linyao-tw.github.io/ui/`。Pull request 與其他分支只執行驗證，不更新公開網站。GitHub Pages 部署與 npm 發佈相互獨立。
 
-Repository owner 首次需在 GitHub `Settings → Pages` 將 Source 設為 `GitHub Actions`。CI 只給 deployment job `pages: write` 與 `id-token: write`，不使用 Pages、npm 或 repository write secrets。Pages 尚未啟用時，第一次 deploy 會失敗；完成設定後重跑該次 CI 即可。
+儲存庫擁有者第一次使用時，需在 GitHub `Settings → Pages` 將 Source 設為 `GitHub Actions`。CI 的部署工作只具有 `pages: write` 與 `id-token: write`。
 
-## Accessibility
+## 可存取性
 
-LYDS 以 WCAG 2.2 AA 為目標。Base UI 與 React Aria Components 處理各自擅長的 keyboard、focus、overlay 與 ARIA semantics；LYDS 再提供一致且可見的 `focus-visible`、interactive states、warm-theme contrast、觸控目標與 reduced-motion tokens。
+Linyao Design System 以 WCAG 2.2 AA 為目標。Base UI 與 React Aria Components 提供鍵盤、焦點、浮層與 ARIA 行為；元件樣式提供一致的 `focus-visible`、互動狀態、對比、觸控目標與減少動態效果支援。
 
-Consumer 仍須提供實際 label、說明、錯誤訊息、合理的 focus order，以及符合情境的 live-region 行為。設計系統不能替產品判斷內容是否清楚，亦不能替代使用真實流程做 keyboard 與 screen-reader 測試。
+使用者仍須提供實際標籤、說明、錯誤訊息、合理的焦點順序與適當的 live region 行為，並以真實流程進行鍵盤與螢幕閱讀器測試。
 
-## Versioning 與發佈
+## 版本與發佈
 
-發佈採 npm Trusted Publishing／GitHub Actions OIDC，且預設關閉：只有 repository variable `NPM_PUBLISH_ENABLED=true` 時，publish workflow 才能觸及 npm。
+發佈使用 npm Trusted Publishing／GitHub Actions OIDC。只有儲存庫變數 `NPM_PUBLISH_ENABLED=true` 時，發佈工作流程才能連線至 npm。
 
 | 來源                | 版本                    | dist-tag   | 重複版本              |
 | ------------------- | ----------------------- | ---------- | --------------------- |
@@ -160,20 +162,20 @@ Consumer 仍須提供實際 label、說明、錯誤訊息、合理的 focus orde
 | tag `v1.2.3`        | `1.2.3`                 | `latest`   | 失敗                  |
 | tag `v2.0.0-beta.1` | `2.0.0-beta.1`          | `beta`     | 失敗                  |
 
-Snapshot 只移動 `snapshot`，不會移動 `latest`。重跑時若 exact snapshot 已存在，只有 registry 的 SHA-512 integrity 與本次已驗證 tarball 完全一致才會安全略過；內容不一致或 registry 狀態不確定都會 fail closed。Tagged prerelease 依第一個 prerelease identifier 使用 channel tag，例如 `beta`；stable release 才使用 npm 預設的 `latest`。CI 只在乾淨 checkout 暫時改 package version，不產生或 push version commit。
+快照版本不會移動 `latest`。相同快照版本已存在時，只有 registry SHA-512 integrity 與本次 tarball 相同才會略過；內容不一致或狀態不明時工作流程會失敗。標籤預發佈版本使用第一個 prerelease identifier 作為 dist-tag；穩定版本才使用 `latest`。CI 只在工作區暫時修改版本，不提交版本變更。
 
-完整合約、OIDC 首次設定欄位、重複版本策略與人工 release 步驟見 [Publishing](docs/publishing.md)。在 review Storybook 並取得明確批准以前，請勿啟用 publish variable。
+完整規則與 OIDC 設定見[發佈](docs/publishing.md)。完成 Storybook 審閱並取得明確批准前，不得啟用發佈變數。
 
 ## 文件
 
-- [Architecture](docs/architecture.md)
-- [Design principles](docs/design-principles.md)
-- [Tokens](docs/tokens.md)
-- [Theming](docs/theming.md)
-- [Components](docs/components.md)
-- [Contributing](docs/contributing.md)
-- [Publishing](docs/publishing.md)
+- [架構](docs/architecture.md)
+- [設計原則](docs/design-principles.md)
+- [設計變數](docs/tokens.md)
+- [主題](docs/theming.md)
+- [元件](docs/components.md)
+- [貢獻指南](docs/contributing.md)
+- [發佈](docs/publishing.md)
 
 ## 授權
 
-`@lyds/ui` 的 package metadata 宣告為 Apache-2.0；發佈前應確認 repository 與 package tarball 中的授權檔一致且完整。
+`@lyds/ui` 的 package metadata 宣告為 Apache-2.0。發佈前應確認 repository 與 package tarball 的授權檔一致且完整。

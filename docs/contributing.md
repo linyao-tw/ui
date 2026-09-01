@@ -1,12 +1,12 @@
-# Contributing
+# 貢獻指南
 
-LYDS 的 contribution goal 是維持一個可預測的 public design-system contract。新增元件並不是只加一個 `.tsx`：API、behavior primitive、semantic tokens、Light/Dark、states、Storybook、tests、exports、types 與 package contents 必須一起完成。
+新增或修改元件時，必須同時處理 API、行為基礎、語意變數、亮色／深色、互動狀態、Storybook、測試、匯出項目、型別與套件內容。
 
-## Prerequisites
+## 開發需求
 
-- Node.js 22.13+（release workflow 另需符合 npm Trusted Publishing 的較高版本要求）。
-- Repository `packageManager` 欄位指定的 pnpm。
-- macOS/Linux shell；CI 是最終 cross-environment gate。
+- Node.js 22.13+；發佈工作流程另需符合 npm Trusted Publishing 的版本要求。
+- 儲存庫 `packageManager` 欄位指定的 pnpm。
+- macOS 或 Linux shell；CI 是跨環境檢查依據。
 
 ```sh
 corepack enable
@@ -15,123 +15,121 @@ pnpm check
 pnpm pack:check
 ```
 
-不要在未檢查 `package.json` / lockfile 前替換工具。只為 ad-hoc visual inspection 時，優先使用 globally installed Playwright CLI：
+不得在檢查 `package.json` 與鎖定檔前替換工具。臨時視覺檢查優先使用全域 Playwright CLI：
 
 ```sh
 command -v playwright
 ```
 
-若 global CLI 可用，就用它做 screenshot/open/codegen；不要只為人工檢查把 Playwright 加進 project。只有要提交 reusable tests 或 CI browser coverage 時，才評估 project dependency。
+若全域 CLI 可用，使用它執行截圖、開啟頁面或 codegen。只有需要提交可重複使用的測試或 CI 瀏覽器覆蓋時，才新增專案層級的 Playwright 依賴。
 
-## Before adding a component
+## 新增元件前的檢查
 
-依序確認：
+1. `@lyds/ui` 是否已有相同語意的元件？
+2. 是否能以現有 parts 或 `render` 組合？
+3. 差異是否只需調整版面或設計變數設定？
+4. Base UI 是否已提供所需行為？
+5. 日期與時間是否應使用現有 React Aria Components 技術組合？
+6. 需求是否屬於應用程式業務邏輯？
 
-1. `@lyds/ui` 是否已存在相同 semantics 的 component？
-2. 是否能用現有 anatomy parts 或 `render` composition 完成？
-3. 差異是否只是 layout 或 token assignment？
-4. 行為是否已由 Base UI 提供？
-5. Date & Time 是否應使用現有 React Aria Components stack？
-6. 需求是否其實是 business logic，應留在 application？
+不要為單一產品建立 `CustomerDatePicker` 或分支修改 `Button`。只有跨產品、沒有業務假設且可維持可存取性的行為才納入 Linyao Design System。
 
-不要因為某個產品需要一個特例，就 fork `Button` 或建立 `CustomerDatePicker`。先改善 shared primitive 的可組合性；只有跨產品、無 domain assumptions 且可維持 accessibility 的行為才進 LYDS。
-
-## Component implementation checklist
+## 元件實作檢查
 
 ### API
 
-- 使用一致的 `variant`、`size`、`orientation` vocabulary。
-- Stateful component 支援適用的 controlled/uncontrolled API。
-- 保留 underlying callback details；若簡化 callback，不應讓 consumer 失去辨識 interaction reason 或 cancel event 的能力。
-- Forward ref 至實際有用的 root/interactive element。
-- 保留 `className`、`style` 與 Base UI stateful class/render 能力，除非有具體型別或安全理由。
-- Native semantics props 如 `name`、`required`、`min`、`max`、`step` 正確傳遞。
-- Icon-only action 在型別或 runtime 結構上要求 accessible name。
-- 不加入 API、router、storage、analytics、form-framework 或 domain validation assumptions。
+- 使用一致的 `variant`、`size`、`orientation`。
+- 有狀態元件提供適用的受控／非受控 API。
+- 保留底層回呼資訊，不移除互動原因或取消事件。
+- Ref 指向有用的根元素或互動元素。
+- 保留 `className`、`style` 與 Base UI 狀態 class／render 能力，除非有明確型別或安全理由。
+- 正確傳遞 `name`、`required`、`min`、`max`、`step` 等原生屬性。
+- 只有圖示的操作必須有可存取名稱。
+- 不加入 API、路由、儲存、分析、表單框架或領域驗證假設。
 
-### Behavior primitive
+### 行為基礎
 
-- 一般 actions、selection、overlays、disclosure、navigation 優先使用 Base UI。
-- Date & Time 使用 React Aria Components 與 `@internationalized/date`；不匯入 Base UI private internals，也不自行寫 calendar arithmetic。
-- 不加入另一套 styled component system。
-- Base UI composition 使用 `render`，不是 `asChild`；render callback 必須把 primitive 提供的 props/ref 完整帶到實際 DOM。
+- 操作、選取、浮層、展開元件與導覽優先使用 Base UI。
+- 日期與時間使用 React Aria Components 與 `@internationalized/date`；不得自行實作日曆運算。
+- 不加入另一套樣式化元件系統。
+- Base UI 組合使用 `render`，不是 `asChild`。Render 回呼必須完整傳遞 props 與 ref。
 
-### Icons
+### 圖示
 
-- 介面 icon 一律使用 `@phosphor-icons/react`；client source、Storybook 與 tests 採 individual `/dist/csr/<Name>` import。
-- 禁止手寫 JSX `<svg>`、legacy `phosphor-react`、Unicode control glyph，以及用 CSS pseudo-element／border 重畫 catalog icon。
-- Icon 繼承 `currentColor`，尺寸由 component anatomy 與 `--icon-size-*` tokens 控制，不指定 raw color 或任意固定大小。
-- Text Button 使用 `startIcon`／`endIcon`；icon-only action 使用 `IconButton` 並提供 `aria-label` 或 `aria-labelledby`。狀態不能只靠 icon 或顏色表達。
-- 新增 icon-bearing component 時，stories 展示適用尺寸與 disabled/loading；tests 驗證 accessible name 與 loading icon replacement。
+- 介面圖示只使用 `@phosphor-icons/react`；用戶端原始碼、Storybook 與測試使用個別 `/dist/csr/<Name>` 匯入。
+- 禁止手寫 JSX `<svg>`、舊版 `phosphor-react`、Unicode 控制字形與 CSS 偽元素圖示。
+- 圖示繼承 `currentColor`；尺寸由元件與 `--icon-size-*` 變數控制。
+- 文字按鈕使用 `startIcon`／`endIcon`；只有圖示的操作使用 `IconButton` 並提供 `aria-label` 或 `aria-labelledby`。
+- 新增含圖示的元件時，stories 必須顯示尺寸與停用／載入狀態；測試必須驗證可存取名稱與載入圖示替換。
 
 ### CSS
 
-- Component colors 全部使用 semantic tokens，包括 shadows、overlay、status、focus 與 disabled。
-- Fixed CSS lengths 使用 rem；只允許真正 hairline/decorative divider 使用 1px。
-- 所有 transition duration/easing 使用 motion tokens。
-- 加入 Light/Dark，以及 relevant hover/pressed/focus-visible/selected/open/disabled/read-only/loading/invalid states。
-- 不加入 Figma anatomy 沒有依據的切角、偽技術標籤、面板接縫或裝飾性工程網格；reference 延伸也不能遮住文字、focus 或 hit target。
-- `prefers-reduced-motion: reduce` 下仍能理解 state。
+- 所有顏色使用語意變數，包括陰影、浮層、狀態、焦點與停用狀態。
+- 固定長度使用 `rem`；只有細線／分隔線可使用 1px。
+- 所有 transition 持續時間／easing 使用動態效果變數。
+- 實作適用的亮色／深色、hover、按下、`focus-visible`、選取、開啟、停用、唯讀、載入與無效狀態。
+- 不加入 Figma 沒有依據的切角、假標籤、面板接縫或工程網格。
+- `prefers-reduced-motion: reduce` 下仍能辨識狀態。
 
 ### Storybook
 
-每個 significant component 至少涵蓋適用的：
+每個主要元件應涵蓋適用的：
 
-- default、variants、sizes；
-- disabled、loading、invalid、read-only；
-- controlled/uncontrolled；
-- Light/Dark；
-- long text、narrow viewport；
-- realistic composition；
-- keyboard interaction／play function；
-- date locale/range/constraints 或 overlay nesting 等 family-specific edge cases。
+- 預設、variants、尺寸；
+- 停用、載入、無效、唯讀；
+- 受控／非受控；
+- 亮色／深色；
+- 長文字與窄螢幕；
+- 實際組合；
+- 鍵盤互動／play function；
+- 日期地區設定／範圍／限制或浮層巢狀結構等特定情況。
 
-Storybook 必須從 `@lyds/ui` public API 匯入，不跨 package 使用 `../../packages/ui/src/**`。
+Storybook 必須從 `@lyds/ui` 公開 API 匯入，不得使用 `../../packages/ui/src/**`。
 
-### Tests
+### 測試
 
-測試 behavior，不以 snapshots 取代 interaction assertions：
+測試互動行為，不以快照取代斷言：
 
-- render 與 accessible name/description/error relationships；
-- controlled/uncontrolled state；
-- keyboard arrows、Enter/Space、Escape、Tab；
-- focus trap、return focus、dismissal、outside interaction；
-- disabled/read-only/invalid/loading；
-- form value 與 reset；
-- Base UI composition；
-- date leap years、month/year boundaries、range、min/max/unavailable；
-- locale-sensitive segment order、first-day-of-week、12/24-hour；
-- zoned vs wall-clock value semantics；
-- axe automated checks；
-- reduced motion，能自動化的部分應驗證 token/state。
+- render 與可存取名稱／說明／錯誤關聯；
+- 受控／非受控狀態；
+- 方向鍵、Enter／Space、Escape、Tab；
+- 焦點限制、焦點返回、關閉與外部互動；
+- 停用／唯讀／無效／載入；
+- 表單值與重設；
+- Base UI 組合；
+- 閏年、月份／年份邊界、範圍、最小／最大值、不可用日期；
+- 依地區設定排列的區段、一週首日、12／24 小時制；
+- 有時區與當地時間的值語意；
+- axe 自動檢查；
+- 可自動化的減少動態效果變數／狀態。
 
-Jsdom tests 不能證明真實 browser focus、layout 或 pointer behavior。Overlay、DatePicker in Dialog/Drawer、RTL 與 responsive UI 需在 Storybook/browser 額外驗證。
+Jsdom 測試無法證明真實瀏覽器焦點、版面或指標行為。浮層元件、Dialog／Drawer 內的 DatePicker、RTL 與響應式介面必須另用 Storybook／瀏覽器驗證。
 
-## Adding a token
+## 新增設計變數
 
-1. 用 role/state 定義需求。
-2. 搜尋是否已有 semantic token。
-3. Light 與 Dark 一起加入。
+1. 以角色／狀態定義需求。
+2. 檢查是否已有適用的語意變數。
+3. 同時設定亮色與深色。
 4. 更新 `docs/tokens.md` 與 Storybook Foundations。
-5. 檢查 component CSS 沒有 raw color 或未命名 easing。
-6. 驗證受影響 contrast pairs 與 states。
+5. 確認元件 CSS 沒有原始色值或未命名 easing。
+6. 驗證受影響的對比與狀態。
 
-不要用新 token 掩飾只出現一次、應由既有 role 表達的值。Public token rename/removal 可能是 breaking change。
+公開變數重新命名／移除可能是破壞性變更。
 
-## Adding a public export
+## 新增公開匯出
 
-1. 從 component family `index.ts` export implementation 與必要 types。
-2. 從 `packages/ui/src/index.ts` export family public API。
-3. 不 export internal class helpers、test setup 或 private anatomy。
-4. `pnpm build:package`，檢查 `dist/index.d.ts`。
-5. Storybook 用 package name 匯入。
-6. `pnpm pack:check`，確認 tarball 有 JS/types/CSS/README/license，沒有 source/tests/config/cache。
+1. 從元件分類的 `index.ts` 匯出實作與必要型別。
+2. 從 `packages/ui/src/index.ts` 匯出公開 API。
+3. 不匯出內部 class 工具、測試設定或私有 parts。
+4. 執行 `pnpm build:package` 並檢查 `dist/index.d.ts`。
+5. Storybook 使用套件名稱匯入。
+6. 執行 `pnpm pack:check`，確認 tarball 有 JS、型別、CSS、README 與授權，且沒有原始碼、測試、設定或快取。
 
-Subpath export 只有在有穩定 maintenance boundary 與 consumer bundle evidence 時才新增；同步更新 `package.json#exports`、types、build 與 pack verification。
+只有具備穩定維護邊界與使用端 bundle 證據時才新增子路徑匯出，並同步更新 `package.json#exports`、型別、建置與封裝驗證。
 
-## Validation
+## 驗證
 
-提交前執行完整 gate：
+提交前執行：
 
 ```sh
 pnpm format
@@ -151,19 +149,19 @@ pnpm check
 pnpm pack:check
 ```
 
-若某項未執行，PR 必須明確說明未執行與原因，不能聲稱通過。
+若未執行任何項目，PR 必須明確說明原因。
 
-Visual changes 需啟動 Storybook：
+視覺變更需啟動 Storybook：
 
 ```sh
 pnpm storybook
 ```
 
-至少檢查 Light/Dark、desktop/mobile、keyboard focus、reduced motion 與 realistic mixed form。PR 附適用 screenshot；不易截圖的 interaction 描述人工檢查方式。
+至少檢查亮色／深色、桌面／行動裝置、鍵盤焦點、減少動態效果與實際組合。PR 應附適用截圖；無法截圖的互動需說明人工檢查方式。
 
-## Commit messages
+## Git commit 訊息
 
-依 repository 規範使用 Linux kernel/Git-style area prefix，不使用 generic Conventional Commit type：
+依儲存庫規範使用 Linux kernel／Git-style 區域前綴，不使用通用 Conventional Commit 類型：
 
 ```text
 ui/button: add loading state semantics
@@ -172,18 +170,18 @@ storybook: document overlay compositions
 publishing: guard npm releases behind repository variable
 ```
 
-Summary 使用 imperative verb、具體且盡量少於 72 characters，不加句點。原因無法從 diff 看出時加 commit body 解釋 why。每個 commit 應是 coherent working milestone，不切成沒有意義的小 commit，也不混入無關改動。
+摘要使用祈使動詞、具體且盡量少於 72 個字元，不加句點。理由無法從差異看出時，在 commit 內容說明原因。每個 commit 應是可獨立檢查的完整變更，不混入無關內容。
 
-## Pull requests
+## Pull request
 
 PR 應包含：
 
-- changed area 與 user/developer-visible impact；
-- API 或 token compatibility notes；
-- validation commands 的實際結果；
-- related issues；
-- visible UI screenshots；
-- accessibility/keyboard/manual checks；
-- deferred work 或 remaining risks。
+- 修改範圍與使用者／開發者可見的影響；
+- API 或設計變數相容性；
+- 實際執行的驗證命令與結果；
+- 相關 issues；
+- 可見介面的截圖；
+- 可存取性、鍵盤與人工檢查；
+- 延後工作或剩餘風險。
 
-永遠不要在 component PR 中順便啟用 `NPM_PUBLISH_ENABLED`、建立 release tag 或直接發布 package。發佈是獨立且需要明確批准的操作，詳見 [Publishing](publishing.md)。
+不得在元件 PR 中啟用 `NPM_PUBLISH_ENABLED`、建立發佈 tag 或直接發佈套件。發佈需要另行明確批准，詳見[發佈](publishing.md)。

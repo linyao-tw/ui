@@ -1,32 +1,32 @@
-# Theming
+# 主題
 
-LYDS themes 是 semantic token assignment，不是兩份 component CSS。Component anatomy 與 states 保持一致；Light、Dark 或 consumer theme 只重新指定 role-based variables。
+Linyao Design System 以語意變數定義主題。所有主題共用相同的元件 CSS；亮色、深色或自訂主題只重新指定角色變數。
 
-## Load the stylesheet
+## 載入樣式
 
-在 application entry 匯入一次：
+在應用程式入口匯入一次：
 
 ```tsx
 import "@lyds/ui/styles.css";
 ```
 
-不要從 `@lyds/ui/dist/**`、`src/**` 或內部 CSS path 匯入。只有 package `exports` 中的 `@lyds/ui/styles.css` 是 public contract。
+不得從 `@lyds/ui/dist/**`、`src/**` 或內部 CSS 路徑匯入。唯一公開樣式入口是 `@lyds/ui/styles.css`。
 
-## Select a theme
+## 選擇主題
 
-Light 是 `:root` 預設，也可明確指定：
+亮色是 `:root` 預設，也可明確指定：
 
 ```html
 <html data-lyds-theme="light"></html>
 ```
 
-Dark：
+深色：
 
 ```html
 <html data-lyds-theme="dark"></html>
 ```
 
-Theme 可以套在 subtree，方便 preview 或逐步 migration；但 document root 是一般 application 的首選，因為 overlay 元件預設會 portal 到 `body`：
+主題也可套在子樹：
 
 ```tsx
 <main data-lyds-theme="light">
@@ -37,13 +37,13 @@ Theme 可以套在 subtree，方便 preview 或逐步 migration；但 document r
 </main>
 ```
 
-`Select`、`Combobox`、`Menu`、`Tooltip`、`Dialog`、`DatePicker` 等 portalled overlay 會依 portal destination 的 ancestor 取得 tokens，而不是依 trigger 的 ancestor。若只對 subtree 套 theme，必須把 portal container 放在同一個 theme scope，或同步將相同的 `data-lyds-theme` 設在 portal destination；否則 popup 可能使用 document root theme。
+一般應用程式應將主題設在文件根元素。`Select`、`Combobox`、`Menu`、`Tooltip`、`Dialog`、`DatePicker` 等浮層元件預設透過 portal 呈現在 `body`，會依 portal 目的節點的祖先元素取得設計變數。若主題只套在子樹，portal 容器也必須位於相同主題範圍。
 
-每個 scope 同時設定適合的 `color-scheme`，讓 browser-native controls 和 LYDS surface 方向一致。
+每個主題範圍同時設定對應的 `color-scheme`，使瀏覽器原生控制項與 Linyao Design System 表面一致。
 
-## Theme state belongs to the application
+## 主題狀態
 
-LYDS 不讀 system preference、不寫 localStorage，也不建立全域 React context。Consumer 可依產品需求組合：
+主題狀態由應用程式管理。Linyao Design System 不讀取系統偏好、不寫入 localStorage，也不建立全域 React context。
 
 ```tsx
 type LydsTheme = "light" | "dark";
@@ -54,55 +54,51 @@ export function AppTheme({ theme, children }: React.PropsWithChildren<{ theme: L
 }
 ```
 
-需要 follow-system 時，由 application 使用 `matchMedia("(prefers-color-scheme: dark)")`；需要 persistence 時，由 application 選擇 cookie、server profile 或 localStorage。這些 policy 不屬於 design system。
+需要跟隨系統時，應用程式可使用 `matchMedia("(prefers-color-scheme: dark)")`。需要保存設定時，由應用程式選擇 cookie、伺服器設定或 localStorage。
 
-### Avoiding first-paint mismatch
+### 首次繪製
 
-SSR 應讓 server markup 與 client 初次 render 使用相同 theme。若 theme 只能在 browser 決定，可在 application 自己的 pre-hydration bootstrap 設定 `document.documentElement.dataset.lydsTheme`。這段 bootstrap 不由 LYDS 注入，因為 storage、CSP、nonce 與 system preference 都是 product policy。
+SSR 的伺服器標記與用戶端第一次 render 必須使用相同主題。若只能在瀏覽器決定，可由應用程式在 hydration 前設定 `document.documentElement.dataset.lydsTheme`。Linyao Design System 不注入此程式，因為儲存方式、CSP、nonce 與系統偏好都屬於產品設定。
 
-## Light strategy
-
-Light theme 的 surface hierarchy：
+## 淺色主題
 
 ```text
-Limestone foundation
-├─ Background/Main       near-white warm canvas
-├─ Background/Secondary  list and adjacent surface
-├─ Background/Elevated   white floating surface
-├─ Background/Inset      quiet grouped control surface
-└─ Background/Sunken     lower-value supporting surface
+Limestone
+├─ Background/Main       暖白主背景
+├─ Background/Secondary  清單與相鄰表面
+├─ Background/Elevated   浮動表面
+├─ Background/Inset      群組控制項表面
+└─ Background/Sunken     次要表面
 
-Charcoal foundation
-├─ Text/Title and Text/Main
-├─ icons
-└─ low-contrast structural dividers
+Charcoal
+├─ Text/Title 與 Text/Main
+├─ 圖示
+└─ 低對比分隔線
 
-Vermilion foundation
+Vermilion
 ├─ primary action
-├─ selected / checked signal
-└─ limited status emphasis
+├─ 選取／勾選
+└─ 必要的狀態強調
 ```
 
-Surface depth優先使用 value、selected plate 與結構性 divider；shadow 只用於真正 floating 的 control 或 overlay。Vermilion foreground 使用 `OnAccent` semantic value，不直接使用 Limestone/Charcoal/white。
+表面層級主要透過明度、選取底板與結構性分隔線表達。陰影只用於浮動元件或浮層元件。Vermilion 上的文字使用 `OnAccent` 語意值。
 
-## Dark strategy
+## 深色主題
 
-Dark theme 是同一套 physical system 在低光下的表現：
+- `Background/Main` 約為 `oklch(0.18 0.008 75)` 的暖色近黑。
+- `Background/Secondary` 與 `Background/Elevated` 逐層提高明度。
+- `Background/Inset`／`Sunken` 保留群組層級，不使用單一純黑背景。
+- `Text/Main` 使用 Limestone／暖色中性色系。
+- Vermilion 保留主要操作與選取角色，不加入 neon glow。
+- 細線與陰影依深色主題重新指定，不直接反轉亮色主題值。
 
-- `Background/Main` 約為 `oklch(0.18 0.008 75)` 的 warm near-black。
-- `Background/Secondary` 與 `Background/Elevated` 逐層提高 lightness。
-- `Background/Inset` / `Sunken` 調整 lightness，保留 grouped surface 階層而不是 generic black box。
-- `Text/Main` 回到 Limestone/warm neutral family。
-- Vermilion 維持 signal/action 角色，不加 neon glow。
-- Hairlines 與 shadows 依 dark compositing 重新指定，不反轉 Light values。
+深色色盤、語意設定與動態效果是 Linyao Design System 的設計，不是 Modulor 公開 Figma 元件庫的原始內容。
 
-Dark palette、semantic assignments 與 motion 是 LYDS 自主設計，並非從 Modulor 公開 Figma library 取得。
+## 自訂主題
 
-## Consumer customization
+### 覆寫語意變數
 
-### Scope semantic tokens
-
-使用自己的 class 或 data attribute 覆寫 semantic roles：
+使用 class 或 data attribute 覆寫語意角色：
 
 ```css
 .operations-theme {
@@ -123,11 +119,11 @@ Dark palette、semantic assignments 與 motion 是 LYDS 自主設計，並非從
 </section>
 ```
 
-完整 custom theme 至少要覆蓋 semantic roles，而不是只改 `--palette-vermilion`。Palette token 與 semantic assignment 是兩層；component 並不直接使用 palette。
+完整自訂主題必須覆寫語意角色，不能只修改 `--palette-vermilion`。元件不直接使用色盤變數。
 
-### Prefer roles over anatomy selectors
+### 使用語意角色
 
-推薦：
+建議：
 
 ```css
 .billing-surface {
@@ -135,7 +131,7 @@ Dark palette、semantic assignments 與 motion 是 LYDS 自主設計，並非從
 }
 ```
 
-不推薦：
+不建議：
 
 ```css
 .billing-surface .lyds-button[data-variant="primary"] {
@@ -143,14 +139,14 @@ Dark palette、semantic assignments 與 motion 是 LYDS 自主設計，並非從
 }
 ```
 
-直接覆寫 `.lyds-*` anatomy 會繞過 hover/pressed/disabled、Dark 與 future internal changes。若一個 semantic role 無法完成合理的 product customization，先提議新增或調整 token，而不是 fork component CSS。
+直接覆寫 `.lyds-*` 會略過 hover、按下、停用、深色主題與未來內部變更。若現有語意角色無法完成合理的自訂，應先提出設計變數調整，不要分支修改元件 CSS。
 
-### Local layout customization
+### 版面調整
 
-`className` 與 `style` 用於 consumer-owned placement、width、grid/flex relationship：
+`className` 與 `style` 用於應用程式控制的位置、寬度與 grid／flex 關係：
 
 ```tsx
-<DatePicker className="checkout-delivery-date" label="Delivery date" />
+<DatePicker className="checkout-delivery-date" label="交付日期" />
 ```
 
 ```css
@@ -159,35 +155,35 @@ Dark palette、semantic assignments 與 motion 是 LYDS 自主設計，並非從
 }
 ```
 
-不要用 `style` 寫入 raw component colors。若必須從 React 動態傳 token，可傳 CSS custom property 並使用可審計的型別 wrapper。
+不要以 `style` 傳入元件原始色值。需要從 React 動態傳入設計變數時，使用 CSS custom property 與可檢查的型別包裝。
 
-## Theme verification checklist
+## 主題驗證
 
-每一個 theme 必須在同一批 realistic compositions 中檢查：
+每個主題都必須檢查：
 
-- body、title、secondary、disabled 與 link text；
-- primary、secondary、quiet、danger actions；
-- input default/hover/focus/invalid/read-only/disabled；
-- selected/checked controls；
+- 內文、標題、次要、停用與連結文字；
+- primary、secondary、quiet、danger 操作；
+- 輸入元件預設／hover／焦點／無效／唯讀／停用；
+- 選取／勾選控制項；
 - popup、dialog、drawer、bottom sheet、backdrop；
-- toast/status surfaces；
-- date selected/range/today/unavailable states；
-- visible focus、keyboard order 與 return focus；
-- long Traditional Chinese/English mixed text；
-- 200% zoom 與 narrow viewport；
+- Toast／狀態表面；
+- 日期選取／範圍／今天／不可用狀態；
+- `focus-visible`、鍵盤順序與焦點返回；
+- 繁體中文與英文混合的長文字；
+- 200% zoom 與窄螢幕；
 - `prefers-reduced-motion: reduce`；
-- print colors where print output is in product scope。
+- 產品需要列印時的 print colors。
 
-Theme change 不應造成 layout shift；semantic values 改變時 control geometry、hit target 與 text wrapping 應保持一致。
+修改主題不應造成版面位移。語意值改變時，元件尺寸、互動目標與文字換行應保持一致。
 
-## Contrast ownership
+## 對比責任
 
-LYDS 內建 themes 以 WCAG 2.2 AA 為目標。Consumer 覆寫 theme 後，即承接自訂 pair 的 contrast verification。至少測量：
+內建主題以 WCAG 2.2 AA 為目標。使用者覆寫主題後，必須重新驗證：
 
-- foreground 對最終 composited background；
-- focus indicator 對 control 與 adjacent surface；
-- non-text control boundaries；
-- hover/pressed/selected，不只 default；
-- disabled 狀態的可理解性（disabled text 不一定受一般 contrast criterion 約束，但仍應可讀）。
+- 前景色與合成後背景；
+- 焦點指示器與控制項／相鄰表面；
+- 非文字控制項邊界；
+- hover／按下／選取狀態；
+- 停用狀態的可讀性。
 
-Brand foundations 不是 accessibility guarantee。特別是 Limestone、Charcoal、white 對 Vermilion 都不適合一般尺寸文字；請使用 `--text-on-accent` / `--control-on-primary`。
+品牌原色不保證符合對比。Limestone、Charcoal 與 white 都不適合直接作為 Vermilion 上的一般尺寸文字；應使用 `--text-on-accent`／`--control-on-primary`。

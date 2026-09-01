@@ -1,95 +1,95 @@
-# Design Principles
+# 設計原則
 
-LYDS 的元件 anatomy、尺寸節奏、variant 組織與互動層級直接依循 Modulor Figma 中可驗證的設計。LYDS 不另加「未來工業」裝飾；與 reference 的主要差異是品牌色盤、字體與為 Web/WCAG 補上的狀態。Figma 沒有對應元件時，才使用相同的表面、圓角、字級、間距與狀態語言延伸。
+Linyao Design System 的元件結構、尺寸、`variant` 與互動狀態以 Modulor Figma 可驗證的設計為依據。主要差異是麟曜數位工作室的色盤、字體，以及 Web 與 WCAG 2.2 AA 所需的狀態。Figma 未提供的元件使用相同的表面、圓角、字級、間距與狀態規則。
 
-## Evidence from Modulor
+## Modulor 依據
 
-研究來源是公開 Figma 檔案「❖ Modulor・Components (Community)」。`1277:150465` 是 **Start Here** canvas，不是單一元件；實作前先由 hierarchy 定位 Glossary、可見 specimens、component sets、variants 與 variables，再以 individual design context 驗證，screenshot 只用於交叉檢查。
+研究來源是公開 Figma 檔案「❖ Modulor・Components (Community)」。`1277:150465` 是 **Start Here** 畫布，不是單一元件。實作時先依階層定位 Glossary、可見範例、元件集、variants 與 variables，再檢查個別元件的設計內容；截圖只用於交叉檢查。
 
-| 範圍                      | Figma nodes                             | 已套用的可驗證規格                                                                  |
-| ------------------------- | --------------------------------------- | ----------------------------------------------------------------------------------- |
-| Glossary / structure      | `26014:40556`, `1277:150465`            | component families、composition vocabulary、公開頁面邊界                            |
-| Button regular            | `16469:37879`–`16469:37882`             | 高 `3.5rem`、radius `0.75rem`、16/20 semibold、無 border/shadow                     |
-| Checkbox / Radio / Switch | `204:69822`                             | 12-state matrix；24px controls；52×30px switch 與 28px knob                         |
-| Segmented control         | `234:61252`, `224:61156`                | 2–6 options、medium/small、共同 surface 與 selected inner plate                     |
-| Tabs                      | `9457:23922`, `1009:124555`             | 2rem content-width pills、0.25rem gap、active quaternary surface、無 rail/underline |
-| Text fields               | `132:59432`, `709:93524`, `740:98259`   | 56px field、12px radius、1px outline、floating-label 與 error anatomy               |
-| Code / Phone fields       | `9297:23908`, `10703:28303`             | 56px segmented fields、8px gap、phone country segment width                         |
-| List / Section heading    | `9457:29047`–`9457:29056`               | 56px row、inset 0.5px divider；32px uppercase section caption                       |
-| Bottom Sheet anatomy      | `9457:26270`, `2589:10397`–`2589:10405` | surface、handle、navigation、docked action、divider 與 mobile safe-area composition |
+| 範圍                    | Figma nodes                             | 採用規格                                                                 |
+| ----------------------- | --------------------------------------- | ------------------------------------------------------------------------ |
+| Glossary／結構          | `26014:40556`, `1277:150465`            | 元件分類、組合規則、公開頁面邊界                                         |
+| Button regular          | `16469:37879`–`16469:37882`             | 高 `3.5rem`、圓角 `0.75rem`、16/20 semibold、無邊框與陰影                |
+| Checkbox／Radio／Switch | `204:69822`                             | 12 種狀態；24px 控制項；52×30px switch 與 28px knob                      |
+| Segmented control       | `234:61252`, `224:61156`                | 2–6 個選項、medium／small、共用表面與選取底板                            |
+| Tabs                    | `9457:23922`, `1009:124555`             | 2rem 內容寬度項目、0.25rem 間距、active quaternary surface、無軌道或底線 |
+| Text fields             | `132:59432`, `709:93524`, `740:98259`   | 56px 欄位、12px 圓角、1px 外框、浮動標籤與錯誤結構                       |
+| Code／Phone fields      | `9297:23908`, `10703:28303`             | 56px 分段欄位、8px 間距、電話國家區段寬度                                |
+| List／Section heading   | `9457:29047`–`9457:29056`               | 56px 列、內縮 0.5px 分隔線；32px 大寫區段標題                            |
+| Bottom Sheet            | `9457:26270`, `2589:10397`–`2589:10405` | 表面、把手、導覽、固定操作區、分隔線與行動裝置安全區域                   |
 
-可驗證的 Modulor vocabulary 包含 `Background/Main`、`Background/Secondary`、`Text/Title`、`Text/Body`、`Icon/Main`、`Divider/Main`、`Control/Primary`、`Control/Secondary`、`Control/Quaternary`、switch state roles 與 `Radius/md`。LYDS 依 category/role/state 哲學建立 deterministic CSS variables，元件不直接使用 physical swatches。
+已驗證的 Modulor 命名包含 `Background/Main`、`Background/Secondary`、`Text/Title`、`Text/Body`、`Icon/Main`、`Divider/Main`、`Control/Primary`、`Control/Secondary`、`Control/Quaternary`、switch 狀態角色與 `Radius/md`。Linyao Design System 依類別／角色／狀態建立固定的 CSS 變數名稱，元件不直接使用實體色票。
 
-Figma MCP 無法直接讀取未放在可見 canvas 的 hidden masters。特別是 Button low 沒有可驗證 specimen；LYDS 不會把任意縮小的 Button regular 宣稱為其 1:1 複刻。Dark theme、Web hover/focus states 與 Figma 未提供的 component families，依已驗證語言延伸並另外做 accessibility/browser 驗證。
+Figma MCP 無法直接讀取未放在可見畫布的隱藏母元件。Button low 沒有可驗證範例，因此不宣稱是 1:1 複刻。深色主題、Web hover／焦點狀態與 Figma 未提供的元件依已驗證規則延伸，並另外進行可存取性與瀏覽器驗證。
 
-## What LYDS follows
+## 元件結構
 
-### 1. Families before one-off components
+### 元件分類
 
-Checkbox、Radio、Switch 共享 selection vocabulary；SegmentedControl 由 equal-width items 組成；Tabs 則維持 content-width pills，兩者不可混成同一種 rail。Overlay 以 Root、Trigger、Portal、Backdrop、Popup、Title、Description 與 Close 等 anatomy parts 組合。
+Checkbox、Radio、Switch 共用選取規則；SegmentedControl 由等寬項目組成；Tabs 使用依內容寬度排列的項目。浮層元件由 Root、Trigger、Portal、Backdrop、Popup、Title、Description 與 Close 等 parts 組合。
 
-### 2. State is a matrix, not a gallery
+### 元件狀態
 
-每個 interactive primitive 按適用性檢查 default、hover、pressed、focus-visible、selected/checked、open、disabled、read-only、loading 與 invalid。Storybook variants 必須呈現實際狀態，tests 觸發 keyboard、focus、open/close 與 controlled/uncontrolled behavior。
+每個互動元件按適用情況檢查預設、hover、按下、`focus-visible`、選取／勾選、開啟、停用、唯讀、載入與無效狀態。Storybook 顯示實際狀態；測試驗證鍵盤、焦點、開關與受控／非受控行為。
 
-### 3. Semantic variables form the contract
+### 語意變數
 
-Component CSS 使用 `--text-main`、`--control-primary-hover`、`--divider-main`，不使用 `--orange` 或 component-local hex。這使同一 anatomy 能在 Light、Dark 與 consumer theme 中維持角色。
+元件 CSS 使用 `--text-main`、`--control-primary-hover`、`--divider-main`，不使用色名或元件內部十六進位色碼。同一元件可在亮色、深色與使用者自訂主題中維持相同角色。
 
-### 4. Surface hierarchy carries identity
+### 表面與尺寸
 
-Modulor 的質感來自少量、重複且可預測的手段：
+使用下列規格：
 
-- main、secondary、elevated 與 quaternary surfaces；
-- 只在結構需要時出現的低對比 hairline divider；
-- `0.75rem` 為核心的柔和 radius；
-- selected plate、switch knob 與少量超柔和 shadow；
-- 規律的 32/40/56px control heights；
-- 清楚的 title/body/caption 層級。
+- main、secondary、elevated 與 quaternary 表面；
+- 只在結構需要時使用低對比細分隔線；
+- 核心 radius 為 `0.75rem`；
+- 選取底板、switch knob 與低對比陰影；
+- 32／40／56px 控制項高度；
+- 清楚的 title／body／caption 層級。
 
-LYDS 不再使用裝飾性切角、偽 serial labels、背景工程網格、面板刻紋、內凹接縫或全庫 uppercase 來製造風格。若一個細節在 Figma anatomy 或互動 affordance 中沒有角色，就不應加入元件。
+不得加入裝飾性切角、假序號、背景工程網格、面板刻紋、內凹接縫或全站 uppercase。沒有元件結構或互動用途的細節不應加入。
 
-## LYDS visual principles
+## 色彩
 
-### Reference geometry, LYDS palette
+### 淺色主題
 
-Light theme 使用接近 Modulor `Background/Main` 的暖白作為主畫布，Limestone 衍生色建立 secondary/quaternary surfaces；Charcoal 衍生色負責文字與 icon；Vermilion 取代 Modulor blue，作為 primary、selected 與 checked signal。Limestone 是色盤基礎，不代表整頁必須是深米色。
+亮色主題使用接近 Modulor `Background/Main` 的暖白作為主背景。Limestone 衍生色用於 secondary／quaternary 表面；Charcoal 衍生色用於文字與圖示；Vermilion 取代 Modulor blue，作為主要操作、選取與勾選狀態。
 
-Dark theme 保留相同 anatomy 與 spacing，以 warm near-black、逐層變亮的 surfaces 和 Limestone text 重建層級，不做簡單反相。Vermilion 仍是 signal，不加入 neon glow。
+### 深色主題
 
-### Signal color is scarce
+深色主題保留相同的元件結構與間距，以暖色近黑、逐層變亮的表面與 Limestone 文字建立層級。Vermilion 保留強調角色，不使用霓虹光暈。
 
-Vermilion 用於 primary action、selected/checked state、必要 indicator 與少量 emphasis。Danger 有自己的 semantic pair，不因品牌色是紅橘就把 destructive action 和 primary action混為一談。Vermilion 上的一般尺寸文字使用經對比驗證的深色 `OnAccent`，不照搬 Figma 的白色而犧牲 WCAG 2.2 AA。
+### 強調色與狀態色
 
-### Typography conveys hierarchy
+Vermilion 用於主要操作、選取／勾選狀態與必要指示器。危險操作使用獨立語意變數，不與主要操作共用角色。Vermilion 上的一般尺寸文字使用通過對比檢查的深色 `OnAccent`，不直接使用白色。
 
-- `GenKiGothicTW` 是一般 UI sans-serif。
-- `GenKiMinTW` 只用於 consumer-owned editorial content，不改變 controls anatomy。
-- `Geist Mono` 只用於真正的 code、date/time、counter、timer 與 numeric value。
-- SectionHeading 的 uppercase 是 reference 中明確存在的 12/16 caption；其他元件不泛用 uppercase。
-- Dates、times 與 numeric fields 使用 tabular numerals。
+## 字體
 
-### Phosphor is the icon grammar
+- `GenKiGothicTW`：一般 UI 無襯線字體。
+- `GenKiMinTW`：由產品控制的編輯內容。
+- `Geist Mono`：程式碼、日期／時間、計數器、計時器與數值。
+- SectionHeading 的大寫只用於 Figma 明確顯示的 12／16 說明文字。
+- 日期、時間與數值欄位使用 tabular numerals。
 
-LYDS 的介面圖示統一使用 Phosphor。Button、field affordance、menu indicator、calendar navigation 等 icon 由 component anatomy 決定尺寸，並繼承相同 semantic foreground；不以 raw color、多色 duotone 或任意大小增加裝飾。預設採 regular／bold 線條，只有 checked／selected state 在 Figma 與語意需要時使用 fill。Icon 不取代 visible state label，也不以手寫 SVG、Unicode 字元或 CSS 圖形製造額外「科技感」。
+## 圖示
 
-### Tactile through state, not ornament
+介面圖示統一使用 Phosphor。Button、欄位、選單與日曆導覽的圖示由元件控制尺寸並繼承語意前景色。預設使用 regular／bold；只有勾選／選取狀態在語意需要時使用 fill。圖示不取代可見的狀態文字，也不得以手寫 SVG、Unicode 字元或 CSS 圖形代替。
 
-觸感來自 hover/pressed surface、selected plate、knob position、短促 motion 與 focus feedback。元件不靠厚邊框、硬陰影、位移刻線或 skeuomorphic panel details 表達可操作性。
+## 互動
 
-### Operational in real products
+可操作狀態透過 hover／按下表面、選取底板、knob 位置、短時間動態效果與焦點回饋表達。不使用厚邊框、硬陰影、位移刻線或面板裝飾表達互動。
 
-任何 reference 延伸都必須：
+所有元件必須：
 
-- 支援長文字與 locale expansion；
-- 在 narrow viewport 不溢出；
-- 維持至少 44px interaction target，或提供等效 hit area；
-- 清楚區分 validation、disabled 與 read-only；
-- keyboard-only 完整使用；
-- reduced motion 下不失去 state change。
+- 支援長文字與地區語言擴展；
+- 在窄螢幕不造成頁面 overflow；
+- 維持至少 44px 互動目標，或提供等效點擊區域；
+- 清楚區分驗證、停用與唯讀；
+- 支援完整鍵盤操作；
+- 在減少動態效果下仍能辨識狀態變化。
 
-## Accessibility is part of the visual mapping
+## 可存取性
 
-LYDS 以 WCAG 2.2 AA 為目標。Figma reference 的尺寸與 anatomy 是主要視覺依據，但若原始 physical swatch pairing 對 Web normal text 不足，LYDS 會保留角色並替換成可存取的 semantic foreground，例如 Vermilion 上使用深色 `OnAccent`。
+Linyao Design System 以 WCAG 2.2 AA 為目標。Figma 的尺寸與結構是視覺依據；若原始配色不符合一般 Web 文字對比，會保留語意角色並改用可存取的前景色，例如 Vermilion 上使用深色 `OnAccent`。
 
-Focus-visible 不能被低對比 shadow 取代；selected、invalid 與 status 不能只靠顏色；disabled 不應把整個 subtree 降到不可讀。Ordinary transitions 使用 motion tokens，`prefers-reduced-motion: reduce` 時移除非必要 distance 與 duration。
+`focus-visible` 不能只以低對比陰影表示；選取、無效與狀態不能只依賴顏色；停用內容仍應可讀。一般 transition 使用動態效果變數，`prefers-reduced-motion: reduce` 時移除非必要的距離與時間。
