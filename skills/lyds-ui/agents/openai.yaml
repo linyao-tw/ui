@@ -1,4 +1,4 @@
 interface:
-  display_name: "LYDS UI"
-  short_description: "Build and review interfaces with @lyds/ui"
-  default_prompt: "Use $lyds-ui to build this interface with LYDS components and semantic tokens."
+  display_name: "Linyao Design System"
+  short_description: "使用 @lyds/ui 建置與檢查介面"
+  default_prompt: "使用 $lyds-ui 與 Linyao Design System 的公開元件及語意設計變數完成這項介面工作。"

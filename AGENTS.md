@@ -1,44 +1,34 @@
-# Repository Guidelines
+# 儲存庫規範
 
-## Commit And PR Guidance
+## 提交與 PR
 
-Use Linux kernel/Git-style commit subjects with a concrete area, subsystem, component, directory, package, or file prefix:
+提交標題使用 Linux kernel／Git 風格，前綴應指出主要變更的目錄、套件、元件或子系統：
 
-```
+```text
 area: imperative patch summary
 sub/sys: imperative patch summary
 ```
 
-The prefix should name the repository area primarily changed. Prefer specific prefixes such as a directory, package, file, subsystem, or component name.
+- 不要以 `fix:`、`feat:`、`chore:`、`docs:` 或 `refactor:` 等泛用 Conventional Commits 類型取代實際範圍。
+- 冒號後使用祈使動詞，例如 `fix`、`clarify`、`split`、`validate`、`rename`、`remove`、`add`、`update` 或 `document`。
+- 標題應具體、簡短，建議不超過 72 個字元，不加句號。
+- 跨多個範圍時，選擇最小的共同範圍；若沒有共同範圍，使用主要行為作為前綴。
 
-Do not use generic Conventional Commit prefixes such as `fix:`, `feat:`, `chore:`, `docs:`, or `refactor:` unless they are actual repository areas in this repository. The prefix should describe where the change belongs, not what type of change it is.
+例如：
 
-Use an imperative verb in the summary after the colon, such as `fix`, `clarify`, `split`, `validate`, `rename`, `remove`, `add`, `update`, `document`, etc. Do not use past tense verbs like `fixed` or `added`.
-
-When a patch spans multiple areas, choose the narrowest common area if one exists. If no clear common area exists, use the primary behavior changed rather than listing multiple unrelated prefixes.
-
-The summary after the colon should briefly describe what the patch does, because it becomes the first line shown in the git changelog. Keep it short, imperative, and specific. Prefer subjects under 72 characters. Use lowercase for the first word after the colon unless it is a proper noun, and do not end the subject with a period.
-
-Examples:
-
-```
+```text
 storybook: clarify build ownership
 web/routes: split route-level chunks
 ui/field: fix select menu positioning
 server/auth: validate session cookie
-githooks.txt: improve the intro section
 ```
 
-Use a commit body when the reason for the change is not obvious from the diff. Explain why the change is needed, not just what changed.
+變更原因無法從差異直接看出時，應在提交本文說明原因。PR 應列出變更範圍、使用者或開發者可見的影響、實際執行的驗證、相關議題，以及視覺變更的截圖。未執行驗證時，必須明確說明原因。
 
-PRs should describe the changed area, summarize the user-visible or developer-visible impact, list validation commands run, link related issues, and include screenshots for visible web UI changes.
+## Linyao Design System Skill
 
-If no validation was run, state that explicitly and explain why. Do not claim to have run commands that were not actually executed.
+Linyao Design System 是麟曜數位工作室的設計系統。專案顯示名稱只能使用 `Linyao Design System`，不得縮寫。小寫 `lyds` 只保留於 `@lyds/ui`、`data-lyds-theme`、Skill 識別與其他技術 API。
 
-For UI changes that are not easily captured in a screenshot, describe the visual change and any manual checks performed.
+安裝或使用 `@lyds/ui`、組合元件、調整語意設計變數或主題、新增元件、撰寫 Storybook 或測試、檢查無障礙，或準備發布時，必須先讀取 `skills/lyds-ui/SKILL.md`，並依工作類型讀取其中指定的參考文件。
 
-## LYDS Agent Skill
-
-Use the repository skill at `skills/lyds-ui/SKILL.md` whenever a task installs or uses `@lyds/ui`, composes LYDS components, changes semantic tokens or themes, adds a component, writes LYDS Storybook stories or tests, reviews accessibility, or prepares a release.
-
-Read the skill before making LYDS implementation changes and follow its routed references for usage, contribution, and publishing work. Prefer an existing public LYDS component or composition before creating a new primitive. Never publish `@lyds/ui`, create a release tag, enable the npm publishing gate, or change npm dist-tags without explicit user approval.
+優先使用既有公開元件或組合方式，不要先建立新的基礎元件。未取得使用者明確同意前，不得發布 `@lyds/ui`、建立發布標籤、啟用 npm 發布開關或變更 npm dist-tag。

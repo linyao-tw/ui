@@ -1,13 +1,15 @@
-# Package and release safeguards
+# 套件與發布規則
 
-The release source of truth is Git. Version changes made for publishing are temporary CI workspace changes: never commit them back. Build from a clean checkout, run the complete shared quality suite, publish `@lyds/ui` with `--access public`, and use npm Trusted Publishing/OIDC rather than a committed npm token.
+Linyao Design System 是麟曜數位工作室的設計系統。npm 套件的技術名稱是 `@lyds/ui`，不得用套件名稱取代專案顯示名稱。
 
-Publishing must remain inert unless both conditions are true:
+Git 是發布版本的唯一來源。CI 為發布暫時修改的版本號不得提交回儲存庫。發布必須使用乾淨的檢出、通過完整驗證、以 `--access public` 發布 `@lyds/ui`，並使用 npm Trusted Publishing／OIDC，不得提交 npm token。
 
-1. the user has explicitly approved publication; and
-2. the GitHub repository variable `NPM_PUBLISH_ENABLED` is exactly `true`.
+只有以下兩個條件同時成立時才能發布：
 
-The publish job should have only the permissions it needs, including:
+1. 使用者已明確同意發布。
+2. GitHub 儲存庫變數 `NPM_PUBLISH_ENABLED` 的值正好是 `true`。
+
+發布工作只保留必要權限：
 
 ```yaml
 permissions:
@@ -15,44 +17,46 @@ permissions:
   id-token: write
 ```
 
-Do not add npm credentials to the repository. The npm package owner must configure the GitHub repository/workflow as a trusted publisher before enabling the gate.
+npm 套件擁有者必須先把 GitHub 儲存庫與工作流程設為 trusted publisher，之後才能啟用發布開關。
 
-## Main-branch snapshots
+## 主要分支快照
 
-A push to `main`, once publishing is enabled, maps to:
+發布開關啟用後，push 至 `main` 會對應到：
 
 ```text
-<commit SHA> -> sha6 = first six hexadecimal characters
+<提交 SHA> -> sha6 = 前六個十六進位字元
 @lyds/ui@0.0.0-snapshot.<sha6>
 npm dist-tag: snapshot
 ```
 
-For example, `a1b2c3d4...` publishes `0.0.0-snapshot.a1b2c3` with `--tag snapshot`; it must not modify `latest`. The workflow must run all checks, derive the lowercase SHA dynamically, set the version only in CI, and avoid a git commit. Serialize concurrent main publications without `cancel-in-progress`, so one main commit is not silently discarded.
+例如 `a1b2c3d4...` 發布為 `0.0.0-snapshot.a1b2c3`，並使用 `--tag snapshot`；不得變更 `latest`。工作流程必須先通過所有檢查，動態取得小寫 SHA，只在 CI 工作目錄設定版本，而且不得建立 Git 提交。
 
-Snapshot reruns are idempotent only when artifact identity is proven: query npm for the exact snapshot version, compare its SHA-512 integrity with the verified local tarball, and skip only when they are identical. An integrity mismatch, an unavailable integrity value, or an indeterminate registry response must fail closed.
+主要分支發布必須依序執行，且不得以 `cancel-in-progress` 取消排隊中的提交。重新執行時，先查詢 npm 上的精確快照版本，再比較其 SHA-512 integrity 與本機已驗證 tarball。只有兩者相同時才能明確記錄並略過；integrity 不同、缺少或 npm registry 結果無法判定時必須失敗。
 
-## Tagged production releases
+## 標籤正式發布
 
-A pushed valid SemVer tag beginning with `v` is the version source of truth:
+以 `v` 開頭的有效 SemVer tag 是版本唯一來源：
 
 ```text
 v1.2.3 -> @lyds/ui@1.2.3 -> npm dist-tag latest
 v2.0.0-beta.1 -> @lyds/ui@2.0.0-beta.1 -> npm dist-tag beta
 ```
 
-Before publishing, validate SemVer, verify the tagged commit is reachable from `main`, run the full suite from that clean tagged checkout, and query npm for the exact version. If the production/prerelease version already exists, fail explicitly; unlike snapshots, tagged duplicates must never be silently skipped.
+發布前必須驗證 SemVer、確認標籤所指的提交可從 `main` 到達、在乾淨的標籤檢出中執行完整驗證，並查詢 npm 上的精確版本。正式版或預發布版已存在時必須明確失敗；不得像快照一樣略過。
 
-Stable versions publish with the default production `latest` tag. Prereleases publish with an npm-safe channel derived from the first prerelease identifier (`beta` in the example) and must not move `latest`. Set the tag-derived package version only in the CI workspace, create no release commit, and publish through OIDC.
+穩定版使用 `latest`。預發布版使用第一個 prerelease identifier 產生的 npm-safe channel，例如 `beta`，不得移動 `latest`。標籤版本只寫入 CI 工作目錄，不建立發布提交，並透過 OIDC 發布。
 
-## Verification is not publication
+## 驗證不代表授權發布
 
-Safe preparation includes:
+以下操作只用於安全準備：
 
 ```sh
 pnpm check
 pnpm pack:check
 ```
 
-Inspecting a tarball or using a non-publishing dry run does not authorize `npm publish`. Do not manually publish snapshots or tag releases, enable `NPM_PUBLISH_ENABLED`, create release tags, or alter npm dist-tags without explicit user authorization.
+檢查 tarball 或執行不發布的預演，不代表取得 `npm publish` 授權。未取得使用者明確同意前，不得手動發布快照或標籤版本、啟用 `NPM_PUBLISH_ENABLED`、建立發布標籤或修改 npm dist-tag。
 
-Before publication, verify that the installed Base UI release contains upstream fix [#5058](https://github.com/mui/base-ui/pull/5058) for nested-menu portal ownership. The repository may temporarily patch Base UI 1.7.0 so Storybook can validate the merged fix, but a pnpm workspace patch does not propagate through the `@lyds/ui` npm tarball to consumers. Remove the temporary patch only after upgrading to an official fixed release, then rerun submenu open-state axe, Arrow keys, Tab/Shift+Tab, Escape, return-focus, and Safari VoiceOver checks against an isolated packed consumer. Treat this as a publication blocker, not a rule to disable or work around in consumer DOM.
+正式發布前，必須確認已安裝的 Base UI 正式版本包含巢狀選單 portal ownership 修正 [#5058](https://github.com/mui/base-ui/pull/5058)。儲存庫可以暫時修補 Base UI 1.7.0 以驗證已合併的修正，但 pnpm workspace patch 不會隨 `@lyds/ui` tarball 傳給使用端。
+
+升級到含修正的 Base UI 正式版本後，才能移除暫時修補；接著使用獨立安裝的封裝套件，重新檢查子選單開啟狀態的 axe、方向鍵、Tab／Shift+Tab、Escape、焦點返回與 Safari VoiceOver。在這些檢查通過前不得發布。

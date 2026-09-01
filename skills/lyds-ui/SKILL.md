@@ -1,28 +1,30 @@
 ---
 name: lyds-ui
-description: Build, integrate, extend, review, or release-plan React interfaces with @lyds/ui while preserving LYDS components, semantic tokens, date-time semantics, accessibility, and publication safeguards.
+description: 使用、擴充、檢查或規劃發布 @lyds/ui，並維持 Linyao Design System 的元件 API、語意設計變數、日期時間語意、無障礙與發布安全規則。
 ---
 
-# LYDS UI
+# Linyao Design System
 
-Use LYDS through its public package API. Inspect the installed version's exports and types before coding; do not assume every component supports every prop.
+Linyao Design System 是麟曜數位工作室的設計系統。所有對外顯示名稱只能使用 `Linyao Design System`，不得縮寫。小寫 `lyds` 只保留於 `@lyds/ui`、`data-lyds-theme`、Skill 識別與其他技術 API。
 
-## Route the work
+透過公開套件 API 使用元件。開始實作前，先檢查已安裝版本的匯出項目與型別，不要假設所有元件都支援相同 props。
 
-- For installation, icon usage, styles, themes, component selection, token use, or date/time values, read [references/usage.md](references/usage.md).
-- When adding or changing an LYDS component, story, or test, read [references/contributing.md](references/contributing.md).
-- For package verification or any snapshot/production release work, read [references/releases.md](references/releases.md).
+## 依工作讀取參考文件
 
-## Preserve the system
+- 安裝、圖示、樣式、主題、元件選擇、設計變數或日期時間：讀取 [references/usage.md](references/usage.md)。
+- 新增或修改元件、Storybook、測試：讀取 [references/contributing.md](references/contributing.md)。
+- 套件驗證、快照或正式發布：讀取 [references/releases.md](references/releases.md)。
 
-- Prefer an existing LYDS component or composition before creating a wrapper, fork, or new primitive. Import only from `@lyds/ui` and documented subpaths.
-- Import `@lyds/ui/styles.css` once at the application entry. Theme with `data-lyds-theme="light"` or `data-lyds-theme="dark"`; the product owns persistence and user preference.
-- Use semantic CSS variables such as `--background-elevated`, `--text-main`, `--control-primary`, and `--focus-ring`. Do not place raw color values in product or component CSS.
-- Use `@phosphor-icons/react` as the only interface icon family. Install it with `@lyds/ui`; use individual CSR exports in client code and the public `/ssr` module in React Server Components. Do not hand-write JSX `<svg>`, use Unicode glyphs or CSS shapes as substitute UI icons, or import legacy `phosphor-react`.
-- Put decorative icons in `Button` through `startIcon` or `endIcon`; use `IconButton` for icon-only actions and always provide `aria-label` or `aria-labelledby`. Let icons inherit `currentColor` and component-controlled sizing instead of assigning raw color or arbitrary size values.
-- Preserve the Modulor-derived LYDS anatomy: clean main/secondary/elevated surfaces, `0.75rem` core radius, restrained selected plates, compact type hierarchy, and structural dividers only where the component calls for them. Do not add cut corners, panel seams, decorative engineering grids, fake serial labels, generalized uppercase, or terminal styling to make an interface look "technical".
-- Use tokens, `rem`, or fluid units for fixed CSS lengths. Reserve `1px` and the Figma-verified `0.5px` list/segment divider for genuine hairlines; SVG coordinates are exempt. Do not reproduce a LYDS component with arbitrary fixed `px` geometry.
-- Preserve controlled/uncontrolled contracts and vocabulary exposed by the component: commonly `value`, `defaultValue`, `onValueChange`, `open`, `defaultOpen`, `onOpenChange`, `variant`, `size`, and state props. Do not add routing, storage, analytics, network calls, business validation, or form-framework assumptions.
-- Keep accessible names, visible focus, keyboard behavior, overlay focus management, touch targets, contrast, and reduced-motion behavior intact. Styling must not replace headless behavior supplied by LYDS/Base UI.
+## 必須遵守的規則
 
-Never publish `@lyds/ui` merely because implementation or release files were requested. Publishing requires explicit user approval and the repository publishing gate described in the release reference.
+- 優先使用既有元件或組合方式；只從 `@lyds/ui` 與文件列出的公開路徑匯入。
+- 在應用程式入口匯入一次 `@lyds/ui/styles.css`。以 `data-lyds-theme="light"` 或 `data-lyds-theme="dark"` 設定主題；偏好儲存與同步由應用程式負責。
+- 元件顏色一律使用語意 CSS 變數，例如 `--background-elevated`、`--text-main`、`--control-primary`、`--focus-ring`；不得使用未轉為設計變數的顏色。
+- 介面圖示只使用 `@phosphor-icons/react`。使用 `@lyds/ui` 時一併安裝；瀏覽器端使用單一 CSR 匯出檔案，React Server Component 使用公開 `/ssr` 模組。不得手寫 JSX `<svg>`、以 Unicode 或 CSS 圖形代替圖示，或使用舊版 `phosphor-react`。
+- `Button` 的裝飾圖示放在 `startIcon` 或 `endIcon`；僅有圖示的操作使用 `IconButton`，並提供 `aria-label` 或 `aria-labelledby`。圖示應繼承 `currentColor` 與元件尺寸。
+- 視覺應依 Figma 與現有元件的結構、尺寸、圓角、間距、字級及狀態延伸。不要加入切角、面板接縫、裝飾格線、虛構編號、全面大寫或終端機樣式。
+- 固定長度使用設計變數或 `rem`。`1px` 與 Figma 已確認的 `0.5px` 只用於真正的細線；SVG 座標不受此限。
+- 保留既有受控／非受控 API，例如 `value`、`defaultValue`、`onValueChange`、`open`、`defaultOpen`、`onOpenChange`、`variant` 與 `size`。不得加入路由、儲存、分析、網路請求、商業驗證或表單框架假設。
+- 維持可存取名稱、可見焦點、鍵盤操作、浮層焦點管理、觸控尺寸、對比與減少動態效果設定。不得以樣式取代 Linyao Design System 或 Base UI 提供的互動行為。
+
+未取得使用者明確同意前，絕對不得發布 `@lyds/ui`。發布還必須符合 [references/releases.md](references/releases.md) 的開關與驗證規則。
