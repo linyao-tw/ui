@@ -695,6 +695,11 @@
 	padding: var(--space-1);
 }
 
+.menuPopup:focus-visible {
+	outline: 0.125rem solid var(--focus-ring);
+	outline-offset: 0.125rem;
+}
+
 .menuItemIndicator {
 	margin-inline-start: auto;
 }

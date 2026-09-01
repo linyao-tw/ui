@@ -35,13 +35,15 @@ import {
 	type TooltipViewportProps
 } from "@base-ui/react/tooltip";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
-import { forwardRef, type JSX, type RefAttributes } from "react";
+import { createContext, forwardRef, useContext, useId, type JSX, type RefAttributes } from "react";
 
 import { mergeClassName } from "./class-names";
 
 export type { PopoverRootChangeEventDetails } from "@base-ui/react/popover";
 export type { PreviewCardRootChangeEventDetails } from "@base-ui/react/preview-card";
 export type { TooltipRootChangeEventDetails } from "@base-ui/react/tooltip";
+
+const TooltipDescriptionContext = createContext<string | undefined>(undefined);
 
 function CloseGlyph(): JSX.Element {
 	return <XIcon aria-hidden="true" className="lyds-overlayClose__glyph" weight="bold" />;
@@ -51,12 +53,24 @@ export function TooltipProvider(props: TooltipProviderProps): JSX.Element {
 	return <BaseTooltip.Provider {...props} />;
 }
 
-export function TooltipRoot<Payload = unknown>(props: TooltipRootProps<Payload>): JSX.Element {
-	return <BaseTooltip.Root {...props} />;
+export interface LydsTooltipRootProps<Payload = unknown> extends TooltipRootProps<Payload> {
+	/** Stable id used to associate the trigger with its tooltip description. */
+	descriptionId?: string;
+}
+
+export function TooltipRoot<Payload = unknown>({ descriptionId, ...props }: LydsTooltipRootProps<Payload>): JSX.Element {
+	const generatedId = useId();
+	return (
+		<TooltipDescriptionContext.Provider value={descriptionId ?? `lyds-tooltip-${generatedId}`}>
+			<BaseTooltip.Root {...props} />
+		</TooltipDescriptionContext.Provider>
+	);
 }
 
 export function TooltipTrigger<Payload = unknown>({ className, ...props }: TooltipTriggerProps<Payload> & RefAttributes<HTMLElement>): JSX.Element {
-	return <BaseTooltip.Trigger {...props} className={mergeClassName("lyds-tooltip__trigger", className)} />;
+	const descriptionId = useContext(TooltipDescriptionContext);
+	const describedBy = [props["aria-describedby"], descriptionId].filter(Boolean).join(" ") || undefined;
+	return <BaseTooltip.Trigger {...props} aria-describedby={describedBy} className={mergeClassName("lyds-tooltip__trigger", className)} />;
 }
 
 export const TooltipPortal = forwardRef<HTMLDivElement, TooltipPortalProps>(function TooltipPortal(props, ref) {
@@ -68,7 +82,8 @@ export const TooltipPositioner = forwardRef<HTMLDivElement, TooltipPositionerPro
 });
 
 export const TooltipPopup = forwardRef<HTMLDivElement, TooltipPopupProps>(function TooltipPopup({ className, ...props }, ref) {
-	return <BaseTooltip.Popup {...props} ref={ref} className={mergeClassName("lyds-tooltip__popup", className)} />;
+	const descriptionId = useContext(TooltipDescriptionContext);
+	return <BaseTooltip.Popup {...props} ref={ref} id={descriptionId} role="tooltip" className={mergeClassName("lyds-tooltip__popup", className)} />;
 });
 
 export const TooltipArrow = forwardRef<HTMLDivElement, TooltipArrowProps>(function TooltipArrow({ className, ...props }, ref) {

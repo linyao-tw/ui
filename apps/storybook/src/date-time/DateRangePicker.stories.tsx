@@ -26,7 +26,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const Open: Story = {
-	args: { open: true }
+	args: { defaultOpen: true }
 };
 
 function ControlledRange() {
@@ -64,5 +64,5 @@ export const ConstraintsAndInvalid: Story = {
 
 export const DarkTheme: Story = {
 	globals: { theme: "dark" },
-	args: { open: true, defaultValue: defaultRange }
+	args: { defaultOpen: true, defaultValue: defaultRange }
 };

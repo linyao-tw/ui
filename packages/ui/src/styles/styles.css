@@ -265,6 +265,8 @@
 	--status-danger-foreground: var(--palette-signal-800);
 	--status-danger-border: var(--palette-signal-700);
 	--status-danger-control: var(--palette-signal-700);
+	--status-danger-control-hover: var(--palette-signal-600);
+	--status-danger-control-pressed: var(--palette-signal-800);
 
 	--shadow-hairline: 0 0 0 1px oklch(0.42 0.01 75 / 10%);
 	--shadow-low: 0 0.125rem 0.5rem oklch(0.22 0.01 75 / 8%);
@@ -356,7 +358,7 @@
 	--control-track: var(--palette-warm-550);
 	--control-track-checked: var(--palette-signal-500);
 	--control-range-indicator: var(--palette-signal-50);
-	--control-placeholder: var(--palette-warm-500);
+	--control-placeholder: var(--palette-warm-400);
 
 	--focus-ring: var(--palette-signal-300);
 	--focus-halo: var(--palette-warm-1000);
@@ -382,6 +384,8 @@
 	--status-danger-foreground: var(--palette-signal-100);
 	--status-danger-border: var(--palette-signal-300);
 	--status-danger-control: var(--palette-signal-300);
+	--status-danger-control-hover: var(--palette-signal-200);
+	--status-danger-control-pressed: var(--palette-signal-400);
 
 	--shadow-hairline: 0 0 0 1px oklch(0.85 0.017 79 / 10%);
 	--shadow-low: 0 0.125rem 0.5rem oklch(0.05 0.008 75 / 28%);

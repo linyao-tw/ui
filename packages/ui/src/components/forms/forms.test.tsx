@@ -255,9 +255,9 @@ describe("file controls", () => {
 		const file = new File(["diagnostic"], "diagnostic.txt", { type: "text/plain" });
 		render(<FileUpload label="Diagnostic file" description="Attach the exported diagnostic report." onFilesChange={onFilesChange} />);
 
-		const input = screen.getByLabelText<HTMLInputElement>("Diagnostic file", { selector: "input" });
-		const trigger = screen.getByRole("button", { name: "Diagnostic file Choose file" });
-		expect(trigger).toHaveAccessibleDescription("Attach the exported diagnostic report.");
+		const input = screen.getByLabelText<HTMLInputElement>("Diagnostic file Choose file", { selector: "input" });
+		expect(input).toHaveAccessibleDescription("Attach the exported diagnostic report.");
+		expect(screen.queryAllByRole("button")).toHaveLength(0);
 		await user.upload(input, file);
 
 		expect(input.files).toHaveLength(1);
@@ -272,8 +272,7 @@ describe("file controls", () => {
 		const file = new File(["telemetry"], "telemetry.csv", { type: "text/csv" });
 		const { container } = render(<DropZone label="Attachments" onChange={onChange} onDrop={onDrop} onFilesChange={onFilesChange} />);
 		const zone = container.querySelector<HTMLDivElement>(".lyds-drop-zone");
-		const input = screen.getByLabelText<HTMLInputElement>("Attachments", { selector: "input" });
-		const inputClick = vi.spyOn(input, "click");
+		const input = screen.getByLabelText<HTMLInputElement>("Attachments Choose files", { selector: "input" });
 
 		expect(zone).not.toBeNull();
 		fireEvent.drop(zone as HTMLDivElement, { dataTransfer: { files: [file] } });
@@ -281,10 +280,9 @@ describe("file controls", () => {
 		expect(onChange).toHaveBeenCalledOnce();
 		expect(onFilesChange).toHaveBeenCalledWith([file], expect.objectContaining({ source: "drop" }));
 
-		const browseButton = screen.getByRole("button", { name: "Attachments Choose files" });
-		browseButton.focus();
-		await user.keyboard("{Enter}");
-		expect(inputClick).toHaveBeenCalledOnce();
+		await user.tab();
+		expect(input).toHaveFocus();
+		expect(screen.getByText("Choose files").closest("label")).toHaveAttribute("for", input.id);
 	});
 
 	it("locks picker and drop interactions when read-only", () => {
@@ -298,10 +296,10 @@ describe("file controls", () => {
 			</>
 		);
 
-		expect(screen.getByLabelText("Locked picker", { selector: "input" })).toBeDisabled();
-		expect(screen.getByRole("button", { name: "Locked picker Choose file" })).toBeDisabled();
-		expect(screen.getByLabelText("Locked drop zone", { selector: "input" })).toBeDisabled();
-		expect(screen.getByRole("button", { name: "Locked drop zone Choose files" })).toBeDisabled();
+		expect(screen.getByLabelText("Locked picker Choose file", { selector: "input" })).toBeDisabled();
+		expect(screen.getByText("Choose file").closest("label")).toHaveAttribute("data-disabled");
+		expect(screen.getByLabelText("Locked drop zone Choose files", { selector: "input" })).toBeDisabled();
+		expect(screen.getByText("Choose files").closest("label")).toHaveAttribute("data-disabled");
 
 		const zone = container.querySelector<HTMLDivElement>(".lyds-drop-zone");
 		expect(zone).not.toBeNull();

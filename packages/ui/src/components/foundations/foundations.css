@@ -74,7 +74,7 @@
 }
 
 .lyds-button[data-variant="danger"]:hover:not(:disabled, [data-disabled], [aria-disabled="true"]) {
-	background: var(--status-danger-border);
+	background: var(--status-danger-control-hover);
 }
 
 .lyds-button:active:not(:disabled, [data-disabled], [aria-disabled="true"]) {
@@ -91,7 +91,7 @@
 }
 
 .lyds-button[data-variant="danger"]:active:not(:disabled, [data-disabled], [aria-disabled="true"]) {
-	background: var(--status-danger-control);
+	background: var(--status-danger-control-pressed);
 }
 
 .lyds-button:focus-visible,
@@ -656,6 +656,7 @@
 .lyds-list-cell__leading,
 .lyds-list-cell__trailing {
 	display: inline-grid;
+	flex-shrink: 0;
 	min-width: var(--icon-size-md);
 	min-height: var(--icon-size-md);
 	place-items: center;

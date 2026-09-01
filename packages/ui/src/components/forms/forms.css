@@ -608,11 +608,17 @@
 	cursor: pointer;
 }
 
-.lyds-file-upload__trigger:active:not(:disabled) {
+.lyds-file-upload__trigger:active:not([data-disabled]) {
 	background: var(--control-surface-pressed);
 }
 
-.lyds-file-upload__trigger:disabled {
+.lyds-file-upload__input:focus-visible + .lyds-file-upload__trigger,
+.lyds-drop-zone__input:focus-visible + .lyds-drop-zone {
+	outline: var(--border-width-strong) solid var(--focus-ring);
+	outline-offset: 0.125rem;
+}
+
+.lyds-file-upload__trigger[data-disabled] {
 	border-color: var(--control-border-disabled);
 	background: var(--background-disabled);
 	color: var(--text-disabled);
@@ -694,12 +700,12 @@
 	flex: none;
 }
 
-.lyds-drop-zone__button:hover:not(:disabled) {
+.lyds-drop-zone__button:hover:not([data-disabled]) {
 	border-color: var(--control-border-hover);
 	background: var(--control-surface-hover);
 }
 
-.lyds-drop-zone__button:active:not(:disabled) {
+.lyds-drop-zone__button:active:not([data-disabled]) {
 	background: var(--control-surface-pressed);
 }
 
@@ -708,7 +714,7 @@
 	outline-offset: 0.125rem;
 }
 
-.lyds-drop-zone__button:disabled {
+.lyds-drop-zone__button[data-disabled] {
 	border-color: var(--control-border-disabled);
 	background: var(--background-disabled);
 	color: var(--text-disabled);
@@ -725,7 +731,7 @@
 	.lyds-otp-field__input:focus-visible,
 	.lyds-code-field__group:focus-within,
 	.lyds-phone-field__country:has(:focus-visible),
-	.lyds-file-upload__trigger:focus-visible,
+	.lyds-file-upload__input:focus-visible + .lyds-file-upload__trigger,
 	.lyds-drop-zone__input:focus-visible + .lyds-drop-zone,
 	.lyds-drop-zone__button:focus-visible {
 		outline-color: CanvasText;

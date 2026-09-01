@@ -45,7 +45,11 @@ export function FieldMessages({ description, error }: Pick<DateTimeFieldChromePr
 					{description}
 				</Text>
 			)}
-			{error == null ? null : <FieldError className="lyds-date-error">{error}</FieldError>}
+			{error == null ? null : (
+				<FieldError aria-atomic="true" aria-live="polite" className="lyds-date-error">
+					{error}
+				</FieldError>
+			)}
 		</>
 	);
 }

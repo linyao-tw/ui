@@ -40,13 +40,13 @@ function Palette({ defaultOpen = false }: { defaultOpen?: boolean }) {
 						<CommandPaletteDescription>Search or use the arrow keys to choose an operation.</CommandPaletteDescription>
 						<CommandPaletteInput aria-label="Search commands" />
 						<CommandPaletteList>
-							{commands.map((command, index) => (
+							{(command: string, index: number) => (
 								<CommandPaletteItem key={command} value={command}>
 									<CommandPaletteItemIndicator />
 									<span>{command}</span>
 									<CommandPaletteShortcut>{index === 0 ? "↵" : `⌘${index}`}</CommandPaletteShortcut>
 								</CommandPaletteItem>
-							))}
+							)}
 						</CommandPaletteList>
 						<CommandPaletteEmpty>No matching command</CommandPaletteEmpty>
 					</CommandPalettePopup>

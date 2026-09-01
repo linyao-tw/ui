@@ -120,6 +120,7 @@ function ComboboxComponent<Value>({
 					aria-invalid={invalid || inputProps?.["aria-invalid"] || undefined}
 					aria-label={ariaLabel ?? inputProps?.["aria-label"]}
 					aria-labelledby={ariaLabelledby ?? inputProps?.["aria-labelledby"]}
+					autoComplete={inputProps?.autoComplete ?? "off"}
 					placeholder={placeholder}
 				/>
 				<ComboboxClear aria-label={clearLabel}>
@@ -133,17 +134,21 @@ function ComboboxComponent<Value>({
 				<ComboboxPositioner {...positionerProps}>
 					<ComboboxPopup {...popupProps}>
 						<ComboboxList>
-							{options.map((option, index) => (
-								<ComboboxItem disabled={option.disabled} index={index} key={option.key ?? option.textValue ?? index} value={option.value}>
-									<ComboboxItemIndicator>
-										<CheckIcon aria-hidden="true" weight="bold" />
-									</ComboboxItemIndicator>
-									<span className={styles.optionText}>
-										<span>{option.label}</span>
-										{option.description ? <span className={styles.optionDescription}>{option.description}</span> : null}
-									</span>
-								</ComboboxItem>
-							))}
+							{(value: Value, index: number) => {
+								const option = options.find(candidate => Object.is(candidate.value, value));
+								if (!option) return null;
+								return (
+									<ComboboxItem disabled={option.disabled} index={index} key={option.key ?? option.textValue ?? index} value={value}>
+										<ComboboxItemIndicator>
+											<CheckIcon aria-hidden="true" weight="bold" />
+										</ComboboxItemIndicator>
+										<span className={styles.optionText}>
+											<span>{option.label}</span>
+											{option.description ? <span className={styles.optionDescription}>{option.description}</span> : null}
+										</span>
+									</ComboboxItem>
+								);
+							}}
 						</ComboboxList>
 						<ComboboxEmpty>{emptyMessage}</ComboboxEmpty>
 					</ComboboxPopup>
@@ -250,6 +255,7 @@ function AutocompleteComponent<ItemValue>({
 					aria-invalid={invalid || inputProps?.["aria-invalid"] || undefined}
 					aria-label={ariaLabel ?? inputProps?.["aria-label"]}
 					aria-labelledby={ariaLabelledby ?? inputProps?.["aria-labelledby"]}
+					autoComplete={inputProps?.autoComplete ?? "off"}
 					placeholder={placeholder}
 				/>
 				<ComboboxClear aria-label={clearLabel}>
@@ -263,11 +269,15 @@ function AutocompleteComponent<ItemValue>({
 				<ComboboxPositioner {...positionerProps}>
 					<ComboboxPopup {...popupProps}>
 						<ComboboxList>
-							{options.map((option, index) => (
-								<AutocompleteItem disabled={option.disabled} index={index} key={option.key ?? option.textValue ?? index} value={option.value}>
-									<span className={styles.optionText}>{option.label}</span>
-								</AutocompleteItem>
-							))}
+							{(value: ItemValue, index: number) => {
+								const option = options.find(candidate => Object.is(candidate.value, value));
+								if (!option) return null;
+								return (
+									<AutocompleteItem disabled={option.disabled} index={index} key={option.key ?? option.textValue ?? index} value={value}>
+										<span className={styles.optionText}>{option.label}</span>
+									</AutocompleteItem>
+								);
+							}}
 						</ComboboxList>
 						<ComboboxEmpty>{emptyMessage}</ComboboxEmpty>
 					</ComboboxPopup>

@@ -133,7 +133,7 @@ export const CollectionPrimitives: Story = {
 export const ScrollableCollection: Story = {
 	render: () => (
 		<ScrollArea className="lyds-story-stack--narrow">
-			<ScrollAreaViewport>
+			<ScrollAreaViewport aria-label="Documents" role="region">
 				<ScrollAreaContent className="lyds-story-scroll-content">
 					{Array.from({ length: 10 }, (_, index) => (
 						<ListCell key={index} title={`Document ${index + 1}`} description="Shared document" metadata={`${index + 1} days ago`} />

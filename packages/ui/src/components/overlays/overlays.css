@@ -8,6 +8,11 @@
 	font-family: var(--font-family-sans);
 }
 
+.lyds-drawer__popup:focus-visible {
+	outline: var(--border-width-strong) solid var(--focus-ring);
+	outline-offset: -0.1875rem;
+}
+
 .lyds-accordion {
 	overflow: hidden;
 	border: var(--border-width-hairline) solid var(--divider-main);
@@ -437,6 +442,7 @@
 	align-items: center;
 	justify-items: center;
 	overflow-y: auto;
+	overscroll-behavior: contain;
 	padding: var(--space-6);
 }
 
@@ -484,6 +490,7 @@
 .lyds-dialog__body,
 .lyds-drawer__body {
 	padding: var(--space-6);
+	overscroll-behavior: contain;
 }
 
 .lyds-dialog__footer,
@@ -718,7 +725,7 @@
 }
 
 .lyds-bottomSheet__popup {
-	height: min(48rem, 92dvh);
+	max-height: min(48rem, 92dvh);
 	border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 	box-shadow: var(--elevation-0);
 }
@@ -756,6 +763,7 @@
 	flex-direction: column;
 	gap: var(--space-2);
 	padding: var(--space-4);
+	padding-block-end: calc(var(--space-4) + env(safe-area-inset-bottom));
 }
 
 .lyds-bottomSheet__footer > :where(.lyds-button, .lyds-overlayCloseAction) {

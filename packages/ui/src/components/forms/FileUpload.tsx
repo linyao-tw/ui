@@ -100,21 +100,14 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(fu
 					readOnly={readOnly}
 					required={required}
 					aria-invalid={invalid || undefined}
-					tabIndex={-1}
-					onChange={handleChange}
-				/>
-				<button
-					className="lyds-file-upload__trigger"
-					type="button"
-					disabled={disabled || readOnly}
-					aria-controls={id}
 					aria-labelledby={label != null ? `${labelId} ${triggerId}` : triggerId}
 					aria-describedby={[description != null ? descriptionId : null, errorId].filter(Boolean).join(" ")}
-					onClick={() => inputRef.current?.click()}
-				>
+					onChange={handleChange}
+				/>
+				<label className="lyds-file-upload__trigger" data-disabled={disabled || readOnly || undefined} htmlFor={id}>
 					<span className="lyds-file-upload__signal" aria-hidden="true" />
 					<span id={triggerId}>{triggerLabel}</span>
-				</button>
+				</label>
 			</div>
 		</FieldFrame>
 	);
@@ -290,7 +283,8 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 				readOnly={readOnly}
 				required={required}
 				aria-invalid={invalid || undefined}
-				tabIndex={-1}
+				aria-labelledby={label != null ? `${labelId} ${triggerId}` : triggerId}
+				aria-describedby={[description != null ? descriptionId : null, errorId].filter(Boolean).join(" ")}
 				onChange={handleInputChange}
 			/>
 			<div
@@ -312,18 +306,10 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 					<span className="lyds-drop-zone__primary">{primaryLabel}</span>
 					<span className="lyds-drop-zone__secondary">{secondaryLabel}</span>
 				</span>
-				<button
-					className="lyds-drop-zone__button"
-					type="button"
-					disabled={disabled || readOnly}
-					aria-controls={id}
-					aria-labelledby={label != null ? `${labelId} ${triggerId}` : triggerId}
-					aria-describedby={[description != null ? descriptionId : null, errorId].filter(Boolean).join(" ")}
-					onClick={() => inputRef.current?.click()}
-				>
+				<label className="lyds-drop-zone__button" data-disabled={disabled || readOnly || undefined} htmlFor={id}>
 					<PlusIcon aria-hidden="true" weight="bold" />
 					<span id={triggerId}>{browseLabel}</span>
-				</button>
+				</label>
 			</div>
 		</FieldFrame>
 	);

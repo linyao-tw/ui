@@ -35,14 +35,24 @@ export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(function Av
 	{ src, alt, fallback, fallbackDelay, size = "md", variant = "neutral", status, statusLabel, imageProps, onLoadingStatusChange, className, style, ...props },
 	ref
 ) {
+	const accessibleLabel = statusLabel ? `${alt}, ${statusLabel}` : alt;
+
 	return (
-		<BaseAvatar.Root {...props} ref={ref} data-size={size} data-variant={variant} className={mergeClassNames("lyds-avatar", className)} style={style}>
-			{src ? <BaseAvatar.Image {...imageProps} src={src} alt={alt} className={mergeClassNames("lyds-avatar__image", imageProps?.className)} onLoadingStatusChange={onLoadingStatusChange} /> : null}
+		<BaseAvatar.Root
+			{...props}
+			ref={ref}
+			aria-label={props["aria-label"] ?? accessibleLabel}
+			role={props.role ?? "img"}
+			data-size={size}
+			data-variant={variant}
+			className={mergeClassNames("lyds-avatar", className)}
+			style={style}
+		>
+			{src ? <BaseAvatar.Image {...imageProps} src={src} alt="" className={mergeClassNames("lyds-avatar__image", imageProps?.className)} onLoadingStatusChange={onLoadingStatusChange} /> : null}
 			<BaseAvatar.Fallback className="lyds-avatar__fallback" delay={fallbackDelay}>
 				{fallback ?? getInitials(alt)}
 			</BaseAvatar.Fallback>
 			{status ? <span className="lyds-avatar__status" data-status={status} aria-hidden="true" /> : null}
-			{statusLabel ? <span className="lyds-sr-only">{statusLabel}</span> : null}
 		</BaseAvatar.Root>
 	);
 });

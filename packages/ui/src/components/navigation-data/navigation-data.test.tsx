@@ -116,8 +116,9 @@ describe("breadcrumb and pagination semantics", () => {
 			</Pagination>
 		);
 
-		const previous = screen.getByText("Previous");
+		const previous = screen.getByRole("link", { name: "Previous" });
 		expect(previous).toHaveAttribute("aria-disabled", "true");
+		expect(previous).toHaveAttribute("role", "link");
 		expect(previous).toHaveAttribute("tabindex", "-1");
 		expect(previous).not.toHaveAttribute("href");
 		expect(screen.getByRole("button", { name: "2" })).toHaveAttribute("aria-current", "page");

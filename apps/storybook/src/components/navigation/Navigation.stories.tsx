@@ -51,22 +51,21 @@ export const HeaderPattern: Story = {
 	render: () => (
 		<Header>
 			<HeaderRail>
-				<span className="lyds-story-note">Documentation</span>
-				<HeaderStatus>
-					<Badge size="sm" variant="success">
-						All services available
-					</Badge>
-				</HeaderStatus>
+				<HeaderBrand href="#">LYDS</HeaderBrand>
+				<HeaderNav>
+					<a href="#guides">Guides</a>
+					<a href="#components">Components</a>
+					<a href="#resources">Resources</a>
+				</HeaderNav>
+				<HeaderActions>
+					<HeaderStatus>
+						<Badge size="sm" variant="success">
+							All services available
+						</Badge>
+					</HeaderStatus>
+					<Button size="sm">Get started</Button>
+				</HeaderActions>
 			</HeaderRail>
-			<HeaderBrand href="#">LYDS</HeaderBrand>
-			<HeaderNav>
-				<a href="#guides">Guides</a>
-				<a href="#components">Components</a>
-				<a href="#resources">Resources</a>
-			</HeaderNav>
-			<HeaderActions>
-				<Button size="sm">Get started</Button>
-			</HeaderActions>
 		</Header>
 	)
 };

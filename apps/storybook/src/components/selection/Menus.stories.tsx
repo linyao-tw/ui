@@ -36,7 +36,9 @@ export const Dropdown: Story = {
 export const Contextual: Story = {
 	render: () => (
 		<ContextMenu.Root>
-			<ContextMenu.Trigger className="lyds-story-context-area">Right-click or press Shift+F10 on this item</ContextMenu.Trigger>
+			<ContextMenu.Trigger aria-haspopup="menu" className="lyds-story-context-area" role="button" tabIndex={0}>
+				Right-click or press Shift+F10 on this item
+			</ContextMenu.Trigger>
 			<ContextMenu.Portal>
 				<ContextMenu.Positioner>
 					<ContextMenu.Popup>

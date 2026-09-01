@@ -268,4 +268,22 @@ describe("selection popups", () => {
 		expect(screen.getByText("Calibrate").closest('[role="menuitem"]')).toBeInTheDocument();
 		expect(screen.getByTestId("context-target")).toHaveTextContent("Panel open");
 	});
+
+	it("maps Shift+F10 to the context menu gesture", () => {
+		render(
+			<ContextMenu.Root>
+				<ContextMenu.Trigger data-testid="keyboard-context-target">Panel</ContextMenu.Trigger>
+				<ContextMenu.Portal>
+					<ContextMenu.Positioner>
+						<ContextMenu.Popup>
+							<ContextMenu.Item>Calibrate</ContextMenu.Item>
+						</ContextMenu.Popup>
+					</ContextMenu.Positioner>
+				</ContextMenu.Portal>
+			</ContextMenu.Root>
+		);
+
+		fireEvent.keyDown(screen.getByTestId("keyboard-context-target"), { key: "F10", shiftKey: true });
+		expect(screen.getByText("Calibrate").closest('[role="menuitem"]')).toBeInTheDocument();
+	});
 });

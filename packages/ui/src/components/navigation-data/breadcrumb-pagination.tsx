@@ -106,6 +106,7 @@ export const PaginationLink = forwardRef<HTMLAnchorElement, PaginationLinkProps>
 			data-current={current ? "" : undefined}
 			data-disabled={disabled ? "" : undefined}
 			href={disabled ? undefined : href}
+			role={disabled ? "link" : undefined}
 			{...interactionProps}
 		>
 			{children}

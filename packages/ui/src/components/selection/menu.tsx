@@ -108,8 +108,26 @@ export const DropdownMenu = menuParts;
 /** Alias for DropdownMenu, matching the Base UI glossary name. */
 export const Menu = menuParts;
 
-export const ContextMenuTrigger = forwardRef<HTMLDivElement, ContextMenuTriggerProps>(function ContextMenuTrigger({ className, ...props }, ref) {
-	return <BaseContextMenu.Trigger {...props} className={mergeStateClassName(styles.contextTrigger, className)} ref={ref} />;
+export const ContextMenuTrigger = forwardRef<HTMLDivElement, ContextMenuTriggerProps>(function ContextMenuTrigger({ className, onKeyDown, ...props }, ref) {
+	const handleKeyDown: NonNullable<ContextMenuTriggerProps["onKeyDown"]> = event => {
+		onKeyDown?.(event);
+		if (event.defaultPrevented || event.key !== "F10" || !event.shiftKey) return;
+
+		event.preventDefault();
+		const target = event.currentTarget;
+		const bounds = target.getBoundingClientRect();
+		target.dispatchEvent(
+			new globalThis.MouseEvent("contextmenu", {
+				bubbles: true,
+				button: 2,
+				cancelable: true,
+				clientX: bounds.left + bounds.width / 2,
+				clientY: bounds.top + bounds.height / 2
+			})
+		);
+	};
+
+	return <BaseContextMenu.Trigger {...props} className={mergeStateClassName(styles.contextTrigger, className)} ref={ref} onKeyDown={handleKeyDown} />;
 });
 
 export const ContextMenu = {

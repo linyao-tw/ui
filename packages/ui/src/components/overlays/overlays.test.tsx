@@ -99,7 +99,9 @@ describe("floating overlays", () => {
 		);
 
 		await user.tab();
-		expect(screen.getByRole("button", { name: "Signal health" })).toHaveFocus();
+		const trigger = screen.getByRole("button", { name: "Signal health" });
+		expect(trigger).toHaveFocus();
+		expect(trigger.getAttribute("aria-describedby")).toMatch(/^lyds-tooltip-/);
 		expect(onOpenChange).toHaveBeenCalledWith(true, expect.objectContaining({ reason: "trigger-focus" }));
 	});
 

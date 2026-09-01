@@ -131,8 +131,7 @@ describe("foundation display primitives", () => {
 	it("renders a stable avatar fallback and an optional readable status", () => {
 		render(<Avatar alt="Lin Yao" status="online" statusLabel="Online" />);
 		expect(screen.getByText("LY")).toBeVisible();
-		expect(screen.getByText("Online")).toBeInTheDocument();
-		expect(screen.queryByRole("img")).not.toBeInTheDocument();
+		expect(screen.getByRole("img", { name: "Lin Yao, Online" })).toBeInTheDocument();
 	});
 
 	it("uses the Base UI separator semantics", () => {

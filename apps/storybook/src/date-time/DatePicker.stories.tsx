@@ -23,7 +23,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const Open: Story = {
-	args: { open: true }
+	args: { defaultOpen: true }
 };
 
 function ControlledPicker() {
@@ -89,5 +89,5 @@ export const LongText: Story = {
 
 export const DarkTheme: Story = {
 	globals: { theme: "dark" },
-	args: { open: true, locale: "zh-TW", defaultValue: defaultDate }
+	args: { defaultOpen: true, locale: "zh-TW", defaultValue: defaultDate }
 };
