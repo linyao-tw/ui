@@ -90,13 +90,22 @@
 .lyds-story-scroll-content {
 	display: flex;
 	flex-direction: column;
-	gap: var(--space-3);
-	block-size: 18rem;
-	padding-inline-end: var(--space-3);
+	gap: var(--space-2);
+	padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
 }
 
 .lyds-story-scroll-content > * {
 	min-block-size: 4rem;
+}
+
+.lyds-story-scroll-area {
+	block-size: 18rem;
+}
+
+.lyds-story-list {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2);
 }
 
 .lyds-story-context-area {

@@ -51,6 +51,10 @@ export const Switch: Story = {
 				<LydsSwitch aria-labelledby="emergency-uplink-label" disabled />
 				<span id="emergency-uplink-label">無法使用離線存取</span>
 			</div>
+			<div className="lyds-story-row">
+				<LydsSwitch defaultChecked aria-labelledby="disabled-checked-switch-label" disabled />
+				<span id="disabled-checked-switch-label">已開啟且停用</span>
+			</div>
 		</div>
 	)
 };

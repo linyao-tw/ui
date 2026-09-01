@@ -134,7 +134,7 @@
 	--shape-cut-md: 0;
 	--component-calendar-day-size: 2.75rem;
 	--component-calendar-day-background-selected: var(--control-primary);
-	--component-calendar-day-foreground-selected: var(--text-on-accent);
+	--component-calendar-day-foreground-selected: var(--control-on-primary);
 	--component-calendar-day-background-in-range: var(--background-selected);
 	--component-calendar-day-foreground-in-range: var(--text-title);
 	--component-calendar-day-ring-today: var(--focus-ring);
@@ -211,16 +211,16 @@
 	--border-control-focus: var(--palette-signal-700);
 	--border-invalid: var(--palette-signal-700);
 
-	--control-primary: var(--palette-signal-500);
-	--control-primary-hover: var(--palette-signal-400);
-	--control-primary-pressed: var(--palette-signal-500);
+	--control-primary: var(--palette-signal-600);
+	--control-primary-hover: var(--palette-signal-700);
+	--control-primary-pressed: var(--palette-signal-800);
 	--control-primary-disabled: var(--palette-signal-100);
 	--control-secondary: var(--palette-warm-100);
 	--control-secondary-hover: var(--palette-warm-150);
 	--control-secondary-pressed: var(--palette-warm-200);
 	--control-secondary-disabled: var(--palette-warm-100);
 	--control-quaternary: var(--palette-warm-200);
-	--control-on-primary: var(--palette-warm-950);
+	--control-on-primary: var(--palette-warm-25);
 	--control-on-secondary: var(--palette-warm-900);
 	--control-border: var(--palette-warm-550);
 	--control-border-hover: var(--palette-warm-600);
@@ -238,6 +238,7 @@
 	--control-thumb-checked: var(--palette-warm-950);
 	--control-track: var(--palette-warm-550);
 	--control-track-checked: var(--palette-signal-500);
+	--control-track-checked-hover: var(--palette-signal-600);
 	--control-range-indicator: var(--palette-signal-800);
 	--control-placeholder: var(--palette-warm-600);
 
@@ -330,16 +331,16 @@
 	--border-control-focus: var(--palette-signal-300);
 	--border-invalid: var(--palette-signal-300);
 
-	--control-primary: var(--palette-signal-500);
-	--control-primary-hover: var(--palette-signal-400);
-	--control-primary-pressed: var(--palette-signal-500);
+	--control-primary: var(--palette-signal-600);
+	--control-primary-hover: var(--palette-signal-700);
+	--control-primary-pressed: var(--palette-signal-800);
 	--control-primary-disabled: var(--palette-signal-900);
 	--control-secondary: oklch(0.28 0.008 75);
 	--control-secondary-hover: oklch(0.32 0.008 75);
 	--control-secondary-pressed: oklch(0.25 0.008 75);
 	--control-secondary-disabled: oklch(0.25 0.005 75);
 	--control-quaternary: oklch(0.31 0.008 75);
-	--control-on-primary: var(--palette-warm-950);
+	--control-on-primary: var(--palette-warm-25);
 	--control-on-secondary: var(--palette-warm-50);
 	--control-border: var(--palette-warm-550);
 	--control-border-hover: var(--palette-warm-400);
@@ -357,6 +358,7 @@
 	--control-thumb-checked: var(--palette-warm-950);
 	--control-track: var(--palette-warm-550);
 	--control-track-checked: var(--palette-signal-500);
+	--control-track-checked-hover: var(--palette-signal-400);
 	--control-range-indicator: var(--palette-signal-50);
 	--control-placeholder: var(--palette-warm-400);
 

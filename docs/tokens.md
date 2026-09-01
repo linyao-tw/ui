@@ -77,15 +77,16 @@ Motion/Ease/InOut        -> --motion-ease-in-out
 
 品牌原色不保證彼此符合可存取性：
 
-| 配色                   |   對比 | 一般 UI 文字 |
-| ---------------------- | -----: | ------------ |
-| Black on Vermilion     | 5.69:1 | AA           |
-| Limestone on Vermilion | 2.32:1 | 不通過       |
-| Charcoal on Vermilion  | 2.29:1 | 不通過       |
-| White on Vermilion     | 3.69:1 | 不通過       |
-| Charcoal on Limestone  | 5.30:1 | AA           |
+| 配色                 |   對比 | 一般介面文字 |
+| -------------------- | -----: | ------------ |
+| 純黑／Vermilion      | 5.69:1 | AA           |
+| Limestone／Vermilion | 2.32:1 | 不通過       |
+| Charcoal／Vermilion  | 2.29:1 | 不通過       |
+| 純白／Vermilion      | 3.69:1 | 不通過       |
+| Warm 25／Signal 600  | 4.54:1 | AA           |
+| Charcoal／Limestone  | 5.30:1 | AA           |
 
-主要強調表面使用 `--text-on-accent`／`--control-on-primary`，目前映射至足夠深的前景色。`Always_White`／`Always_Dark` 只用於跨主題不可改變的語意，不得當作一般文字捷徑。
+品牌強調表面使用 `--text-on-accent` 的深色前景；主要控制項使用較深的 `--palette-signal-600` 與暖近白 `--control-on-primary`。這兩種語意不可互換。`Always_White`／`Always_Dark` 只用於跨主題不可改變的語意，不得當作一般文字捷徑。
 
 每次修改語意設定都必須驗證：
 

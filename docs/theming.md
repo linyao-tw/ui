@@ -105,10 +105,10 @@ Vermilion
 	--background-main: oklch(88% 0.018 82);
 	--background-secondary: oklch(92% 0.014 82);
 	--text-main: oklch(35% 0.01 82);
-	--control-primary: oklch(67% 0.22 32);
-	--control-primary-hover: oklch(72% 0.2 32);
-	--control-primary-pressed: oklch(61% 0.23 32);
-	--control-on-primary: oklch(10% 0.01 32);
+	--control-primary: var(--palette-signal-600);
+	--control-primary-hover: var(--palette-signal-700);
+	--control-primary-pressed: var(--palette-signal-800);
+	--control-on-primary: var(--palette-warm-25);
 	--focus-ring: oklch(48% 0.17 32);
 }
 ```
@@ -186,4 +186,4 @@ Vermilion
 - hover／按下／選取狀態；
 - 停用狀態的可讀性。
 
-品牌原色不保證符合對比。Limestone、Charcoal 與 white 都不適合直接作為 Vermilion 上的一般尺寸文字；應使用 `--text-on-accent`／`--control-on-primary`。
+品牌原色不保證符合對比。Limestone、Charcoal 與 white 都不適合直接作為 Vermilion 上的一般尺寸文字。品牌強調表面應使用 `--text-on-accent`；需要近白前景的主要控制項，應同時使用較深的 `--control-primary` 與 `--control-on-primary`。

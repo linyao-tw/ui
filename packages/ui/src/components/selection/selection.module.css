@@ -201,6 +201,10 @@
 	background: var(--control-track-checked);
 }
 
+.switch[data-checked]:hover:not([data-disabled]):not([data-readonly]) {
+	background: var(--control-track-checked-hover);
+}
+
 .switchSignal {
 	display: none;
 }

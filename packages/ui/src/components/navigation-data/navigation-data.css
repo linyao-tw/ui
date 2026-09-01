@@ -605,7 +605,7 @@ button.lyds-pagination__control {
 
 .lyds-collection {
 	inline-size: min(100%, 20.5rem);
-	border-radius: 0.75rem;
+	border-radius: var(--radius-md);
 	overflow: hidden;
 	background: var(--background-secondary);
 }
@@ -617,13 +617,13 @@ button.lyds-pagination__control {
 	align-items: center;
 	gap: var(--space-3);
 	min-height: var(--control-target-min);
-	padding: var(--space-3) var(--space-2);
+	padding: var(--space-3) var(--space-4);
 	transition: background-color var(--motion-duration-fast) var(--motion-ease-out);
 }
 
 .lyds-collection__item:not(:last-child)::after {
 	position: absolute;
-	inset-inline: 1rem 0;
+	inset-inline: var(--space-4) 0;
 	inset-block-end: 0;
 	height: 0.03125rem;
 	background: var(--divider-subtle);
@@ -700,6 +700,7 @@ button.lyds-pagination__control {
 	position: relative;
 	overflow: hidden;
 	background: var(--background-transparent);
+	border-radius: var(--radius-md);
 }
 
 .lyds-scroll-area__viewport {
@@ -707,6 +708,7 @@ button.lyds-pagination__control {
 	height: 100%;
 	overflow: scroll;
 	overscroll-behavior: contain;
+	border-radius: inherit;
 	scrollbar-width: none;
 }
 
@@ -975,6 +977,12 @@ button.lyds-pagination__control {
 	}
 
 	.lyds-collection__meta {
-		grid-column: 1 / -1;
+		grid-column: 1;
+		grid-row: 2;
+	}
+
+	.lyds-collection__actions {
+		grid-column: 2;
+		grid-row: 1 / span 2;
 	}
 }

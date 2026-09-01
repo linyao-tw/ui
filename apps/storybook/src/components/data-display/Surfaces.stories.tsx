@@ -29,7 +29,6 @@ import {
 	ScrollAreaThumb,
 	ScrollAreaViewport,
 	SectionHeading,
-	Separator,
 	Table,
 	TableBody,
 	TableCaption,
@@ -85,26 +84,27 @@ export const ListCells: Story = {
 	name: "清單項目",
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
-			<SectionHeading annotation="3 個可用" description="最近使用的工作區。" action={<Badge variant="success">目前</Badge>}>
+			<SectionHeading annotation="3 個可用" description="依更新時間排序。" action={<Badge variant="success">目前</Badge>}>
 				最近的工作區
 			</SectionHeading>
-			<ListCell
-				leading={<Avatar alt="設計團隊" fallback="設" status="online" statusLabel="上線" />}
-				title="設計團隊"
-				description="12 位成員"
-				metadata="今天更新"
-				trailing={<CaretRightIcon aria-hidden weight="bold" />}
-			/>
-			<Separator spacing="none" variant="solid" />
-			<ListCell
-				action={{ href: "#research", "aria-label": "開啟研究工作區詳細資料" }}
-				leading={<Avatar alt="研究工作區" fallback="研" />}
-				title="名稱較長的使用者研究工作區"
-				description="私人工作區 · 8 位成員"
-				metadata="昨天"
-				trailing={<CaretRightIcon aria-hidden weight="bold" />}
-			/>
-			<ListCell disabled leading={<Avatar alt="已封存工作區" fallback="封" status="offline" statusLabel="已封存" />} title="已封存工作區" description="唯讀" metadata="已封存" />
+			<div className="lyds-story-list">
+				<ListCell
+					leading={<Avatar alt="設計團隊" fallback="設" status="online" statusLabel="上線" />}
+					title="設計團隊"
+					description="12 位成員"
+					metadata="今天更新"
+					trailing={<CaretRightIcon aria-hidden weight="bold" />}
+				/>
+				<ListCell
+					action={{ href: "#research", "aria-label": "開啟研究工作區詳細資料" }}
+					leading={<Avatar alt="研究工作區" fallback="研" />}
+					title="名稱較長的使用者研究工作區"
+					description="私人工作區 · 8 位成員"
+					metadata="昨天"
+					trailing={<CaretRightIcon aria-hidden weight="bold" />}
+				/>
+				<ListCell disabled leading={<Avatar alt="已封存工作區" fallback="封" status="offline" statusLabel="已封存" />} title="已封存工作區" description="唯讀" metadata="已封存" />
+			</div>
 		</div>
 	)
 };
@@ -112,7 +112,7 @@ export const ListCells: Story = {
 export const CollectionPrimitives: Story = {
 	name: "集合",
 	render: () => (
-		<Collection density="comfortable" className="lyds-story-stack lyds-story-stack--narrow">
+		<Collection density="comfortable" className="lyds-story-stack--narrow">
 			{[
 				["design", "設計規劃", "共用工作區", "今天更新"],
 				["research", "使用者研究", "私人工作區", "8 位成員"],
@@ -136,7 +136,7 @@ export const CollectionPrimitives: Story = {
 export const ScrollableCollection: Story = {
 	name: "可捲動清單",
 	render: () => (
-		<ScrollArea className="lyds-story-stack--narrow">
+		<ScrollArea className="lyds-story-scroll-area lyds-story-stack--narrow">
 			<ScrollAreaViewport aria-label="文件" role="region">
 				<ScrollAreaContent className="lyds-story-scroll-content">
 					{Array.from({ length: 10 }, (_, index) => (

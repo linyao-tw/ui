@@ -94,13 +94,30 @@ describe("selection controls", () => {
 		const user = userEvent.setup();
 		const onCheckedChange = vi.fn();
 		const { rerender } = render(<Switch aria-label="Cooling system" checked={false} onCheckedChange={onCheckedChange} />);
+		const control = screen.getByRole("switch", { name: "Cooling system" });
 
-		await user.click(screen.getByRole("switch", { name: "Cooling system" }));
+		expect(control).toHaveAttribute("data-unchecked");
+
+		await user.click(control);
 		expect(onCheckedChange).toHaveBeenCalledWith(true, expect.objectContaining({ reason: "none" }));
-		expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", "false");
+		expect(control).toHaveAttribute("aria-checked", "false");
 
 		rerender(<Switch aria-label="Cooling system" checked onCheckedChange={onCheckedChange} />);
 		expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", "true");
+		expect(screen.getByRole("switch")).toHaveAttribute("data-checked");
+	});
+
+	it("toggles an uncontrolled switch with Space", async () => {
+		const user = userEvent.setup();
+		render(<Switch aria-label="Automatic updates" defaultChecked />);
+		const control = screen.getByRole("switch", { name: "Automatic updates" });
+
+		control.focus();
+		await user.keyboard(" ");
+
+		expect(control).toHaveFocus();
+		expect(control).toHaveAttribute("aria-checked", "false");
+		expect(control).toHaveAttribute("data-unchecked");
 	});
 
 	it("changes a slider with the keyboard", async () => {

@@ -48,9 +48,9 @@ export function ProfileForm() {
 
 ```css
 .product-theme {
-	--control-primary: oklch(67% 0.22 32);
-	--control-primary-hover: oklch(72% 0.2 32);
-	--control-on-primary: oklch(10% 0.01 32);
+	--control-primary: var(--palette-signal-600);
+	--control-primary-hover: var(--palette-signal-700);
+	--control-on-primary: var(--palette-warm-25);
 	--focus-ring: oklch(48% 0.17 32);
 }
 ```

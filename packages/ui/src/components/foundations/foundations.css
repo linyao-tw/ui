@@ -339,7 +339,7 @@
 .lyds-avatar[data-variant="accent"] {
 	background: var(--control-primary);
 	border-color: var(--control-primary);
-	color: var(--text-on-accent);
+	color: var(--control-on-primary);
 }
 
 .lyds-avatar__image,
@@ -569,23 +569,14 @@
 	padding: var(--space-3) var(--space-4);
 	background: var(--background-secondary);
 	border: 0;
-	border-radius: var(--radius-none);
+	border-radius: var(--radius-md);
 	color: var(--text-main);
+	overflow: hidden;
 	transition:
 		background-color var(--motion-duration-fast) var(--motion-ease-out),
 		border-color var(--motion-duration-fast) var(--motion-ease-out),
 		box-shadow var(--motion-duration-fast) var(--motion-ease-out),
 		transform var(--motion-duration-fast) var(--motion-ease-out);
-}
-
-.lyds-list-cell::after {
-	position: absolute;
-	inset-inline: var(--space-4) 0;
-	inset-block-end: 0;
-	height: 0.5px;
-	background: var(--divider-subtle);
-	content: "";
-	pointer-events: none;
 }
 
 .lyds-list-cell[data-size="sm"] {
@@ -622,7 +613,7 @@
 	appearance: none;
 	background: var(--background-transparent);
 	border: 0;
-	border-radius: var(--radius-none);
+	border-radius: inherit;
 	cursor: pointer;
 }
 
@@ -710,6 +701,10 @@
 	font-size: var(--font-size-xs);
 	font-variant-numeric: tabular-nums lining-nums;
 	line-height: var(--line-height-heading);
+}
+
+.lyds-list-cell[data-selected] .lyds-list-cell__metadata {
+	color: var(--text-secondary);
 }
 
 @keyframes lyds-foundation-spin {
