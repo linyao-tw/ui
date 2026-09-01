@@ -1,6 +1,6 @@
 import { ContextMenu, DropdownMenu, MenuCheckboxItem, MenuCheckboxItemIndicator, MenuItem, MenuPopup, MenuPositioner, MenuSeparator, MenuTrigger } from "@lyds/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -19,9 +19,9 @@ export const Dropdown: Story = {
 		const body = within(document.body);
 		await userEvent.click(canvas.getByRole("button", { name: "操作" }));
 
-		expect(getComputedStyle(await body.findByRole("menuitem", { name: "查看詳細資料" })).cursor).toBe("pointer");
-		expect(getComputedStyle(body.getByRole("menuitem", { name: "無法封存" })).cursor).toBe("not-allowed");
-		expect(body.getByRole("menuitemcheckbox", { name: "顯示說明" })).toHaveAttribute("aria-checked", "true");
+		await expect(getComputedStyle(await body.findByRole("menuitem", { name: "查看詳細資料" })).cursor).toBe("pointer");
+		await expect(getComputedStyle(body.getByRole("menuitem", { name: "無法封存" })).cursor).toBe("not-allowed");
+		await expect(body.getByRole("menuitemcheckbox", { name: "顯示說明" })).toHaveAttribute("aria-checked", "true");
 	},
 	render: () => (
 		<DropdownMenu.Root>
@@ -52,9 +52,9 @@ export const Contextual: Story = {
 		const target = canvas.getByText("在此項目按滑鼠右鍵或 Shift+F10");
 		target.focus();
 		await userEvent.pointer([{ keys: "[MouseRight]", target }]);
-		expect(getComputedStyle(await body.findByRole("menuitem", { name: "查看詳細資料" })).cursor).toBe("pointer");
+		await expect(getComputedStyle(await body.findByRole("menuitem", { name: "查看詳細資料" })).cursor).toBe("pointer");
 		await userEvent.keyboard("{Escape}");
-		expect(target).toHaveFocus();
+		await waitFor(() => expect(target).toHaveFocus());
 	},
 	render: () => (
 		<ContextMenu.Root>

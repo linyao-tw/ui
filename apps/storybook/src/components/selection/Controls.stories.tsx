@@ -39,9 +39,9 @@ export const CheckboxStates: Story = {
 		const checked = canvas.getByRole("checkbox", { name: "已勾選" });
 		const checkedColor = resolveBackgroundColor(canvasElement, "--control-primary");
 
-		expect(getComputedStyle(checked).backgroundColor).toBe(checkedColor);
+		await expect(getComputedStyle(checked).backgroundColor).toBe(checkedColor);
 		await userEvent.click(checked);
-		expect(checked).toHaveAttribute("data-unchecked");
+		await expect(checked).toHaveAttribute("data-unchecked");
 	},
 	render: () => (
 		<div className="lyds-story-row">
@@ -61,9 +61,9 @@ export const Switch: Story = {
 		const checked = canvas.getByRole("switch", { name: "自動儲存變更" });
 		const checkedColor = resolveBackgroundColor(canvasElement, "--control-primary");
 
-		expect(getComputedStyle(checked).backgroundColor).toBe(checkedColor);
+		await expect(getComputedStyle(checked).backgroundColor).toBe(checkedColor);
 		await userEvent.click(checked);
-		expect(checked).toHaveAttribute("data-unchecked");
+		await expect(checked).toHaveAttribute("data-unchecked");
 	},
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">
@@ -124,10 +124,10 @@ export const SliderControl: Story = {
 		const track = input.parentElement?.parentElement;
 		const indicator = track?.firstElementChild;
 
-		expect(track).not.toBeNull();
-		expect(indicator).not.toBeNull();
-		expect(getComputedStyle(track!).backgroundColor).toBe(resolveBackgroundColor(canvasElement, "--control-border-hover"));
-		expect(getComputedStyle(indicator!).backgroundColor).toBe(resolveBackgroundColor(canvasElement, "--control-selected"));
+		await expect(track).not.toBeNull();
+		await expect(indicator).not.toBeNull();
+		await expect(getComputedStyle(track!).backgroundColor).toBe(resolveBackgroundColor(canvasElement, "--control-border-hover"));
+		await expect(getComputedStyle(indicator!).backgroundColor).toBe(resolveBackgroundColor(canvasElement, "--control-selected"));
 	},
 	render: () => (
 		<div className="lyds-story-stack lyds-story-stack--narrow">

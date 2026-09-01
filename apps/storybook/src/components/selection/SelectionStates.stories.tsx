@@ -260,8 +260,8 @@ export const MenuOpenWithRadioAndLink: Story = {
 		const body = within(document.body);
 		const selected = await body.findByRole("menuitemradio", { name: "寬鬆" });
 
-		expect(selected).toHaveAttribute("aria-checked", "true");
-		expect(selected.querySelector('[data-lyds-glyph="check"]')).toBeInTheDocument();
+		await expect(selected).toHaveAttribute("aria-checked", "true");
+		await expect(selected.querySelector('[data-lyds-glyph="check"]')).toBeInTheDocument();
 	},
 	render: () => (
 		<DropdownMenu.Root defaultOpen>
