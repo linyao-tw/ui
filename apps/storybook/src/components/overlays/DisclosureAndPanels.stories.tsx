@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>;
 
 export const AccordionSections: Story = {
 	render: () => (
-		<Accordion.Root className="lyds-story-stack lyds-story-stack--narrow">
+		<Accordion.Root defaultValue={["account"]} className="lyds-story-stack--narrow">
 			<Accordion.Item value="account">
 				<Accordion.Header>
 					<Accordion.Trigger>Account details</Accordion.Trigger>
@@ -38,7 +38,7 @@ export const AccordionSections: Story = {
 
 export const CollapsibleDetails: Story = {
 	render: () => (
-		<Collapsible.Root className="lyds-story-stack lyds-story-stack--narrow">
+		<Collapsible.Root className="lyds-story-stack--narrow">
 			<Collapsible.Trigger>Additional information</Collapsible.Trigger>
 			<Collapsible.Panel>
 				<p>No additional issues were found during the last review.</p>
