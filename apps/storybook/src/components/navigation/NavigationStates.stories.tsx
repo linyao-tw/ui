@@ -263,7 +263,7 @@ export const MenubarStates: Story = {
 		await expect(firstItem).toHaveFocus();
 		await userEvent.keyboard("{Escape}");
 		await waitFor(() => expect(trigger).toHaveAttribute("aria-expanded", "false"));
-		await expect(trigger).toHaveFocus();
+		await waitFor(() => expect(trigger).toHaveFocus());
 	},
 	render: () => (
 		<div className="lyds-story-stack">
