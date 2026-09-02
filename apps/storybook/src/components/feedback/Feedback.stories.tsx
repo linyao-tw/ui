@@ -1,4 +1,4 @@
-import { Alert, AlertActions, AlertContent, AlertDescription, AlertTitle, Banner, Button, EmptyState, Loader, Meter, Progress, Skeleton, Spinner } from "@lyds/ui";
+import { Alert, AlertActions, AlertContent, AlertDescription, AlertTitle, Banner, Button, EmptyState, Loader, Meter, Progress, Skeleton, Spinner } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import "../story-layout.css";

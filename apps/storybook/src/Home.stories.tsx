@@ -44,14 +44,14 @@ export const Introduction: Story = {
 						<h3>安裝</h3>
 						<p>安裝元件套件與 Phosphor 圖示。</p>
 						<pre className="foundation-code-block">
-							<code>pnpm add @lyds/ui @phosphor-icons/react</code>
+							<code>pnpm add @linyao.tw/ui @phosphor-icons/react</code>
 						</pre>
 					</article>
 					<article className="foundation-start-card">
 						<h3>匯入</h3>
 						<p>在應用程式入口匯入一次樣式，再從公開套件入口使用元件。</p>
 						<pre className="foundation-code-block">
-							<code>{`import "@lyds/ui/styles.css";\nimport { Button, DatePicker } from "@lyds/ui";`}</code>
+							<code>{`import "@linyao.tw/ui/styles.css";\nimport { Button, DatePicker } from "@linyao.tw/ui";`}</code>
 						</pre>
 					</article>
 				</div>

@@ -96,7 +96,7 @@ jobs:
           set -euo pipefail
           pack_directory="${RUNNER_TEMP}/lyds-pack"
           mkdir -p "$pack_directory"
-          pnpm --filter @lyds/ui pack --pack-destination "$pack_directory"
+          pnpm --filter @linyao.tw/ui pack --pack-destination "$pack_directory"
           shopt -s nullglob
           tarballs=("$pack_directory"/*.tgz)
           if [[ ${#tarballs[@]} -ne 1 ]]; then
@@ -115,7 +115,7 @@ jobs:
 
       - name: 記錄重跑時不衝突的檔案名稱
         id: artifact_name
-        run: echo "name=lyds-ui-release-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" >> "$GITHUB_OUTPUT"
+        run: echo "name=linyao-ui-release-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" >> "$GITHUB_OUTPUT"
 
       - name: 上傳已驗證的發佈檔案
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -185,7 +185,7 @@ jobs:
           {
             echo "### npm 發佈結果"
             echo
-            echo "- 套件：\`@lyds/ui@${RELEASE_VERSION}\`"
+            echo "- 套件：\`@linyao.tw/ui@${RELEASE_VERSION}\`"
             echo "- 類型：\`${RELEASE_KIND}\`"
             echo "- Dist-tag：\`${RELEASE_DIST_TAG}\`"
             echo "- 結果：\`${RELEASE_STATUS}\`"

@@ -1,4 +1,4 @@
-import { Autocomplete, Combobox, Select } from "@lyds/ui";
+import { Autocomplete, Combobox, Select } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";

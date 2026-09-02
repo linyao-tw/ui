@@ -1,8 +1,8 @@
 # 套件與發布規則
 
-Linyao Design System 是麟曜數位工作室的設計系統。npm 套件的技術名稱是 `@lyds/ui`，不得用套件名稱取代專案顯示名稱。
+Linyao Design System 是麟曜數位工作室的設計系統。npm 套件的技術名稱是 `@linyao.tw/ui`，不得用套件名稱取代專案顯示名稱。
 
-Git 是發布版本的唯一來源。CI 為發布暫時修改的版本號不得提交回儲存庫。發布必須使用乾淨的檢出、通過完整驗證、以 `--access public` 發布 `@lyds/ui`，並使用 npm Trusted Publishing／OIDC，不得提交 npm token。
+Git 是發布版本的唯一來源。CI 為發布暫時修改的版本號不得提交回儲存庫。發布必須使用乾淨的檢出、通過完整驗證、以 `--access public` 發布 `@linyao.tw/ui`，並使用 npm Trusted Publishing／OIDC，不得提交 npm token。
 
 只有以下兩個條件同時成立時才能發布：
 
@@ -25,7 +25,7 @@ npm 套件擁有者必須先把 GitHub 儲存庫與工作流程設為 trusted pu
 
 ```text
 <提交 SHA> -> sha6 = 前六個十六進位字元
-@lyds/ui@0.0.0-snapshot.<sha6>
+@linyao.tw/ui@0.0.0-snapshot.<sha6>
 npm dist-tag: snapshot
 ```
 
@@ -38,8 +38,8 @@ npm dist-tag: snapshot
 以 `v` 開頭的有效 SemVer tag 是版本唯一來源：
 
 ```text
-v1.2.3 -> @lyds/ui@1.2.3 -> npm dist-tag latest
-v2.0.0-beta.1 -> @lyds/ui@2.0.0-beta.1 -> npm dist-tag beta
+v1.2.3 -> @linyao.tw/ui@1.2.3 -> npm dist-tag latest
+v2.0.0-beta.1 -> @linyao.tw/ui@2.0.0-beta.1 -> npm dist-tag beta
 ```
 
 發布前必須驗證 SemVer、確認標籤所指的提交可從 `main` 到達、在乾淨的標籤檢出中執行完整驗證，並查詢 npm 上的精確版本。正式版或預發布版已存在時必須明確失敗；不得像快照一樣略過。
@@ -57,6 +57,6 @@ pnpm pack:check
 
 檢查 tarball 或執行不發布的預演，不代表取得 `npm publish` 授權。未取得使用者明確同意前，不得手動發布快照或標籤版本、啟用 `NPM_PUBLISH_ENABLED`、建立發布標籤或修改 npm dist-tag。
 
-正式發布前，必須確認已安裝的 Base UI 正式版本包含巢狀選單 portal ownership 修正 [#5058](https://github.com/mui/base-ui/pull/5058)。儲存庫可以暫時修補 Base UI 1.7.0 以驗證已合併的修正，但 pnpm workspace patch 不會隨 `@lyds/ui` tarball 傳給使用端。
+正式發布前，必須確認已安裝的 Base UI 正式版本包含巢狀選單 portal ownership 修正 [#5058](https://github.com/mui/base-ui/pull/5058)。儲存庫可以暫時修補 Base UI 1.7.0 以驗證已合併的修正，但 pnpm workspace patch 不會隨 `@linyao.tw/ui` tarball 傳給使用端。
 
 升級到含修正的 Base UI 正式版本後，才能移除暫時修補；接著使用獨立安裝的封裝套件，重新檢查子選單開啟狀態的 axe、方向鍵、Tab／Shift+Tab、Escape、焦點返回與 Safari VoiceOver。在這些檢查通過前不得發布。

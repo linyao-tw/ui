@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"build": "pnpm build:package && pnpm --filter @lyds/storybook build",
-		"build:package": "pnpm --filter @lyds/ui build",
+		"build:package": "pnpm --filter @linyao.tw/ui build",
 		"build:storybook": "pnpm build:package && pnpm --filter @lyds/storybook build",
 		"check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
 		"format": "prettier --write .",
@@ -18,8 +18,8 @@
 		"test": "pnpm test:unit && pnpm test:storybook",
 		"test:release": "node --test scripts/release/*.test.mjs",
 		"test:storybook": "pnpm --filter @lyds/storybook test",
-		"test:unit": "pnpm --filter @lyds/ui test",
-		"test:watch": "pnpm --filter @lyds/ui test:watch",
+		"test:unit": "pnpm --filter @linyao.tw/ui test",
+		"test:watch": "pnpm --filter @linyao.tw/ui test:watch",
 		"typecheck": "pnpm build:package && pnpm -r --if-present typecheck"
 	},
 	"devDependencies": {

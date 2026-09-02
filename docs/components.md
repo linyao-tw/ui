@@ -61,7 +61,7 @@ const [value, setValue] = React.useState("line-a");
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";
 import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
-import { Button, IconButton } from "@lyds/ui";
+import { Button, IconButton } from "@linyao.tw/ui";
 
 <Button startIcon={<FloppyDiskIcon weight="bold" />}>儲存變更</Button>;
 <Button endIcon={<ArrowRightIcon weight="bold" />}>繼續</Button>;
@@ -101,7 +101,7 @@ import { Button, IconButton } from "@lyds/ui";
 
 一般選項可使用高階 `Select`／`Combobox`。需要群組、分隔線、複合項目或特殊 render 時，使用同一元件的 parts，不直接混用未樣式化基礎元件。
 
-> [!IMPORTANT] Base UI 1.7.0 在展開巢狀子選單時會產生不合法的 portal owner。工作區暫時套用官方已合併但尚未發版的 [Base UI #5058](https://github.com/mui/base-ui/pull/5058) 原始 patch，為受限選單擁有者加上 `role="group"`；Storybook 的開啟狀態 axe 回歸測試必須保持啟用。pnpm 工作區 patch 不會由 `@lyds/ui` npm tarball 傳給使用者，因此正式發佈前必須升級到包含 #5058 的 Base UI 版本，移除 patch，並重新驗證子選單的方向鍵、Tab／Shift+Tab、Escape、焦點返回、axe 與 Safari VoiceOver。Base UI 焦點守衛用於 portal 的 Tab 順序導引，不得刪除、設為 inert 或以 MutationObserver 改寫。
+> [!IMPORTANT] Base UI 1.7.0 在展開巢狀子選單時會產生不合法的 portal owner。工作區暫時套用官方已合併但尚未發版的 [Base UI #5058](https://github.com/mui/base-ui/pull/5058) 原始 patch，為受限選單擁有者加上 `role="group"`；Storybook 的開啟狀態 axe 回歸測試必須保持啟用。pnpm 工作區 patch 不會由 `@linyao.tw/ui` npm tarball 傳給使用者，因此正式發佈前必須升級到包含 #5058 的 Base UI 版本，移除 patch，並重新驗證子選單的方向鍵、Tab／Shift+Tab、Escape、焦點返回、axe 與 Safari VoiceOver。Base UI 焦點守衛用於 portal 的 Tab 順序導引，不得刪除、設為 inert 或以 MutationObserver 改寫。
 
 ### 展開與結構
 
@@ -201,7 +201,7 @@ Linyao Design System 從套件根目錄重新匯出常用值類別與剖析器�
 
 ```tsx
 import { useState } from "react";
-import { CalendarDate, DateRangePicker } from "@lyds/ui";
+import { CalendarDate, DateRangePicker } from "@linyao.tw/ui";
 
 const [range, setRange] = useState({
 	start: new CalendarDate(2026, 9, 1),

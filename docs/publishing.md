@@ -1,8 +1,8 @@
 # 發佈
 
-本文件定義 `@lyds/ui` 的發佈規則，並同步適用於本機操作、GitHub Actions 與 Linyao Design System 代理技能。
+本文件定義 `@linyao.tw/ui` 的發佈規則，並同步適用於本機操作、GitHub Actions 與 Linyao Design System 代理技能。
 
-> [!IMPORTANT] `@lyds/ui` 尚未發佈。`NPM_PUBLISH_ENABLED` 預設不存在或不等於字串 `true`，發佈工作必須保持停用。只有完成 Storybook 審閱並取得儲存庫擁有者明確批准後，才能執行初始發佈或啟用發佈。
+> [!IMPORTANT] `@linyao.tw/ui` 尚未發佈。`NPM_PUBLISH_ENABLED` 預設不存在或不等於字串 `true`，發佈工作必須保持停用。只有完成 Storybook 審閱並取得儲存庫擁有者明確批准後，才能執行初始發佈或啟用發佈。
 
 ## 安全設定
 
@@ -51,15 +51,15 @@ NPM_PUBLISH_ENABLED=true
 ```text
 commit a1b2c3d4…
 -> 0.0.0-snapshot.a1b2c3
--> @lyds/ui@0.0.0-snapshot.a1b2c3
+-> @linyao.tw/ui@0.0.0-snapshot.a1b2c3
 -> dist-tag snapshot
 ```
 
 安裝方式：
 
 ```sh
-pnpm add @lyds/ui@snapshot
-pnpm add @lyds/ui@0.0.0-snapshot.a1b2c3
+pnpm add @linyao.tw/ui@snapshot
+pnpm add @linyao.tw/ui@0.0.0-snapshot.a1b2c3
 ```
 
 規則：
@@ -92,7 +92,7 @@ v2.0.0-beta.1 -> package 2.0.0-beta.1 -> dist-tag beta
 2. 移除 `v` 取得 npm 版本。
 3. 取得 `main` 歷史，確認標記的 commit 可從 `main` 追溯；否則失敗。
 4. 從 tag 的乾淨 checkout 執行完整安裝、格式、lint、型別檢查、測試、套件建置、Storybook 建置與封裝驗證。
-5. 查詢 `@lyds/ui@<version>`。
+5. 查詢 `@linyao.tw/ui@<version>`。
 6. 確切的標籤版本已存在時必須失敗，不得略過。
 7. 只在 CI 工作區／tarball 暫時設定版本；不 commit、不 push。
 8. 使用 `--access public`。
@@ -117,7 +117,7 @@ git tag v2.0.0-beta.1
 git push origin v2.0.0-beta.1
 ```
 
-Push tag 即為發佈要求。建立前先以 `npm view @lyds/ui@<version> version` 進行唯讀重複版本檢查；CI 仍須再次檢查。
+Push tag 即為發佈要求。建立前先以 `npm view @linyao.tw/ui@<version> version` 進行唯讀重複版本檢查；CI 仍須再次檢查。
 
 ### npm dist-tag 規則
 
@@ -156,11 +156,11 @@ Push tag 即為發佈要求。建立前先以 `npm view @lyds/ui@<version> versi
 
 ### 1. 確認 npm scope 與套件所有權
 
-確認 npm 帳號可公開發佈 `@lyds/*` scope，並啟用 2FA。確認 `@lyds/ui` 名稱與儲存庫 metadata 正確。
+確認 npm 帳號可公開發佈 `@linyao.tw/*` scope，並啟用 2FA。確認 `@linyao.tw/ui` 名稱與儲存庫 metadata 正確。
 
 ### 2. 建立套件頁面
 
-npm Trusted Publisher 設定位於既有套件的 Settings。若 `@lyds/ui` 尚無套件頁面，取得明確發佈批准後，才可使用互動式 npm 帳號與 2FA 執行一次非 `latest` 的初始發佈。不得使用假的穩定版本。
+npm Trusted Publisher 設定位於既有套件的 Settings。若 `@linyao.tw/ui` 尚無套件頁面，取得明確發佈批准後，才可使用互動式 npm 帳號與 2FA 執行一次非 `latest` 的初始發佈。不得使用假的穩定版本。
 
 安全流程：
 
@@ -175,7 +175,7 @@ npm Trusted Publisher 設定位於既有套件的 Settings。若 `@lyds/ui` 尚�
 
 ### 3. 設定 Trusted Publisher
 
-在 npmjs.com 開啟 `@lyds/ui` → Settings → Trusted publishing → GitHub Actions：
+在 npmjs.com 開啟 `@linyao.tw/ui` → Settings → Trusted publishing → GitHub Actions：
 
 | 欄位                 | 值                                                 |
 | -------------------- | -------------------------------------------------- |
@@ -192,7 +192,7 @@ Workflow filename 只填 `publish.yml`，不是 `.github/workflows/publish.yml`�
 若套件已存在、npm 帳號已啟用 2FA 且 CLI 支援 `npm trust`，也可使用相同資料設定。2026-08-31 的 `npm trust` 需要 npm 11.15+，高於發佈工作流程的 npm 11.5.1+ 最低需求。實際執行前應依最新 [npm trust CLI 文件](https://docs.npmjs.com/cli/v11/commands/npm-trust/) 確認，並先使用 `--dry-run`：
 
 ```sh
-npm trust github @lyds/ui \
+npm trust github @linyao.tw/ui \
 	--repo linyao-tw/ui \
 	--file publish.yml \
 	--allow-publish
@@ -226,7 +226,7 @@ Value: true
 - [ ] `pnpm install --frozen-lockfile` 成功。
 - [ ] `pnpm check` 成功。
 - [ ] `pnpm pack:check` 成功且已人工檢查 tarball。
-- [ ] `@lyds/ui` 版本／匯出／型別／樣式／授權／儲存庫 metadata 正確。
+- [ ] `@linyao.tw/ui` 版本／匯出／型別／樣式／授權／儲存庫 metadata 正確。
 - [ ] Base UI 正式版本已包含 #5058 子選單 portal owner 修正；暫時 patch 已移除；使用端 tarball 的子選單開啟狀態 axe／鍵盤／VoiceOver 驗證已通過。
 - [ ] npm 確切版本唯讀查詢符合快照／正式版本規則。
 - [ ] npm Trusted Publisher 欄位正確。

@@ -18,31 +18,31 @@ Linyao Design System 是麟曜數位工作室的設計系統。顯示名稱不�
 變更依賴前先檢查使用端：
 
 ```sh
-rg -n --glob 'package.json' --glob '!node_modules/**' '"(@lyds/ui|@phosphor-icons/react)"' .
-pnpm list @lyds/ui @phosphor-icons/react --depth 0
+rg -n --glob 'package.json' --glob '!node_modules/**' '"(@linyao.tw/ui|@phosphor-icons/react)"' .
+pnpm list @linyao.tw/ui @phosphor-icons/react --depth 0
 ```
 
 pnpm workspace 應限定至實際使用的套件：
 
 ```sh
-pnpm --filter '<consumer-package>' list @lyds/ui @phosphor-icons/react --depth 0
-pnpm --filter '<consumer-package>' add @lyds/ui @phosphor-icons/react
+pnpm --filter '<consumer-package>' list @linyao.tw/ui @phosphor-icons/react --depth 0
+pnpm --filter '<consumer-package>' add @linyao.tw/ui @phosphor-icons/react
 ```
 
 使用同一 workspace 的本機版本：
 
 ```sh
-pnpm --filter '<consumer-package>' add '@lyds/ui@workspace:*' @phosphor-icons/react
+pnpm --filter '<consumer-package>' add '@linyao.tw/ui@workspace:*' @phosphor-icons/react
 ```
 
-相容版本已存在時不要無故重裝。使用不熟悉的元件前，檢查套件 `exports`、型別與 Storybook。不得匯入 `@lyds/ui/src/**`、`@lyds/ui/dist/**` 或其他內部路徑。
+相容版本已存在時不要無故重裝。使用不熟悉的元件前，檢查套件 `exports`、型別與 Storybook。不得匯入 `@linyao.tw/ui/src/**`、`@linyao.tw/ui/dist/**` 或其他內部路徑。
 
 ## 樣式與主題
 
 在應用程式入口或框架版面中匯入一次樣式：
 
 ```tsx
-import "@lyds/ui/styles.css";
+import "@linyao.tw/ui/styles.css";
 ```
 
 在文件根節點或獨立區域設定主題：
@@ -79,7 +79,7 @@ Dialog、Menu、Tooltip 等元件會透過 portal 顯示於 `body` 時，優先�
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";
 import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
-import { Button, IconButton } from "@lyds/ui";
+import { Button, IconButton } from "@linyao.tw/ui";
 
 export function Actions() {
 	return (
@@ -129,7 +129,7 @@ CSR 與 SSR 的匯入應留在各自的環境邊界。
 
 ```tsx
 import { CalendarDate } from "@internationalized/date";
-import { DatePicker } from "@lyds/ui";
+import { DatePicker } from "@linyao.tw/ui";
 
 const minimum = new CalendarDate(2026, 1, 1);
 

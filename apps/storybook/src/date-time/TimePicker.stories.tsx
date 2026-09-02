@@ -1,4 +1,4 @@
-import { Time, TimeField, TimePicker } from "@lyds/ui";
+import { Time, TimeField, TimePicker } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect, userEvent, within } from "storybook/test";

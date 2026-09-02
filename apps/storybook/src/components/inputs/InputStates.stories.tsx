@@ -1,4 +1,4 @@
-import { CodeField, DropZone, FileUpload, Input, NumberField, OTPField, PasswordField, PhoneField, SearchField, Textarea, TextView } from "@lyds/ui";
+import { CodeField, DropZone, FileUpload, Input, NumberField, OTPField, PasswordField, PhoneField, SearchField, Textarea, TextView } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ReactNode } from "react";
 import { expect, within } from "storybook/test";

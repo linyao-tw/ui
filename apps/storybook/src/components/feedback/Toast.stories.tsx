@@ -1,4 +1,4 @@
-import { Button, createToastManager, ToastProvider, type ToastManager } from "@lyds/ui";
+import { Button, createToastManager, ToastProvider, type ToastManager } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useEffect, useMemo } from "react";
 

@@ -1,4 +1,4 @@
-import { CheckboxGroup, CheckboxItem, Switch as LydsSwitch, RadioGroup, RadioItem, SegmentedControl, SegmentedControlItem, Slider, Toggle, ToggleGroup } from "@lyds/ui";
+import { CheckboxGroup, CheckboxItem, Switch as LydsSwitch, RadioGroup, RadioItem, SegmentedControl, SegmentedControlItem, Slider, Toggle, ToggleGroup } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 

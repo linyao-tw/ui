@@ -1,4 +1,4 @@
-import { CalendarDate, CalendarDateTime, DateField, DatePicker, DateTimePicker } from "@lyds/ui";
+import { CalendarDate, CalendarDateTime, DateField, DatePicker, DateTimePicker } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect, userEvent } from "storybook/test";

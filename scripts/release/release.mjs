@@ -10,7 +10,7 @@ import { gunzipSync } from "node:zlib";
 
 const execFile = promisify(execFileCallback);
 
-export const PACKAGE_NAME = "@lyds/ui";
+export const PACKAGE_NAME = "@linyao.tw/ui";
 export const NPM_REGISTRY = "https://registry.npmjs.org/";
 export const MINIMUM_TRUSTED_PUBLISHING_NPM_VERSION = "11.5.1";
 

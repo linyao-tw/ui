@@ -1,4 +1,4 @@
-import { Tabs } from "@lyds/ui";
+import { Tabs } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import "../story-layout.css";

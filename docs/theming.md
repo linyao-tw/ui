@@ -7,10 +7,10 @@ Linyao Design System 以語意變數定義主題。所有主題共用相同的�
 在應用程式入口匯入一次：
 
 ```tsx
-import "@lyds/ui/styles.css";
+import "@linyao.tw/ui/styles.css";
 ```
 
-不得從 `@lyds/ui/dist/**`、`src/**` 或內部 CSS 路徑匯入。唯一公開樣式入口是 `@lyds/ui/styles.css`。
+不得從 `@linyao.tw/ui/dist/**`、`src/**` 或內部 CSS 路徑匯入。唯一公開樣式入口是 `@linyao.tw/ui/styles.css`。
 
 ## 選擇主題
 

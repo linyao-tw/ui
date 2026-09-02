@@ -1,4 +1,4 @@
-import { Avatar, Badge, Button, Card, CardBody, CardDescription, CardFooter, CardHeader, CardTitle, IconButton, Link, ListCell, SectionHeading, Separator } from "@lyds/ui";
+import { Avatar, Badge, Button, Card, CardBody, CardDescription, CardFooter, CardHeader, CardTitle, IconButton, Link, ListCell, SectionHeading, Separator } from "@linyao.tw/ui";
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { BellIcon } from "@phosphor-icons/react/dist/csr/Bell";
 import { CaretRightIcon } from "@phosphor-icons/react/dist/csr/CaretRight";

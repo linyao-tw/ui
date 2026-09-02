@@ -1,4 +1,4 @@
-import "@lyds/ui/styles.css";
+import "@linyao.tw/ui/styles.css";
 import "./preview.css";
 
 import type { Preview } from "@storybook/react-vite";

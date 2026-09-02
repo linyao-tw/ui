@@ -1,4 +1,4 @@
-import { Badge, Button, Card, CardBody, CardDescription, CardHeader, CardTitle, Switch } from "@lyds/ui";
+import { Badge, Button, Card, CardBody, CardDescription, CardHeader, CardTitle, Switch } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import "./foundations.css";

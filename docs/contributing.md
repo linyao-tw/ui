@@ -25,7 +25,7 @@ command -v playwright
 
 ## 新增元件前的檢查
 
-1. `@lyds/ui` 是否已有相同語意的元件？
+1. `@linyao.tw/ui` 是否已有相同語意的元件？
 2. 是否能以現有 parts 或 `render` 組合？
 3. 差異是否只需調整版面或設計變數設定？
 4. Base UI 是否已提供所需行為？
@@ -84,7 +84,7 @@ command -v playwright
 - 鍵盤互動／play function；
 - 日期地區設定／範圍／限制或浮層巢狀結構等特定情況。
 
-Storybook 必須從 `@lyds/ui` 公開 API 匯入，不得使用 `../../packages/ui/src/**`。
+Storybook 必須從 `@linyao.tw/ui` 公開 API 匯入，不得使用 `../../packages/ui/src/**`。
 
 ### 測試
 

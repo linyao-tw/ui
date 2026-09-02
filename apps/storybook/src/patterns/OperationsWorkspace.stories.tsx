@@ -71,7 +71,7 @@ import {
 	ToastProvider,
 	createToastManager,
 	type ToastManager
-} from "@lyds/ui";
+} from "@linyao.tw/ui";
 import { ArrowClockwiseIcon } from "@phosphor-icons/react/dist/csr/ArrowClockwise";
 import { BellIcon } from "@phosphor-icons/react/dist/csr/Bell";
 import { CaretRightIcon } from "@phosphor-icons/react/dist/csr/CaretRight";

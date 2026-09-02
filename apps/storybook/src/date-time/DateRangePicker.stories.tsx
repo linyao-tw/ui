@@ -1,4 +1,4 @@
-import { CalendarDate, DateRangePicker } from "@lyds/ui";
+import { CalendarDate, DateRangePicker } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect } from "storybook/test";

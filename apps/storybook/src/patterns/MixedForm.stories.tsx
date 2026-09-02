@@ -15,7 +15,7 @@ import {
 	TimePicker,
 	parseDate,
 	parseTime
-} from "@lyds/ui";
+} from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { FormEvent } from "react";
 import { useState } from "react";

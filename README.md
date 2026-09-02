@@ -1,6 +1,6 @@
 # Linyao Design System
 
-Linyao Design System 是麟曜數位工作室的設計系統，提供 React 元件、設計變數、亮色／深色主題與共用樣式。預計以 npm 套件 `@lyds/ui` 發佈；`@lyds/ui` 與 `lyds-*` 僅為程式識別名稱，不是專案名稱。
+Linyao Design System 是麟曜數位工作室的設計系統，提供 React 元件、設計變數、亮色／深色主題與共用樣式。預計以 npm 套件 `@linyao.tw/ui` 發佈；`lyds-*` 僅保留於既有 CSS 類別、主題屬性與其他技術 API，不是專案名稱。
 
 元件結構、尺寸、`variant` 與互動狀態以 Modulor Figma 可驗證的設計為依據，色盤改用 Limestone、Charcoal 與 Vermilion。Figma 未提供的元件沿用相同的表面、圓角、字級、間距與狀態規則。
 
@@ -14,29 +14,29 @@ Linyao Design System 是麟曜數位工作室的設計系統，提供 React 元�
 - 提供完整的亮色／深色語意色彩、尺寸、字體、形狀、陰影與動態效果變數。
 - 元件 CSS 只使用語意變數，不包含產品邏輯或硬編碼品牌色。
 - Storybook 用於元件審閱、狀態展示與可存取性檢查。
-- 元件、設計變數、主題與 CSS 均由 `@lyds/ui` 提供；介面圖示統一使用 `@phosphor-icons/react`。
+- 元件、設計變數、主題與 CSS 均由 `@linyao.tw/ui` 提供；介面圖示統一使用 `@phosphor-icons/react`。
 
 ## 安裝
 
 公開發佈後可安裝：
 
 ```sh
-pnpm add @lyds/ui @phosphor-icons/react
+pnpm add @linyao.tw/ui @phosphor-icons/react
 ```
 
-目前請從此工作區開發與審閱；不要假設 npm registry 已存在 `@lyds/ui`。
+目前請從此工作區開發與審閱；不要假設 npm registry 已存在 `@linyao.tw/ui`。
 
 在應用程式入口匯入一次樣式：
 
 ```tsx
-import "@lyds/ui/styles.css";
+import "@linyao.tw/ui/styles.css";
 ```
 
 從套件根目錄使用公開 API：
 
 ```tsx
 import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";
-import { Button, Card, CardBody, CardTitle, TextField } from "@lyds/ui";
+import { Button, Card, CardBody, CardTitle, TextField } from "@linyao.tw/ui";
 
 export function AccountPanel() {
 	return (
@@ -105,7 +105,7 @@ Motion/Ease/InOut -> --motion-ease-in-out
 
 ```tsx
 import { useState } from "react";
-import { CalendarDate, DatePicker } from "@lyds/ui";
+import { CalendarDate, DatePicker } from "@linyao.tw/ui";
 
 export function DeliveryDate() {
 	const [value, setValue] = useState<CalendarDate | null>(new CalendarDate(2026, 9, 1));
@@ -132,13 +132,13 @@ pnpm format:check       # 檢查 Prettier 格式
 pnpm lint               # 執行 ESLint
 pnpm typecheck          # 檢查工作區 TypeScript
 pnpm test               # 執行元件與互動測試
-pnpm build:package      # 建置 @lyds/ui
+pnpm build:package      # 建置 @linyao.tw/ui
 pnpm build:storybook    # 建置 Storybook
 pnpm pack:check         # 檢查 npm tarball
 pnpm check              # 執行完整本機檢查
 ```
 
-Storybook 透過 `@lyds/ui` 的工作區套件 API 使用元件，以驗證匯出項目與 CSS 封裝。
+Storybook 透過 `@linyao.tw/ui` 的工作區套件 API 使用元件，以驗證匯出項目與 CSS 封裝。
 
 ### 線上 Storybook
 
@@ -178,4 +178,4 @@ Linyao Design System 以 WCAG 2.2 AA 為目標。Base UI 與 React Aria Componen
 
 ## 授權
 
-`@lyds/ui` 的 package metadata 宣告為 Apache-2.0。發佈前應確認 repository 與 package tarball 的授權檔一致且完整。
+`@linyao.tw/ui` 的 package metadata 宣告為 Apache-2.0。發佈前應確認 repository 與 package tarball 的授權檔一致且完整。

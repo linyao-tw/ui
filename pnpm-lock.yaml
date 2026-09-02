@@ -56,7 +56,7 @@ importers:
 
   apps/storybook:
     dependencies:
-      '@lyds/ui':
+      '@linyao.tw/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@phosphor-icons/react':

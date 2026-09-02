@@ -1,4 +1,4 @@
-import { Calendar, CalendarDate } from "@lyds/ui";
+import { Calendar, CalendarDate } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect } from "storybook/test";

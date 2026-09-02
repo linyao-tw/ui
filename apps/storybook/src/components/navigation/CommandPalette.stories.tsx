@@ -14,7 +14,7 @@ import {
 	CommandPaletteTitle,
 	CommandPaletteTrigger,
 	CommandPaletteViewport
-} from "@lyds/ui";
+} from "@linyao.tw/ui";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, waitFor, within } from "storybook/test";

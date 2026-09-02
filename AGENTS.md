@@ -27,8 +27,8 @@ server/auth: validate session cookie
 
 ## Linyao Design System Skill
 
-Linyao Design System 是麟曜數位工作室的設計系統。專案顯示名稱只能使用 `Linyao Design System`，不得縮寫。小寫 `lyds` 只保留於 `@lyds/ui`、`data-lyds-theme`、Skill 識別與其他技術 API。
+Linyao Design System 是麟曜數位工作室的設計系統。專案顯示名稱只能使用 `Linyao Design System`，不得縮寫。小寫 `lyds` 只保留於 `data-lyds-theme`、CSS 類別、Skill 識別與其他既有技術 API。
 
-安裝或使用 `@lyds/ui`、組合元件、調整語意設計變數或主題、新增元件、撰寫 Storybook 或測試、檢查無障礙，或準備發布時，必須先讀取 `skills/lyds-ui/SKILL.md`，並依工作類型讀取其中指定的參考文件。
+安裝或使用 `@linyao.tw/ui`、組合元件、調整語意設計變數或主題、新增元件、撰寫 Storybook 或測試、檢查無障礙，或準備發布時，必須先讀取 `skills/lyds-ui/SKILL.md`，並依工作類型讀取其中指定的參考文件。
 
-優先使用既有公開元件或組合方式，不要先建立新的基礎元件。未取得使用者明確同意前，不得發布 `@lyds/ui`、建立發布標籤、啟用 npm 發布開關或變更 npm dist-tag。
+優先使用既有公開元件或組合方式，不要先建立新的基礎元件。未取得使用者明確同意前，不得發布 `@linyao.tw/ui`、建立發布標籤、啟用 npm 發布開關或變更 npm dist-tag。

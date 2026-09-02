@@ -1,4 +1,4 @@
-import { Accordion, AlertDialog, BottomSheet, Button, Collapsible, Dialog, Drawer, Popover, Tabs, Tooltip } from "@lyds/ui";
+import { Accordion, AlertDialog, BottomSheet, Button, Collapsible, Dialog, Drawer, Popover, Tabs, Tooltip } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect, userEvent, within } from "storybook/test";

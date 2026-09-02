@@ -63,7 +63,7 @@ import {
 	ToolbarInput,
 	ToolbarLink,
 	ToolbarSeparator
-} from "@lyds/ui";
+} from "@linyao.tw/ui";
 import { ArchiveIcon } from "@phosphor-icons/react/dist/csr/Archive";
 import { BellIcon } from "@phosphor-icons/react/dist/csr/Bell";
 import { GearIcon } from "@phosphor-icons/react/dist/csr/Gear";

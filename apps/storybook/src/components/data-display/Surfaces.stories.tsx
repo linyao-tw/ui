@@ -36,7 +36,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow
-} from "@lyds/ui";
+} from "@linyao.tw/ui";
 import { CaretRightIcon } from "@phosphor-icons/react/dist/csr/CaretRight";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 

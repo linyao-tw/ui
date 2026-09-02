@@ -1,6 +1,6 @@
 # 架構
 
-Linyao Design System 採 pnpm 單一儲存庫架構，對外只提供 `@lyds/ui`。使用者安裝一個套件即可取得 React 元件、TypeScript 型別與 CSS；Storybook、測試與發佈流程使用相同的公開邊界。
+Linyao Design System 採 pnpm 單一儲存庫架構，對外只提供 `@linyao.tw/ui`。使用者安裝一個套件即可取得 React 元件、TypeScript 型別與 CSS；Storybook、測試與發佈流程使用相同的公開邊界。
 
 ## 工作區結構
 
@@ -17,20 +17,20 @@ Linyao Design System 採 pnpm 單一儲存庫架構，對外只提供 `@lyds/ui`
 └─ .github/workflows/  # CI 與受開關保護的發佈流程
 ```
 
-根目錄與 `apps/storybook` 的套件均為 `private: true`。只有 `packages/ui` 對應 `@lyds/ui`。
+根目錄與 `apps/storybook` 的套件均為 `private: true`。只有 `packages/ui` 對應 `@linyao.tw/ui`。
 
 ## 公開套件邊界
 
 公開使用方式：
 
 ```tsx
-import { Button, DatePicker } from "@lyds/ui";
-import "@lyds/ui/styles.css";
+import { Button, DatePicker } from "@linyao.tw/ui";
+import "@linyao.tw/ui/styles.css";
 ```
 
 `packages/ui/package.json` 的 `exports` 是公開 API 的依據。`src/**`、測試工具、內部工具與建置設定均不是公開 API。`files` 白名單與 `pnpm pack:check` 會限制 tarball 內容。
 
-CSS 標記為 side effect，避免正式建置的 tree shaking 移除樣式。建置必須輸出 ESM JavaScript、TypeScript 宣告與 `dist/styles.css`。Storybook 只能透過 `@lyds/ui` 工作區依賴使用套件，不得以跨套件相對路徑匯入原始碼。
+CSS 標記為 side effect，避免正式建置的 tree shaking 移除樣式。建置必須輸出 ESM JavaScript、TypeScript 宣告與 `dist/styles.css`。Storybook 只能透過 `@linyao.tw/ui` 工作區依賴使用套件，不得以跨套件相對路徑匯入原始碼。
 
 目前使用單一根目錄匯出。只有在 bundle 分析證明有需要、子路徑有穩定維護邊界、型別與 CSS side effects 可測試，而且不會暴露內部檔案結構時，才新增元件子路徑匯出。
 
@@ -64,7 +64,7 @@ Base UI 不提供完整的日期元件，因此日期與時間元件使用：
 
 ### 圖示
 
-`@phosphor-icons/react` 是唯一標準介面圖示套件。它是 `@lyds/ui` 的同儕依賴，也是套件與 Storybook 的開發依賴。建置時會將 Phosphor 設為外部依賴，不把整套圖示庫包入 `@lyds/ui`。
+`@phosphor-icons/react` 是唯一標準介面圖示套件。它是 `@linyao.tw/ui` 的同儕依賴，也是套件與 Storybook 的開發依賴。建置時會將 Phosphor 設為外部依賴，不把整套圖示庫包入 `@linyao.tw/ui`。
 
 套件原始碼、Storybook 與一般用戶端元件使用個別 `/dist/csr/<Name>` 匯出；React Server Components 使用 `/ssr`。品牌標誌、插圖與資料視覺化不屬於介面圖示，但仍需設計審核；不得用手寫 JSX SVG、Unicode 字形或 CSS 偽元素圖示取代既有圖示。
 
@@ -139,7 +139,7 @@ Base UI 不提供完整的日期元件，因此日期與時間元件使用：
 4. 不包含業務假設；
 5. 在架構或元件文件記錄原因。
 
-不得加入 MUI、Chakra UI、Mantine、Ant Design 或另一套樣式執行環境。GSAP 不得成為 `@lyds/ui` 執行期依賴；一般動態效果使用設計變數控制的 CSS transition／animation。
+不得加入 MUI、Chakra UI、Mantine、Ant Design 或另一套樣式執行環境。GSAP 不得成為 `@linyao.tw/ui` 執行期依賴；一般動態效果使用設計變數控制的 CSS transition／animation。
 
 ## 驗證範圍
 

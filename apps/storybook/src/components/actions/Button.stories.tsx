@@ -1,4 +1,4 @@
-import { Badge, Button, Card, CardBody, CardDescription, CardFooter, CardHeader, CardTitle, IconButton } from "@lyds/ui";
+import { Badge, Button, Card, CardBody, CardDescription, CardFooter, CardHeader, CardTitle, IconButton } from "@linyao.tw/ui";
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { EyeIcon } from "@phosphor-icons/react/dist/csr/Eye";
 import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";

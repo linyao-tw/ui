@@ -1,6 +1,6 @@
-# @lyds/ui
+# @linyao.tw/ui
 
-Linyao Design System 是麟曜數位工作室的設計系統。`@lyds/ui` 提供 React 元件、TypeScript 型別、語意設計變數、亮色與深色主題，以及元件樣式。
+Linyao Design System 是麟曜數位工作室的設計系統。`@linyao.tw/ui` 提供 React 元件、TypeScript 型別、語意設計變數、亮色與深色主題，以及元件樣式。
 
 > 此套件尚未發佈至 npm。取得專案負責人明確批准前，不得發佈套件。
 
@@ -9,20 +9,20 @@ Linyao Design System 是麟曜數位工作室的設計系統。`@lyds/ui` 提供
 套件公開發佈後，可使用 pnpm 安裝：
 
 ```sh
-pnpm add @lyds/ui @phosphor-icons/react
+pnpm add @linyao.tw/ui @phosphor-icons/react
 ```
 
 在應用程式入口匯入一次樣式：
 
 ```tsx
-import "@lyds/ui/styles.css";
+import "@linyao.tw/ui/styles.css";
 ```
 
 ## 使用
 
 ```tsx
 import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";
-import { Button, TextField } from "@lyds/ui";
+import { Button, TextField } from "@linyao.tw/ui";
 
 export function ProfileForm() {
 	return (
@@ -68,11 +68,11 @@ export function ProfileForm() {
 請從套件公開匯出項目匯入：
 
 ```tsx
-import { Button, DatePicker } from "@lyds/ui";
-import "@lyds/ui/styles.css";
+import { Button, DatePicker } from "@linyao.tw/ui";
+import "@linyao.tw/ui/styles.css";
 ```
 
-不要匯入 `@lyds/ui/src/**`、`@lyds/ui/dist/**` 或內部工具。公開介面以套件提供的 `dist/index.d.ts` 為準。
+不要匯入 `@linyao.tw/ui/src/**`、`@linyao.tw/ui/dist/**` 或內部工具。公開介面以套件提供的 `dist/index.d.ts` 為準。
 
 ## 無障礙
 

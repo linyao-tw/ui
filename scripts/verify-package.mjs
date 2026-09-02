@@ -196,7 +196,7 @@ function assertPackageFiles(files, label) {
 	}
 
 	if (problems.length > 0) {
-		throw new Error(`${label} violates the @lyds/ui tarball contract.\n${problems.join("\n")}`);
+		throw new Error(`${label} violates the @linyao.tw/ui tarball contract.\n${problems.join("\n")}`);
 	}
 }
 
@@ -270,7 +270,7 @@ async function verifyConsumer(tarballPath, temporaryRoot, packageJson) {
 		private: true,
 		type: "module",
 		dependencies: {
-			"@lyds/ui": `file:${tarballPath}`,
+			"@linyao.tw/ui": `file:${tarballPath}`,
 			"@phosphor-icons/react": dependencyVersion(packageJson, "@phosphor-icons/react"),
 			"@types/react": dependencyVersion(packageJson, "@types/react"),
 			"@types/react-dom": dependencyVersion(packageJson, "@types/react-dom"),
@@ -290,16 +290,16 @@ async function verifyConsumer(tarballPath, temporaryRoot, packageJson) {
 		`import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { Button, CodeField, DatePicker } from "@lyds/ui";
+import { Button, CodeField, DatePicker } from "@linyao.tw/ui";
 
 for (const [name, value] of Object.entries({ Button, CodeField, DatePicker, PlusIcon })) {
-  if (value == null) throw new Error(\`@lyds/ui did not provide the named ESM export \${name}.\`);
+  if (value == null) throw new Error(\`@linyao.tw/ui did not provide the named ESM export \${name}.\`);
 }
 
-const cssUrl = import.meta.resolve("@lyds/ui/styles.css");
+const cssUrl = import.meta.resolve("@linyao.tw/ui/styles.css");
 const cssPath = fileURLToPath(cssUrl);
 const css = await readFile(cssPath, "utf8");
-if (css.trim().length === 0) throw new Error("@lyds/ui/styles.css resolved to an empty file.");
+if (css.trim().length === 0) throw new Error("@linyao.tw/ui/styles.css resolved to an empty file.");
 
 console.log(\`Named ESM imports work; CSS export resolves to \${cssPath}.\`);
 `
@@ -312,7 +312,7 @@ console.log(\`Named ESM imports work; CSS export resolves to \${cssPath}.\`);
 	await writeFile(
 		typeScriptSmokePath,
 		`import { createElement, type ComponentProps } from "react";
-import { Button, CodeField, DatePicker } from "@lyds/ui";
+import { Button, CodeField, DatePicker } from "@linyao.tw/ui";
 
 const buttonProps = { children: "Verify package", startIcon: createElement("span") } satisfies ComponentProps<typeof Button>;
 const codeFieldProps = {
@@ -352,7 +352,7 @@ void DatePicker;
 
 	runCommand("Verify TypeScript NodeNext resolution", process.execPath, [workspaceCli.tsc, "--project", join(consumerDirectory, "tsconfig.json")], { cwd: repositoryRoot });
 
-	await writeFile(join(consumerDirectory, "button-consumer.js"), 'export { Button } from "@lyds/ui";\n');
+	await writeFile(join(consumerDirectory, "button-consumer.js"), 'export { Button } from "@linyao.tw/ui";\n');
 	await writeFile(
 		join(consumerDirectory, "vite.config.mjs"),
 		`export default {
@@ -391,8 +391,8 @@ function formatError(error) {
 async function main() {
 	const { providedTarball } = parseArguments(process.argv.slice(2));
 	const packageJson = await readPackageJson();
-	if (packageJson.name !== "@lyds/ui") {
-		throw new Error(`Expected packages/ui to be @lyds/ui, found ${JSON.stringify(packageJson.name)}.`);
+	if (packageJson.name !== "@linyao.tw/ui") {
+		throw new Error(`Expected packages/ui to be @linyao.tw/ui, found ${JSON.stringify(packageJson.name)}.`);
 	}
 	assertPhosphorPeerContract(packageJson, "packages/ui/package.json");
 
@@ -401,7 +401,7 @@ async function main() {
 	let temporaryRoot;
 
 	try {
-		runCommand("Build @lyds/ui before packing", "pnpm", ["--filter", "@lyds/ui", "build"]);
+		runCommand("Build @linyao.tw/ui before packing", "pnpm", ["--filter", "@linyao.tw/ui", "build"]);
 
 		const npmDryRunValue = parseJsonOutput(
 			runCommand("Inspect npm's dry-run package manifest", "npm", ["pack", "--dry-run", "--json", "--ignore-scripts"], { capture: true, cwd: packageDirectory }),

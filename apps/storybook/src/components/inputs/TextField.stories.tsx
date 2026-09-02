@@ -1,4 +1,4 @@
-import { CodeField, Input, PasswordField, PhoneField, SearchField, Textarea, TextField, TextView } from "@lyds/ui";
+import { CodeField, Input, PasswordField, PhoneField, SearchField, Textarea, TextField, TextView } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 

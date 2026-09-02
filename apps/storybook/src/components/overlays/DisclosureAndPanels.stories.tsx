@@ -1,4 +1,4 @@
-import { Accordion, BottomSheet, Button, Collapsible, Drawer } from "@lyds/ui";
+import { Accordion, BottomSheet, Button, Collapsible, Drawer } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 

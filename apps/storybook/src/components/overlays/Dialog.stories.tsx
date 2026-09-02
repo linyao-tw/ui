@@ -1,4 +1,4 @@
-import { AlertDialog, Button, Dialog, TextField } from "@lyds/ui";
+import { AlertDialog, Button, Dialog, TextField } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
