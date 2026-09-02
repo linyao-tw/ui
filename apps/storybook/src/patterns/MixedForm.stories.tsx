@@ -59,7 +59,6 @@ function DeploymentForm() {
 			<section className="pattern-shell" aria-labelledby="release-title">
 				<aside className="pattern-sidebar">
 					<div className="pattern-brand">
-						<span className="pattern-overline">Linyao Design System</span>
 						<h1>部署設定</h1>
 						<p>設定部署環境、日期、時間與通知。</p>
 					</div>
@@ -89,7 +88,6 @@ function DeploymentForm() {
 				<form className="pattern-form" onSubmit={handleSubmit}>
 					<header className="pattern-form__header">
 						<div className="pattern-form__header-copy">
-							<span className="pattern-overline">時間</span>
 							<h2 id="release-title">發布內容</h2>
 							<p className="pattern-form__intro">設定發布時間、流量與審核方式。</p>
 						</div>
@@ -123,13 +121,32 @@ function DeploymentForm() {
 							/>
 						</div>
 
-						<TextField description="選填的變更單編號。" label="變更單編號" name="changeReference" placeholder="REL-2048" />
+						<div className="pattern-field">
+							<span className="pattern-field-label" id="change-reference-label">
+								變更單編號
+							</span>
+							<TextField aria-labelledby="change-reference-label" description="選填的變更單編號。" name="changeReference" placeholder="REL-2048" />
+						</div>
 
 						<DatePicker defaultValue={parseDate("2026-09-04")} description="選擇部署日期。" firstDayOfWeek="mon" label="部署日期" locale="en-GB" name="deploymentDate" />
 
 						<TimePicker defaultValue={parseTime("21:30")} description="輸入部署開始時間。" granularity="minute" hourCycle={24} label="開始時間" locale="en-GB" name="startTime" />
 
-						<NumberField defaultValue={25} description="設定初始導入流量。" format={{ style: "unit", unit: "percent" }} label="初始流量" max={100} min={0} name="traffic" step={5} />
+						<div className="pattern-field">
+							<span className="pattern-field-label" id="initial-traffic-label">
+								初始流量
+							</span>
+							<NumberField
+								aria-labelledby="initial-traffic-label"
+								defaultValue={25}
+								description="設定初始導入流量。"
+								format={{ style: "unit", unit: "percent" }}
+								max={100}
+								min={0}
+								name="traffic"
+								step={5}
+							/>
+						</div>
 
 						<div className="pattern-field">
 							<span className="pattern-field-label">部署方式</span>

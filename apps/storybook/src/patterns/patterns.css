@@ -13,7 +13,6 @@
 	margin-inline: auto;
 	overflow: hidden;
 	background: var(--background-elevated);
-	border: var(--border-width-hairline) solid var(--divider-main);
 	border-radius: var(--radius-lg);
 }
 
@@ -31,7 +30,6 @@
 	gap: var(--space-4);
 }
 
-.pattern-overline,
 .pattern-step__index,
 .pattern-meter__label,
 .pattern-summary dt,
@@ -46,7 +44,6 @@
 	letter-spacing: var(--letter-spacing-body);
 }
 
-.pattern-overline,
 .pattern-meter__label {
 	color: var(--text-accent);
 }
@@ -190,7 +187,6 @@
 	gap: var(--space-5);
 	padding: var(--space-5);
 	background: var(--background-secondary);
-	border: var(--border-width-hairline) solid var(--divider-subtle);
 	border-radius: var(--radius-md);
 }
 
@@ -222,7 +218,6 @@
 	gap: var(--space-1);
 	padding: var(--space-4);
 	background: var(--background-secondary);
-	border: var(--border-width-hairline) solid var(--divider-subtle);
 	border-radius: var(--radius-sm);
 }
 

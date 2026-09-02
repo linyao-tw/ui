@@ -1,5 +1,6 @@
 import { addons } from "storybook/manager-api";
 
 addons.setConfig({
-	brandTitle: "Linyao Design System"
+	brandTitle: "Linyao Design System",
+	panelPosition: "right"
 });

@@ -5,9 +5,10 @@
 }
 
 .ops-workspace[data-layout="narrow"] {
+	width: 100%;
 	max-width: 42rem;
 	margin-inline: auto;
-	border-inline: var(--border-width-hairline) solid var(--divider-subtle);
+	overflow-x: clip;
 }
 
 .ops-skip-link {
@@ -60,7 +61,6 @@
 	gap: var(--space-2);
 }
 
-.ops-eyebrow,
 .ops-field-label,
 .ops-filter-summary,
 .ops-footer,
@@ -72,11 +72,6 @@
 	line-height: var(--line-height-body);
 }
 
-.ops-eyebrow {
-	color: var(--text-accent);
-	font-weight: var(--font-weight-semibold);
-}
-
 .ops-hero h1 {
 	color: var(--text-title);
 	font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-display));
@@ -85,7 +80,7 @@
 	letter-spacing: var(--letter-spacing-tight);
 }
 
-.ops-hero p:not(.ops-eyebrow),
+.ops-hero p,
 .ops-section-header p {
 	color: var(--text-secondary);
 	font-size: var(--font-size-md);
@@ -168,9 +163,17 @@
 .ops-panel {
 	padding: var(--space-6);
 	background: var(--background-elevated);
-	border: var(--border-width-hairline) solid var(--divider-main);
 	border-radius: var(--radius-lg);
 	box-shadow: var(--shadow-low);
+}
+
+.ops-tabs,
+.ops-tabs > .lyds-tabs__panel,
+.ops-filter-panel,
+.ops-panel,
+.ops-secondary-grid,
+.ops-kpi-grid {
+	min-width: 0;
 }
 
 .ops-filter-grid {
@@ -371,6 +374,51 @@
 	.ops-footer {
 		padding: var(--space-5) var(--space-4);
 	}
+}
+
+.ops-workspace[data-layout="narrow"] .ops-main {
+	width: min(calc(100% - (var(--space-4) * 2)), 90rem);
+	padding-block: var(--space-6) var(--space-10);
+}
+
+.ops-workspace[data-layout="narrow"] :is(.ops-kpi-grid, .ops-filter-grid, .ops-secondary-grid) {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.ops-workspace[data-layout="narrow"] .ops-hero {
+	align-items: start;
+	flex-direction: column;
+}
+
+.ops-workspace[data-layout="narrow"] :is(.ops-filter-panel, .ops-panel) {
+	padding: var(--space-4);
+}
+
+.ops-workspace[data-layout="narrow"] :is(.ops-hero-actions, .ops-hero-actions > *, .ops-quick-actions, .ops-quick-actions > *) {
+	width: 100%;
+}
+
+.ops-workspace[data-layout="narrow"] :is(.ops-section-header, .ops-table-footer, .ops-footer) {
+	align-items: stretch;
+	flex-direction: column;
+}
+
+.ops-workspace[data-layout="narrow"] .lyds-header__rail {
+	grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.ops-workspace[data-layout="narrow"] .lyds-header__nav {
+	display: none;
+}
+
+.ops-workspace[data-layout="narrow"] .lyds-header__actions {
+	min-width: 0;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+}
+
+.ops-workspace[data-layout="narrow"] .lyds-header__status {
+	display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

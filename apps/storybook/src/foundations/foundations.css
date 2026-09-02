@@ -94,7 +94,6 @@
 	min-width: 0;
 	overflow: hidden;
 	background: var(--background-elevated);
-	border: var(--border-width-hairline) solid var(--divider-main);
 	border-radius: var(--radius-md);
 }
 
@@ -250,7 +249,7 @@
 	color: inherit;
 	text-align: left;
 	background: var(--background-elevated);
-	border: var(--border-width-hairline) solid var(--divider-main);
+	border: 0;
 	border-radius: var(--radius-md);
 	cursor: pointer;
 }
@@ -315,7 +314,6 @@
 	gap: var(--space-4);
 	padding: var(--space-4);
 	background: var(--background-elevated);
-	border: var(--border-width-hairline) solid var(--divider-main);
 	border-radius: var(--radius-md);
 }
 
@@ -353,7 +351,6 @@
 	padding: var(--space-6);
 	color: var(--text-main);
 	background: var(--background-main);
-	border: var(--border-width-hairline) solid var(--divider-main);
 	border-radius: var(--radius-lg);
 }
 
@@ -371,7 +368,6 @@
 	gap: var(--space-4);
 	padding: var(--space-5);
 	background: var(--background-elevated);
-	border: var(--border-width-hairline) solid var(--divider-subtle);
 	border-radius: var(--radius-md);
 }
 
@@ -397,7 +393,6 @@
 	align-content: start;
 	padding: var(--space-5);
 	background: var(--background-elevated);
-	border: var(--border-width-hairline) solid var(--divider-subtle);
 	border-radius: var(--radius-md);
 }
 
@@ -427,7 +422,6 @@
 	min-width: 0;
 	padding: var(--space-5);
 	background: var(--background-elevated);
-	border: var(--border-width-hairline) solid var(--divider-subtle);
 	border-radius: var(--radius-md);
 }
 
@@ -449,7 +443,6 @@
 	overflow-x: auto;
 	padding: var(--space-4);
 	background: var(--background-secondary);
-	border: var(--border-width-hairline) solid var(--divider-main);
 	border-radius: var(--radius-sm);
 }
 

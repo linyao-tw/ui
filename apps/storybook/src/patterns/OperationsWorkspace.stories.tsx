@@ -643,7 +643,6 @@ function OperationsWorkspace({ empty = false, initialSaved = false, layout = "wi
 
 					<section className="ops-hero" aria-labelledby="ops-title">
 						<div>
-							<p className="ops-eyebrow">9 月 1 日，星期二</p>
 							<h1 id="ops-title">服務總覽</h1>
 							<p>查看服務狀態、維護時段與最近活動。</p>
 						</div>
@@ -886,6 +885,18 @@ export const NarrowContent: Story = {
 	name: "窄版頁面",
 	parameters: {
 		viewport: { defaultViewport: "mobile2" }
+	},
+	play: async ({ canvasElement }) => {
+		const workspace = canvasElement.querySelector<HTMLElement>('.ops-workspace[data-layout="narrow"]');
+		await expect(workspace).not.toBeNull();
+		await expect(workspace!.scrollWidth).toBeLessThanOrEqual(workspace!.clientWidth);
+
+		const viewportWidth = document.documentElement.clientWidth;
+		for (const section of workspace!.querySelectorAll<HTMLElement>(".ops-panel, .ops-filter-panel, .ops-table-shell")) {
+			const bounds = section.getBoundingClientRect();
+			await expect(bounds.left).toBeGreaterThanOrEqual(0);
+			await expect(bounds.right).toBeLessThanOrEqual(viewportWidth + 1);
+		}
 	},
 	render: () => <OperationsWorkspace layout="narrow" />
 };
