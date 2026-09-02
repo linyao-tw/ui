@@ -2,11 +2,9 @@
 
 Linyao Design System 是麟曜數位工作室的設計系統。`@linyao.tw/ui` 提供 React 元件、TypeScript 型別、語意設計變數、亮色與深色主題，以及元件樣式。
 
-> 此套件尚未發佈至 npm。取得專案負責人明確批准前，不得發佈套件。
-
 ## 安裝
 
-套件公開發佈後，可使用 pnpm 安裝：
+使用 pnpm 安裝：
 
 ```sh
 pnpm add @linyao.tw/ui @phosphor-icons/react
@@ -82,4 +80,4 @@ Linyao Design System 以 WCAG 2.2 AA 為目標，提供鍵盤操作、焦點樣�
 
 完整的安裝、Storybook、開發、元件、設計變數、主題與發佈規範請參閱 [專案 README](https://github.com/linyao-tw/ui#readme) 與 [文件目錄](https://github.com/linyao-tw/ui/tree/main/docs)。
 
-授權：Apache-2.0。發佈前須確認套件內容中的授權檔與專案一致。
+授權：Apache-2.0。套件與專案包含相同的完整授權檔。

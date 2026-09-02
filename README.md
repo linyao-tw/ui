@@ -1,10 +1,8 @@
 # Linyao Design System
 
-Linyao Design System 是麟曜數位工作室的設計系統，提供 React 元件、設計變數、亮色／深色主題與共用樣式。預計以 npm 套件 `@linyao.tw/ui` 發佈；`lyds-*` 僅保留於既有 CSS 類別、主題屬性與其他技術 API，不是專案名稱。
+Linyao Design System 是麟曜數位工作室的設計系統，透過 npm 套件 `@linyao.tw/ui` 提供 React 元件、設計變數、亮色／深色主題與共用樣式。`lyds-*` 僅保留於既有 CSS 類別、主題屬性與其他技術 API，不是專案名稱。
 
 元件結構、尺寸、`variant` 與互動狀態以 Modulor Figma 可驗證的設計為依據，色盤改用 Limestone、Charcoal 與 Vermilion。Figma 未提供的元件沿用相同的表面、圓角、字級、間距與狀態規則。
-
-專案目前處於發佈前審閱階段。npm 發佈預設由儲存庫變數 `NPM_PUBLISH_ENABLED` 關閉；未取得明確批准前不會發佈任何版本。
 
 ## 功能
 
@@ -18,13 +16,11 @@ Linyao Design System 是麟曜數位工作室的設計系統，提供 React 元�
 
 ## 安裝
 
-公開發佈後可安裝：
+使用 pnpm 安裝：
 
 ```sh
 pnpm add @linyao.tw/ui @phosphor-icons/react
 ```
-
-目前請從此工作區開發與審閱；不要假設 npm registry 已存在 `@linyao.tw/ui`。
 
 在應用程式入口匯入一次樣式：
 
@@ -164,7 +160,7 @@ Linyao Design System 以 WCAG 2.2 AA 為目標。Base UI 與 React Aria Componen
 
 快照版本不會移動 `latest`。相同快照版本已存在時，只有 registry SHA-512 integrity 與本次 tarball 相同才會略過；內容不一致或狀態不明時工作流程會失敗。標籤預發佈版本使用第一個 prerelease identifier 作為 dist-tag；穩定版本才使用 `latest`。CI 只在工作區暫時修改版本，不提交版本變更。
 
-完整規則與 OIDC 設定見[發佈](docs/publishing.md)。完成 Storybook 審閱並取得明確批准前，不得啟用發佈變數。
+完整規則與 OIDC 設定見[發佈](docs/publishing.md)。發佈工作只在獲得批准的版本啟用 `NPM_PUBLISH_ENABLED`。
 
 ## 文件
 
@@ -178,4 +174,4 @@ Linyao Design System 以 WCAG 2.2 AA 為目標。Base UI 與 React Aria Componen
 
 ## 授權
 
-`@linyao.tw/ui` 的 package metadata 宣告為 Apache-2.0。發佈前應確認 repository 與 package tarball 的授權檔一致且完整。
+`@linyao.tw/ui` 採用 Apache-2.0 授權；repository 與 package tarball 均包含完整授權檔。
