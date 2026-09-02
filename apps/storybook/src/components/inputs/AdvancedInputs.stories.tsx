@@ -101,3 +101,22 @@ export const DropZoneSurface: Story = {
 		</div>
 	)
 };
+
+export const RejectedFileType: Story = {
+	name: "不接受的檔案類型",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const input = canvas.getByLabelText("圖片附件 選擇檔案");
+		await userEvent.upload(input, new File(["PDF"], "版面規格.pdf", { type: "application/pdf" }), { applyAccept: false });
+		const fileName = canvas.getByText("版面規格.pdf");
+		const status = canvas.getByText("不支援的檔案類型");
+		await expect(fileName).toBeVisible();
+		await expect(status).toBeVisible();
+		await expect(canvas.getAllByText("不支援的檔案類型")).toHaveLength(1);
+		await expect(getComputedStyle(fileName).color).toBe(getComputedStyle(status).color);
+		await expect(
+			Math.abs(fileName.getBoundingClientRect().top + fileName.getBoundingClientRect().height / 2 - (status.getBoundingClientRect().top + status.getBoundingClientRect().height / 2))
+		).toBeLessThanOrEqual(1);
+	},
+	render: () => <FileUpload accept="image/*" label="圖片附件" description="只接受圖片檔案。" />
+};

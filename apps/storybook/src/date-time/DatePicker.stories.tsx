@@ -25,7 +25,14 @@ export const Default: Story = { name: "預設" };
 
 export const Open: Story = {
 	name: "展開",
-	args: { defaultOpen: true }
+	args: { defaultOpen: true },
+	play: async () => {
+		const popover = document.querySelector<HTMLElement>(".lyds-date-popover");
+		await expect(popover).not.toBeNull();
+		await expect(getComputedStyle(popover!).overflowX).toBe("hidden");
+		await expect(getComputedStyle(popover!).scrollbarWidth).toBe("none");
+		await expect(popover!.scrollWidth).toBeLessThanOrEqual(popover!.clientWidth);
+	}
 };
 
 function ControlledPicker() {

@@ -191,6 +191,15 @@
 	padding-inline: var(--space-2);
 }
 
+.lyds-time-field .lyds-date-input {
+	gap: var(--space-0);
+	padding-inline: var(--space-3);
+}
+
+.lyds-time-field .lyds-date-segment {
+	padding-inline: var(--space-1);
+}
+
 .lyds-date-input:has(.lyds-date-segment[data-type="timeZoneName"]) .lyds-date-segment {
 	padding-inline: 0;
 }
@@ -292,12 +301,19 @@
 .lyds-date-popover {
 	z-index: var(--z-popover);
 	inline-size: min(21.25rem, calc(100vw - var(--space-4)));
-	overflow: auto;
-	border: 1px solid var(--divider-subtle);
+	max-block-size: var(--available-height);
+	overflow-x: hidden;
+	overflow-y: auto;
+	border: 0;
 	border-radius: var(--radius-md);
 	background: var(--background-elevated);
 	box-shadow: var(--elevation-2);
 	transform-origin: var(--trigger-anchor-point);
+	scrollbar-width: none;
+}
+
+.lyds-date-popover::-webkit-scrollbar {
+	display: none;
 }
 
 .lyds-date-popover[data-entering] {

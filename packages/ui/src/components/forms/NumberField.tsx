@@ -47,6 +47,9 @@ export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(fu
 	},
 	ref
 ) {
+	const ariaLabel = numberProps["aria-label"];
+	const ariaLabelledBy = numberProps["aria-labelledby"];
+
 	return (
 		<FieldFrame
 			label={label}
@@ -70,7 +73,12 @@ export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(fu
 		>
 			<BaseNumberField.Root {...numberProps} ref={ref} className="lyds-number-field" name={name} disabled={disabled} readOnly={readOnly} required={required} data-size={size}>
 				<BaseNumberField.Group className={withStateClassName<BaseNumberField.Group.State>("lyds-number-field__group", groupClassName)}>
-					<BaseNumberField.Input className={withStateClassName<BaseNumberField.Input.State>("lyds-number-field__input", inputClassName)} style={inputStyle} />
+					<BaseNumberField.Input
+						aria-label={ariaLabel}
+						aria-labelledby={ariaLabelledBy}
+						className={withStateClassName<BaseNumberField.Input.State>("lyds-number-field__input", inputClassName)}
+						style={inputStyle}
+					/>
 					{showSteppers ? (
 						<span className="lyds-number-field__steppers">
 							<BaseNumberField.Decrement className={cx("lyds-number-field__stepper", "lyds-number-field__stepper--decrement")} aria-label={decrementLabel}>

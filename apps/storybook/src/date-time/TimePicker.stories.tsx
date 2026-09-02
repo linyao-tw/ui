@@ -66,7 +66,18 @@ export const ClockFormats: Story = {
 			<TimeField label="時間欄位" defaultValue={new Time(8, 14, 32)} granularity="second" description="不顯示選擇器按鈕，仍依地區格式顯示欄位。" />
 			<TimePicker label="唯讀時間" defaultValue={new Time(6, 45)} readOnly />
 		</div>
-	)
+	),
+	play: async ({ canvasElement }) => {
+		const inputs = Array.from(canvasElement.querySelectorAll<HTMLElement>(".lyds-time-field .lyds-date-input"));
+		const startOffsets = inputs.map(input => {
+			const firstSegment = input.querySelector<HTMLElement>(".lyds-date-segment");
+			if (firstSegment == null) throw new Error("時間欄位缺少可編輯區段。");
+			return firstSegment.getBoundingClientRect().left - input.getBoundingClientRect().left;
+		});
+
+		await expect(inputs.length).toBe(4);
+		await expect(Math.max(...startOffsets) - Math.min(...startOffsets)).toBeLessThanOrEqual(1);
+	}
 };
 
 export const ConstraintsAndInvalid: Story = {

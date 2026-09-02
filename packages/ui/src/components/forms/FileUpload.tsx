@@ -2,6 +2,7 @@ import { Input as BaseInput } from "@base-ui/react/input";
 import { FileIcon } from "@phosphor-icons/react/dist/csr/File";
 import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
 import * as React from "react";
+import { Button } from "../foundations/Button";
 import "./forms.css";
 import { cx, FieldFrame, type FieldAnatomyProps } from "./internal";
 
@@ -31,10 +32,31 @@ function FileImagePreview({ file }: { file: File }) {
 	}, [file]);
 
 	if (preview?.file !== file) return <FileIcon aria-hidden="true" weight="regular" />;
-	return <img className="lyds-file-selection__thumbnail" src={preview.url} alt="" loading="lazy" decoding="async" />;
+	return <img className="lyds-file-selection__thumbnail" src={preview.url} alt="" width={48} height={48} loading="lazy" decoding="async" />;
 }
 
-function FileSelectionPreview({ files, summaryId }: { files: readonly File[]; summaryId: string }) {
+function isFileAccepted(file: File, accept: string | undefined): boolean {
+	if (!accept?.trim()) return true;
+
+	const fileName = file.name.toLocaleLowerCase();
+	const mimeType = file.type.toLocaleLowerCase();
+	return accept.split(",").some(rawRule => {
+		const rule = rawRule.trim().toLocaleLowerCase();
+		if (!rule) return false;
+		if (rule.startsWith(".")) return fileName.endsWith(rule);
+		if (rule.endsWith("/*")) return mimeType.startsWith(rule.slice(0, -1));
+		return mimeType === rule;
+	});
+}
+
+interface FileSelectionPreviewProps {
+	accept: string | undefined;
+	files: readonly File[];
+	invalidFileLabel: React.ReactNode;
+	summaryId: string;
+}
+
+function FileSelectionPreview({ accept, files, invalidFileLabel, summaryId }: FileSelectionPreviewProps) {
 	return (
 		<div className={cx("lyds-file-selection", files.length === 0 && "lyds-sr-only")}>
 			<p id={summaryId} className="lyds-file-selection__summary" role="status" aria-live="polite" aria-atomic="true">
@@ -42,14 +64,20 @@ function FileSelectionPreview({ files, summaryId }: { files: readonly File[]; su
 			</p>
 			{files.length > 0 ? (
 				<ul className="lyds-file-selection__list" aria-label="已選擇的檔案">
-					{files.map((file, index) => (
-						<li className="lyds-file-selection__item" key={`${file.name}-${file.size}-${file.lastModified}-${index}`}>
-							<span className="lyds-file-selection__visual">{file.type.startsWith("image/") ? <FileImagePreview file={file} /> : <FileIcon aria-hidden="true" weight="regular" />}</span>
-							<span className="lyds-file-selection__name" title={file.name}>
-								{file.name}
-							</span>
-						</li>
-					))}
+					{files.map((file, index) => {
+						const accepted = isFileAccepted(file, accept);
+						return (
+							<li className="lyds-file-selection__item" data-invalid={accepted ? undefined : ""} key={`${file.name}-${file.size}-${file.lastModified}-${index}`}>
+								<span className="lyds-file-selection__visual">{file.type.startsWith("image/") ? <FileImagePreview file={file} /> : <FileIcon aria-hidden="true" weight="regular" />}</span>
+								<span className="lyds-file-selection__details">
+									<span className="lyds-file-selection__name" title={file.name}>
+										{file.name}
+									</span>
+									{accepted ? null : <span className="lyds-file-selection__status">{invalidFileLabel}</span>}
+								</span>
+							</li>
+						);
+					})}
 				</ul>
 			) : null}
 		</div>
@@ -71,6 +99,7 @@ export interface FileUploadProps extends NativeFileInputProps, FieldAnatomyProps
 	inputClassName?: string;
 	inputStyle?: React.CSSProperties;
 	triggerLabel?: React.ReactNode;
+	invalidFileLabel?: React.ReactNode;
 	onChange?: React.ChangeEventHandler<HTMLInputElement>;
 	onFilesChange?: (files: readonly File[], event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -98,6 +127,7 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(fu
 		inputClassName,
 		inputStyle,
 		triggerLabel = "選擇檔案",
+		invalidFileLabel = "不支援的檔案類型",
 		onChange,
 		onFilesChange,
 		id: idProp,
@@ -165,13 +195,13 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(fu
 					aria-invalid={invalid || undefined}
 					aria-labelledby={label != null ? `${labelId} ${triggerId}` : triggerId}
 					aria-describedby={[description != null ? descriptionId : null, selectedFiles.length > 0 ? selectionSummaryId : null, errorId].filter(Boolean).join(" ")}
+					tabIndex={-1}
 					onChange={handleChange}
 				/>
-				<label className="lyds-file-upload__trigger" data-disabled={disabled || readOnly || undefined} htmlFor={id}>
-					<span className="lyds-file-upload__signal" aria-hidden="true" />
+				<Button className="lyds-file-upload__trigger" disabled={disabled || readOnly} size={size} variant="secondary" onClick={() => inputRef.current?.click()}>
 					<span id={triggerId}>{triggerLabel}</span>
-				</label>
-				<FileSelectionPreview files={selectedFiles} summaryId={selectionSummaryId} />
+				</Button>
+				<FileSelectionPreview accept={inputProps.accept} files={selectedFiles} invalidFileLabel={invalidFileLabel} summaryId={selectionSummaryId} />
 			</div>
 		</FieldFrame>
 	);
@@ -184,6 +214,7 @@ export interface DropZoneProps extends NativeFileInputProps, FieldAnatomyProps {
 	primaryLabel?: React.ReactNode;
 	secondaryLabel?: React.ReactNode;
 	browseLabel?: string;
+	invalidFileLabel?: React.ReactNode;
 	onChange?: React.ChangeEventHandler<HTMLInputElement>;
 	onFilesChange?: (files: readonly File[], details: DropZoneChangeDetails) => void;
 	onDragEnter?: React.DragEventHandler<HTMLDivElement>;
@@ -216,6 +247,7 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 		primaryLabel = "將檔案拖曳至此",
 		secondaryLabel = "或從裝置選擇檔案",
 		browseLabel = "選擇檔案",
+		invalidFileLabel = "不支援的檔案類型",
 		onChange,
 		onFilesChange,
 		onDragEnter,
@@ -357,6 +389,7 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 				aria-invalid={invalid || undefined}
 				aria-labelledby={label != null ? `${labelId} ${triggerId}` : triggerId}
 				aria-describedby={[description != null ? descriptionId : null, selectedFiles.length > 0 ? selectionSummaryId : null, errorId].filter(Boolean).join(" ")}
+				tabIndex={-1}
 				onChange={handleInputChange}
 			/>
 			<div
@@ -374,11 +407,17 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 					<span className="lyds-drop-zone__primary">{primaryLabel}</span>
 					<span className="lyds-drop-zone__secondary">{secondaryLabel}</span>
 				</span>
-				<label className="lyds-drop-zone__button" data-disabled={disabled || readOnly || undefined} htmlFor={id}>
-					<PlusIcon aria-hidden="true" weight="bold" />
+				<Button
+					className="lyds-drop-zone__button"
+					disabled={disabled || readOnly}
+					size={size}
+					startIcon={<PlusIcon aria-hidden="true" weight="bold" />}
+					variant="secondary"
+					onClick={() => inputRef.current?.click()}
+				>
 					<span id={triggerId}>{browseLabel}</span>
-				</label>
-				<FileSelectionPreview files={selectedFiles} summaryId={selectionSummaryId} />
+				</Button>
+				<FileSelectionPreview accept={inputProps.accept} files={selectedFiles} invalidFileLabel={invalidFileLabel} summaryId={selectionSummaryId} />
 			</div>
 		</FieldFrame>
 	);

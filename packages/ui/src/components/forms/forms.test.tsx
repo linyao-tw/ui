@@ -97,6 +97,17 @@ describe("NumberField", () => {
 		expect(input).toHaveValue("1.235");
 		expect(onValueChange).toHaveBeenLastCalledWith(1235, expect.objectContaining({ reason: "keyboard", direction: 1 }));
 	});
+
+	it("forwards an external visible label to the editable input", () => {
+		render(
+			<>
+				<span id="traffic-label">Initial traffic</span>
+				<NumberField aria-labelledby="traffic-label" defaultValue={25} />
+			</>
+		);
+
+		expect(screen.getByRole("textbox", { name: "Initial traffic" })).toBeVisible();
+	});
 });
 
 describe("OTPField", () => {
@@ -257,7 +268,8 @@ describe("file controls", () => {
 
 		const input = screen.getByLabelText<HTMLInputElement>("Diagnostic file 選擇檔案", { selector: "input" });
 		expect(input).toHaveAccessibleDescription("Attach the exported diagnostic report.");
-		expect(screen.queryAllByRole("button")).toHaveLength(0);
+		expect(input).toHaveAttribute("tabindex", "-1");
+		expect(screen.getByRole("button", { name: "選擇檔案" })).toHaveClass("lyds-button");
 		await user.upload(input, file);
 
 		expect(input.files).toHaveLength(1);
@@ -314,8 +326,21 @@ describe("file controls", () => {
 		expect(screen.getByRole("list", { name: "已選擇的檔案" })).toHaveTextContent("telemetry.csv");
 
 		await user.tab();
-		expect(input).toHaveFocus();
-		expect(screen.getByText("選擇檔案").closest("label")).toHaveAttribute("for", input.id);
+		expect(screen.getByRole("button", { name: "選擇檔案" })).toHaveFocus();
+		expect(input).toHaveAttribute("tabindex", "-1");
+	});
+
+	it("marks rejected file types beside the file name without duplicating field errors", async () => {
+		const user = userEvent.setup({ applyAccept: false });
+		const file = new File(["document"], "release-notes.pdf", { type: "application/pdf" });
+		const { container } = render(<FileUpload accept="image/*" label="Image attachment" />);
+
+		await user.upload(screen.getByLabelText<HTMLInputElement>("Image attachment 選擇檔案", { selector: "input" }), file);
+
+		const item = screen.getByText("release-notes.pdf").closest("li");
+		expect(item).toHaveAttribute("data-invalid");
+		expect(screen.getByText("不支援的檔案類型")).toHaveClass("lyds-file-selection__status");
+		expect(container.querySelector(".lyds-field__error")).not.toBeInTheDocument();
 	});
 
 	it("clears picker and drop-zone previews when their form resets", async () => {
@@ -363,9 +388,9 @@ describe("file controls", () => {
 		);
 
 		expect(screen.getByLabelText("Locked picker 選擇檔案", { selector: "input" })).toBeDisabled();
-		expect(screen.getAllByText("選擇檔案")[0]?.closest("label")).toHaveAttribute("data-disabled");
 		expect(screen.getByLabelText("Locked drop zone 選擇檔案", { selector: "input" })).toBeDisabled();
-		expect(screen.getAllByText("選擇檔案")[1]?.closest("label")).toHaveAttribute("data-disabled");
+		expect(screen.getAllByRole("button", { name: "選擇檔案" })).toHaveLength(2);
+		expect(screen.getAllByRole("button", { name: "選擇檔案" }).every(button => button.hasAttribute("disabled"))).toBe(true);
 
 		const zone = container.querySelector<HTMLDivElement>(".lyds-drop-zone");
 		expect(zone).not.toBeNull();
