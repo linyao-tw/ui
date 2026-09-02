@@ -21,11 +21,7 @@ export type IconButtonProps = IconButtonBaseProps & AccessibleName;
 export const IconButton = React.forwardRef<HTMLElement, IconButtonProps>(function IconButton({ children, className, loading = false, ...props }, ref) {
 	return (
 		<Button {...props} ref={ref} className={mergeClassNames("lyds-icon-button", className)} loading={loading}>
-			{loading ? null : (
-				<span className="lyds-icon-button__icon" aria-hidden="true">
-					{children}
-				</span>
-			)}
+			{loading ? null : children}
 		</Button>
 	);
 });

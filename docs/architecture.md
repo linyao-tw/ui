@@ -72,7 +72,7 @@ Base UI 不提供完整的日期元件，因此日期與時間元件使用：
 
 相同概念使用相同名稱：
 
-- `variant`：語意或視覺層級，例如 `primary`、`secondary`、`quiet`、`danger`。
+- `variant`：語意或視覺層級，例如 `primary`、`secondary`、`neutral`、`quiet`、`danger`。
 - `size`：主要使用 `sm`、`md`、`lg`。
 - `orientation`：只用於需要水平或垂直方向的元件。
 - `disabled`、`readOnly`、`required`、`invalid`、`loading`：映射至底層基礎元件。

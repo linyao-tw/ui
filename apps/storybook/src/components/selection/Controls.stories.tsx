@@ -107,6 +107,16 @@ export const DarkControlStates: Story = {
 
 export const RadioChoices: Story = {
 	name: "單選項目",
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		for (const radio of canvas.getAllByRole("radio")) {
+			const item = radio.closest("label");
+			await expect(item).not.toBeNull();
+			const radioBounds = radio.getBoundingClientRect();
+			const itemBounds = item!.getBoundingClientRect();
+			await expect(Math.abs(radioBounds.top + radioBounds.height / 2 - (itemBounds.top + itemBounds.height / 2))).toBeLessThanOrEqual(1);
+		}
+	},
 	render: () => (
 		<RadioGroup aria-label="更新頻率" defaultValue="daily">
 			<RadioItem value="weekly" label="每週" description="每週一提供摘要。" />

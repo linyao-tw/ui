@@ -2,7 +2,7 @@ import { Button as BaseButton, type ButtonProps as BaseButtonProps } from "@base
 import * as React from "react";
 import { mergeClassNames } from "./shared";
 
-export type ButtonVariant = "primary" | "secondary" | "quiet" | "danger";
+export type ButtonVariant = "primary" | "secondary" | "neutral" | "quiet" | "danger";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends Omit<BaseButtonProps, "children" | "className" | "style"> {

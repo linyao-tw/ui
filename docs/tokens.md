@@ -43,7 +43,7 @@ Motion/Ease/InOut        -> --motion-ease-in-out
 - `Text/*`：`Title`、`Main`、`Secondary`、`Muted`、`Disabled`、`Accent`、`Link`、`On_Accent`、`On_Danger`、`Always_White`、`Always_Dark`。
 - `Icon/*`：一般、次要、強調、停用、on-accent 與固定角色。
 - `Divider/*`、`Border/*`：subtle／main／strong、控制項狀態與無效狀態。
-- `Control/*`：primary／secondary／quaternary／surface、hover／按下／停用、選取、軌道、滑塊、knob、預留文字。
+- `Control/*`：primary／secondary／neutral／quaternary／surface、hover／按下／停用、選取、軌道、滑塊、knob、預留文字。`neutral` 提供跨主題的高對比灰色操作；`danger` 保留給破壞性操作。
 - `Focus/*`、`Selection/*`：焦點環、光暈／偏移與選取前景色／背景色。
 - `Status/*`：中性、資訊、成功、警告、危險的背景色／前景色／邊框。
 - `Shadow/*`、`Elevation/*`：細線、低、中、浮層、選取與浮動控制項陰影。

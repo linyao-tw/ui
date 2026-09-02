@@ -114,7 +114,6 @@
 	justify-content: center;
 	min-block-size: 12rem;
 	padding: var(--space-6);
-	border: 1px solid var(--divider-main);
 	border-radius: var(--radius-md);
 	background: var(--background-secondary);
 	color: var(--text-secondary);

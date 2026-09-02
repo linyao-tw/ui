@@ -143,7 +143,7 @@
 
 .choiceLabel {
 	display: inline-flex;
-	align-items: flex-start;
+	align-items: center;
 	gap: var(--space-3);
 	min-height: var(--control-target-min);
 	padding-block: var(--space-2);
@@ -608,7 +608,7 @@
 	overflow: hidden;
 	color: var(--text-main);
 	background: var(--background-elevated);
-	border: 1px solid var(--divider-subtle);
+	border: 0;
 	border-radius: var(--radius-md);
 	box-shadow: var(--shadow-medium);
 	transform-origin: var(--transform-origin);
@@ -648,7 +648,7 @@
 	border: 0;
 	border-radius: var(--radius-sm);
 	outline: 0;
-	cursor: default;
+	cursor: pointer;
 	user-select: none;
 }
 

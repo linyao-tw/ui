@@ -193,7 +193,7 @@ button.lyds-pagination__control {
 .lyds-navigation-menu__popup,
 .lyds-menubar__popup {
 	min-width: 14rem;
-	border: 1px solid var(--divider-subtle);
+	border: 0;
 	border-radius: var(--radius-lg);
 	background: var(--background-elevated);
 	box-shadow: var(--elevation-2);
@@ -826,7 +826,7 @@ button.lyds-pagination__control {
 .lyds-command-palette__popup {
 	position: relative;
 	width: min(42rem, 100%);
-	border: 1px solid var(--divider-subtle);
+	border: 0;
 	border-radius: var(--radius-xl);
 	display: grid;
 	gap: var(--space-3);
@@ -905,10 +905,15 @@ button.lyds-pagination__control {
 	user-select: none;
 }
 
-.lyds-command-palette__item[data-highlighted],
-.lyds-command-palette__item[data-selected] {
+.lyds-command-palette__item[data-highlighted] {
 	background: var(--control-surface-selected);
 	color: var(--text-title);
+}
+
+.lyds-command-palette__item[data-selected] {
+	background: var(--background-selected);
+	color: var(--text-accent);
+	font-weight: var(--font-weight-medium);
 }
 
 .lyds-command-palette__item[data-disabled] {

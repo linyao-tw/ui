@@ -14,7 +14,7 @@ const meta = {
 		children: "儲存變更"
 	},
 	argTypes: {
-		variant: { control: "select", options: ["primary", "secondary", "quiet", "danger"] },
+		variant: { control: "select", options: ["primary", "secondary", "neutral", "quiet", "danger"] },
 		size: { control: "select", options: ["sm", "md", "lg"] }
 	}
 } satisfies Meta<typeof Button>;
@@ -30,6 +30,7 @@ export const Variants: Story = {
 		<div className="lyds-story-row">
 			<Button variant="primary">繼續</Button>
 			<Button variant="secondary">查看詳細資料</Button>
+			<Button variant="neutral">開啟審核</Button>
 			<Button variant="quiet">取消</Button>
 			<Button variant="danger">刪除</Button>
 		</div>
@@ -106,6 +107,7 @@ export const DarkTheme: Story = {
 		<div className="lyds-story-row">
 			<Button>儲存變更</Button>
 			<Button variant="secondary">預覽</Button>
+			<Button variant="neutral">開啟審核</Button>
 			<Button variant="quiet">取消</Button>
 		</div>
 	)

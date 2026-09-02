@@ -98,6 +98,8 @@ export function Actions() {
 
 `Button` 的 `startIcon` 與 `endIcon` 是裝飾內容，可存取名稱由按鈕文字提供。圖示不指定任意 `color` 或 `size`，而是繼承 `currentColor` 與按鈕尺寸。`IconButton` 必須提供 `aria-label` 或 `aria-labelledby`。獨立裝飾圖示應加上 `aria-hidden="true"`；重要狀態還必須有文字或其他可存取名稱。
 
+按鈕層級使用 `primary`、`secondary`、`neutral`、`quiet` 與 `danger`。需要在亮色背景維持灰底白字時使用 `neutral`；刪除、撤銷或其他破壞性操作使用 `danger`，不得自行覆寫背景色模擬新樣式。
+
 React Server Component 或無法使用 React Context 的環境使用公開 SSR 模組：
 
 ```tsx

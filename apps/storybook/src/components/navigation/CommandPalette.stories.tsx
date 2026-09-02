@@ -84,8 +84,10 @@ export const Open: Story = {
 	play: async () => {
 		const body = within(document.body);
 		const selected = await body.findByRole("option", { name: /開啟設定/ });
+		const unselected = await body.findByRole("option", { name: /建立文件/ });
 		await expect(selected).toHaveAttribute("aria-selected", "true");
 		await expect(selected.querySelector(".lyds-command-palette__indicator svg")).toHaveAttribute("aria-hidden", "true");
+		await expect(getComputedStyle(selected).color).not.toBe(getComputedStyle(unselected).color);
 	},
 	render: () => <Palette defaultOpen defaultValue="開啟設定" />
 };

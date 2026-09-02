@@ -75,7 +75,7 @@
 	align-items: center;
 	justify-content: center;
 	padding-inline: var(--space-4);
-	border: var(--border-width-hairline) solid var(--control-border);
+	border: 0;
 	border-radius: var(--radius-sm);
 	color: var(--control-on-secondary);
 	background: var(--control-secondary);
@@ -88,7 +88,6 @@
 	touch-action: manipulation;
 	transition:
 		background-color var(--motion-duration-fast) var(--motion-ease-out),
-		border-color var(--motion-duration-fast) var(--motion-ease-out),
 		transform var(--motion-duration-fast) var(--motion-ease-out);
 }
 
@@ -96,7 +95,6 @@
 		:disabled,
 		[data-disabled]
 	) {
-	border-color: var(--control-border-hover);
 	background: var(--control-secondary-hover);
 }
 
@@ -112,7 +110,6 @@
 		:disabled,
 		[data-disabled]
 	) {
-	border-color: var(--control-border-disabled);
 	color: var(--text-disabled);
 	background: var(--control-secondary-disabled);
 	cursor: not-allowed;
@@ -189,7 +186,7 @@
 }
 
 .lyds-collapsible {
-	border: var(--border-width-hairline) solid var(--divider-main);
+	border: 0;
 	border-radius: var(--radius-md);
 	background: var(--background-elevated);
 }
@@ -315,7 +312,7 @@
 .lyds-popover__popup,
 .lyds-previewCard__popup {
 	position: relative;
-	border: var(--border-width-hairline) solid var(--divider-main);
+	border: 0;
 	border-radius: var(--radius-md);
 	background: var(--background-elevated);
 	color: var(--text-main);
@@ -353,9 +350,9 @@
 
 .lyds-tooltip__popup {
 	max-width: min(20rem, calc(100vw - var(--space-6)));
-	border-color: var(--divider-strong);
 	border-radius: var(--radius-sm);
 	padding: var(--space-2) var(--space-3);
+	box-shadow: var(--elevation-1);
 	font-family: var(--font-family-sans);
 	font-size: var(--font-size-xs);
 	font-weight: var(--font-weight-regular);
@@ -398,29 +395,21 @@
 
 :where(.lyds-tooltip__arrow, .lyds-popover__arrow, .lyds-previewCard__arrow)[data-side="top"] {
 	inset-block-end: 0;
-	border-inline-end: var(--border-width-hairline) solid var(--overlay-arrow-border);
-	border-block-end: var(--border-width-hairline) solid var(--overlay-arrow-border);
 	translate: 0 50%;
 }
 
 :where(.lyds-tooltip__arrow, .lyds-popover__arrow, .lyds-previewCard__arrow)[data-side="right"] {
 	inset-inline-start: 0;
-	border-inline-start: var(--border-width-hairline) solid var(--overlay-arrow-border);
-	border-block-end: var(--border-width-hairline) solid var(--overlay-arrow-border);
 	translate: -50% 0;
 }
 
 :where(.lyds-tooltip__arrow, .lyds-popover__arrow, .lyds-previewCard__arrow)[data-side="bottom"] {
 	inset-block-start: 0;
-	border-inline-start: var(--border-width-hairline) solid var(--overlay-arrow-border);
-	border-block-start: var(--border-width-hairline) solid var(--overlay-arrow-border);
 	translate: 0 -50%;
 }
 
 :where(.lyds-tooltip__arrow, .lyds-popover__arrow, .lyds-previewCard__arrow)[data-side="left"] {
 	inset-inline-end: 0;
-	border-inline-end: var(--border-width-hairline) solid var(--overlay-arrow-border);
-	border-block-start: var(--border-width-hairline) solid var(--overlay-arrow-border);
 	translate: 50% 0;
 }
 
@@ -514,7 +503,7 @@
 	width: min(36rem, calc(100vw - var(--space-8)));
 	max-height: min(44rem, calc(100dvh - var(--space-8)));
 	overflow: auto;
-	border: var(--border-width-hairline) solid var(--divider-main);
+	border: 0;
 	border-radius: var(--radius-lg);
 	background: var(--background-modal);
 	box-shadow: var(--elevation-2);
@@ -631,7 +620,7 @@
 	min-height: var(--control-target-min);
 	align-items: center;
 	justify-content: center;
-	border: var(--border-width-hairline) solid var(--control-border);
+	border: 0;
 	border-radius: var(--radius-xs);
 	background: var(--control-secondary);
 	color: var(--control-on-secondary);
@@ -644,12 +633,10 @@
 	padding: var(--space-2) var(--space-4);
 	transition:
 		background-color var(--motion-duration-fast) var(--motion-ease-out),
-		border-color var(--motion-duration-fast) var(--motion-ease-out),
 		transform var(--motion-duration-fast) var(--motion-ease-out);
 }
 
 .lyds-overlayCloseAction:not(.lyds-button):hover {
-	border-color: var(--control-border-hover);
 	background: var(--control-secondary-hover);
 }
 
@@ -659,7 +646,6 @@
 }
 
 .lyds-overlayCloseAction:not(.lyds-button)[data-disabled] {
-	border-color: var(--control-border-disabled);
 	background: var(--control-secondary-disabled);
 	color: var(--text-disabled);
 	cursor: not-allowed;

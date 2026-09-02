@@ -47,7 +47,7 @@ const [value, setValue] = React.useState("line-a");
 
 ### 基礎元件
 
-- `Button`：`primary`、`secondary`、`quiet`、`danger`；尺寸、載入、起始／結尾圖示。
+- `Button`：`primary`、`secondary`、`neutral`、`quiet`、`danger`；尺寸、載入、起始／結尾圖示。`neutral` 在亮色與深色主題均使用高對比灰色表面；破壞性操作使用 `danger`，不得以一般灰色按鈕代替。
 - `IconButton`：只有圖示的操作，必須有可存取名稱。
 - `Link`：保留連結與導覽語意。
 - `Badge`、`Avatar`、`Separator`。

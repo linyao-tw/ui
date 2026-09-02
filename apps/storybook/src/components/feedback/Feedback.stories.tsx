@@ -30,7 +30,7 @@ export const Alerts: Story = {
 						<AlertDescription>顯示目前狀態與可執行的操作。</AlertDescription>
 					</AlertContent>
 					<AlertActions>
-						<Button size="sm" variant="secondary">
+						<Button size="sm" variant={status === "danger" ? "danger" : "neutral"}>
 							查看
 						</Button>
 					</AlertActions>

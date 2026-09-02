@@ -154,6 +154,13 @@ export const DisabledGroups: Story = {
 
 export const SelectOpen: Story = {
 	name: "展開的選擇器",
+	play: async () => {
+		const body = within(document.body);
+		const enabledOption = await body.findByRole("option", { name: /台北辦公室/ });
+		const disabledOption = await body.findByRole("option", { name: /已封存工作區/ });
+		await expect(getComputedStyle(enabledOption).cursor).toBe("pointer");
+		await expect(getComputedStyle(disabledOption).cursor).toBe("not-allowed");
+	},
 	render: () => <Select<string> defaultOpen aria-label="展開的辦公室選擇器" className="lyds-story-control" defaultValue="north" options={offices} />
 };
 

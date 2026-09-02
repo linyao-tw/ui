@@ -219,6 +219,11 @@
 	--control-secondary-hover: var(--palette-warm-150);
 	--control-secondary-pressed: var(--palette-warm-200);
 	--control-secondary-disabled: var(--palette-warm-100);
+	--control-neutral: var(--palette-charcoal);
+	--control-neutral-hover: var(--palette-warm-800);
+	--control-neutral-pressed: var(--palette-warm-900);
+	--control-neutral-disabled: var(--palette-warm-200);
+	--control-on-neutral: var(--palette-warm-25);
 	--control-quaternary: var(--palette-warm-200);
 	--control-on-primary: var(--palette-warm-25);
 	--control-on-secondary: var(--palette-warm-900);
@@ -339,6 +344,11 @@
 	--control-secondary-hover: oklch(0.32 0.008 75);
 	--control-secondary-pressed: oklch(0.25 0.008 75);
 	--control-secondary-disabled: oklch(0.25 0.005 75);
+	--control-neutral: var(--palette-warm-700);
+	--control-neutral-hover: var(--palette-warm-600);
+	--control-neutral-pressed: var(--palette-warm-800);
+	--control-neutral-disabled: var(--palette-warm-800);
+	--control-on-neutral: var(--palette-warm-25);
 	--control-quaternary: oklch(0.31 0.008 75);
 	--control-on-primary: var(--palette-warm-25);
 	--control-on-secondary: var(--palette-warm-50);

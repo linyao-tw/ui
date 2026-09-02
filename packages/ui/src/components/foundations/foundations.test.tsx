@@ -88,7 +88,9 @@ describe("foundation actions", () => {
 			</IconButton>
 		);
 		expect(screen.getByRole("button", { name: "Close panel" })).toBeVisible();
-		expect(screen.getByRole("button", { name: "Close panel" }).querySelector("svg")).not.toBeNull();
+		const button = screen.getByRole("button", { name: "Close panel" });
+		expect(button.querySelector(".lyds-button__label > svg")).not.toBeNull();
+		expect(button.querySelector(".lyds-icon-button__icon")).toBeNull();
 	});
 
 	it("replaces an icon with the loading indicator without changing its name", () => {
@@ -103,6 +105,11 @@ describe("foundation actions", () => {
 		expect(button.querySelector(".lyds-button__spinner")).not.toBeNull();
 		expect(button.querySelector(".lyds-icon-button__icon")).toBeNull();
 		expect(button.querySelector("svg")).toBeNull();
+	});
+
+	it("exposes the neutral high-contrast button variant", () => {
+		render(<Button variant="neutral">Open review</Button>);
+		expect(screen.getByRole("button", { name: "Open review" })).toHaveAttribute("data-variant", "neutral");
 	});
 
 	it("removes disabled links from navigation and suppresses activation", async () => {

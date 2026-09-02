@@ -213,19 +213,15 @@ export const TooltipPlacements: Story = {
 			if (side === "top") {
 				await expect(arrowRect.top).toBeLessThan(popupRect.bottom);
 				await expect(arrowRect.bottom).toBeGreaterThan(popupRect.bottom);
-				await expect(arrowStyle.borderBottomWidth).not.toBe("0px");
 			} else if (side === "right") {
 				await expect(arrowRect.left).toBeLessThan(popupRect.left);
 				await expect(arrowRect.right).toBeGreaterThan(popupRect.left);
-				await expect(arrowStyle.borderLeftWidth).not.toBe("0px");
 			} else if (side === "bottom") {
 				await expect(arrowRect.top).toBeLessThan(popupRect.top);
 				await expect(arrowRect.bottom).toBeGreaterThan(popupRect.top);
-				await expect(arrowStyle.borderTopWidth).not.toBe("0px");
 			} else {
 				await expect(arrowRect.left).toBeLessThan(popupRect.right);
 				await expect(arrowRect.right).toBeGreaterThan(popupRect.right);
-				await expect(arrowStyle.borderRightWidth).not.toBe("0px");
 			}
 		}
 	},

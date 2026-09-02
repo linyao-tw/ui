@@ -1,6 +1,7 @@
 import { Button, createToastManager, ToastProvider, type ToastManager } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useEffect, useMemo } from "react";
+import { expect, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -75,6 +76,17 @@ function VisibleToast() {
 
 export const Default: Story = {
 	name: "預設",
+	play: async () => {
+		const body = within(document.body);
+		const title = await body.findByText("設定已儲存");
+		const toast = title.closest<HTMLElement>('[data-status="success"]');
+		const signal = toast?.firstElementChild as HTMLElement | null;
+		await expect(toast).not.toBeNull();
+		await expect(signal).not.toBeNull();
+		const titleBounds = title.getBoundingClientRect();
+		const signalBounds = signal!.getBoundingClientRect();
+		await expect(Math.abs(titleBounds.top + titleBounds.height / 2 - (signalBounds.top + signalBounds.height / 2))).toBeLessThanOrEqual(1);
+	},
 	render: () => <VisibleToast />
 };
 

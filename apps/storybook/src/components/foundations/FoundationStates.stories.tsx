@@ -11,7 +11,7 @@ import { expect, within } from "storybook/test";
 
 import "../story-layout.css";
 
-const buttonVariants = ["primary", "secondary", "quiet", "danger"] as const;
+const buttonVariants = ["primary", "secondary", "neutral", "quiet", "danger"] as const;
 const buttonSizes = ["sm", "md", "lg"] as const;
 const linkVariants = ["default", "accent", "subtle"] as const;
 const linkSizes = ["sm", "md", "lg"] as const;
@@ -24,6 +24,7 @@ const headingSizes = ["sm", "md", "lg"] as const;
 const buttonVariantLabels = {
 	primary: "主要",
 	secondary: "次要",
+	neutral: "中性",
 	quiet: "低調",
 	danger: "危險"
 } as const;
@@ -83,11 +84,25 @@ function MatrixCard({ label, children }: { label: string; children: ReactNode })
 export const IconButtonStates: Story = {
 	name: "圖示按鈕",
 	play: async ({ canvasElement }) => {
+		const iconButton = within(canvasElement).getByRole("button", { name: "主要通知操作" });
 		const loadingButton = within(canvasElement).getByRole("button", { name: "儲存項目" });
+		const icon = iconButton.querySelector("svg");
+		const spinner = loadingButton.querySelector<HTMLElement>(".lyds-button__spinner");
 
 		await expect(loadingButton).toHaveAttribute("aria-busy", "true");
-		await expect(loadingButton.querySelector(".lyds-button__spinner")).not.toBeNull();
+		await expect(spinner).not.toBeNull();
 		await expect(loadingButton.querySelector(".lyds-icon-button__icon")).toBeNull();
+		await expect(icon).not.toBeNull();
+
+		for (const [button, content] of [
+			[iconButton, icon],
+			[loadingButton, spinner]
+		] as const) {
+			const buttonBounds = button.getBoundingClientRect();
+			const contentBounds = content!.getBoundingClientRect();
+			await expect(Math.abs(buttonBounds.left + buttonBounds.width / 2 - (contentBounds.left + contentBounds.width / 2))).toBeLessThanOrEqual(1);
+			await expect(Math.abs(buttonBounds.top + buttonBounds.height / 2 - (contentBounds.top + contentBounds.height / 2))).toBeLessThanOrEqual(1);
+		}
 	},
 	render: () => (
 		<div className="lyds-story-stack">
