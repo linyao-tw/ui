@@ -1,5 +1,7 @@
 # @linyao.tw/ui
 
+![Linyao Design System 元件示意圖](https://raw.githubusercontent.com/linyao-tw/ui/main/assets/og-image.png)
+
 Linyao Design System 是麟曜數位工作室的設計系統。`@linyao.tw/ui` 提供 React 元件、TypeScript 型別、語意設計變數、亮色與深色主題，以及元件樣式。
 
 ## 安裝

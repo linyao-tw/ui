@@ -1,5 +1,7 @@
 # Linyao Design System
 
+![Linyao Design System 元件示意圖](./assets/og-image.png)
+
 Linyao Design System 是麟曜數位工作室的設計系統，透過 npm 套件 `@linyao.tw/ui` 提供 React 元件、設計變數、亮色／深色主題與共用樣式。`lyds-*` 僅保留於既有 CSS 類別、主題屬性與其他技術 API，不是專案名稱。
 
 元件結構、尺寸、`variant` 與互動狀態以 Modulor Figma 可驗證的設計為依據，色盤改用 Limestone、Charcoal 與 Vermilion。Figma 未提供的元件沿用相同的表面、圓角、字級、間距與狀態規則。
