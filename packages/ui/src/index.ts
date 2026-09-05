@@ -8,12 +8,12 @@ import "./components/navigation-data/navigation-data.css";
 import "./components/overlays/overlays.css";
 import "./components/selection/selection.css";
 
-export * from "./components/date-time/index.js";
-export * from "./components/feedback/index.js";
-export * from "./components/forms/index.js";
-export * from "./components/foundations/index.js";
-export * from "./components/navigation-data/index.js";
-export * from "./components/overlays/index.js";
-export * from "./components/selection/index.js";
+export * from "./components/date-time/index";
+export * from "./components/feedback/index";
+export * from "./components/forms/index";
+export * from "./components/foundations/index";
+export * from "./components/navigation-data/index";
+export * from "./components/overlays/index";
+export * from "./components/selection/index";
 
-export { MessagesProvider, enUSMessages, useMessages, zhTWMessages, type ComponentMessages, type MessagesProviderProps } from "./intl/index.js";
+export { MessagesProvider, enUSMessages, useMessages, zhTWMessages, type ComponentMessages, type MessagesProviderProps } from "./intl/index";
