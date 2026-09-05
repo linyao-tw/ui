@@ -18,7 +18,7 @@
 	flex: 0 0 auto;
 	width: 1.5rem;
 	height: 1.5rem;
-	padding: 0.0625rem;
+	padding: var(--border-width-hairline);
 	color: var(--control-on-primary);
 	background: var(--control-track);
 	background-clip: content-box;
@@ -30,7 +30,7 @@
 }
 
 .checkbox {
-	border-radius: 0.25rem;
+	border-radius: var(--radius-2xs);
 }
 
 .checkbox:hover:not([data-disabled]):not([data-readonly]),
@@ -197,7 +197,7 @@
 	align-items: center;
 	width: 3.25rem;
 	height: 1.875rem;
-	padding: 0.0625rem;
+	padding: var(--border-width-hairline);
 	background: var(--control-track);
 	border: 0;
 	border-radius: var(--radius-round);
@@ -384,7 +384,7 @@
 	max-width: 100%;
 	min-height: 3.5rem;
 	overflow-x: auto;
-	padding: 1px;
+	padding: var(--border-width-hairline);
 	background: var(--control-quaternary);
 	border: 0;
 	border-radius: var(--radius-md);
@@ -406,7 +406,7 @@
 	color: var(--text-secondary);
 	background: var(--background-transparent);
 	border: 0;
-	border-radius: 0.6875rem;
+	border-radius: calc(var(--radius-md) - var(--border-width-hairline));
 	box-shadow: var(--shadow-control-context);
 	overflow: hidden;
 	text-overflow: ellipsis;

@@ -90,6 +90,7 @@
 	--letter-spacing-technical: 0.01em;
 
 	--space-0: 0;
+	--space-05: 0.125rem;
 	--space-1: 0.25rem;
 	--space-2: 0.5rem;
 	--space-3: 0.75rem;
@@ -106,6 +107,7 @@
 	--border-width-strong: 0.125rem;
 
 	--radius-none: 0;
+	--radius-2xs: 0.25rem;
 	--radius-xs: 0.375rem;
 	--radius-sm: 0.5rem;
 	--radius-md: 0.75rem;
@@ -397,6 +399,8 @@
 	--component-field-label: var(--text-title);
 	--component-field-supporting-text: var(--text-secondary);
 	--component-field-supporting-font-size: 0.8125rem;
+	--component-field-masked-font-size: 1.5625rem;
+	--component-toast-signal-offset: 0.4375rem;
 	--component-date-field-segment-foreground: var(--text-title);
 	--component-date-field-segment-background-focused: var(--background-selected);
 	--component-calendar-day-size: 2.75rem;

@@ -442,7 +442,7 @@ button.lyds-pagination__control {
 	min-width: 100%;
 	display: flex;
 	align-items: center;
-	gap: 0.25rem;
+	gap: var(--space-1);
 }
 
 .lyds-tab-bar__item {
@@ -453,15 +453,15 @@ button.lyds-pagination__control {
 .lyds-tab-bar__link {
 	position: relative;
 	min-height: var(--control-target-min);
-	border-radius: 999rem;
+	border-radius: var(--radius-round);
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: 0.25rem;
-	padding: 0.25rem 0.75rem 0.25rem 0.5rem;
+	gap: var(--space-1);
+	padding: var(--space-1) var(--space-3) var(--space-1) var(--space-2);
 	background: var(--background-transparent);
 	color: var(--text-secondary);
-	font-size: 0.875rem;
+	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-regular);
 	line-height: 1.0625rem;
 	text-align: center;

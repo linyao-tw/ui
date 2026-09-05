@@ -6,6 +6,7 @@
 	--lyds-field-rest-padding-block: 1.125rem;
 	--lyds-field-float-padding-start: 1.6875rem;
 	--lyds-field-float-padding-end: 0.5625rem;
+	--lyds-field-invalid-padding-end: 0.8125rem;
 	font-family: var(--font-family-sans);
 	color: var(--text-main);
 }
@@ -15,7 +16,7 @@
 	display: flex;
 	min-inline-size: 0;
 	flex-direction: column;
-	gap: 0.125rem;
+	gap: var(--space-05);
 }
 
 .lyds-field[data-size="sm"],
@@ -26,6 +27,7 @@
 	--lyds-field-rest-padding-block: 0.875rem;
 	--lyds-field-float-padding-start: 1.4375rem;
 	--lyds-field-float-padding-end: 0.3125rem;
+	--lyds-field-invalid-padding-end: 0.5625rem;
 }
 
 .lyds-field[data-size="lg"],
@@ -36,15 +38,16 @@
 	--lyds-field-rest-padding-block: 1.375rem;
 	--lyds-field-float-padding-start: 1.9375rem;
 	--lyds-field-float-padding-end: 0.8125rem;
+	--lyds-field-invalid-padding-end: 1.0625rem;
 }
 
 .lyds-field__label {
 	display: inline-flex;
 	align-items: baseline;
 	align-self: flex-start;
-	gap: 0.5rem;
+	gap: var(--space-2);
 	color: var(--text-secondary);
-	font-size: 0.75rem;
+	font-size: var(--font-size-xs);
 	font-weight: var(--font-weight-regular);
 	line-height: 1rem;
 	letter-spacing: -0.02rem;
@@ -62,7 +65,7 @@
 	max-inline-size: calc(100% - 2rem);
 	overflow: hidden;
 	color: var(--control-placeholder);
-	font-size: 1rem;
+	font-size: var(--font-size-md);
 	line-height: 1.25rem;
 	pointer-events: none;
 	text-overflow: ellipsis;
@@ -81,7 +84,7 @@
 
 .lyds-field:is([data-focused], [data-filled], [data-invalid]):has(> .lyds-field__control-frame, > .lyds-textarea, > .lyds-number-field, > .lyds-phone-field) > .lyds-field__label {
 	inset-block-start: var(--lyds-field-label-float-top);
-	font-size: 0.75rem;
+	font-size: var(--font-size-xs);
 	line-height: 1rem;
 }
 
@@ -96,7 +99,7 @@
 
 .lyds-field__required {
 	font-family: var(--font-family-sans);
-	font-size: 0.75rem;
+	font-size: var(--font-size-xs);
 	font-variant-numeric: tabular-nums;
 	font-weight: var(--font-weight-regular);
 	letter-spacing: -0.02rem;
@@ -106,8 +109,8 @@
 .lyds-field__description,
 .lyds-field__error {
 	min-block-size: 1.5rem;
-	padding: 0.25rem 1rem;
-	font-size: 0.8125rem;
+	padding: var(--space-1) var(--space-4);
+	font-size: var(--component-field-supporting-font-size);
 	font-weight: var(--font-weight-regular);
 	line-height: 1rem;
 	letter-spacing: -0.01875rem;
@@ -136,7 +139,7 @@
 .lyds-drop-zone,
 .lyds-phone-field__country {
 	border: var(--border-width-hairline) solid var(--border-control);
-	border-radius: 0.75rem;
+	border-radius: var(--radius-md);
 	background: var(--background-elevated);
 	color: var(--text-main);
 	transition:
@@ -151,7 +154,7 @@
 .lyds-number-field__input,
 .lyds-otp-field__input {
 	font-family: var(--font-family-sans);
-	font-size: 1rem;
+	font-size: var(--font-size-md);
 	font-feature-settings: "cv04" 1;
 	font-weight: var(--font-weight-regular);
 	line-height: 1.25rem;
@@ -167,7 +170,7 @@
 .lyds-input {
 	inline-size: 100%;
 	min-inline-size: 0;
-	padding: var(--lyds-field-rest-padding-block) 1rem;
+	padding: var(--lyds-field-rest-padding-block) var(--space-4);
 }
 
 .lyds-field__control-frame {
@@ -184,7 +187,7 @@
 .lyds-number-field__input {
 	min-inline-size: 0;
 	flex: 1;
-	padding: var(--lyds-field-rest-padding-block) 1rem;
+	padding: var(--lyds-field-rest-padding-block) var(--space-4);
 	border: 0;
 	outline: 0;
 	background: var(--background-transparent);
@@ -206,15 +209,15 @@
 }
 
 .lyds-field__adornment--start {
-	padding-inline-start: 1rem;
+	padding-inline-start: var(--space-4);
 }
 
 .lyds-field__adornment--start + .lyds-field__input {
-	padding-inline-start: 1rem;
+	padding-inline-start: var(--space-4);
 }
 
 .lyds-field__adornment--end {
-	padding-inline-end: 1rem;
+	padding-inline-end: var(--space-4);
 }
 
 .lyds-field__adornment--end:has(.lyds-field__utility-button) {
@@ -234,7 +237,7 @@
 	align-items: center;
 	justify-content: center;
 	border: 0;
-	border-radius: 0.75rem;
+	border-radius: var(--radius-md);
 	outline: 0;
 	background: var(--background-transparent);
 	color: var(--icon-main);
@@ -265,7 +268,7 @@
 }
 
 .lyds-field__input[type="password"][data-filled] {
-	font-size: 1.5625rem;
+	font-size: var(--component-field-masked-font-size);
 	font-weight: var(--font-weight-medium);
 	line-height: 1.25rem;
 	letter-spacing: 0;
@@ -367,16 +370,16 @@
 	inline-size: 100%;
 	min-inline-size: 0;
 	min-block-size: 7.25rem;
-	padding: 1.125rem 1rem;
+	padding: var(--lyds-field-rest-padding-block) var(--space-4);
 	resize: vertical;
 }
 
 .lyds-field:is([data-focused], [data-filled]) > .lyds-textarea {
-	padding-block: 1.6875rem 1.25rem;
+	padding-block: var(--lyds-field-float-padding-start) var(--space-5);
 }
 
 .lyds-field[data-invalid] > .lyds-textarea {
-	padding-block: 1.6875rem 0.8125rem;
+	padding-block: var(--lyds-field-float-padding-start) var(--lyds-field-invalid-padding-end);
 }
 
 .lyds-number-field,
@@ -414,7 +417,7 @@
 	background: var(--background-transparent);
 	color: var(--icon-main);
 	font-family: var(--font-family-sans);
-	font-size: 1rem;
+	font-size: var(--font-size-md);
 	font-weight: var(--font-weight-regular);
 	line-height: 1;
 	cursor: pointer;
@@ -453,7 +456,7 @@
 	max-inline-size: 20.5rem;
 	min-inline-size: 0;
 	align-items: stretch;
-	gap: 0.5rem;
+	gap: var(--space-2);
 }
 
 .lyds-phone-field__country {
@@ -472,8 +475,8 @@
 	block-size: 100%;
 	align-items: center;
 	justify-content: center;
-	gap: 0.25rem;
-	padding-inline: 1rem;
+	gap: var(--space-1);
+	padding-inline: var(--space-4);
 	border: 0;
 	outline: 0;
 	background: var(--background-transparent);
@@ -505,7 +508,7 @@
 	inline-size: 100%;
 	max-inline-size: 20.5rem;
 	align-items: center;
-	gap: 0.5rem;
+	gap: var(--space-2);
 }
 
 .lyds-otp-field__input {
@@ -526,7 +529,7 @@
 	justify-content: center;
 	color: var(--text-secondary);
 	font-family: var(--font-family-sans);
-	font-size: 0.8125rem;
+	font-size: var(--component-field-supporting-font-size);
 	line-height: 1rem;
 }
 
@@ -583,7 +586,7 @@
 .lyds-file-upload {
 	display: grid;
 	inline-size: 100%;
-	gap: 0.75rem;
+	gap: var(--space-3);
 }
 
 .lyds-file-upload__input,
@@ -609,12 +612,12 @@
 	display: flex;
 	min-inline-size: 0;
 	flex-direction: column;
-	gap: 0.5rem;
+	gap: var(--space-2);
 }
 
 .lyds-file-selection__summary {
 	color: var(--text-secondary);
-	font-size: 0.8125rem;
+	font-size: var(--component-field-supporting-font-size);
 	font-variant-numeric: tabular-nums;
 	font-weight: var(--font-weight-regular);
 	line-height: 1rem;
@@ -625,7 +628,7 @@
 	display: grid;
 	min-inline-size: 0;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
-	gap: 0.5rem;
+	gap: var(--space-2);
 	list-style: none;
 }
 
@@ -634,9 +637,9 @@
 	min-inline-size: 0;
 	grid-template-columns: 3rem minmax(0, 1fr);
 	align-items: center;
-	gap: 0.625rem;
-	padding: 0.5rem;
-	border-radius: 0.75rem;
+	gap: var(--space-3);
+	padding: var(--space-2);
+	border-radius: var(--radius-md);
 	background: var(--background-secondary);
 	color: var(--text-main);
 }
@@ -656,7 +659,7 @@
 	place-items: center;
 	overflow: hidden;
 	border: var(--border-width-hairline) solid var(--divider-main);
-	border-radius: 0.5rem;
+	border-radius: var(--radius-sm);
 	background: var(--background-inset);
 	color: var(--icon-secondary);
 }
@@ -676,7 +679,7 @@
 .lyds-file-selection__name {
 	min-inline-size: 0;
 	overflow: hidden;
-	font-size: 0.875rem;
+	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-regular);
 	line-height: 1.125rem;
 	letter-spacing: -0.01875rem;
@@ -701,8 +704,8 @@
 	min-block-size: 7.25rem;
 	grid-template-columns: minmax(0, 1fr) auto;
 	align-items: center;
-	gap: 1rem;
-	padding: 1rem;
+	gap: var(--space-4);
+	padding: var(--space-4);
 	border-style: dashed;
 }
 
@@ -717,12 +720,12 @@
 	display: flex;
 	min-inline-size: 0;
 	flex-direction: column;
-	gap: 0.125rem;
+	gap: var(--space-05);
 }
 
 .lyds-drop-zone__primary {
 	color: var(--text-title);
-	font-size: 1rem;
+	font-size: var(--font-size-md);
 	font-weight: var(--font-weight-regular);
 	line-height: 1.25rem;
 	letter-spacing: -0.02rem;
@@ -730,7 +733,7 @@
 
 .lyds-drop-zone__secondary {
 	color: var(--text-secondary);
-	font-size: 0.8125rem;
+	font-size: var(--component-field-supporting-font-size);
 	font-weight: var(--font-weight-regular);
 	line-height: 1rem;
 	letter-spacing: -0.01875rem;
@@ -789,7 +792,7 @@
 		flex-wrap: wrap;
 		overflow: visible;
 		color: var(--text-secondary);
-		font-size: 0.75rem;
+		font-size: var(--font-size-xs);
 		line-height: 1rem;
 		pointer-events: auto;
 		white-space: normal;
@@ -815,7 +818,7 @@
 	}
 
 	.lyds-field:is([data-focused], [data-filled], [data-invalid]) > .lyds-textarea {
-		padding-block: 1.125rem;
+		padding-block: var(--lyds-field-rest-padding-block);
 	}
 
 	.lyds-field:has(> .lyds-field__label):not([data-focused]):not([data-filled]):not([data-invalid]) :is(.lyds-field__input, .lyds-textarea, .lyds-number-field__input)::placeholder {

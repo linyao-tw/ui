@@ -133,6 +133,15 @@ border-radius: var(--radius-md); /* 0.75rem */
 
 只有 1px 邊框／分隔線與 Figma 明確指定的 0.5px 分隔線可使用 `px`。SVG viewBox 座標不屬於 CSS 長度。流動版面可使用 `%`、`fr`、`vw`、`dvh` 與無單位行高。
 
+`pnpm lint:css` 會強制檢查：`font-size`、`border-radius`、`gap`、`padding-*` 與 `margin-*` 的每個值都必須是 `var(...)`、`calc()`／`clamp()`／`min()`／`max()`／`env()`，或 `0`、`auto`、百分比等關鍵字。寫入原始長度會讓檢查失敗：
+
+```css
+padding: 0.75rem var(--space-4); /* 失敗 */
+padding: var(--space-3) var(--space-4); /* 通過 */
+```
+
+刻度沒有對應值時，先確認是否應該貼齊既有刻度；確實是元件專屬的光學常數，才新增 `--component-*` 變數或該元件檔案內的區域 `--lyds-*` 變數。檢查範圍涵蓋 `packages/ui/src/components` 與 `apps/storybook/src`。
+
 控制項高度分成兩組刻度，元件 CSS 不得再寫入原始高度：
 
 | 刻度                          |       值 | 用途                                                         |
