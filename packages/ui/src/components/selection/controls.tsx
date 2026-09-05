@@ -8,7 +8,7 @@ import { Toggle as BaseToggle, type ToggleProps as BaseToggleProps } from "@base
 import { ToggleGroup as BaseToggleGroup, type ToggleGroupProps as BaseToggleGroupProps } from "@base-ui/react/toggle-group";
 import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { MinusIcon } from "@phosphor-icons/react/dist/csr/Minus";
-import { forwardRef, useState, type ForwardedRef, type JSX, type ReactNode, type RefAttributes } from "react";
+import { forwardRef, useId, useState, type ForwardedRef, type JSX, type ReactNode, type RefAttributes } from "react";
 
 import { cx, withStateClassName } from "../../internal";
 import styles from "./selection.module.css";
@@ -38,6 +38,18 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(func
 	return <BaseCheckboxGroup {...props} className={withStateClassName(styles.choiceGroup, className)} ref={ref} />;
 });
 
+/**
+ * The wrapping <label> makes the whole row a hit target, but it also makes every word inside it
+ * part of the control's accessible name — including the description. Naming the control from the
+ * title and describing it from the description keeps the row clickable without reading the
+ * supporting copy out as part of the name. The visible title always wins over an `aria-label`,
+ * which is what WCAG 2.5.3 asks for; pass `aria-labelledby` to point somewhere else entirely.
+ */
+function useChoiceCopyIds(description: ReactNode) {
+	const id = useId();
+	return { titleId: `${id}-title`, descriptionId: description ? `${id}-description` : undefined };
+}
+
 export interface CheckboxItemProps extends CheckboxProps {
 	label: ReactNode;
 	description?: ReactNode;
@@ -45,12 +57,20 @@ export interface CheckboxItemProps extends CheckboxProps {
 }
 
 export const CheckboxItem = forwardRef<HTMLElement, CheckboxItemProps>(function CheckboxItem({ description, label, wrapperClassName, ...props }, ref) {
+	const { titleId, descriptionId } = useChoiceCopyIds(description);
+
 	return (
 		<label className={cx(styles.choiceLabel, wrapperClassName)}>
-			<Checkbox {...props} ref={ref} />
+			<Checkbox {...props} ref={ref} aria-labelledby={props["aria-labelledby"] ?? titleId} aria-describedby={props["aria-describedby"] ?? descriptionId} />
 			<span className={styles.choiceCopy}>
-				<span className={styles.choiceTitle}>{label}</span>
-				{description ? <span className={styles.choiceDescription}>{description}</span> : null}
+				<span className={styles.choiceTitle} id={titleId}>
+					{label}
+				</span>
+				{description ? (
+					<span className={styles.choiceDescription} id={descriptionId}>
+						{description}
+					</span>
+				) : null}
 			</span>
 		</label>
 	);
@@ -86,12 +106,20 @@ export interface RadioItemProps<Value = string> extends RadioProps<Value> {
 type RadioItemComponent = <Value = string>(props: RadioItemProps<Value> & RefAttributes<HTMLElement>) => JSX.Element;
 
 export const RadioItem = forwardRef(function RadioItem<Value = string>({ description, label, wrapperClassName, ...props }: RadioItemProps<Value>, ref: ForwardedRef<HTMLElement>) {
+	const { titleId, descriptionId } = useChoiceCopyIds(description);
+
 	return (
 		<label className={cx(styles.choiceLabel, wrapperClassName)}>
-			<Radio {...props} ref={ref} />
+			<Radio {...props} ref={ref} aria-labelledby={props["aria-labelledby"] ?? titleId} aria-describedby={props["aria-describedby"] ?? descriptionId} />
 			<span className={styles.choiceCopy}>
-				<span className={styles.choiceTitle}>{label}</span>
-				{description ? <span className={styles.choiceDescription}>{description}</span> : null}
+				<span className={styles.choiceTitle} id={titleId}>
+					{label}
+				</span>
+				{description ? (
+					<span className={styles.choiceDescription} id={descriptionId}>
+						{description}
+					</span>
+				) : null}
 			</span>
 		</label>
 	);

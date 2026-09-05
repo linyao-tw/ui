@@ -45,6 +45,33 @@ beforeAll(() => {
 	});
 });
 
+describe("choice items", () => {
+	it("names the control from its title and describes it with the supporting copy", () => {
+		render(
+			<CheckboxGroup aria-label="Delivery">
+				<CheckboxItem name="express" label="Express delivery" description="Arrives the next working day." />
+			</CheckboxGroup>
+		);
+
+		const checkbox = screen.getByRole("checkbox", { name: "Express delivery" });
+		expect(checkbox).toHaveAccessibleName("Express delivery");
+		expect(checkbox).toHaveAccessibleDescription("Arrives the next working day.");
+	});
+
+	it("keeps radio supporting copy out of the name and honours an explicit labelledby", () => {
+		render(
+			<RadioGroup aria-label="Plan">
+				<RadioItem value="pro" label="Pro" description="Ten seats included." />
+				<RadioItem value="team" aria-labelledby="team-heading" label="Team" description="Twenty seats included." />
+				<h3 id="team-heading">Team plan</h3>
+			</RadioGroup>
+		);
+
+		expect(screen.getByRole("radio", { name: "Pro" })).toHaveAccessibleDescription("Ten seats included.");
+		expect(screen.getByRole("radio", { name: "Team plan" })).toHaveAccessibleDescription("Twenty seats included.");
+	});
+});
+
 describe("selection controls", () => {
 	it("submits checkbox group values and supports uncontrolled changes", async () => {
 		const user = userEvent.setup();
