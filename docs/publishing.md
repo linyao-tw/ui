@@ -2,7 +2,7 @@
 
 本文件定義 `@linyao.tw/ui` 的發佈規則，並同步適用於本機操作、GitHub Actions 與 Linyao Design System 代理技能。
 
-> [!IMPORTANT] `@linyao.tw/ui` 尚未發佈。`NPM_PUBLISH_ENABLED` 預設不存在或不等於字串 `true`，發佈工作必須保持停用。只有完成 Storybook 審閱並取得儲存庫擁有者明確批准後，才能執行初始發佈或啟用發佈。
+`@linyao.tw/ui` 已建立公開 npm 套件頁面。`NPM_PUBLISH_ENABLED` 預設不存在或不等於字串 `true`；只有完成審閱並取得儲存庫擁有者對目標版本的明確批准後，才能啟用發佈。
 
 ## 安全設定
 
@@ -98,6 +98,7 @@ v2.0.0-beta.1 -> package 2.0.0-beta.1 -> dist-tag beta
 8. 使用 `--access public`。
 9. 穩定版本使用 `--tag latest`。
 10. 預發佈版本使用第一個 prerelease identifier，例如 `beta`；不得移動 `latest`。
+11. npm 發佈成功後建立同一 tag 的 GitHub Release，附上已驗證的 npm tarball；預發佈版本必須標示為 prerelease。
 
 只有擁有者明確批准，且目標 commit 已在 `main` 時，才能執行：
 
@@ -128,6 +129,12 @@ Push tag 即為發佈要求。建立前先以 `npm view @linyao.tw/ui@<version> 
 | main SHA `a1b2c3…` | `0.0.0-snapshot.a1b2c3` | `snapshot`   | 不變           |
 
 預發佈識別字必須可安全作為 npm dist-tag。若採用 `alpha`、`rc` 或其他頻道，工作流程與本文件必須先以測試驗證映射；不得回退至 `latest`。
+
+### GitHub Release
+
+標籤版本完成 npm 發佈後，`github-release` job 才會建立 GitHub Release。該 job 使用獨立的 `contents: write` 權限，不與 npm OIDC 發佈 job 共用寫入權限。Release 標題使用 `Linyao Design System <version>`，附上安裝指令、自動產生的變更記錄，以及 preflight 驗證後交給 npm 發佈的同一個 tarball。主要分支 snapshot 不建立 GitHub Release。
+
+已存在的 GitHub Release 不得被工作流程覆寫。穩定版本標示為 GitHub 最新版本；預發佈版本標示為 prerelease，且不得成為 GitHub 最新版本。
 
 ## 重複版本
 
@@ -171,7 +178,7 @@ npm Trusted Publisher 設定位於既有套件的 Settings。若 `@linyao.tw/ui`
 5. 核對套件、檔案、儲存庫、版本與 `snapshot` tag，確認未產生 `latest`。
 6. 立即設定 Trusted Publisher，之後以新 commit 驗證 OIDC。
 
-這項初始發佈不屬於目前工作，不得現在執行。若 npm 已支援為未發佈套件建立 Trusted Publisher，應依當時的 [npm 官方文件](https://docs.npmjs.com/trusted-publishers/) 使用無 token 流程。
+初始套件頁面建立後，所有後續版本一律改用 Trusted Publishing。若 npm 日後支援為未發佈套件建立 Trusted Publisher，新的套件應依當時的 [npm 官方文件](https://docs.npmjs.com/trusted-publishers/) 優先使用無 token 流程。
 
 ### 3. 設定 Trusted Publisher
 
@@ -227,13 +234,14 @@ Value: true
 - [ ] `pnpm check` 成功。
 - [ ] `pnpm pack:check` 成功且已人工檢查 tarball。
 - [ ] `@linyao.tw/ui` 版本／匯出／型別／樣式／授權／儲存庫 metadata 正確。
-- [ ] Base UI 正式版本已包含 #5058 子選單 portal owner 修正；暫時 patch 已移除；使用端 tarball 的子選單開啟狀態 axe／鍵盤／VoiceOver 驗證已通過。
+- [ ] Base UI 至少為 1.8.0、未使用 workspace patch，且使用端 tarball 的子選單開啟狀態 axe／鍵盤／VoiceOver 驗證已通過。
 - [ ] npm 確切版本唯讀查詢符合快照／正式版本規則。
 - [ ] npm Trusted Publisher 欄位正確。
 - [ ] 工作流程使用 GitHub-hosted runner、`contents: read`、`id-token: write`。
 - [ ] 沒有 npm 寫入 token。
 - [ ] `NPM_PUBLISH_ENABLED=true` 是已核准的狀態。
 - [ ] 穩定／預發佈 dist-tag 已確認，不會誤移 `latest`。
+- [ ] 標籤版本的 GitHub Release 會在 npm 成功後建立，使用同一份已驗證 tarball。
 
 ## 發佈問題處理
 

@@ -160,7 +160,7 @@ Linyao Design System 以 WCAG 2.2 AA 為目標。Base UI 與 React Aria Componen
 | tag `v1.2.3`        | `1.2.3`                 | `latest`   | 失敗                  |
 | tag `v2.0.0-beta.1` | `2.0.0-beta.1`          | `beta`     | 失敗                  |
 
-快照版本不會移動 `latest`。相同快照版本已存在時，只有 registry SHA-512 integrity 與本次 tarball 相同才會略過；內容不一致或狀態不明時工作流程會失敗。標籤預發佈版本使用第一個 prerelease identifier 作為 dist-tag；穩定版本才使用 `latest`。CI 只在工作區暫時修改版本，不提交版本變更。
+快照版本不會移動 `latest`。相同快照版本已存在時，只有 registry SHA-512 integrity 與本次 tarball 相同才會略過；內容不一致或狀態不明時工作流程會失敗。標籤預發佈版本使用第一個 prerelease identifier 作為 dist-tag；穩定版本才使用 `latest`。CI 只在工作區暫時修改版本，不提交版本變更。標籤版本完成 npm 發佈後會建立 GitHub Release，並附上同一份已驗證的 npm tarball。
 
 完整規則與 OIDC 設定見[發佈](docs/publishing.md)。發佈工作只在獲得批准的版本啟用 `NPM_PUBLISH_ENABLED`。
 

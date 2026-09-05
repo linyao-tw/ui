@@ -26,20 +26,20 @@
 	"devDependencies": {
 		"@arethetypeswrong/cli": "^0.18.5",
 		"@eslint/js": "^9.39.5",
-		"@types/node": "^24.10.0",
+		"@types/node": "^26.4.1",
 		"eslint": "^9.39.5",
 		"eslint-plugin-jsx-a11y": "^6.10.2",
 		"eslint-plugin-react-hooks": "^7.1.1",
-		"globals": "^16.5.0",
+		"globals": "^17.12.0",
 		"prettier": "^3.9.6",
 		"prettier-plugin-organize-imports": "^4.3.0",
 		"prettier-plugin-packagejson": "^3.0.2",
 		"publint": "^0.3.24",
 		"semver": "^7.8.5",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.68.0"
+		"typescript-eslint": "^8.69.0"
 	},
-	"packageManager": "pnpm@11.24.0+sha512.bd27e345e976dcb0be0b7a1228217b049a817e21b1f355c90dbe7dc46671895a8bc1e6d06c24554505ea93ea0b45f489a27ec1bfbc8de6a9659fca0f16fa0000",
+	"packageManager": "pnpm@11.25.0+sha512.5cde925b4f075f725eb71fbae18a42ffe784524789f19b61c731cb8721ec28aaee160e01a8d5af4fedb2a42cdbf300efe23db356b0d4a17b4d63e11f8ab7c956",
 	"engines": {
 		"node": ">=22.13.0"
 	}

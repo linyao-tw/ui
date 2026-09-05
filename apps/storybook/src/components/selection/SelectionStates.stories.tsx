@@ -28,7 +28,7 @@ import {
 import { CaretRightIcon } from "@phosphor-icons/react/dist/csr/CaretRight";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import "../story-layout.css";
 
@@ -310,11 +310,37 @@ export const MenuSubmenu: Story = {
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 		const body = within(document.body);
-		await canvas.findByRole("button", { name: "分享" });
-		const submenuTrigger = await body.findByRole("menuitem", { name: "傳送至" });
+		const rootTrigger = await canvas.findByRole("button", { name: "分享" });
+		let submenuTrigger = await body.findByRole("menuitem", { name: "傳送至" });
 		submenuTrigger.focus();
 		await userEvent.keyboard("{ArrowRight}");
-		await body.findByRole("menuitem", { name: "設計審查" });
+		let firstSubmenuItem = await body.findByRole("menuitem", { name: "設計審查" });
+		await waitFor(() => expect(firstSubmenuItem).toHaveFocus());
+
+		await userEvent.keyboard("{Escape}");
+		await waitFor(() => expect(submenuTrigger).toHaveFocus());
+		await waitFor(() => expect(body.queryByRole("menuitem", { name: "設計審查" })).not.toBeInTheDocument());
+
+		await userEvent.keyboard("{ArrowRight}");
+		firstSubmenuItem = await body.findByRole("menuitem", { name: "設計審查" });
+		await waitFor(() => expect(firstSubmenuItem).toHaveFocus());
+		await userEvent.keyboard("{Shift>}{Tab}{/Shift}");
+		await waitFor(() => expect(submenuTrigger).toHaveFocus());
+		await waitFor(() => expect(body.queryByRole("menuitem", { name: "設計審查" })).not.toBeInTheDocument());
+
+		await userEvent.keyboard("{ArrowRight}");
+		firstSubmenuItem = await body.findByRole("menuitem", { name: "設計審查" });
+		await waitFor(() => expect(firstSubmenuItem).toHaveFocus());
+		await userEvent.keyboard("{Tab}");
+		await waitFor(() => expect(rootTrigger).toHaveFocus());
+		await waitFor(() => expect(body.queryByRole("menuitem", { name: "傳送至" })).not.toBeInTheDocument());
+
+		await userEvent.keyboard("{ArrowDown}");
+		submenuTrigger = await body.findByRole("menuitem", { name: "傳送至" });
+		submenuTrigger.focus();
+		await userEvent.keyboard("{ArrowRight}");
+		firstSubmenuItem = await body.findByRole("menuitem", { name: "設計審查" });
+		await waitFor(() => expect(firstSubmenuItem).toHaveFocus());
 
 		const parentMenu = body.getByRole("menuitem", { name: "複製連結" }).closest('[role="menu"]');
 		await expect(parentMenu?.querySelector("span[aria-owns]")).toHaveAttribute("role", "group");

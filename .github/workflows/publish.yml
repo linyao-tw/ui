@@ -52,7 +52,7 @@ jobs:
       - name: 設定 pnpm 與 Node.js
         uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
         with:
-          version: 11.24.0
+          version: 11.25.0
           runtime: node@24
           cache: false
           install: false
@@ -145,7 +145,7 @@ jobs:
       - name: 設定 npm 執行環境
         uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
         with:
-          version: 11.24.0
+          version: 11.25.0
           runtime: node@24
           cache: false
           install: false
@@ -194,3 +194,59 @@ jobs:
               echo "- 說明：相同 snapshot 版本已存在，且完整性一致，已安全略過。"
             fi
           } >> "$GITHUB_STEP_SUMMARY"
+
+  github-release:
+    name: 建立 GitHub Release ${{ needs.preflight.outputs.version }}
+    if: ${{ startsWith(github.ref, 'refs/tags/') }}
+    needs:
+      - preflight
+      - publish
+    permissions:
+      actions: read
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 下載已發佈的套件檔案
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: ${{ needs.preflight.outputs.artifact_name }}
+          path: ${{ runner.temp }}/lyds-github-release
+
+      - name: 建立 GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_VERSION: ${{ needs.preflight.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          tarballs=("${RUNNER_TEMP}/lyds-github-release"/*.tgz)
+          if [[ ${#tarballs[@]} -ne 1 ]]; then
+            echo "應只有一個 GitHub Release tarball，實際找到 ${#tarballs[@]} 個。" >&2
+            exit 1
+          fi
+
+          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "GitHub Release ${RELEASE_TAG} 已存在；拒絕覆寫正式發佈。" >&2
+            exit 1
+          fi
+
+          release_flags=(--latest)
+          if [[ "$RELEASE_VERSION" == *-* ]]; then
+            release_flags=(--prerelease --latest=false)
+          fi
+
+          release_intro=$(printf '%s\n\n%s\n' \
+            "npm：@linyao.tw/ui@${RELEASE_VERSION}" \
+            "安裝：pnpm add @linyao.tw/ui@${RELEASE_VERSION} @phosphor-icons/react")
+
+          gh release create "$RELEASE_TAG" \
+            "${tarballs[0]}#@linyao.tw/ui ${RELEASE_VERSION} npm tarball" \
+            --repo "$GITHUB_REPOSITORY" \
+            --verify-tag \
+            --title "Linyao Design System ${RELEASE_VERSION}" \
+            --notes "$release_intro" \
+            --generate-notes \
+            "${release_flags[@]}"

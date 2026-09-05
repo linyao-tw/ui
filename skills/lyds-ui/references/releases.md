@@ -46,6 +46,8 @@ v2.0.0-beta.1 -> @linyao.tw/ui@2.0.0-beta.1 -> npm dist-tag beta
 
 穩定版使用 `latest`。預發布版使用第一個 prerelease identifier 產生的 npm-safe channel，例如 `beta`，不得移動 `latest`。標籤版本只寫入 CI 工作目錄，不建立發布提交，並透過 OIDC 發布。
 
+npm 發布成功後，工作流程才建立相同 tag 的 GitHub Release，附上 preflight 驗證過的同一份 npm tarball。GitHub Release 使用獨立的 `contents: write` job；npm 發布 job 仍只保留 `contents: read` 與 `id-token: write`。穩定版標示為 GitHub 最新版本；預發布版標示為 prerelease。主要分支 snapshot 不建立 GitHub Release，既有 GitHub Release 不得被自動覆寫。
+
 ## 驗證不代表授權發布
 
 以下操作只用於安全準備：
@@ -57,6 +59,6 @@ pnpm pack:check
 
 檢查 tarball 或執行不發布的預演，不代表取得 `npm publish` 授權。未取得使用者明確同意前，不得手動發布快照或標籤版本、啟用 `NPM_PUBLISH_ENABLED`、建立發布標籤或修改 npm dist-tag。
 
-正式發布前，必須確認已安裝的 Base UI 正式版本包含巢狀選單 portal ownership 修正 [#5058](https://github.com/mui/base-ui/pull/5058)。儲存庫可以暫時修補 Base UI 1.7.0 以驗證已合併的修正，但 pnpm workspace patch 不會隨 `@linyao.tw/ui` tarball 傳給使用端。
+正式發布至少使用 Base UI 1.8.0；該正式版本包含巢狀選單 portal ownership 修正 [#5058](https://github.com/mui/base-ui/pull/5058)。不得恢復只存在於 workspace、無法隨 `@linyao.tw/ui` tarball 傳給使用端的 Base UI patch。
 
-升級到含修正的 Base UI 正式版本後，才能移除暫時修補；接著使用獨立安裝的封裝套件，重新檢查子選單開啟狀態的 axe、方向鍵、Tab／Shift+Tab、Escape、焦點返回與 Safari VoiceOver。在這些檢查通過前不得發布。
+發布前使用獨立安裝的封裝套件，重新檢查子選單開啟狀態的 axe、方向鍵、Tab／Shift+Tab、Escape、焦點返回與 Safari VoiceOver。在這些檢查通過前不得發布。
