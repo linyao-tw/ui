@@ -409,9 +409,19 @@ describe("file controls", () => {
 			</>
 		);
 
-		expect(screen.getByLabelText("Locked picker 選擇檔案", { selector: "input" })).toBeDisabled();
-		expect(screen.getByLabelText("Locked drop zone 選擇檔案", { selector: "input" })).toBeDisabled();
-		expect(container.querySelectorAll("label.lyds-button[data-disabled]")).toHaveLength(2);
+		// A read-only file field keeps whatever the user already picked in the submission, so the
+		// input stays enabled and refuses the picker instead of being disabled out of the form.
+		for (const label of ["Locked picker 選擇檔案", "Locked drop zone 選擇檔案"]) {
+			const input = screen.getByLabelText<HTMLInputElement>(label, { selector: "input" });
+			expect(input).not.toBeDisabled();
+			expect(input).toHaveAttribute("readonly");
+			expect(input).toHaveAttribute("aria-disabled", "true");
+
+			const openedPicker = fireEvent.click(input);
+			expect(openedPicker).toBe(false);
+		}
+
+		expect(container.querySelectorAll("label.lyds-button[data-readonly]")).toHaveLength(2);
 		expect(container.querySelectorAll("button")).toHaveLength(0);
 
 		const zone = container.querySelector<HTMLDivElement>(".lyds-drop-zone");
@@ -420,6 +430,13 @@ describe("file controls", () => {
 		expect(onUploadFiles).not.toHaveBeenCalled();
 		expect(onDropFiles).not.toHaveBeenCalled();
 		expect(screen.getAllByRole("status").every(status => status.textContent === "")).toBe(true);
+	});
+	it("keeps a disabled file field out of the form entirely", () => {
+		const { container } = render(<FileUpload label="Archived upload" disabled />);
+		const input = screen.getByLabelText<HTMLInputElement>("Archived upload 選擇檔案", { selector: "input" });
+
+		expect(input).toBeDisabled();
+		expect(container.querySelector("label.lyds-button[data-disabled]")).not.toBeNull();
 	});
 });
 

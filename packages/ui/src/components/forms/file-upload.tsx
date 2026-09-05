@@ -97,12 +97,24 @@ function useClearFileSelectionOnFormReset(inputRef: React.RefObject<HTMLInputEle
 	}, [formId, inputRef, setSelectedFiles]);
 }
 
+/**
+ * HTML has no read-only file input. Disabling one would drop whatever the user already picked from
+ * the submission, so a read-only field stays enabled and simply refuses to open the picker.
+ */
+function useBlockedPicker(readOnly: boolean | undefined, onClick: React.MouseEventHandler<HTMLInputElement> | undefined) {
+	return (event: React.MouseEvent<HTMLInputElement>) => {
+		onClick?.(event);
+		if (readOnly) event.preventDefault();
+	};
+}
+
 interface FileTriggerProps {
 	children: React.ReactNode;
 	className: string;
 	disabled: boolean;
 	htmlFor: string;
 	id: string;
+	readOnly: boolean;
 	size: FieldAnatomyProps["size"];
 	startIcon?: React.ReactNode;
 }
@@ -112,9 +124,9 @@ interface FileTriggerProps {
  * tab stop, the accessible name and native picker activation. Rendering a button beside the input
  * instead would leave the description, error and validity on an element the keyboard cannot reach.
  */
-function FileTrigger({ children, className, disabled, htmlFor, id, size, startIcon }: FileTriggerProps) {
+function FileTrigger({ children, className, disabled, htmlFor, id, readOnly, size, startIcon }: FileTriggerProps) {
 	return (
-		<label className={cx("lyds-button", className)} data-disabled={disabled || undefined} data-size={size} data-variant="secondary" htmlFor={htmlFor}>
+		<label className={cx("lyds-button", className)} data-disabled={disabled || undefined} data-readonly={readOnly || undefined} data-size={size} data-variant="secondary" htmlFor={htmlFor}>
 			{startIcon != null ? (
 				<span className="lyds-button__icon" aria-hidden="true">
 					{startIcon}
@@ -168,6 +180,7 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(fu
 	forwardedRef
 ) {
 	const messages = useMessages();
+	const blockPickerWhenReadOnly = useBlockedPicker(readOnly, inputProps.onClick);
 	const generatedId = React.useId();
 	const id = idProp ?? generatedId;
 	const labelId = `${id}-label`;
@@ -222,15 +235,17 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(fu
 					type="file"
 					className={cx("lyds-file-upload__input", inputClassName)}
 					style={inputStyle}
-					disabled={disabled || readOnly}
+					disabled={disabled}
 					readOnly={readOnly}
+					aria-disabled={readOnly || undefined}
+					onClick={blockPickerWhenReadOnly}
 					required={required}
 					aria-invalid={invalid || undefined}
 					aria-labelledby={label != null ? `${labelId} ${triggerId}` : triggerId}
 					aria-describedby={cx(description != null && descriptionId, selectedFiles.length > 0 && selectionSummaryId, error != null && errorId) || undefined}
 					onChange={handleChange}
 				/>
-				<FileTrigger className="lyds-file-upload__trigger" disabled={Boolean(disabled || readOnly)} htmlFor={id} id={triggerId} size={size}>
+				<FileTrigger className="lyds-file-upload__trigger" disabled={Boolean(disabled)} htmlFor={id} id={triggerId} readOnly={Boolean(readOnly)} size={size}>
 					{triggerLabel ?? messages.fileUploadTrigger}
 				</FileTrigger>
 				<FileSelectionPreview accept={inputProps.accept} files={selectedFiles} invalidFileLabel={invalidFileLabel ?? messages.fileUploadInvalidFile} summaryId={selectionSummaryId} />
@@ -292,6 +307,7 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 	forwardedRef
 ) {
 	const messages = useMessages();
+	const blockPickerWhenReadOnly = useBlockedPicker(readOnly, inputProps.onClick);
 	const generatedId = React.useId();
 	const id = idProp ?? generatedId;
 	const labelId = `${id}-label`;
@@ -416,8 +432,10 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 				id={id}
 				type="file"
 				className={cx("lyds-drop-zone__input", inputClassName)}
-				disabled={disabled || readOnly}
+				disabled={disabled}
 				readOnly={readOnly}
+				aria-disabled={readOnly || undefined}
+				onClick={blockPickerWhenReadOnly}
 				required={required}
 				aria-invalid={invalid || undefined}
 				aria-labelledby={label != null ? `${labelId} ${triggerId}` : triggerId}
@@ -439,7 +457,15 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 					<span className="lyds-drop-zone__primary">{primaryLabel ?? messages.dropZonePrimary}</span>
 					<span className="lyds-drop-zone__secondary">{secondaryLabel ?? messages.dropZoneSecondary}</span>
 				</span>
-				<FileTrigger className="lyds-drop-zone__button" disabled={Boolean(disabled || readOnly)} htmlFor={id} id={triggerId} size={size} startIcon={<PlusIcon aria-hidden="true" weight="bold" />}>
+				<FileTrigger
+					className="lyds-drop-zone__button"
+					disabled={Boolean(disabled)}
+					htmlFor={id}
+					id={triggerId}
+					readOnly={Boolean(readOnly)}
+					size={size}
+					startIcon={<PlusIcon aria-hidden="true" weight="bold" />}
+				>
 					{browseLabel ?? messages.dropZoneBrowse}
 				</FileTrigger>
 				<FileSelectionPreview accept={inputProps.accept} files={selectedFiles} invalidFileLabel={invalidFileLabel ?? messages.fileUploadInvalidFile} summaryId={selectionSummaryId} />

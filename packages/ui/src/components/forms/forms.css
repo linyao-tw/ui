@@ -599,6 +599,11 @@
 	white-space: nowrap;
 }
 
+.lyds-button[data-readonly] {
+	cursor: default;
+	pointer-events: none;
+}
+
 .lyds-file-upload__trigger {
 	justify-self: start;
 }

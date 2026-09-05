@@ -343,8 +343,8 @@
 	position: relative;
 	display: inline-grid;
 	flex: none;
-	width: 3rem;
-	height: 3rem;
+	width: var(--control-height-compact-md);
+	height: var(--control-height-compact-md);
 	place-items: center;
 	overflow: visible;
 	background: var(--background-inset);
@@ -370,14 +370,14 @@
 }
 
 .lyds-avatar[data-size="lg"] {
-	width: 3.5rem;
-	height: 3.5rem;
+	width: var(--control-height-compact-lg);
+	height: var(--control-height-compact-lg);
 	font-size: var(--font-size-md);
 }
 
 .lyds-avatar[data-size="xl"] {
-	width: var(--space-16);
-	height: var(--space-16);
+	width: var(--control-height-lg);
+	height: var(--control-height-lg);
 	font-size: var(--font-size-lg);
 }
 
