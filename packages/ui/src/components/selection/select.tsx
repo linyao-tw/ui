@@ -18,46 +18,45 @@ import { forwardRef, useMemo, type Key, type ReactNode } from "react";
 
 import { combineStateClassNames, withStateClassName } from "@/internal";
 import { useMessages } from "@/intl";
-import styles from "./selection.module.css";
 
 export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(function SelectTrigger({ className, ...props }, ref) {
-	return <BaseSelect.Trigger {...props} className={withStateClassName(styles.selectTrigger, className)} ref={ref} />;
+	return <BaseSelect.Trigger {...props} className={withStateClassName("lyds-select__trigger", className)} ref={ref} />;
 });
 
 export const SelectValue = forwardRef<HTMLSpanElement, SelectValueProps>(function SelectValue({ className, ...props }, ref) {
-	return <BaseSelect.Value {...props} className={withStateClassName(styles.selectValue, className)} ref={ref} />;
+	return <BaseSelect.Value {...props} className={withStateClassName("lyds-select__value", className)} ref={ref} />;
 });
 
 export const SelectPositioner = forwardRef<HTMLDivElement, SelectPositionerProps>(function SelectPositioner({ className, ...props }, ref) {
-	return <BaseSelect.Positioner {...props} className={withStateClassName(styles.positioner, className)} ref={ref} />;
+	return <BaseSelect.Positioner {...props} className={withStateClassName("lyds-listbox__positioner", className)} ref={ref} />;
 });
 
 export const SelectPopup = forwardRef<HTMLDivElement, SelectPopupProps>(function SelectPopup({ className, ...props }, ref) {
-	return <BaseSelect.Popup {...props} className={withStateClassName(styles.popup, className)} ref={ref} />;
+	return <BaseSelect.Popup {...props} className={withStateClassName("lyds-listbox__popup", className)} ref={ref} />;
 });
 
 export const SelectList = forwardRef<HTMLDivElement, SelectListProps>(function SelectList({ className, ...props }, ref) {
-	return <BaseSelect.List {...props} className={withStateClassName(styles.optionList, className)} ref={ref} />;
+	return <BaseSelect.List {...props} className={withStateClassName("lyds-listbox__list", className)} ref={ref} />;
 });
 
 export const SelectItem = forwardRef<HTMLElement, SelectItemProps>(function SelectItem({ className, ...props }, ref) {
-	return <BaseSelect.Item {...props} className={withStateClassName(styles.option, className)} ref={ref} />;
+	return <BaseSelect.Item {...props} className={withStateClassName("lyds-listbox__option", className)} ref={ref} />;
 });
 
 export const SelectItemIndicator = forwardRef<HTMLSpanElement, SelectItemIndicatorProps>(function SelectItemIndicator({ className, ...props }, ref) {
-	return <BaseSelect.ItemIndicator {...props} className={withStateClassName(styles.optionIndicator, className)} ref={ref} />;
+	return <BaseSelect.ItemIndicator {...props} className={withStateClassName("lyds-listbox__option-indicator", className)} ref={ref} />;
 });
 
 export const SelectItemText = forwardRef<HTMLDivElement, SelectItemTextProps>(function SelectItemText({ className, ...props }, ref) {
-	return <BaseSelect.ItemText {...props} className={withStateClassName(styles.optionText, className)} ref={ref} />;
+	return <BaseSelect.ItemText {...props} className={withStateClassName("lyds-listbox__option-text", className)} ref={ref} />;
 });
 
 export const SelectGroupLabel = forwardRef<HTMLDivElement, SelectGroupLabelProps>(function SelectGroupLabel({ className, ...props }, ref) {
-	return <BaseSelect.GroupLabel {...props} className={withStateClassName(styles.groupLabel, className)} ref={ref} />;
+	return <BaseSelect.GroupLabel {...props} className={withStateClassName("lyds-listbox__group-label", className)} ref={ref} />;
 });
 
 export const SelectSeparator = forwardRef<HTMLDivElement, SelectSeparatorProps>(function SelectSeparator({ className, ...props }, ref) {
-	return <BaseSelect.Separator {...props} className={withStateClassName(styles.separator, className)} ref={ref} />;
+	return <BaseSelect.Separator {...props} className={withStateClassName("lyds-listbox__separator", className)} ref={ref} />;
 });
 
 export interface SelectOption<Value> {
@@ -110,7 +109,7 @@ function SelectComponent<Value>({
 				className={combineStateClassNames(className, triggerProps?.className)}
 			>
 				<SelectValue placeholder={placeholder ?? messages.selectPlaceholder} />
-				<BaseSelect.Icon aria-hidden="true" className={styles.selectIcon}>
+				<BaseSelect.Icon aria-hidden="true" className={"lyds-select__icon"}>
 					<CaretDownIcon aria-hidden="true" weight="bold" />
 				</BaseSelect.Icon>
 			</SelectTrigger>
@@ -125,7 +124,7 @@ function SelectComponent<Value>({
 									</SelectItemIndicator>
 									<SelectItemText>
 										<span>{option.label}</span>
-										{option.description ? <span className={styles.optionDescription}>{option.description}</span> : null}
+										{option.description ? <span className={"lyds-listbox__option-description"}>{option.description}</span> : null}
 									</SelectItemText>
 								</SelectItem>
 							))}

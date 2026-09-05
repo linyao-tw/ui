@@ -64,6 +64,12 @@ pnpm --filter @lyds/storybook test
 - 不加入另一套樣式化元件系統。
 - Base UI 組合使用 `render`，不是 `asChild`。Render 回呼必須完整傳遞 props 與 ref。
 
+### 樣式
+
+- 元件樣式一律是全域 `lyds-*` 類別，不使用 CSS Modules，也不新增 `*.css.d.ts`。
+- 命名採 `lyds-<元件>`／`lyds-<元件>__<部位>`／`lyds-<元件>--<變體>`。
+- 樣式表只由 `src/index.ts` 匯入一次，決定串接順序；元件檔案不重複匯入自己的 CSS。
+
 ### 模組與匯入路徑
 
 - 跨目錄一律使用 `@/` 別名，不得出現 `../`：

@@ -1,7 +1,6 @@
 import { forwardRef, type HTMLAttributes } from "react";
 
 import { cx } from "@/internal";
-import styles from "./feedback.module.css";
 import { getLiveRegionProps, type FeedbackLiveMode, type FeedbackStatus } from "./feedback.types";
 export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
 	/**
@@ -22,7 +21,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert({ "ar
 	return (
 		<div
 			ref={ref}
-			className={cx(styles.feedbackPanel, styles.alert, className)}
+			className={cx("lyds-feedback-panel", "lyds-alert", className)}
 			data-status={status}
 			role={role ?? liveRegionProps.role}
 			aria-live={ariaLive ?? liveRegionProps["aria-live"]}
@@ -35,17 +34,17 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert({ "ar
 export const AlertView = Alert;
 
 export const AlertContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function AlertContent({ className, ...props }, ref) {
-	return <div ref={ref} className={cx(styles.feedbackContent, className)} {...props} />;
+	return <div ref={ref} className={cx("lyds-feedback__content", className)} {...props} />;
 });
 
 export const AlertTitle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function AlertTitle({ className, ...props }, ref) {
-	return <div ref={ref} className={cx(styles.feedbackTitle, className)} {...props} />;
+	return <div ref={ref} className={cx("lyds-feedback__title", className)} {...props} />;
 });
 
 export const AlertDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(function AlertDescription({ className, ...props }, ref) {
-	return <p ref={ref} className={cx(styles.feedbackDescription, className)} {...props} />;
+	return <p ref={ref} className={cx("lyds-feedback__description", className)} {...props} />;
 });
 
 export const AlertActions = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function AlertActions({ className, ...props }, ref) {
-	return <div ref={ref} className={cx(styles.feedbackActions, className)} {...props} />;
+	return <div ref={ref} className={cx("lyds-feedback__actions", className)} {...props} />;
 });

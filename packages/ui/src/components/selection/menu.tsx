@@ -18,62 +18,61 @@ import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { forwardRef } from "react";
 
 import { withStateClassName } from "@/internal";
-import styles from "./selection.module.css";
 
 export const MenuTrigger = forwardRef<HTMLButtonElement, MenuTriggerProps>(function MenuTrigger({ className, ...props }, ref) {
-	return <BaseMenu.Trigger {...props} className={withStateClassName(styles.menuTrigger, className)} ref={ref} />;
+	return <BaseMenu.Trigger {...props} className={withStateClassName("lyds-menu__trigger", className)} ref={ref} />;
 });
 
 export const MenuPositioner = forwardRef<HTMLDivElement, MenuPositionerProps>(function MenuPositioner({ className, ...props }, ref) {
-	return <BaseMenu.Positioner {...props} className={withStateClassName(styles.positioner, className)} ref={ref} />;
+	return <BaseMenu.Positioner {...props} className={withStateClassName("lyds-listbox__positioner", className)} ref={ref} />;
 });
 
 export const MenuPopup = forwardRef<HTMLDivElement, MenuPopupProps>(function MenuPopup({ className, ...props }, ref) {
-	return <BaseMenu.Popup {...props} className={withStateClassName(styles.menuPopup, className)} ref={ref} />;
+	return <BaseMenu.Popup {...props} className={withStateClassName("lyds-menu__popup", className)} ref={ref} />;
 });
 
 export const MenuItem = forwardRef<HTMLElement, MenuItemProps>(function MenuItem({ className, ...props }, ref) {
-	return <BaseMenu.Item {...props} className={withStateClassName(styles.menuItem, className)} ref={ref} />;
+	return <BaseMenu.Item {...props} className={withStateClassName("lyds-menu__item", className)} ref={ref} />;
 });
 
 export const MenuLinkItem = forwardRef<HTMLAnchorElement, MenuLinkItemProps>(function MenuLinkItem({ className, ...props }, ref) {
-	return <BaseMenu.LinkItem {...props} className={withStateClassName(styles.menuItem, className)} ref={ref} />;
+	return <BaseMenu.LinkItem {...props} className={withStateClassName("lyds-menu__item", className)} ref={ref} />;
 });
 
 export const MenuCheckboxItem = forwardRef<HTMLElement, MenuCheckboxItemProps>(function MenuCheckboxItem({ className, ...props }, ref) {
-	return <BaseMenu.CheckboxItem {...props} className={withStateClassName(styles.menuItem, className)} ref={ref} />;
+	return <BaseMenu.CheckboxItem {...props} className={withStateClassName("lyds-menu__item", className)} ref={ref} />;
 });
 
 export const MenuCheckboxItemIndicator = forwardRef<HTMLSpanElement, MenuCheckboxItemIndicatorProps>(function MenuCheckboxItemIndicator({ children, className, ...props }, ref) {
 	return (
-		<BaseMenu.CheckboxItemIndicator {...props} className={withStateClassName(styles.menuItemIndicator, className)} ref={ref}>
+		<BaseMenu.CheckboxItemIndicator {...props} className={withStateClassName("lyds-menu__item-indicator", className)} ref={ref}>
 			{children ?? <CheckIcon aria-hidden="true" weight="bold" />}
 		</BaseMenu.CheckboxItemIndicator>
 	);
 });
 
 export const MenuRadioItem = forwardRef<HTMLElement, MenuRadioItemProps>(function MenuRadioItem({ className, ...props }, ref) {
-	return <BaseMenu.RadioItem {...props} className={withStateClassName(styles.menuItem, className)} ref={ref} />;
+	return <BaseMenu.RadioItem {...props} className={withStateClassName("lyds-menu__item", className)} ref={ref} />;
 });
 
 export const MenuRadioItemIndicator = forwardRef<HTMLSpanElement, MenuRadioItemIndicatorProps>(function MenuRadioItemIndicator({ children, className, ...props }, ref) {
 	return (
-		<BaseMenu.RadioItemIndicator {...props} className={withStateClassName(styles.menuItemIndicator, className)} ref={ref}>
+		<BaseMenu.RadioItemIndicator {...props} className={withStateClassName("lyds-menu__item-indicator", className)} ref={ref}>
 			{children ?? <CheckIcon aria-hidden="true" data-lyds-glyph="check" weight="bold" />}
 		</BaseMenu.RadioItemIndicator>
 	);
 });
 
 export const MenuGroupLabel = forwardRef<HTMLDivElement, MenuGroupLabelProps>(function MenuGroupLabel({ className, ...props }, ref) {
-	return <BaseMenu.GroupLabel {...props} className={withStateClassName(styles.groupLabel, className)} ref={ref} />;
+	return <BaseMenu.GroupLabel {...props} className={withStateClassName("lyds-listbox__group-label", className)} ref={ref} />;
 });
 
 export const MenuSeparator = forwardRef<HTMLDivElement, SeparatorProps>(function MenuSeparator({ className, ...props }, ref) {
-	return <BaseSeparator {...props} className={withStateClassName(styles.separator, className)} ref={ref} />;
+	return <BaseSeparator {...props} className={withStateClassName("lyds-listbox__separator", className)} ref={ref} />;
 });
 
 export const MenuSubmenuTrigger = forwardRef<HTMLElement, MenuSubmenuTriggerProps>(function MenuSubmenuTrigger({ className, ...props }, ref) {
-	return <BaseMenu.SubmenuTrigger {...props} className={withStateClassName(styles.menuItem, className)} ref={ref} />;
+	return <BaseMenu.SubmenuTrigger {...props} className={withStateClassName("lyds-menu__item", className)} ref={ref} />;
 });
 
 const menuParts = {
@@ -126,7 +125,7 @@ export const ContextMenuTrigger = forwardRef<HTMLDivElement, ContextMenuTriggerP
 		);
 	};
 
-	return <BaseContextMenu.Trigger {...props} className={withStateClassName(styles.contextTrigger, className)} ref={ref} onKeyDown={handleKeyDown} />;
+	return <BaseContextMenu.Trigger {...props} className={withStateClassName("lyds-context-menu__trigger", className)} ref={ref} onKeyDown={handleKeyDown} />;
 });
 
 export const ContextMenu = {

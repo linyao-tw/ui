@@ -1,7 +1,6 @@
 import { createElement, forwardRef, type HTMLAttributes, type ReactNode } from "react";
 
 import { cx } from "@/internal";
-import styles from "./feedback.module.css";
 import { type FeedbackStatus } from "./feedback.types";
 export interface EmptyStateProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 	actions?: ReactNode;
@@ -18,22 +17,22 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(function E
 	ref
 ) {
 	return (
-		<div ref={ref} className={cx(styles.emptyState, className)} data-status={status} {...props}>
-			<div className={styles.emptyStateRail} aria-hidden="true">
+		<div ref={ref} className={cx("lyds-empty-state", className)} data-status={status} {...props}>
+			<div className={"lyds-empty-state__rail"} aria-hidden="true">
 				<span />
 				<span />
 				<span />
 			</div>
-			<div className={styles.emptyStateBody}>
+			<div className={"lyds-empty-state__body"}>
 				{icon ? (
-					<div className={styles.emptyStateIcon} aria-hidden="true">
+					<div className={"lyds-empty-state__icon"} aria-hidden="true">
 						{icon}
 					</div>
 				) : null}
-				{eyebrow ? <div className={styles.emptyStateEyebrow}>{eyebrow}</div> : null}
-				{createElement(`h${headingLevel}`, { className: styles.emptyStateTitle }, title)}
-				{description ? <p className={styles.emptyStateDescription}>{description}</p> : null}
-				{actions ? <div className={styles.emptyStateActions}>{actions}</div> : null}
+				{eyebrow ? <div className={"lyds-empty-state__eyebrow"}>{eyebrow}</div> : null}
+				{createElement(`h${headingLevel}`, { className: "lyds-empty-state__title" }, title)}
+				{description ? <p className={"lyds-empty-state__description"}>{description}</p> : null}
+				{actions ? <div className={"lyds-empty-state__actions"}>{actions}</div> : null}
 			</div>
 		</div>
 	);

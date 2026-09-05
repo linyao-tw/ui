@@ -108,6 +108,8 @@ Base UI 不提供完整的日期元件，因此日期與時間元件使用：
 
 字型由獨立的可選入口 `fonts.css` 提供，因此 `styles.css` 不含任何跨來源請求；CSP、離線環境與自行代管字型都不需要分支處理。
 
+元件 CSS 一律使用全域 `lyds-*` 類別，不使用 CSS Modules。使用端因此能以一致的方式檢視、覆寫與偵錯任何元件，型別也不需要靠手寫的 `*.css.d.ts` 維護。命名為 `lyds-<元件>`、`lyds-<元件>__<部位>`、`lyds-<元件>--<變體>`；跨元件共用的部位使用共通字首（例如 Select、Combobox 與 Autocomplete 的清單共用 `lyds-listbox__*`）。
+
 所有元件顏色必須使用語意變數。固定長度必須來自設計變數，由 `pnpm lint:css` 強制檢查；只有 1px 細線或分隔線可使用 `px`。流動版面可使用 `%`、`fr`、viewport units 或無單位行高。
 
 全域基準樣式限定為 box-sizing 與 margin／padding 歸零、`body` 的背景／文字色／字體、表單控制項的 `font: inherit`、`::selection`，以及列印色彩。全部包在 `@layer lyds.base` 內：

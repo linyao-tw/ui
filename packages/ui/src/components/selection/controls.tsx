@@ -11,7 +11,6 @@ import { MinusIcon } from "@phosphor-icons/react/dist/csr/Minus";
 import { forwardRef, useCallback, useId, useState, type ForwardedRef, type JSX, type ReactNode, type RefAttributes } from "react";
 
 import { cx, withStateClassName } from "@/internal";
-import styles from "./selection.module.css";
 
 function CheckGlyph({ indeterminate = false }: { indeterminate?: boolean }) {
 	return indeterminate ? <MinusIcon aria-hidden="true" weight="bold" /> : <CheckIcon aria-hidden="true" weight="bold" />;
@@ -23,8 +22,8 @@ export interface CheckboxProps extends CheckboxRootProps {
 
 export const Checkbox = forwardRef<HTMLElement, CheckboxProps>(function Checkbox({ children, className, indicator, indeterminate, ...props }, ref) {
 	return (
-		<BaseCheckbox.Root {...props} className={withStateClassName(styles.checkbox, className)} indeterminate={indeterminate} ref={ref}>
-			<BaseCheckbox.Indicator className={styles.checkboxIndicator} keepMounted>
+		<BaseCheckbox.Root {...props} className={withStateClassName("lyds-checkbox", className)} indeterminate={indeterminate} ref={ref}>
+			<BaseCheckbox.Indicator className={"lyds-checkbox__indicator"} keepMounted>
 				{indicator ?? <CheckGlyph indeterminate={indeterminate ?? false} />}
 			</BaseCheckbox.Indicator>
 			{children}
@@ -35,7 +34,7 @@ export const Checkbox = forwardRef<HTMLElement, CheckboxProps>(function Checkbox
 export type CheckboxGroupProps = BaseCheckboxGroupProps;
 
 export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(function CheckboxGroup({ className, ...props }, ref) {
-	return <BaseCheckboxGroup {...props} className={withStateClassName(styles.choiceGroup, className)} ref={ref} />;
+	return <BaseCheckboxGroup {...props} className={withStateClassName("lyds-choice-group", className)} ref={ref} />;
 });
 
 /**
@@ -60,14 +59,14 @@ export const CheckboxItem = forwardRef<HTMLElement, CheckboxItemProps>(function 
 	const { titleId, descriptionId } = useChoiceCopyIds(description);
 
 	return (
-		<label className={cx(styles.choiceLabel, wrapperClassName)}>
+		<label className={cx("lyds-choice", wrapperClassName)}>
 			<Checkbox {...props} ref={ref} aria-labelledby={props["aria-labelledby"] ?? titleId} aria-describedby={props["aria-describedby"] ?? descriptionId} />
-			<span className={styles.choiceCopy}>
-				<span className={styles.choiceTitle} id={titleId}>
+			<span className={"lyds-choice__copy"}>
+				<span className={"lyds-choice__title"} id={titleId}>
 					{label}
 				</span>
 				{description ? (
-					<span className={styles.choiceDescription} id={descriptionId}>
+					<span className={"lyds-choice__description"} id={descriptionId}>
 						{description}
 					</span>
 				) : null}
@@ -81,7 +80,7 @@ export type RadioGroupProps<Value = string> = BaseRadioGroupProps<Value>;
 type RadioGroupComponent = <Value = string>(props: RadioGroupProps<Value> & RefAttributes<HTMLDivElement>) => JSX.Element;
 
 export const RadioGroup = forwardRef(function RadioGroup<Value = string>({ className, ...props }: RadioGroupProps<Value>, ref: ForwardedRef<HTMLDivElement>) {
-	return <BaseRadioGroup {...props} className={withStateClassName(styles.choiceGroup, className)} ref={ref} />;
+	return <BaseRadioGroup {...props} className={withStateClassName("lyds-choice-group", className)} ref={ref} />;
 }) as RadioGroupComponent;
 
 export type RadioProps<Value = string> = RadioRootProps<Value>;
@@ -90,8 +89,8 @@ type RadioComponent = <Value = string>(props: RadioProps<Value> & RefAttributes<
 
 export const Radio = forwardRef(function Radio<Value = string>({ children, className, ...props }: RadioProps<Value>, ref: ForwardedRef<HTMLElement>) {
 	return (
-		<BaseRadio.Root {...props} className={withStateClassName(styles.radio, className)} ref={ref}>
-			<BaseRadio.Indicator className={styles.radioIndicator} keepMounted />
+		<BaseRadio.Root {...props} className={withStateClassName("lyds-radio", className)} ref={ref}>
+			<BaseRadio.Indicator className={"lyds-radio__indicator"} keepMounted />
 			{children}
 		</BaseRadio.Root>
 	);
@@ -109,14 +108,14 @@ export const RadioItem = forwardRef(function RadioItem<Value = string>({ descrip
 	const { titleId, descriptionId } = useChoiceCopyIds(description);
 
 	return (
-		<label className={cx(styles.choiceLabel, wrapperClassName)}>
+		<label className={cx("lyds-choice", wrapperClassName)}>
 			<Radio {...props} ref={ref} aria-labelledby={props["aria-labelledby"] ?? titleId} aria-describedby={props["aria-describedby"] ?? descriptionId} />
-			<span className={styles.choiceCopy}>
-				<span className={styles.choiceTitle} id={titleId}>
+			<span className={"lyds-choice__copy"}>
+				<span className={"lyds-choice__title"} id={titleId}>
 					{label}
 				</span>
 				{description ? (
-					<span className={styles.choiceDescription} id={descriptionId}>
+					<span className={"lyds-choice__description"} id={descriptionId}>
 						{description}
 					</span>
 				) : null}
@@ -131,9 +130,9 @@ export interface SwitchProps extends SwitchRootProps {
 
 export const Switch = forwardRef<HTMLElement, SwitchProps>(function Switch({ children, className, ...props }, ref) {
 	return (
-		<BaseSwitch.Root {...props} className={withStateClassName(styles.switch, className)} ref={ref}>
-			<span aria-hidden="true" className={styles.switchSignal} />
-			<BaseSwitch.Thumb className={styles.switchThumb} />
+		<BaseSwitch.Root {...props} className={withStateClassName("lyds-switch", className)} ref={ref}>
+			<span aria-hidden="true" className={"lyds-switch__signal"} />
+			<BaseSwitch.Thumb className={"lyds-switch__thumb"} />
 			{children}
 		</BaseSwitch.Root>
 	);
@@ -182,14 +181,14 @@ export const Slider = forwardRef(function Slider<Value extends number | readonly
 	);
 
 	return (
-		<BaseSlider.Root {...props} aria-label={ariaLabel} aria-labelledby={ariaLabelledby} className={withStateClassName(styles.slider, className)} defaultValue={defaultValue} ref={ref} value={value}>
-			{showValue ? <BaseSlider.Value className={styles.sliderValue} /> : null}
-			<BaseSlider.Control className={styles.sliderControl}>
-				<BaseSlider.Track className={styles.sliderTrack}>
-					<BaseSlider.Indicator className={styles.sliderIndicator} />
+		<BaseSlider.Root {...props} aria-label={ariaLabel} aria-labelledby={ariaLabelledby} className={withStateClassName("lyds-slider", className)} defaultValue={defaultValue} ref={ref} value={value}>
+			{showValue ? <BaseSlider.Value className={"lyds-slider__value"} /> : null}
+			<BaseSlider.Control className={"lyds-slider__control"}>
+				<BaseSlider.Track className={"lyds-slider__track"}>
+					<BaseSlider.Indicator className={"lyds-slider__indicator"} />
 					{Array.from({ length: thumbCount }, (_, index) => (
 						<BaseSlider.Thumb
-							className={styles.sliderThumb}
+							className={"lyds-slider__thumb"}
 							getAriaLabel={getAriaLabel ?? fallbackThumbLabel}
 							getAriaValueText={getAriaValueText}
 							inputRef={applyThumbDescription}
@@ -210,7 +209,7 @@ export interface ToggleProps<Value extends string = string> extends BaseTogglePr
 type ToggleComponent = <Value extends string = string>(props: ToggleProps<Value> & RefAttributes<HTMLButtonElement>) => JSX.Element;
 
 export const Toggle = forwardRef(function Toggle<Value extends string = string>({ className, variant = "standard", ...props }: ToggleProps<Value>, ref: ForwardedRef<HTMLButtonElement>) {
-	return <BaseToggle {...props} className={state => cx(styles.toggle, variant === "quiet" && styles.toggleQuiet, typeof className === "function" ? className(state) : className)} ref={ref} />;
+	return <BaseToggle {...props} className={state => cx("lyds-toggle", variant === "quiet" && "lyds-toggle--quiet", typeof className === "function" ? className(state) : className)} ref={ref} />;
 }) as ToggleComponent;
 
 export type ToggleGroupProps<Value extends string = string> = BaseToggleGroupProps<Value>;
@@ -218,7 +217,7 @@ export type ToggleGroupProps<Value extends string = string> = BaseToggleGroupPro
 type ToggleGroupComponent = <Value extends string = string>(props: ToggleGroupProps<Value> & RefAttributes<HTMLDivElement>) => JSX.Element;
 
 export const ToggleGroup = forwardRef(function ToggleGroup<Value extends string = string>({ className, ...props }: ToggleGroupProps<Value>, ref: ForwardedRef<HTMLDivElement>) {
-	return <BaseToggleGroup {...props} className={withStateClassName(styles.toggleGroup, className)} ref={ref} />;
+	return <BaseToggleGroup {...props} className={withStateClassName("lyds-toggle-group", className)} ref={ref} />;
 }) as ToggleGroupComponent;
 
 export interface SegmentedControlProps<Value extends string = string> extends Omit<BaseToggleGroupProps<Value>, "aria-readonly" | "defaultValue" | "multiple" | "onValueChange" | "value"> {
@@ -245,7 +244,7 @@ export const SegmentedControl = forwardRef(function SegmentedControl<Value exten
 			<BaseToggleGroup
 				{...props}
 				aria-label={ariaLabel}
-				className={withStateClassName(styles.segmentedControl, className)}
+				className={withStateClassName("lyds-segmented-control", className)}
 				data-size={size}
 				disabled={disabled}
 				multiple={false}

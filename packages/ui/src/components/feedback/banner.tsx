@@ -1,7 +1,6 @@
 import { forwardRef, type HTMLAttributes } from "react";
 
 import { cx } from "@/internal";
-import styles from "./feedback.module.css";
 import { getLiveRegionProps, type FeedbackLiveMode, type FeedbackStatus } from "./feedback.types";
 export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
 	status?: FeedbackStatus;
@@ -15,7 +14,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner({ 
 	return (
 		<div
 			ref={ref}
-			className={cx(styles.feedbackPanel, styles.banner, className)}
+			className={cx("lyds-feedback-panel", "lyds-banner", className)}
 			data-status={status}
 			role={role ?? liveRegionProps.role}
 			aria-live={ariaLive ?? liveRegionProps["aria-live"]}

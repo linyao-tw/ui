@@ -603,11 +603,6 @@
 	justify-self: start;
 }
 
-.lyds-file-upload__signal,
-.lyds-drop-zone__plate {
-	display: none;
-}
-
 .lyds-file-selection {
 	display: flex;
 	min-inline-size: 0;
