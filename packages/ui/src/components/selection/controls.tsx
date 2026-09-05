@@ -8,7 +8,7 @@ import { Toggle as BaseToggle, type ToggleProps as BaseToggleProps } from "@base
 import { ToggleGroup as BaseToggleGroup, type ToggleGroupProps as BaseToggleGroupProps } from "@base-ui/react/toggle-group";
 import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { MinusIcon } from "@phosphor-icons/react/dist/csr/Minus";
-import { forwardRef, useId, useState, type ForwardedRef, type JSX, type ReactNode, type RefAttributes } from "react";
+import { forwardRef, useCallback, useId, useState, type ForwardedRef, type JSX, type ReactNode, type RefAttributes } from "react";
 
 import { cx, withStateClassName } from "@/internal";
 import styles from "./selection.module.css";
@@ -168,6 +168,18 @@ export const Slider = forwardRef(function Slider<Value extends number | readonly
 ) {
 	const thumbCount = getThumbCount(value ?? defaultValue);
 	const fallbackThumbLabel = ariaLabel ? (index: number) => (thumbCount === 1 ? ariaLabel : `${ariaLabel} ${index + 1}`) : undefined;
+	// Base UI owns the thumb inputs, so these two relationships have to be applied to the nodes it
+	// renders. An inline callback would detach and reattach on every render; aria-labelledby is only
+	// ever added because Base UI sets its own, while aria-describedby is ours to clear.
+	const applyThumbDescription = useCallback(
+		(input: HTMLInputElement | null) => {
+			if (!input) return;
+			if (ariaDescribedby) input.setAttribute("aria-describedby", ariaDescribedby);
+			else input.removeAttribute("aria-describedby");
+			if (ariaLabelledby && !getAriaLabel) input.setAttribute("aria-labelledby", ariaLabelledby);
+		},
+		[ariaDescribedby, ariaLabelledby, getAriaLabel]
+	);
 
 	return (
 		<BaseSlider.Root {...props} aria-label={ariaLabel} aria-labelledby={ariaLabelledby} className={withStateClassName(styles.slider, className)} defaultValue={defaultValue} ref={ref} value={value}>
@@ -180,11 +192,7 @@ export const Slider = forwardRef(function Slider<Value extends number | readonly
 							className={styles.sliderThumb}
 							getAriaLabel={getAriaLabel ?? fallbackThumbLabel}
 							getAriaValueText={getAriaValueText}
-							inputRef={input => {
-								if (!input) return;
-								if (ariaDescribedby) input.setAttribute("aria-describedby", ariaDescribedby);
-								if (ariaLabelledby && !getAriaLabel) input.setAttribute("aria-labelledby", ariaLabelledby);
-							}}
+							inputRef={applyThumbDescription}
 							index={index}
 							key={index}
 						/>

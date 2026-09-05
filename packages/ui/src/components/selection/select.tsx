@@ -14,7 +14,7 @@ import {
 } from "@base-ui/react/select";
 import { CaretDownIcon } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
-import { forwardRef, type Key, type ReactNode } from "react";
+import { forwardRef, useMemo, type Key, type ReactNode } from "react";
 
 import { combineStateClassNames, withStateClassName } from "@/internal";
 import { useMessages } from "@/intl";
@@ -96,7 +96,8 @@ function SelectComponent<Value>({
 	...rootProps
 }: SelectProps<Value>) {
 	const messages = useMessages();
-	const items = options.map(option => ({ label: option.label, value: option.value }));
+	// A fresh array on every render resets Base UI's item collection, so keep the identity stable.
+	const items = useMemo(() => options.map(option => ({ label: option.label, value: option.value })), [options]);
 
 	return (
 		<BaseSelect.Root {...rootProps} items={items}>

@@ -451,3 +451,13 @@ describe("accessibility", () => {
 		expect(results.violations).toEqual([]);
 	});
 });
+
+describe("password autocomplete", () => {
+	it("leaves autocomplete to the caller instead of assuming an existing password", () => {
+		const { rerender } = render(<PasswordField label="Access key" />);
+		expect(screen.getByLabelText("Access key")).not.toHaveAttribute("autocomplete");
+
+		rerender(<PasswordField label="Access key" autoComplete="new-password" />);
+		expect(screen.getByLabelText("Access key")).toHaveAttribute("autocomplete", "new-password");
+	});
+});

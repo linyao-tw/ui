@@ -250,6 +250,11 @@ function VisibilityIcon({ visible }: { visible: boolean }) {
 }
 
 export interface PasswordFieldProps extends Omit<TextFieldProps, "endAdornment" | "type"> {
+	/**
+	 * Left to the caller. A sign-in form wants `current-password`, a sign-up or change-password
+	 * form wants `new-password`, and guessing either one hands the browser the wrong value.
+	 */
+	autoComplete?: string;
 	visible?: boolean;
 	defaultVisible?: boolean;
 	onVisibilityChange?: (visible: boolean) => void;
@@ -258,7 +263,7 @@ export interface PasswordFieldProps extends Omit<TextFieldProps, "endAdornment" 
 }
 
 export const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldProps>(function PasswordField(
-	{ visible: visibleProp, defaultVisible = false, onVisibilityChange, showPasswordLabel, hidePasswordLabel, autoComplete, ...props },
+	{ visible: visibleProp, defaultVisible = false, onVisibilityChange, showPasswordLabel, hidePasswordLabel, ...props },
 	ref
 ) {
 	const messages = useMessages();
@@ -278,7 +283,6 @@ export const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldPro
 			{...props}
 			ref={ref}
 			type={visible ? "text" : "password"}
-			autoComplete={autoComplete ?? "current-password"}
 			endAdornment={
 				<button
 					className="lyds-field__utility-button"
