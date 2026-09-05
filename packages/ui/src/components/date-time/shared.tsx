@@ -21,10 +21,6 @@ export interface DateTimeFieldChromeProps {
 	className?: string;
 }
 
-export function cx(...values: Array<string | false | null | undefined>): string {
-	return values.filter(Boolean).join(" ");
-}
-
 export function LocaleBoundary({ locale, children }: { locale?: string | undefined; children: ReactNode }) {
 	if (!locale) {
 		return <>{children}</>;

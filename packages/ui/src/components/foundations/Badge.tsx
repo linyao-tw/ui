@@ -1,7 +1,6 @@
 import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
-import { type ComponentRenderProp, type ElementProps, mergeClassNames } from "./shared";
-
+import { type ComponentRenderProp, cx, type ElementProps } from "../../internal";
 export type BadgeVariant = "neutral" | "accent" | "success" | "warning" | "danger";
 export type BadgeSize = "sm" | "md";
 
@@ -31,7 +30,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(function Badg
 					<span className="lyds-badge__label">{children}</span>
 				</>
 			),
-			className: mergeClassNames("lyds-badge", className)
+			className: cx("lyds-badge", className)
 		}
 	});
 });

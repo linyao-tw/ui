@@ -1,8 +1,8 @@
 import { createElement, forwardRef, type HTMLAttributes, type ReactNode } from "react";
 
+import { cx } from "../../internal";
 import styles from "./feedback.module.css";
-import { mergeClassNames, type FeedbackStatus } from "./feedback.types";
-
+import { type FeedbackStatus } from "./feedback.types";
 export interface EmptyStateProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 	actions?: ReactNode;
 	description?: ReactNode;
@@ -18,7 +18,7 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(function E
 	ref
 ) {
 	return (
-		<div ref={ref} className={mergeClassNames(styles.emptyState, className)} data-status={status} {...props}>
+		<div ref={ref} className={cx(styles.emptyState, className)} data-status={status} {...props}>
 			<div className={styles.emptyStateRail} aria-hidden="true">
 				<span />
 				<span />

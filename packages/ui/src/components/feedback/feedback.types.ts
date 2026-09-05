@@ -4,10 +4,6 @@ export type FeedbackStatus = (typeof FEEDBACK_STATUSES)[number];
 
 export type FeedbackLiveMode = "off" | "polite" | "assertive";
 
-export function mergeClassNames(...classNames: Array<string | undefined>): string {
-	return classNames.filter(Boolean).join(" ");
-}
-
 export function getLiveRegionProps(live: FeedbackLiveMode): {
 	"aria-live"?: "polite" | "assertive";
 	role?: "status" | "alert";

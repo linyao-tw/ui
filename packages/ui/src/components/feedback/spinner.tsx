@@ -1,8 +1,8 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 
+import { cx } from "../../internal";
 import styles from "./feedback.module.css";
-import { mergeClassNames, type FeedbackStatus } from "./feedback.types";
-
+import { type FeedbackStatus } from "./feedback.types";
 type SpinnerAccessibilityProps =
 	| {
 			/** 附近已有載入說明文字時，對輔助科技隱藏 Spinner。 */
@@ -27,7 +27,7 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(function Spinne
 			ref={ref}
 			aria-hidden={decorative ? "true" : undefined}
 			aria-label={decorative ? undefined : label}
-			className={mergeClassNames(styles.spinner, className)}
+			className={cx(styles.spinner, className)}
 			data-size={size}
 			data-status={status}
 			role={decorative ? undefined : "status"}
@@ -44,7 +44,7 @@ export interface LoaderProps extends Omit<HTMLAttributes<HTMLDivElement>, "child
 
 export const Loader = forwardRef<HTMLDivElement, LoaderProps>(function Loader({ className, label, size = "md", status = "neutral", ...props }, ref) {
 	return (
-		<div ref={ref} aria-live="polite" className={mergeClassNames(styles.loader, className)} data-status={status} role="status" {...props}>
+		<div ref={ref} aria-live="polite" className={cx(styles.loader, className)} data-status={status} role="status" {...props}>
 			<Spinner decorative size={size} status={status} />
 			<span>{label}</span>
 		</div>

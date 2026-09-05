@@ -1,7 +1,6 @@
 import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
-import { type ComponentRenderProp, type ElementProps, mergeClassNames } from "./shared";
-
+import { type ComponentRenderProp, cx, type ElementProps } from "../../internal";
 export type ListCellVariant = "default" | "inset";
 export type ListCellSize = "sm" | "md" | "lg";
 export type ListCellCurrentSemantics = "page" | "step" | "location" | "date" | "time";
@@ -92,7 +91,7 @@ export const ListCellAction = React.forwardRef<HTMLElement, ListCellActionProps>
 				aria-current={props["aria-current"] ?? context.current}
 				aria-disabled={disabled || undefined}
 				tabIndex={disabled ? -1 : linkProps.tabIndex}
-				className={mergeClassNames("lyds-list-cell__action", className)}
+				className={cx("lyds-list-cell__action", className)}
 				onClick={event => {
 					if (disabled) {
 						event.preventDefault();
@@ -114,7 +113,7 @@ export const ListCellAction = React.forwardRef<HTMLElement, ListCellActionProps>
 			type={type ?? "button"}
 			disabled={disabled}
 			aria-current={props["aria-current"] ?? context.current}
-			className={mergeClassNames("lyds-list-cell__action", className)}
+			className={cx("lyds-list-cell__action", className)}
 			onClick={onClick}
 		/>
 	);
@@ -166,7 +165,7 @@ export const ListCell = React.forwardRef<HTMLElement, ListCellProps>(function Li
 		state,
 		props: {
 			...props,
-			className: mergeClassNames("lyds-list-cell", className),
+			className: cx("lyds-list-cell", className),
 			"aria-current": !action && current !== undefined ? current : props["aria-current"],
 			"aria-disabled": !action && disabled ? true : props["aria-disabled"],
 			"aria-selected": selectionSemantics === "selected" ? selected : props["aria-selected"],
@@ -198,7 +197,7 @@ function createListCellSlot(slotName: ListCellSlotName) {
 			props: {
 				...props,
 				children,
-				className: mergeClassNames(`lyds-list-cell__${slotName}`, className)
+				className: cx(`lyds-list-cell__${slotName}`, className)
 			}
 		});
 	});

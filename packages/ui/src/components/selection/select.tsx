@@ -16,47 +16,47 @@ import { CaretDownIcon } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { forwardRef, type Key, type ReactNode } from "react";
 
-import { combineStateClassNames, mergeStateClassName } from "./classnames";
+import { combineStateClassNames, withStateClassName } from "../../internal";
 import styles from "./selection.module.css";
 
 export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(function SelectTrigger({ className, ...props }, ref) {
-	return <BaseSelect.Trigger {...props} className={mergeStateClassName(styles.selectTrigger, className)} ref={ref} />;
+	return <BaseSelect.Trigger {...props} className={withStateClassName(styles.selectTrigger, className)} ref={ref} />;
 });
 
 export const SelectValue = forwardRef<HTMLSpanElement, SelectValueProps>(function SelectValue({ className, ...props }, ref) {
-	return <BaseSelect.Value {...props} className={mergeStateClassName(styles.selectValue, className)} ref={ref} />;
+	return <BaseSelect.Value {...props} className={withStateClassName(styles.selectValue, className)} ref={ref} />;
 });
 
 export const SelectPositioner = forwardRef<HTMLDivElement, SelectPositionerProps>(function SelectPositioner({ className, ...props }, ref) {
-	return <BaseSelect.Positioner {...props} className={mergeStateClassName(styles.positioner, className)} ref={ref} />;
+	return <BaseSelect.Positioner {...props} className={withStateClassName(styles.positioner, className)} ref={ref} />;
 });
 
 export const SelectPopup = forwardRef<HTMLDivElement, SelectPopupProps>(function SelectPopup({ className, ...props }, ref) {
-	return <BaseSelect.Popup {...props} className={mergeStateClassName(styles.popup, className)} ref={ref} />;
+	return <BaseSelect.Popup {...props} className={withStateClassName(styles.popup, className)} ref={ref} />;
 });
 
 export const SelectList = forwardRef<HTMLDivElement, SelectListProps>(function SelectList({ className, ...props }, ref) {
-	return <BaseSelect.List {...props} className={mergeStateClassName(styles.optionList, className)} ref={ref} />;
+	return <BaseSelect.List {...props} className={withStateClassName(styles.optionList, className)} ref={ref} />;
 });
 
 export const SelectItem = forwardRef<HTMLElement, SelectItemProps>(function SelectItem({ className, ...props }, ref) {
-	return <BaseSelect.Item {...props} className={mergeStateClassName(styles.option, className)} ref={ref} />;
+	return <BaseSelect.Item {...props} className={withStateClassName(styles.option, className)} ref={ref} />;
 });
 
 export const SelectItemIndicator = forwardRef<HTMLSpanElement, SelectItemIndicatorProps>(function SelectItemIndicator({ className, ...props }, ref) {
-	return <BaseSelect.ItemIndicator {...props} className={mergeStateClassName(styles.optionIndicator, className)} ref={ref} />;
+	return <BaseSelect.ItemIndicator {...props} className={withStateClassName(styles.optionIndicator, className)} ref={ref} />;
 });
 
 export const SelectItemText = forwardRef<HTMLDivElement, SelectItemTextProps>(function SelectItemText({ className, ...props }, ref) {
-	return <BaseSelect.ItemText {...props} className={mergeStateClassName(styles.optionText, className)} ref={ref} />;
+	return <BaseSelect.ItemText {...props} className={withStateClassName(styles.optionText, className)} ref={ref} />;
 });
 
 export const SelectGroupLabel = forwardRef<HTMLDivElement, SelectGroupLabelProps>(function SelectGroupLabel({ className, ...props }, ref) {
-	return <BaseSelect.GroupLabel {...props} className={mergeStateClassName(styles.groupLabel, className)} ref={ref} />;
+	return <BaseSelect.GroupLabel {...props} className={withStateClassName(styles.groupLabel, className)} ref={ref} />;
 });
 
 export const SelectSeparator = forwardRef<HTMLDivElement, SelectSeparatorProps>(function SelectSeparator({ className, ...props }, ref) {
-	return <BaseSelect.Separator {...props} className={mergeStateClassName(styles.separator, className)} ref={ref} />;
+	return <BaseSelect.Separator {...props} className={withStateClassName(styles.separator, className)} ref={ref} />;
 });
 
 export interface SelectOption<Value> {

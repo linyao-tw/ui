@@ -2,9 +2,9 @@ import { NumberField as BaseNumberField } from "@base-ui/react/number-field";
 import { MinusIcon } from "@phosphor-icons/react/dist/csr/Minus";
 import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
 import * as React from "react";
+import { cx, withStateClassName } from "../../internal";
 import "./forms.css";
-import { cx, FieldFrame, withStateClassName, type FieldAnatomyProps } from "./internal";
-
+import { FieldFrame, type FieldAnatomyProps } from "./internal";
 type NumberRootProps = Omit<BaseNumberField.Root.Props, "className" | "disabled" | "name" | "readOnly" | "required" | "style">;
 
 export interface NumberFieldProps extends NumberRootProps, FieldAnatomyProps {

@@ -2,10 +2,10 @@ import { Input as BaseInput } from "@base-ui/react/input";
 import { FileIcon } from "@phosphor-icons/react/dist/csr/File";
 import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
 import * as React from "react";
+import { cx } from "../../internal";
 import { Button } from "../foundations/Button";
 import "./forms.css";
-import { cx, FieldFrame, type FieldAnatomyProps } from "./internal";
-
+import { FieldFrame, type FieldAnatomyProps } from "./internal";
 type NativeFileInputProps = Omit<
 	React.InputHTMLAttributes<HTMLInputElement>,
 	"children" | "className" | "defaultValue" | "disabled" | "name" | "onChange" | "readOnly" | "required" | "size" | "style" | "type" | "value"

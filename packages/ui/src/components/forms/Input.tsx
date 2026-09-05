@@ -1,9 +1,9 @@
 import { Field as BaseField } from "@base-ui/react/field";
 import { Input as BaseInput } from "@base-ui/react/input";
 import * as React from "react";
+import { withStateClassName } from "../../internal";
 import "./forms.css";
-import { withStateClassName, type FieldSize } from "./internal";
-
+import { type FieldSize } from "./internal";
 export interface InputProps extends Omit<BaseInput.Props, "size"> {
 	/** Linyao Design System 的控制項尺寸。原生 HTML `size` 屬性請使用 `inputSize`。 */
 	size?: FieldSize;

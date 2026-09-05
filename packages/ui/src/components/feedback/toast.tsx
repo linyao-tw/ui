@@ -2,9 +2,9 @@ import { Toast as BaseToast } from "@base-ui/react/toast";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { Fragment, forwardRef, type ComponentPropsWithoutRef, type ForwardedRef, type ReactElement, type ReactNode, type RefAttributes } from "react";
 
+import { cx } from "../../internal";
 import styles from "./feedback.module.css";
-import { FEEDBACK_STATUSES, mergeClassNames, type FeedbackStatus } from "./feedback.types";
-
+import { FEEDBACK_STATUSES, type FeedbackStatus } from "./feedback.types";
 const feedbackStatusSet: ReadonlySet<string> = new Set(FEEDBACK_STATUSES);
 
 export interface ToastData extends Record<string, unknown> {
@@ -52,13 +52,13 @@ export const ToastRoot = forwardRef(function ToastRoot<Data extends object = Toa
 	const status = getToastStatus(toast);
 
 	return (
-		<BaseToast.Root ref={ref} className={mergeClassNames(styles.toastRoot, className)} data-status={status} toast={toast} {...props}>
+		<BaseToast.Root ref={ref} className={cx(styles.toastRoot, className)} data-status={status} toast={toast} {...props}>
 			<span aria-hidden="true" className={styles.toastSignal} />
 			<BaseToast.Content className={styles.toastContent}>
 				{toast.title ? <BaseToast.Title className={styles.toastTitle} /> : null}
 				{toast.description ? <BaseToast.Description className={styles.toastDescription} /> : null}
 			</BaseToast.Content>
-			{actionProps ? <BaseToast.Action {...actionProps} className={mergeClassNames(styles.toastAction, actionClassName)} /> : null}
+			{actionProps ? <BaseToast.Action {...actionProps} className={cx(styles.toastAction, actionClassName)} /> : null}
 			<BaseToast.Close aria-label={closeLabel} className={styles.toastClose}>
 				<XIcon aria-hidden="true" weight="bold" />
 			</BaseToast.Close>
@@ -82,7 +82,7 @@ export const ToastViewport = forwardRef(function ToastViewport<Data extends obje
 
 	return (
 		<BaseToast.Portal>
-			<BaseToast.Viewport ref={ref} className={mergeClassNames(styles.toastViewport, className)} {...props}>
+			<BaseToast.Viewport ref={ref} className={cx(styles.toastViewport, className)} {...props}>
 				{toast.toasts.map(toastObject =>
 					renderToast ? (
 						<Fragment key={toastObject.id}>{renderToast(toastObject)}</Fragment>

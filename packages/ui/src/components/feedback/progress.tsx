@@ -1,9 +1,9 @@
 import { Progress as BaseProgress } from "@base-ui/react/progress";
 import { forwardRef, type ReactNode } from "react";
 
+import { cx } from "../../internal";
 import styles from "./feedback.module.css";
-import { mergeClassNames, type FeedbackStatus } from "./feedback.types";
-
+import { type FeedbackStatus } from "./feedback.types";
 export interface ProgressProps extends Omit<BaseProgress.Root.Props, "children" | "className"> {
 	label: ReactNode;
 	className?: string;
@@ -15,13 +15,13 @@ export interface ProgressProps extends Omit<BaseProgress.Root.Props, "children" 
 
 export const Progress = forwardRef<HTMLDivElement, ProgressProps>(function Progress({ className, indicatorClassName, label, showValue = true, status = "neutral", trackClassName, ...props }, ref) {
 	return (
-		<BaseProgress.Root ref={ref} className={mergeClassNames(styles.rangeRoot, className)} data-status={status} {...props}>
+		<BaseProgress.Root ref={ref} className={cx(styles.rangeRoot, className)} data-status={status} {...props}>
 			<div className={styles.rangeHeader}>
 				<BaseProgress.Label className={styles.rangeLabel}>{label}</BaseProgress.Label>
 				{showValue ? <BaseProgress.Value className={styles.rangeValue} /> : null}
 			</div>
-			<BaseProgress.Track className={mergeClassNames(styles.rangeTrack, trackClassName)}>
-				<BaseProgress.Indicator className={mergeClassNames(styles.rangeIndicator, indicatorClassName)} />
+			<BaseProgress.Track className={cx(styles.rangeTrack, trackClassName)}>
+				<BaseProgress.Indicator className={cx(styles.rangeIndicator, indicatorClassName)} />
 			</BaseProgress.Track>
 		</BaseProgress.Root>
 	);

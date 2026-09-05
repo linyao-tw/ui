@@ -37,8 +37,7 @@ import {
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { createContext, forwardRef, useContext, useId, type JSX, type RefAttributes } from "react";
 
-import { mergeClassName } from "./class-names";
-
+import { withStateClassName } from "../../internal";
 export type { PopoverRootChangeEventDetails } from "@base-ui/react/popover";
 export type { PreviewCardRootChangeEventDetails } from "@base-ui/react/preview-card";
 export type { TooltipRootChangeEventDetails } from "@base-ui/react/tooltip";
@@ -72,7 +71,7 @@ export function TooltipRoot<Payload = unknown>({ descriptionId, ...props }: Tool
 export function TooltipTrigger<Payload = unknown>({ className, ...props }: TooltipTriggerProps<Payload> & RefAttributes<HTMLElement>): JSX.Element {
 	const descriptionId = useContext(TooltipDescriptionContext);
 	const describedBy = [props["aria-describedby"], descriptionId].filter(Boolean).join(" ") || undefined;
-	return <BaseTooltip.Trigger {...props} aria-describedby={describedBy} className={mergeClassName("lyds-tooltip__trigger", className)} />;
+	return <BaseTooltip.Trigger {...props} aria-describedby={describedBy} className={withStateClassName("lyds-tooltip__trigger", className)} />;
 }
 
 export const TooltipPortal = forwardRef<HTMLDivElement, TooltipPortalProps>(function TooltipPortal(props, ref) {
@@ -80,20 +79,20 @@ export const TooltipPortal = forwardRef<HTMLDivElement, TooltipPortalProps>(func
 });
 
 export const TooltipPositioner = forwardRef<HTMLDivElement, TooltipPositionerProps>(function TooltipPositioner({ className, sideOffset = 8, ...props }, ref) {
-	return <BaseTooltip.Positioner {...props} ref={ref} sideOffset={sideOffset} className={mergeClassName("lyds-tooltip__positioner", className)} />;
+	return <BaseTooltip.Positioner {...props} ref={ref} sideOffset={sideOffset} className={withStateClassName("lyds-tooltip__positioner", className)} />;
 });
 
 export const TooltipPopup = forwardRef<HTMLDivElement, TooltipPopupProps>(function TooltipPopup({ className, ...props }, ref) {
 	const descriptionId = useContext(TooltipDescriptionContext);
-	return <BaseTooltip.Popup {...props} ref={ref} id={descriptionId} role="tooltip" className={mergeClassName("lyds-tooltip__popup", className)} />;
+	return <BaseTooltip.Popup {...props} ref={ref} id={descriptionId} role="tooltip" className={withStateClassName("lyds-tooltip__popup", className)} />;
 });
 
 export const TooltipArrow = forwardRef<HTMLDivElement, TooltipArrowProps>(function TooltipArrow({ className, ...props }, ref) {
-	return <BaseTooltip.Arrow {...props} ref={ref} className={mergeClassName("lyds-tooltip__arrow", className)} />;
+	return <BaseTooltip.Arrow {...props} ref={ref} className={withStateClassName("lyds-tooltip__arrow", className)} />;
 });
 
 export const TooltipViewport = forwardRef<HTMLDivElement, TooltipViewportProps>(function TooltipViewport({ className, ...props }, ref) {
-	return <BaseTooltip.Viewport {...props} ref={ref} className={mergeClassName("lyds-tooltip__viewport", className)} />;
+	return <BaseTooltip.Viewport {...props} ref={ref} className={withStateClassName("lyds-tooltip__viewport", className)} />;
 });
 
 export const Tooltip = {
@@ -114,7 +113,7 @@ export function PopoverRoot<Payload = unknown>(props: PopoverRootProps<Payload>)
 }
 
 export function PopoverTrigger<Payload = unknown>({ className, ...props }: PopoverTriggerProps<Payload> & RefAttributes<HTMLElement>): JSX.Element {
-	return <BasePopover.Trigger {...props} className={mergeClassName("lyds-popover__trigger", className)} />;
+	return <BasePopover.Trigger {...props} className={withStateClassName("lyds-popover__trigger", className)} />;
 }
 
 export const PopoverPortal = forwardRef<HTMLDivElement, PopoverPortalProps>(function PopoverPortal(props, ref) {
@@ -122,27 +121,27 @@ export const PopoverPortal = forwardRef<HTMLDivElement, PopoverPortalProps>(func
 });
 
 export const PopoverPositioner = forwardRef<HTMLDivElement, PopoverPositionerProps>(function PopoverPositioner({ className, sideOffset = 10, ...props }, ref) {
-	return <BasePopover.Positioner {...props} ref={ref} sideOffset={sideOffset} className={mergeClassName("lyds-popover__positioner", className)} />;
+	return <BasePopover.Positioner {...props} ref={ref} sideOffset={sideOffset} className={withStateClassName("lyds-popover__positioner", className)} />;
 });
 
 export const PopoverBackdrop = forwardRef<HTMLDivElement, PopoverBackdropProps>(function PopoverBackdrop({ className, ...props }, ref) {
-	return <BasePopover.Backdrop {...props} ref={ref} className={mergeClassName("lyds-popover__backdrop", className)} />;
+	return <BasePopover.Backdrop {...props} ref={ref} className={withStateClassName("lyds-popover__backdrop", className)} />;
 });
 
 export const PopoverPopup = forwardRef<HTMLDivElement, PopoverPopupProps>(function PopoverPopup({ className, ...props }, ref) {
-	return <BasePopover.Popup {...props} ref={ref} className={mergeClassName("lyds-popover__popup", className)} />;
+	return <BasePopover.Popup {...props} ref={ref} className={withStateClassName("lyds-popover__popup", className)} />;
 });
 
 export const PopoverArrow = forwardRef<HTMLDivElement, PopoverArrowProps>(function PopoverArrow({ className, ...props }, ref) {
-	return <BasePopover.Arrow {...props} ref={ref} className={mergeClassName("lyds-popover__arrow", className)} />;
+	return <BasePopover.Arrow {...props} ref={ref} className={withStateClassName("lyds-popover__arrow", className)} />;
 });
 
 export const PopoverTitle = forwardRef<HTMLHeadingElement, PopoverTitleProps>(function PopoverTitle({ className, ...props }, ref) {
-	return <BasePopover.Title {...props} ref={ref} className={mergeClassName("lyds-popover__title", className)} />;
+	return <BasePopover.Title {...props} ref={ref} className={withStateClassName("lyds-popover__title", className)} />;
 });
 
 export const PopoverDescription = forwardRef<HTMLParagraphElement, PopoverDescriptionProps>(function PopoverDescription({ className, ...props }, ref) {
-	return <BasePopover.Description {...props} ref={ref} className={mergeClassName("lyds-popover__description", className)} />;
+	return <BasePopover.Description {...props} ref={ref} className={withStateClassName("lyds-popover__description", className)} />;
 });
 
 export interface PopoverCloseProps extends BasePopoverCloseProps {
@@ -159,7 +158,7 @@ export const PopoverClose = forwardRef<HTMLButtonElement, PopoverCloseProps>(fun
 			{...props}
 			ref={ref}
 			aria-label={ariaLabel ?? (children == null ? "關閉彈出視窗" : undefined)}
-			className={mergeClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
+			className={withStateClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
 		>
 			{children ?? <CloseGlyph />}
 		</BasePopover.Close>
@@ -167,7 +166,7 @@ export const PopoverClose = forwardRef<HTMLButtonElement, PopoverCloseProps>(fun
 });
 
 export const PopoverViewport = forwardRef<HTMLDivElement, PopoverViewportProps>(function PopoverViewport({ className, ...props }, ref) {
-	return <BasePopover.Viewport {...props} ref={ref} className={mergeClassName("lyds-popover__viewport", className)} />;
+	return <BasePopover.Viewport {...props} ref={ref} className={withStateClassName("lyds-popover__viewport", className)} />;
 });
 
 export const Popover = {
@@ -191,7 +190,7 @@ export function PreviewCardRoot<Payload = unknown>(props: PreviewCardRootProps<P
 }
 
 export function PreviewCardTrigger<Payload = unknown>({ className, ...props }: PreviewCardTriggerProps<Payload> & RefAttributes<HTMLElement>): JSX.Element {
-	return <BasePreviewCard.Trigger {...props} className={mergeClassName("lyds-previewCard__trigger", className)} />;
+	return <BasePreviewCard.Trigger {...props} className={withStateClassName("lyds-previewCard__trigger", className)} />;
 }
 
 export const PreviewCardPortal = forwardRef<HTMLDivElement, PreviewCardPortalProps>(function PreviewCardPortal(props, ref) {
@@ -199,24 +198,24 @@ export const PreviewCardPortal = forwardRef<HTMLDivElement, PreviewCardPortalPro
 });
 
 export const PreviewCardPositioner = forwardRef<HTMLDivElement, PreviewCardPositionerProps>(function PreviewCardPositioner({ className, sideOffset = 10, ...props }, ref) {
-	return <BasePreviewCard.Positioner {...props} ref={ref} sideOffset={sideOffset} className={mergeClassName("lyds-previewCard__positioner", className)} />;
+	return <BasePreviewCard.Positioner {...props} ref={ref} sideOffset={sideOffset} className={withStateClassName("lyds-previewCard__positioner", className)} />;
 });
 
 /** PreviewCard 僅補充觸發項目的資訊；必要內容仍應顯示於頁面中。 */
 export const PreviewCardPopup = forwardRef<HTMLDivElement, PreviewCardPopupProps>(function PreviewCardPopup({ className, ...props }, ref) {
-	return <BasePreviewCard.Popup {...props} ref={ref} className={mergeClassName("lyds-previewCard__popup", className)} />;
+	return <BasePreviewCard.Popup {...props} ref={ref} className={withStateClassName("lyds-previewCard__popup", className)} />;
 });
 
 export const PreviewCardArrow = forwardRef<HTMLDivElement, PreviewCardArrowProps>(function PreviewCardArrow({ className, ...props }, ref) {
-	return <BasePreviewCard.Arrow {...props} ref={ref} className={mergeClassName("lyds-previewCard__arrow", className)} />;
+	return <BasePreviewCard.Arrow {...props} ref={ref} className={withStateClassName("lyds-previewCard__arrow", className)} />;
 });
 
 export const PreviewCardBackdrop = forwardRef<HTMLDivElement, PreviewCardBackdropProps>(function PreviewCardBackdrop({ className, ...props }, ref) {
-	return <BasePreviewCard.Backdrop {...props} ref={ref} className={mergeClassName("lyds-previewCard__backdrop", className)} />;
+	return <BasePreviewCard.Backdrop {...props} ref={ref} className={withStateClassName("lyds-previewCard__backdrop", className)} />;
 });
 
 export const PreviewCardViewport = forwardRef<HTMLDivElement, PreviewCardViewportProps>(function PreviewCardViewport({ className, ...props }, ref) {
-	return <BasePreviewCard.Viewport {...props} ref={ref} className={mergeClassName("lyds-previewCard__viewport", className)} />;
+	return <BasePreviewCard.Viewport {...props} ref={ref} className={withStateClassName("lyds-previewCard__viewport", className)} />;
 });
 
 export const PreviewCard = {

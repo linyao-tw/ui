@@ -1,7 +1,6 @@
 import { Avatar as BaseAvatar, type AvatarImageProps, type AvatarRootProps, type ImageLoadingStatus } from "@base-ui/react/avatar";
 import * as React from "react";
-import { mergeClassNames } from "./shared";
-
+import { cx } from "../../internal";
 export type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type AvatarVariant = "neutral" | "accent";
 export type AvatarStatus = "online" | "away" | "busy" | "offline";
@@ -45,10 +44,10 @@ export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(function Av
 			role={props.role ?? "img"}
 			data-size={size}
 			data-variant={variant}
-			className={mergeClassNames("lyds-avatar", className)}
+			className={cx("lyds-avatar", className)}
 			style={style}
 		>
-			{src ? <BaseAvatar.Image {...imageProps} src={src} alt="" className={mergeClassNames("lyds-avatar__image", imageProps?.className)} onLoadingStatusChange={onLoadingStatusChange} /> : null}
+			{src ? <BaseAvatar.Image {...imageProps} src={src} alt="" className={cx("lyds-avatar__image", imageProps?.className)} onLoadingStatusChange={onLoadingStatusChange} /> : null}
 			<BaseAvatar.Fallback className="lyds-avatar__fallback" delay={fallbackDelay}>
 				{fallback ?? getInitials(alt)}
 			</BaseAvatar.Fallback>

@@ -1,7 +1,6 @@
 import * as React from "react";
+import { cx } from "../../internal";
 import { Button, type ButtonProps } from "./Button";
-import { mergeClassNames } from "./shared";
-
 type AccessibleName =
 	| {
 			"aria-label": string;
@@ -20,7 +19,7 @@ export type IconButtonProps = IconButtonBaseProps & AccessibleName;
 
 export const IconButton = React.forwardRef<HTMLElement, IconButtonProps>(function IconButton({ children, className, loading = false, ...props }, ref) {
 	return (
-		<Button {...props} ref={ref} className={mergeClassNames("lyds-icon-button", className)} loading={loading}>
+		<Button {...props} ref={ref} className={cx("lyds-icon-button", className)} loading={loading}>
 			{loading ? null : children}
 		</Button>
 	);

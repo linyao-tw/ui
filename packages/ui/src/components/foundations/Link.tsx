@@ -1,7 +1,6 @@
 import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
-import { type ComponentRenderProp, type ElementProps, mergeClassNames } from "./shared";
-
+import { type ComponentRenderProp, cx, type ElementProps } from "../../internal";
 export type LinkVariant = "default" | "accent" | "subtle";
 export type LinkSize = "sm" | "md" | "lg";
 
@@ -43,7 +42,7 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link
 			rel: secureRel,
 			"aria-disabled": disabled || undefined,
 			tabIndex: disabled ? -1 : props.tabIndex,
-			className: mergeClassNames("lyds-link", className),
+			className: cx("lyds-link", className),
 			onClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
 				if (disabled) {
 					event.preventDefault();

@@ -1,8 +1,8 @@
 import { OTPField as BaseOTPField } from "@base-ui/react/otp-field";
 import * as React from "react";
+import { withStateClassName } from "../../internal";
 import "./forms.css";
-import { FieldFrame, withStateClassName, type FieldAnatomyProps } from "./internal";
-
+import { FieldFrame, type FieldAnatomyProps } from "./internal";
 type OTPRootProps = Omit<BaseOTPField.Root.Props, "className" | "disabled" | "name" | "readOnly" | "required" | "style">;
 
 export interface OTPFieldProps extends OTPRootProps, FieldAnatomyProps {

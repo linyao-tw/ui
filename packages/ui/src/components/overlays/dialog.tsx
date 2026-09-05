@@ -14,8 +14,7 @@ import {
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, type HTMLAttributes, type JSX, type ReactNode, type RefAttributes } from "react";
 
-import { mergeClassName } from "./class-names";
-
+import { withStateClassName } from "../../internal";
 export type { AlertDialogRootChangeEventDetails } from "@base-ui/react/alert-dialog";
 export type { DialogRootChangeEventDetails } from "@base-ui/react/dialog";
 
@@ -28,7 +27,7 @@ export function DialogRoot<Payload = unknown>(props: DialogRootProps<Payload>): 
 }
 
 export function DialogTrigger<Payload = unknown>({ className, ...props }: DialogTriggerProps<Payload> & RefAttributes<HTMLElement>): JSX.Element {
-	return <BaseDialog.Trigger {...props} className={mergeClassName("lyds-dialog__trigger", className)} />;
+	return <BaseDialog.Trigger {...props} className={withStateClassName("lyds-dialog__trigger", className)} />;
 }
 
 export const DialogPortal = forwardRef<HTMLDivElement, DialogPortalProps>(function DialogPortal(props, ref) {
@@ -36,11 +35,11 @@ export const DialogPortal = forwardRef<HTMLDivElement, DialogPortalProps>(functi
 });
 
 export const DialogBackdrop = forwardRef<HTMLDivElement, DialogBackdropProps>(function DialogBackdrop({ className, ...props }, ref) {
-	return <BaseDialog.Backdrop {...props} ref={ref} className={mergeClassName("lyds-dialog__backdrop", className)} />;
+	return <BaseDialog.Backdrop {...props} ref={ref} className={withStateClassName("lyds-dialog__backdrop", className)} />;
 });
 
 export const DialogViewport = forwardRef<HTMLDivElement, DialogViewportProps>(function DialogViewport({ className, ...props }, ref) {
-	return <BaseDialog.Viewport {...props} ref={ref} className={mergeClassName("lyds-dialog__viewport", className)} />;
+	return <BaseDialog.Viewport {...props} ref={ref} className={withStateClassName("lyds-dialog__viewport", className)} />;
 });
 
 export interface DialogPopupProps extends BaseDialogPopupProps {
@@ -54,7 +53,7 @@ export interface DialogPopupProps extends BaseDialogPopupProps {
 
 export const DialogPopup = forwardRef<HTMLDivElement, DialogPopupProps>(function DialogPopup({ children, className, closeLabel = "關閉對話框", closeProps, hasCustomClose = false, ...props }, ref) {
 	return (
-		<BaseDialog.Popup {...props} ref={ref} className={mergeClassName("lyds-dialog__popup", className)}>
+		<BaseDialog.Popup {...props} ref={ref} className={withStateClassName("lyds-dialog__popup", className)}>
 			{children}
 			{hasCustomClose ? null : <DialogClose {...closeProps} aria-label={closeLabel} />}
 		</BaseDialog.Popup>
@@ -62,11 +61,11 @@ export const DialogPopup = forwardRef<HTMLDivElement, DialogPopupProps>(function
 });
 
 export const DialogTitle = forwardRef<HTMLHeadingElement, DialogTitleProps>(function DialogTitle({ className, ...props }, ref) {
-	return <BaseDialog.Title {...props} ref={ref} className={mergeClassName("lyds-dialog__title", className)} />;
+	return <BaseDialog.Title {...props} ref={ref} className={withStateClassName("lyds-dialog__title", className)} />;
 });
 
 export const DialogDescription = forwardRef<HTMLParagraphElement, DialogDescriptionProps>(function DialogDescription({ className, ...props }, ref) {
-	return <BaseDialog.Description {...props} ref={ref} className={mergeClassName("lyds-dialog__description", className)} />;
+	return <BaseDialog.Description {...props} ref={ref} className={withStateClassName("lyds-dialog__description", className)} />;
 });
 
 export interface DialogCloseProps extends BaseDialogCloseProps {
@@ -83,7 +82,7 @@ export const DialogClose = forwardRef<HTMLButtonElement, DialogCloseProps>(funct
 			{...props}
 			ref={ref}
 			aria-label={ariaLabel ?? (children == null ? "關閉對話框" : undefined)}
-			className={mergeClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
+			className={withStateClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
 		>
 			{children ?? <CloseGlyph />}
 		</BaseDialog.Close>
@@ -133,7 +132,7 @@ export function AlertDialogRoot<Payload = unknown>(props: AlertDialogRootProps<P
 }
 
 export function AlertDialogTrigger<Payload = unknown>({ className, ...props }: AlertDialogTriggerProps<Payload> & RefAttributes<HTMLElement>): JSX.Element {
-	return <BaseAlertDialog.Trigger {...props} className={mergeClassName("lyds-alertDialog__trigger", className)} />;
+	return <BaseAlertDialog.Trigger {...props} className={withStateClassName("lyds-alertDialog__trigger", className)} />;
 }
 
 export interface AlertDialogPopupProps extends BaseDialogPopupProps {
@@ -150,7 +149,7 @@ export const AlertDialogPopup = forwardRef<HTMLDivElement, AlertDialogPopupProps
 	ref
 ) {
 	return (
-		<BaseAlertDialog.Popup {...props} ref={ref} className={mergeClassName("lyds-dialog__popup lyds-alertDialog__popup", className)}>
+		<BaseAlertDialog.Popup {...props} ref={ref} className={withStateClassName("lyds-dialog__popup lyds-alertDialog__popup", className)}>
 			{children}
 			{hasCustomClose ? null : <AlertDialogClose {...closeProps} aria-label={closeLabel} />}
 		</BaseAlertDialog.Popup>
@@ -166,7 +165,7 @@ export const AlertDialogClose = forwardRef<HTMLButtonElement, DialogCloseProps>(
 			{...props}
 			ref={ref}
 			aria-label={ariaLabel ?? (children == null ? "取消並關閉警示" : undefined)}
-			className={mergeClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
+			className={withStateClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
 		>
 			{children ?? <CloseGlyph />}
 		</BaseAlertDialog.Close>

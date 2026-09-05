@@ -18,47 +18,47 @@ import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, useMemo, type Key, type ReactNode } from "react";
 
-import { mergeStateClassName } from "./classnames";
+import { withStateClassName } from "../../internal";
 import styles from "./selection.module.css";
 
 export const ComboboxInputGroup = forwardRef<HTMLDivElement, ComboboxInputGroupProps>(function ComboboxInputGroup({ className, ...props }, ref) {
-	return <BaseCombobox.InputGroup {...props} className={mergeStateClassName(styles.comboboxInputGroup, className)} ref={ref} />;
+	return <BaseCombobox.InputGroup {...props} className={withStateClassName(styles.comboboxInputGroup, className)} ref={ref} />;
 });
 
 export const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(function ComboboxInput({ className, ...props }, ref) {
-	return <BaseCombobox.Input {...props} className={mergeStateClassName(styles.comboboxInput, className)} ref={ref} />;
+	return <BaseCombobox.Input {...props} className={withStateClassName(styles.comboboxInput, className)} ref={ref} />;
 });
 
 export const ComboboxTrigger = forwardRef<HTMLButtonElement, ComboboxTriggerProps>(function ComboboxTrigger({ className, ...props }, ref) {
-	return <BaseCombobox.Trigger {...props} className={mergeStateClassName(styles.comboboxTrigger, className)} ref={ref} />;
+	return <BaseCombobox.Trigger {...props} className={withStateClassName(styles.comboboxTrigger, className)} ref={ref} />;
 });
 
 export const ComboboxClear = forwardRef<HTMLButtonElement, ComboboxClearProps>(function ComboboxClear({ className, ...props }, ref) {
-	return <BaseCombobox.Clear {...props} className={mergeStateClassName(styles.comboboxClear, className)} ref={ref} />;
+	return <BaseCombobox.Clear {...props} className={withStateClassName(styles.comboboxClear, className)} ref={ref} />;
 });
 
 export const ComboboxPositioner = forwardRef<HTMLDivElement, ComboboxPositionerProps>(function ComboboxPositioner({ className, ...props }, ref) {
-	return <BaseCombobox.Positioner {...props} className={mergeStateClassName(styles.positioner, className)} ref={ref} />;
+	return <BaseCombobox.Positioner {...props} className={withStateClassName(styles.positioner, className)} ref={ref} />;
 });
 
 export const ComboboxPopup = forwardRef<HTMLDivElement, ComboboxPopupProps>(function ComboboxPopup({ className, ...props }, ref) {
-	return <BaseCombobox.Popup {...props} className={mergeStateClassName(styles.popup, className)} ref={ref} />;
+	return <BaseCombobox.Popup {...props} className={withStateClassName(styles.popup, className)} ref={ref} />;
 });
 
 export const ComboboxList = forwardRef<HTMLDivElement, ComboboxListProps>(function ComboboxList({ className, ...props }, ref) {
-	return <BaseCombobox.List {...props} className={mergeStateClassName(styles.optionList, className)} ref={ref} />;
+	return <BaseCombobox.List {...props} className={withStateClassName(styles.optionList, className)} ref={ref} />;
 });
 
 export const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(function ComboboxItem({ className, ...props }, ref) {
-	return <BaseCombobox.Item {...props} className={mergeStateClassName(styles.option, className)} ref={ref} />;
+	return <BaseCombobox.Item {...props} className={withStateClassName(styles.option, className)} ref={ref} />;
 });
 
 export const ComboboxItemIndicator = forwardRef<HTMLSpanElement, ComboboxItemIndicatorProps>(function ComboboxItemIndicator({ className, ...props }, ref) {
-	return <BaseCombobox.ItemIndicator {...props} className={mergeStateClassName(styles.optionIndicator, className)} ref={ref} />;
+	return <BaseCombobox.ItemIndicator {...props} className={withStateClassName(styles.optionIndicator, className)} ref={ref} />;
 });
 
 export const ComboboxEmpty = forwardRef<HTMLDivElement, ComboboxEmptyProps>(function ComboboxEmpty({ className, ...props }, ref) {
-	return <BaseCombobox.Empty {...props} className={mergeStateClassName(styles.emptyOption, className)} ref={ref} />;
+	return <BaseCombobox.Empty {...props} className={withStateClassName(styles.emptyOption, className)} ref={ref} />;
 });
 
 export interface ComboboxOption<Value> {
@@ -230,11 +230,11 @@ export const Combobox = Object.assign(ComboboxComponent, {
 });
 
 export const AutocompleteInputGroup = forwardRef<HTMLDivElement, AutocompleteInputGroupProps>(function AutocompleteInputGroup({ className, ...props }, ref) {
-	return <BaseAutocomplete.InputGroup {...props} className={mergeStateClassName(styles.comboboxInputGroup, className)} ref={ref} />;
+	return <BaseAutocomplete.InputGroup {...props} className={withStateClassName(styles.comboboxInputGroup, className)} ref={ref} />;
 });
 
 export const AutocompleteItem = forwardRef<HTMLDivElement, AutocompleteItemProps>(function AutocompleteItem({ className, ...props }, ref) {
-	return <BaseAutocomplete.Item {...props} className={mergeStateClassName(styles.option, className)} ref={ref} />;
+	return <BaseAutocomplete.Item {...props} className={withStateClassName(styles.option, className)} ref={ref} />;
 });
 
 export interface AutocompleteOption<Value> {

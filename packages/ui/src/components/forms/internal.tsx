@@ -1,6 +1,8 @@
 import { Field as BaseField } from "@base-ui/react/field";
 import type * as React from "react";
 
+import { cx } from "../../internal";
+
 export type FieldSize = "sm" | "md" | "lg";
 
 export type FieldValidationProps = Pick<BaseField.Root.Props, "actionsRef" | "dirty" | "touched" | "validate" | "validationDebounceTime" | "validationMode">;
@@ -30,18 +32,6 @@ interface FieldFrameProps extends FieldAnatomyProps {
 	labelId?: string | undefined;
 	descriptionId?: string | undefined;
 	errorId?: string | undefined;
-}
-
-export function cx(...classes: Array<string | false | null | undefined>): string {
-	return classes.filter(Boolean).join(" ");
-}
-
-export function withStateClassName<State>(baseClassName: string, className: string | ((state: State) => string | undefined) | undefined): string | ((state: State) => string) {
-	if (typeof className === "function") {
-		return state => cx(baseClassName, className(state));
-	}
-
-	return cx(baseClassName, className);
 }
 
 export function FieldFrame({

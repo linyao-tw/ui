@@ -10,7 +10,7 @@ import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { MinusIcon } from "@phosphor-icons/react/dist/csr/Minus";
 import { forwardRef, useState, type ForwardedRef, type JSX, type ReactNode, type RefAttributes } from "react";
 
-import { cx, mergeStateClassName } from "./classnames";
+import { cx, withStateClassName } from "../../internal";
 import styles from "./selection.module.css";
 
 function CheckGlyph({ indeterminate = false }: { indeterminate?: boolean }) {
@@ -23,7 +23,7 @@ export interface CheckboxProps extends CheckboxRootProps {
 
 export const Checkbox = forwardRef<HTMLElement, CheckboxProps>(function Checkbox({ children, className, indicator, indeterminate, ...props }, ref) {
 	return (
-		<BaseCheckbox.Root {...props} className={mergeStateClassName(styles.checkbox, className)} indeterminate={indeterminate} ref={ref}>
+		<BaseCheckbox.Root {...props} className={withStateClassName(styles.checkbox, className)} indeterminate={indeterminate} ref={ref}>
 			<BaseCheckbox.Indicator className={styles.checkboxIndicator} keepMounted>
 				{indicator ?? <CheckGlyph indeterminate={indeterminate ?? false} />}
 			</BaseCheckbox.Indicator>
@@ -35,7 +35,7 @@ export const Checkbox = forwardRef<HTMLElement, CheckboxProps>(function Checkbox
 export type CheckboxGroupProps = BaseCheckboxGroupProps;
 
 export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(function CheckboxGroup({ className, ...props }, ref) {
-	return <BaseCheckboxGroup {...props} className={mergeStateClassName(styles.choiceGroup, className)} ref={ref} />;
+	return <BaseCheckboxGroup {...props} className={withStateClassName(styles.choiceGroup, className)} ref={ref} />;
 });
 
 export interface CheckboxItemProps extends CheckboxProps {
@@ -61,7 +61,7 @@ export type RadioGroupProps<Value = string> = BaseRadioGroupProps<Value>;
 type RadioGroupComponent = <Value = string>(props: RadioGroupProps<Value> & RefAttributes<HTMLDivElement>) => JSX.Element;
 
 export const RadioGroup = forwardRef(function RadioGroup<Value = string>({ className, ...props }: RadioGroupProps<Value>, ref: ForwardedRef<HTMLDivElement>) {
-	return <BaseRadioGroup {...props} className={mergeStateClassName(styles.choiceGroup, className)} ref={ref} />;
+	return <BaseRadioGroup {...props} className={withStateClassName(styles.choiceGroup, className)} ref={ref} />;
 }) as RadioGroupComponent;
 
 export type RadioProps<Value = string> = RadioRootProps<Value>;
@@ -70,7 +70,7 @@ type RadioComponent = <Value = string>(props: RadioProps<Value> & RefAttributes<
 
 export const Radio = forwardRef(function Radio<Value = string>({ children, className, ...props }: RadioProps<Value>, ref: ForwardedRef<HTMLElement>) {
 	return (
-		<BaseRadio.Root {...props} className={mergeStateClassName(styles.radio, className)} ref={ref}>
+		<BaseRadio.Root {...props} className={withStateClassName(styles.radio, className)} ref={ref}>
 			<BaseRadio.Indicator className={styles.radioIndicator} keepMounted />
 			{children}
 		</BaseRadio.Root>
@@ -103,7 +103,7 @@ export interface SwitchProps extends SwitchRootProps {
 
 export const Switch = forwardRef<HTMLElement, SwitchProps>(function Switch({ children, className, ...props }, ref) {
 	return (
-		<BaseSwitch.Root {...props} className={mergeStateClassName(styles.switch, className)} ref={ref}>
+		<BaseSwitch.Root {...props} className={withStateClassName(styles.switch, className)} ref={ref}>
 			<span aria-hidden="true" className={styles.switchSignal} />
 			<BaseSwitch.Thumb className={styles.switchThumb} />
 			{children}
@@ -142,7 +142,7 @@ export const Slider = forwardRef(function Slider<Value extends number | readonly
 	const fallbackThumbLabel = ariaLabel ? (index: number) => (thumbCount === 1 ? ariaLabel : `${ariaLabel} ${index + 1}`) : undefined;
 
 	return (
-		<BaseSlider.Root {...props} aria-label={ariaLabel} aria-labelledby={ariaLabelledby} className={mergeStateClassName(styles.slider, className)} defaultValue={defaultValue} ref={ref} value={value}>
+		<BaseSlider.Root {...props} aria-label={ariaLabel} aria-labelledby={ariaLabelledby} className={withStateClassName(styles.slider, className)} defaultValue={defaultValue} ref={ref} value={value}>
 			{showValue ? <BaseSlider.Value className={styles.sliderValue} /> : null}
 			<BaseSlider.Control className={styles.sliderControl}>
 				<BaseSlider.Track className={styles.sliderTrack}>
@@ -182,7 +182,7 @@ export type ToggleGroupProps<Value extends string = string> = BaseToggleGroupPro
 type ToggleGroupComponent = <Value extends string = string>(props: ToggleGroupProps<Value> & RefAttributes<HTMLDivElement>) => JSX.Element;
 
 export const ToggleGroup = forwardRef(function ToggleGroup<Value extends string = string>({ className, ...props }: ToggleGroupProps<Value>, ref: ForwardedRef<HTMLDivElement>) {
-	return <BaseToggleGroup {...props} className={mergeStateClassName(styles.toggleGroup, className)} ref={ref} />;
+	return <BaseToggleGroup {...props} className={withStateClassName(styles.toggleGroup, className)} ref={ref} />;
 }) as ToggleGroupComponent;
 
 export interface SegmentedControlProps<Value extends string = string> extends Omit<BaseToggleGroupProps<Value>, "aria-readonly" | "defaultValue" | "multiple" | "onValueChange" | "value"> {
@@ -209,7 +209,7 @@ export const SegmentedControl = forwardRef(function SegmentedControl<Value exten
 			<BaseToggleGroup
 				{...props}
 				aria-label={ariaLabel}
-				className={mergeStateClassName(styles.segmentedControl, className)}
+				className={withStateClassName(styles.segmentedControl, className)}
 				data-size={size}
 				disabled={disabled}
 				multiple={false}

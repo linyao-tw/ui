@@ -15,8 +15,7 @@ import {
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, type HTMLAttributes, type JSX, type RefAttributes } from "react";
 
-import { mergeClassName } from "./class-names";
-
+import { withStateClassName } from "../../internal";
 export type { DrawerRootChangeEventDetails } from "@base-ui/react/drawer";
 
 function CloseGlyph(): JSX.Element {
@@ -28,7 +27,7 @@ export function DrawerRoot<Payload = unknown>({ swipeDirection = "right", ...pro
 }
 
 export function DrawerTrigger<Payload = unknown>({ className, ...props }: DrawerTriggerProps<Payload> & RefAttributes<HTMLElement>): JSX.Element {
-	return <BaseDrawer.Trigger {...props} className={mergeClassName("lyds-drawer__trigger", className)} />;
+	return <BaseDrawer.Trigger {...props} className={withStateClassName("lyds-drawer__trigger", className)} />;
 }
 
 export const DrawerPortal = forwardRef<HTMLDivElement, DrawerPortalProps>(function DrawerPortal(props, ref) {
@@ -36,11 +35,11 @@ export const DrawerPortal = forwardRef<HTMLDivElement, DrawerPortalProps>(functi
 });
 
 export const DrawerBackdrop = forwardRef<HTMLDivElement, DrawerBackdropProps>(function DrawerBackdrop({ className, ...props }, ref) {
-	return <BaseDrawer.Backdrop {...props} ref={ref} className={mergeClassName("lyds-drawer__backdrop", className)} />;
+	return <BaseDrawer.Backdrop {...props} ref={ref} className={withStateClassName("lyds-drawer__backdrop", className)} />;
 });
 
 export const DrawerViewport = forwardRef<HTMLDivElement, DrawerViewportProps>(function DrawerViewport({ className, ...props }, ref) {
-	return <BaseDrawer.Viewport {...props} ref={ref} className={mergeClassName("lyds-drawer__viewport", className)} />;
+	return <BaseDrawer.Viewport {...props} ref={ref} className={withStateClassName("lyds-drawer__viewport", className)} />;
 });
 
 export interface DrawerPopupProps extends BaseDrawerPopupProps {
@@ -54,7 +53,7 @@ export interface DrawerPopupProps extends BaseDrawerPopupProps {
 
 export const DrawerPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(function DrawerPopup({ children, className, closeLabel = "關閉側欄", closeProps, hasCustomClose = false, ...props }, ref) {
 	return (
-		<BaseDrawer.Popup {...props} ref={ref} className={mergeClassName("lyds-drawer__popup", className)}>
+		<BaseDrawer.Popup {...props} ref={ref} className={withStateClassName("lyds-drawer__popup", className)}>
 			{children}
 			{hasCustomClose ? null : <DrawerClose {...closeProps} aria-label={closeLabel} />}
 		</BaseDrawer.Popup>
@@ -62,15 +61,15 @@ export const DrawerPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(function
 });
 
 export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(function DrawerContent({ className, ...props }, ref) {
-	return <BaseDrawer.Content {...props} ref={ref} className={mergeClassName("lyds-drawer__content", className)} />;
+	return <BaseDrawer.Content {...props} ref={ref} className={withStateClassName("lyds-drawer__content", className)} />;
 });
 
 export const DrawerTitle = forwardRef<HTMLHeadingElement, DrawerTitleProps>(function DrawerTitle({ className, ...props }, ref) {
-	return <BaseDrawer.Title {...props} ref={ref} className={mergeClassName("lyds-drawer__title", className)} />;
+	return <BaseDrawer.Title {...props} ref={ref} className={withStateClassName("lyds-drawer__title", className)} />;
 });
 
 export const DrawerDescription = forwardRef<HTMLParagraphElement, DrawerDescriptionProps>(function DrawerDescription({ className, ...props }, ref) {
-	return <BaseDrawer.Description {...props} ref={ref} className={mergeClassName("lyds-drawer__description", className)} />;
+	return <BaseDrawer.Description {...props} ref={ref} className={withStateClassName("lyds-drawer__description", className)} />;
 });
 
 export interface DrawerCloseProps extends BaseDrawerCloseProps {
@@ -87,7 +86,7 @@ export const DrawerClose = forwardRef<HTMLButtonElement, DrawerCloseProps>(funct
 			{...props}
 			ref={ref}
 			aria-label={ariaLabel ?? (children == null ? "關閉側欄" : undefined)}
-			className={mergeClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
+			className={withStateClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
 		>
 			{children ?? <CloseGlyph />}
 		</BaseDrawer.Close>
@@ -95,7 +94,7 @@ export const DrawerClose = forwardRef<HTMLButtonElement, DrawerCloseProps>(funct
 });
 
 export const DrawerSwipeArea = forwardRef<HTMLDivElement, DrawerSwipeAreaProps>(function DrawerSwipeArea({ className, ...props }, ref) {
-	return <BaseDrawer.SwipeArea {...props} ref={ref} className={mergeClassName("lyds-drawer__swipeArea", className)} />;
+	return <BaseDrawer.SwipeArea {...props} ref={ref} className={withStateClassName("lyds-drawer__swipeArea", className)} />;
 });
 
 export type DrawerHeaderProps = HTMLAttributes<HTMLDivElement>;
@@ -160,7 +159,7 @@ export const BottomSheetPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(fun
 	ref
 ) {
 	return (
-		<BaseDrawer.Popup {...props} ref={ref} className={mergeClassName("lyds-drawer__popup lyds-bottomSheet__popup", className)}>
+		<BaseDrawer.Popup {...props} ref={ref} className={withStateClassName("lyds-drawer__popup lyds-bottomSheet__popup", className)}>
 			{children}
 			{hasCustomClose ? null : <DrawerClose {...closeProps} aria-label={closeLabel} />}
 		</BaseDrawer.Popup>

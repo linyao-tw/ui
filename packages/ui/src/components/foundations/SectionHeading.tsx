@@ -1,7 +1,6 @@
 import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
-import { type ComponentRenderProp, type ElementProps, mergeClassNames } from "./shared";
-
+import { type ComponentRenderProp, cx, type ElementProps } from "../../internal";
 export type SectionHeadingSize = "sm" | "md" | "lg";
 export type SectionHeadingLevel = 2 | 3 | 4 | 5 | 6;
 
@@ -32,7 +31,7 @@ export const SectionHeading = React.forwardRef<HTMLElement, SectionHeadingProps>
 		state: { size },
 		props: {
 			...props,
-			className: mergeClassNames("lyds-section-heading", className),
+			className: cx("lyds-section-heading", className),
 			children: (
 				<>
 					<span className="lyds-section-heading__rail" aria-hidden="true" />

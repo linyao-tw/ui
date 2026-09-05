@@ -1,8 +1,8 @@
 import { forwardRef, type HTMLAttributes } from "react";
 
+import { cx } from "../../internal";
 import styles from "./feedback.module.css";
-import { getLiveRegionProps, mergeClassNames, type FeedbackLiveMode, type FeedbackStatus } from "./feedback.types";
-
+import { getLiveRegionProps, type FeedbackLiveMode, type FeedbackStatus } from "./feedback.types";
 export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
 	status?: FeedbackStatus;
 	/** 僅在 Banner 動態出現時使用 `polite` 或 `assertive`。 */
@@ -15,7 +15,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner({ 
 	return (
 		<div
 			ref={ref}
-			className={mergeClassNames(styles.feedbackPanel, styles.banner, className)}
+			className={cx(styles.feedbackPanel, styles.banner, className)}
 			data-status={status}
 			role={role ?? liveRegionProps.role}
 			aria-live={ariaLive ?? liveRegionProps["aria-live"]}

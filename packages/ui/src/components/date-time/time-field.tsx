@@ -1,9 +1,9 @@
 import type { Time } from "@internationalized/date";
 import { forwardRef, type ReactElement, type RefAttributes } from "react";
 import { TimeField as AriaTimeField, DateInput, DateSegment, type TimeFieldProps as AriaTimeFieldProps } from "react-aria-components/TimeField";
+import { cx } from "../../internal";
 import type { TimeValue as LydsTimeValue, TimeFieldBehaviorProps } from "./date-types";
-import { ClockGlyph, FieldLabel, FieldMessages, LocaleBoundary, cx, type DateTimeFieldChromeProps } from "./shared";
-
+import { ClockGlyph, FieldLabel, FieldMessages, LocaleBoundary, type DateTimeFieldChromeProps } from "./shared";
 export interface TimeFieldProps<T extends LydsTimeValue = Time> extends TimeFieldBehaviorProps<T>, DateTimeFieldChromeProps {}
 
 export type TimePickerProps<T extends LydsTimeValue = Time> = TimeFieldProps<T>;

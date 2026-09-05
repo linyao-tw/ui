@@ -1,7 +1,6 @@
 import { Button as BaseButton, type ButtonProps as BaseButtonProps } from "@base-ui/react/button";
 import * as React from "react";
-import { mergeClassNames } from "./shared";
-
+import { cx } from "../../internal";
 export type ButtonVariant = "primary" | "secondary" | "neutral" | "quiet" | "danger";
 export type ButtonSize = "sm" | "md" | "lg";
 
@@ -37,7 +36,7 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>(function Button
 			data-loading={loading ? "" : undefined}
 			data-variant={variant}
 			data-size={size}
-			className={mergeClassNames("lyds-button", className)}
+			className={cx("lyds-button", className)}
 			style={style}
 		>
 			{loading ? (

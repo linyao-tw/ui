@@ -4,8 +4,7 @@ import { CaretRightIcon } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { DotsThreeIcon } from "@phosphor-icons/react/dist/csr/DotsThree";
 import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type HTMLAttributes, type LiHTMLAttributes, type MouseEvent, type ReactNode } from "react";
 
-import { cx } from "./utils.js";
-
+import { cx } from "../../internal";
 export interface BreadcrumbProps extends HTMLAttributes<HTMLElement> {
 	/** 麵包屑導覽區域的無障礙名稱。 */
 	label?: string;

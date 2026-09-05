@@ -1,7 +1,6 @@
 import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
-import { type ComponentRenderProp, type ElementProps, mergeClassNames } from "./shared";
-
+import { type ComponentRenderProp, cx, type ElementProps } from "../../internal";
 export type CardVariant = "material" | "elevated" | "inset" | "outline" | "cloud";
 export type CardSize = "sm" | "md" | "lg";
 
@@ -26,7 +25,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card({ 
 		props: {
 			...props,
 			children,
-			className: mergeClassNames("lyds-card", className)
+			className: cx("lyds-card", className)
 		}
 	});
 });
@@ -62,7 +61,7 @@ function useCardSlot<Element extends HTMLElement>(
 		props: {
 			...props,
 			children,
-			className: mergeClassNames(`lyds-card__${slotName}`, className)
+			className: cx(`lyds-card__${slotName}`, className)
 		}
 	});
 }

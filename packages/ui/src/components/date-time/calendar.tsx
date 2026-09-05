@@ -15,9 +15,9 @@ import {
 	CalendarYearPicker,
 	type CalendarProps as AriaCalendarProps
 } from "react-aria-components/Calendar";
+import { cx } from "../../internal";
 import type { CalendarBehaviorProps, DateValue as LydsDateValue } from "./date-types";
-import { LocaleBoundary, cx } from "./shared";
-
+import { LocaleBoundary } from "./shared";
 export type { FirstDayOfWeek } from "./date-types";
 export type WeekdayStyle = "narrow" | "short" | "long";
 
