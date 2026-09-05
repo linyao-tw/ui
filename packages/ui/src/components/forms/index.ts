@@ -1,9 +1,9 @@
-export { CodeField, type CodeFieldProps } from "./CodeField";
-export { DropZone, FileUpload, type DropZoneChangeDetails, type DropZoneProps, type FileUploadProps } from "./FileUpload";
-export { Input, type InputProps } from "./Input";
+export { CodeField, type CodeFieldProps } from "./code-field";
+export { DropZone, FileUpload, type DropZoneChangeDetails, type DropZoneProps, type FileUploadProps } from "./file-upload";
+export { Input, type InputProps } from "./input";
 export type { FieldAnatomyProps, FieldSize, FieldValidationProps } from "./internal";
-export { NumberField, type NumberFieldProps } from "./NumberField";
-export { OTPField, type OTPFieldProps } from "./OTPField";
+export { NumberField, type NumberFieldProps } from "./number-field";
+export { OTPField, type OTPFieldProps } from "./otp-field";
 export {
 	PasswordField,
 	PhoneField,
@@ -18,4 +18,4 @@ export {
 	type TextFieldProps,
 	type TextViewProps,
 	type TextareaProps
-} from "./TextField";
+} from "./text-field";

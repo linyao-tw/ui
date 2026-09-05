@@ -64,6 +64,12 @@ pnpm --filter @lyds/storybook test
 - 不加入另一套樣式化元件系統。
 - Base UI 組合使用 `render`，不是 `asChild`。Render 回呼必須完整傳遞 props 與 ref。
 
+### 檔案命名
+
+- `packages/ui` 的原始檔一律 kebab-case：`text-field.tsx`、`icon-button.tsx`、`class-names.ts`。匯出的元件仍是 PascalCase，檔名不跟著元件名走。
+- 資料夾同樣 kebab-case：`date-time`、`navigation-data`。
+- 例外只有 Storybook 的故事檔，沿用 Storybook 慣例 `<Name>.stories.tsx`；故事檔名在整個 `apps/storybook/src` 內必須唯一，方便在測試輸出中辨識。
+
 ### 樣式
 
 - 元件樣式一律是全域 `lyds-*` 類別，不使用 CSS Modules，也不新增 `*.css.d.ts`。

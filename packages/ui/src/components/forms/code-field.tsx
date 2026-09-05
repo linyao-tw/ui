@@ -4,7 +4,7 @@ import { OTPField as BaseOTPField } from "@base-ui/react/otp-field";
 import * as React from "react";
 import "./forms.css";
 import { FieldFrame } from "./internal";
-import type { OTPFieldProps } from "./OTPField";
+import type { OTPFieldProps } from "./otp-field";
 
 export interface CodeFieldProps extends Omit<OTPFieldProps, "length" | "separator" | "separatorAfter"> {
 	/**

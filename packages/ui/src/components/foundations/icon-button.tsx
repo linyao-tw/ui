@@ -1,6 +1,6 @@
 import { cx } from "@/internal";
 import * as React from "react";
-import { Button, type ButtonProps } from "./Button";
+import { Button, type ButtonProps } from "./button";
 type AccessibleName =
 	| {
 			"aria-label": string;

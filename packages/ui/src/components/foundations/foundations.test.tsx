@@ -7,15 +7,15 @@ import userEvent from "@testing-library/user-event";
 import axe from "axe-core";
 import * as React from "react";
 import { beforeAll, describe, expect, it, vi } from "vitest";
-import { Avatar } from "./Avatar";
-import { Badge } from "./Badge";
-import { Button } from "./Button";
-import { Card, CardBody, CardFooter, CardHeader, CardTitle } from "./Card";
-import { IconButton } from "./IconButton";
-import { Link } from "./Link";
-import { ListCell, ListCellContent, ListCellDescription, ListCellLeading, ListCellTitle } from "./ListCell";
-import { SectionHeading } from "./SectionHeading";
-import { Separator } from "./Separator";
+import { Avatar } from "./avatar";
+import { Badge } from "./badge";
+import { Button } from "./button";
+import { Card, CardBody, CardFooter, CardHeader, CardTitle } from "./card";
+import { IconButton } from "./icon-button";
+import { Link } from "./link";
+import { ListCell, ListCellContent, ListCellDescription, ListCellLeading, ListCellTitle } from "./list-cell";
+import { SectionHeading } from "./section-heading";
+import { Separator } from "./separator";
 
 beforeAll(() => {
 	if (!window.PointerEvent) {
