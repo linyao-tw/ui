@@ -1,4 +1,5 @@
 import { cx, withStateClassName } from "@/internal";
+import { useMessages } from "@/intl";
 import { Field as BaseField } from "@base-ui/react/field";
 import { Input as BaseInput } from "@base-ui/react/input";
 import { EyeIcon } from "@phosphor-icons/react/dist/csr/Eye";
@@ -257,9 +258,10 @@ export interface PasswordFieldProps extends Omit<TextFieldProps, "endAdornment" 
 }
 
 export const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldProps>(function PasswordField(
-	{ visible: visibleProp, defaultVisible = false, onVisibilityChange, showPasswordLabel = "顯示密碼", hidePasswordLabel = "隱藏密碼", autoComplete, ...props },
+	{ visible: visibleProp, defaultVisible = false, onVisibilityChange, showPasswordLabel, hidePasswordLabel, autoComplete, ...props },
 	ref
 ) {
+	const messages = useMessages();
 	const [uncontrolledVisible, setUncontrolledVisible] = React.useState(defaultVisible);
 	const visible = visibleProp ?? uncontrolledVisible;
 
@@ -281,7 +283,7 @@ export const PasswordField = React.forwardRef<HTMLInputElement, PasswordFieldPro
 				<button
 					className="lyds-field__utility-button"
 					type="button"
-					aria-label={visible ? hidePasswordLabel : showPasswordLabel}
+					aria-label={visible ? (hidePasswordLabel ?? messages.passwordFieldHide) : (showPasswordLabel ?? messages.passwordFieldShow)}
 					aria-pressed={visible}
 					onClick={toggleVisibility}
 					disabled={props.disabled}

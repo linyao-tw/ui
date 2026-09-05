@@ -1,4 +1,5 @@
 import { cx, withStateClassName } from "@/internal";
+import { useMessages } from "@/intl";
 import { NumberField as BaseNumberField } from "@base-ui/react/number-field";
 import { MinusIcon } from "@phosphor-icons/react/dist/csr/Minus";
 import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
@@ -41,12 +42,13 @@ export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(fu
 		inputStyle,
 		groupClassName,
 		showSteppers = true,
-		incrementLabel = "增加數值",
-		decrementLabel = "減少數值",
+		incrementLabel,
+		decrementLabel,
 		...numberProps
 	},
 	ref
 ) {
+	const messages = useMessages();
 	const ariaLabel = numberProps["aria-label"];
 	const ariaLabelledBy = numberProps["aria-labelledby"];
 
@@ -81,10 +83,10 @@ export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(fu
 					/>
 					{showSteppers ? (
 						<span className="lyds-number-field__steppers">
-							<BaseNumberField.Decrement className={cx("lyds-number-field__stepper", "lyds-number-field__stepper--decrement")} aria-label={decrementLabel}>
+							<BaseNumberField.Decrement className={cx("lyds-number-field__stepper", "lyds-number-field__stepper--decrement")} aria-label={decrementLabel ?? messages.numberFieldDecrement}>
 								<MinusIcon aria-hidden="true" weight="bold" />
 							</BaseNumberField.Decrement>
-							<BaseNumberField.Increment className={cx("lyds-number-field__stepper", "lyds-number-field__stepper--increment")} aria-label={incrementLabel}>
+							<BaseNumberField.Increment className={cx("lyds-number-field__stepper", "lyds-number-field__stepper--increment")} aria-label={incrementLabel ?? messages.numberFieldIncrement}>
 								<PlusIcon aria-hidden="true" weight="bold" />
 							</BaseNumberField.Increment>
 						</span>

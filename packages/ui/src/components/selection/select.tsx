@@ -17,6 +17,7 @@ import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { forwardRef, type Key, type ReactNode } from "react";
 
 import { combineStateClassNames, withStateClassName } from "@/internal";
+import { useMessages } from "@/intl";
 import styles from "./selection.module.css";
 
 export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(function SelectTrigger({ className, ...props }, ref) {
@@ -88,12 +89,13 @@ function SelectComponent<Value>({
 	className,
 	invalid = false,
 	options,
-	placeholder = "請選擇",
+	placeholder,
 	popupProps,
 	positionerProps,
 	triggerProps,
 	...rootProps
 }: SelectProps<Value>) {
+	const messages = useMessages();
 	const items = options.map(option => ({ label: option.label, value: option.value }));
 
 	return (
@@ -106,7 +108,7 @@ function SelectComponent<Value>({
 				aria-labelledby={ariaLabelledby ?? triggerProps?.["aria-labelledby"]}
 				className={combineStateClassNames(className, triggerProps?.className)}
 			>
-				<SelectValue placeholder={placeholder} />
+				<SelectValue placeholder={placeholder ?? messages.selectPlaceholder} />
 				<BaseSelect.Icon aria-hidden="true" className={styles.selectIcon}>
 					<CaretDownIcon aria-hidden="true" weight="bold" />
 				</BaseSelect.Icon>

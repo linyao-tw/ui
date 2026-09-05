@@ -1,4 +1,5 @@
 import { cx } from "@/internal";
+import { useMessages } from "@/intl";
 import { Input as BaseInput } from "@base-ui/react/input";
 import { FileIcon } from "@phosphor-icons/react/dist/csr/File";
 import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
@@ -56,13 +57,15 @@ interface FileSelectionPreviewProps {
 }
 
 function FileSelectionPreview({ accept, files, invalidFileLabel, summaryId }: FileSelectionPreviewProps) {
+	const messages = useMessages();
+
 	return (
 		<div className={cx("lyds-file-selection", files.length === 0 && "lyds-sr-only")}>
 			<p id={summaryId} className="lyds-file-selection__summary" role="status" aria-live="polite" aria-atomic="true">
-				{files.length > 0 ? `已選擇 ${files.length} 個檔案` : null}
+				{files.length > 0 ? messages.fileSelectionSummary(files.length) : null}
 			</p>
 			{files.length > 0 ? (
-				<ul className="lyds-file-selection__list" aria-label="已選擇的檔案">
+				<ul className="lyds-file-selection__list" aria-label={messages.fileSelectionLabel}>
 					{files.map((file, index) => {
 						const accepted = isFileAccepted(file, accept);
 						return (
@@ -155,8 +158,8 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(fu
 		actionsRef,
 		inputClassName,
 		inputStyle,
-		triggerLabel = "選擇檔案",
-		invalidFileLabel = "不支援的檔案類型",
+		triggerLabel,
+		invalidFileLabel,
 		onChange,
 		onFilesChange,
 		id: idProp,
@@ -164,6 +167,7 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(fu
 	},
 	forwardedRef
 ) {
+	const messages = useMessages();
 	const generatedId = React.useId();
 	const id = idProp ?? generatedId;
 	const labelId = `${id}-label`;
@@ -227,9 +231,9 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(fu
 					onChange={handleChange}
 				/>
 				<FileTrigger className="lyds-file-upload__trigger" disabled={Boolean(disabled || readOnly)} htmlFor={id} id={triggerId} size={size}>
-					{triggerLabel}
+					{triggerLabel ?? messages.fileUploadTrigger}
 				</FileTrigger>
-				<FileSelectionPreview accept={inputProps.accept} files={selectedFiles} invalidFileLabel={invalidFileLabel} summaryId={selectionSummaryId} />
+				<FileSelectionPreview accept={inputProps.accept} files={selectedFiles} invalidFileLabel={invalidFileLabel ?? messages.fileUploadInvalidFile} summaryId={selectionSummaryId} />
 			</div>
 		</FieldFrame>
 	);
@@ -241,7 +245,7 @@ export interface DropZoneProps extends NativeFileInputProps, FieldAnatomyProps {
 	inputClassName?: string;
 	primaryLabel?: React.ReactNode;
 	secondaryLabel?: React.ReactNode;
-	browseLabel?: string;
+	browseLabel?: React.ReactNode;
 	invalidFileLabel?: React.ReactNode;
 	onChange?: React.ChangeEventHandler<HTMLInputElement>;
 	onFilesChange?: (files: readonly File[], details: DropZoneChangeDetails) => void;
@@ -272,10 +276,10 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 		touched,
 		actionsRef,
 		inputClassName,
-		primaryLabel = "將檔案拖曳至此",
-		secondaryLabel = "或從裝置選擇檔案",
-		browseLabel = "選擇檔案",
-		invalidFileLabel = "不支援的檔案類型",
+		primaryLabel,
+		secondaryLabel,
+		browseLabel,
+		invalidFileLabel,
 		onChange,
 		onFilesChange,
 		onDragEnter,
@@ -287,6 +291,7 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 	},
 	forwardedRef
 ) {
+	const messages = useMessages();
 	const generatedId = React.useId();
 	const id = idProp ?? generatedId;
 	const labelId = `${id}-label`;
@@ -431,13 +436,13 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 				onDrop={handleDrop}
 			>
 				<span className="lyds-drop-zone__copy">
-					<span className="lyds-drop-zone__primary">{primaryLabel}</span>
-					<span className="lyds-drop-zone__secondary">{secondaryLabel}</span>
+					<span className="lyds-drop-zone__primary">{primaryLabel ?? messages.dropZonePrimary}</span>
+					<span className="lyds-drop-zone__secondary">{secondaryLabel ?? messages.dropZoneSecondary}</span>
 				</span>
 				<FileTrigger className="lyds-drop-zone__button" disabled={Boolean(disabled || readOnly)} htmlFor={id} id={triggerId} size={size} startIcon={<PlusIcon aria-hidden="true" weight="bold" />}>
-					{browseLabel}
+					{browseLabel ?? messages.dropZoneBrowse}
 				</FileTrigger>
-				<FileSelectionPreview accept={inputProps.accept} files={selectedFiles} invalidFileLabel={invalidFileLabel} summaryId={selectionSummaryId} />
+				<FileSelectionPreview accept={inputProps.accept} files={selectedFiles} invalidFileLabel={invalidFileLabel ?? messages.fileUploadInvalidFile} summaryId={selectionSummaryId} />
 			</div>
 		</FieldFrame>
 	);

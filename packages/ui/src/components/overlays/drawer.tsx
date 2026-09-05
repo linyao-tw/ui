@@ -16,6 +16,7 @@ import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, type HTMLAttributes, type JSX, type RefAttributes } from "react";
 
 import { withStateClassName } from "@/internal";
+import { useMessages } from "@/intl";
 export type { DrawerRootChangeEventDetails } from "@base-ui/react/drawer";
 
 function CloseGlyph(): JSX.Element {
@@ -51,11 +52,13 @@ export interface DrawerPopupProps extends BaseDrawerPopupProps {
 	hasCustomClose?: boolean;
 }
 
-export const DrawerPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(function DrawerPopup({ children, className, closeLabel = "關閉側欄", closeProps, hasCustomClose = false, ...props }, ref) {
+export const DrawerPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(function DrawerPopup({ children, className, closeLabel, closeProps, hasCustomClose = false, ...props }, ref) {
+	const messages = useMessages();
+
 	return (
 		<BaseDrawer.Popup {...props} ref={ref} className={withStateClassName("lyds-drawer__popup", className)}>
 			{children}
-			{hasCustomClose ? null : <DrawerClose {...closeProps} aria-label={closeLabel} />}
+			{hasCustomClose ? null : <DrawerClose {...closeProps} aria-label={closeLabel ?? messages.drawerClose} />}
 		</BaseDrawer.Popup>
 	);
 });
@@ -81,11 +84,13 @@ export const DrawerClose = forwardRef<HTMLButtonElement, DrawerCloseProps>(funct
 	{ "aria-label": ariaLabel, children, className, variant = children == null ? "icon" : "action", ...props },
 	ref
 ) {
+	const messages = useMessages();
+
 	return (
 		<BaseDrawer.Close
 			{...props}
 			ref={ref}
-			aria-label={ariaLabel ?? (children == null ? "關閉側欄" : undefined)}
+			aria-label={ariaLabel ?? (children == null ? messages.drawerClose : undefined)}
 			className={withStateClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
 		>
 			{children ?? <CloseGlyph />}
@@ -154,14 +159,13 @@ export function BottomSheetRoot<Payload = unknown>({ snapPoints = defaultBottomS
 	return <BaseDrawer.Root {...props} swipeDirection="down" snapPoints={snapPoints} defaultSnapPoint={defaultSnapPoint ?? accessibleDefaultSnapPoint} />;
 }
 
-export const BottomSheetPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(function BottomSheetPopup(
-	{ children, className, closeLabel = "關閉底部面板", closeProps, hasCustomClose = false, ...props },
-	ref
-) {
+export const BottomSheetPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(function BottomSheetPopup({ children, className, closeLabel, closeProps, hasCustomClose = false, ...props }, ref) {
+	const messages = useMessages();
+
 	return (
 		<BaseDrawer.Popup {...props} ref={ref} className={withStateClassName("lyds-drawer__popup lyds-bottomSheet__popup", className)}>
 			{children}
-			{hasCustomClose ? null : <DrawerClose {...closeProps} aria-label={closeLabel} />}
+			{hasCustomClose ? null : <DrawerClose {...closeProps} aria-label={closeLabel ?? messages.bottomSheetClose} />}
 		</BaseDrawer.Popup>
 	);
 });

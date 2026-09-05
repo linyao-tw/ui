@@ -4,6 +4,7 @@ import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { forwardRef, useCallback, useImperativeHandle, useRef, useState, type ComponentRef, type HTMLAttributes, type ReactNode } from "react";
 
 import { cx, withStateClassName } from "@/internal";
+import { useMessages } from "@/intl";
 export interface CommandPaletteProps<Value> extends Omit<BaseCombobox.Root.Props<Value, false>, "autoComplete" | "children" | "defaultOpen" | "inline" | "modal" | "onOpenChange" | "open"> {
 	children: ReactNode;
 	defaultOpen?: boolean;
@@ -101,7 +102,8 @@ export const CommandPaletteDescription = forwardRef<ComponentRef<typeof BaseDial
 });
 
 export const CommandPaletteClose = forwardRef<ComponentRef<typeof BaseDialog.Close>, BaseDialog.Close.Props>(function CommandPaletteClose(props, ref) {
-	const { className, children = "關閉", ...closeProps } = props;
+	const messages = useMessages();
+	const { className, children = messages.commandPaletteClose, ...closeProps } = props;
 	return (
 		<BaseDialog.Close ref={ref} className={withStateClassName<BaseDialog.Close.State>("lyds-command-palette__close", className)} {...closeProps}>
 			{children}
@@ -115,7 +117,8 @@ export const CommandPaletteLabel = forwardRef<ComponentRef<typeof BaseCombobox.L
 });
 
 export const CommandPaletteInput = forwardRef<ComponentRef<typeof BaseCombobox.Input>, BaseCombobox.Input.Props>(function CommandPaletteInput(props, ref) {
-	const { className, placeholder = "輸入指令…", ...inputProps } = props;
+	const messages = useMessages();
+	const { className, placeholder = messages.commandPalettePlaceholder, ...inputProps } = props;
 	return <BaseCombobox.Input ref={ref} className={withStateClassName<BaseCombobox.Input.State>("lyds-command-palette__input", className)} placeholder={placeholder} {...inputProps} />;
 });
 

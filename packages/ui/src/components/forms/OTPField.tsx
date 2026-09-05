@@ -1,4 +1,5 @@
 import { withStateClassName } from "@/internal";
+import { useMessages } from "@/intl";
 import { OTPField as BaseOTPField } from "@base-ui/react/otp-field";
 import * as React from "react";
 import "./forms.css";
@@ -45,6 +46,8 @@ export const OTPField = React.forwardRef<HTMLDivElement, OTPFieldProps>(function
 	},
 	ref
 ) {
+	const messages = useMessages();
+
 	return (
 		<FieldFrame
 			label={label}
@@ -72,7 +75,7 @@ export const OTPField = React.forwardRef<HTMLDivElement, OTPFieldProps>(function
 						<BaseOTPField.Input
 							className={withStateClassName<BaseOTPField.Input.State>("lyds-otp-field__input", inputClassName)}
 							style={inputStyle}
-							aria-label={index > 0 ? (getSlotLabel?.(index) ?? `第 ${index + 1} 個字元，共 ${length} 個`) : undefined}
+							aria-label={index > 0 ? (getSlotLabel?.(index) ?? messages.codeSlotLabel(index + 1, length)) : undefined}
 						/>
 						{separatorAfter.includes(index + 1) && index < length - 1 ? <span className="lyds-otp-field__separator">{separator}</span> : null}
 					</React.Fragment>

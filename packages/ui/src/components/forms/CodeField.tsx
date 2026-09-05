@@ -1,4 +1,5 @@
 import { cx, withStateClassName } from "@/internal";
+import { useMessages } from "@/intl";
 import { OTPField as BaseOTPField } from "@base-ui/react/otp-field";
 import * as React from "react";
 import "./forms.css";
@@ -64,6 +65,7 @@ export const CodeField = React.forwardRef<HTMLDivElement, CodeFieldProps>(functi
 	},
 	ref
 ) {
+	const messages = useMessages();
 	const length = constrainInteger(lengthProp, 2, 12);
 	const defaultGroupSize = length >= 9 ? 4 : 1;
 	const groupSize = constrainInteger(groupSizeProp ?? defaultGroupSize, 1, length);
@@ -81,7 +83,7 @@ export const CodeField = React.forwardRef<HTMLDivElement, CodeFieldProps>(functi
 			className={withStateClassName<BaseOTPField.Input.State>(cx("lyds-otp-field__input", "lyds-code-field__input", insideGroup && "lyds-code-field__group-input"), inputClassName)}
 			style={inputStyle}
 			placeholder={typeof placeholder === "function" ? placeholder(index) : placeholderCharacters?.[index]}
-			aria-label={index > 0 ? (getSlotLabel?.(index) ?? `第 ${index + 1} 個字元，共 ${length} 個`) : undefined}
+			aria-label={index > 0 ? (getSlotLabel?.(index) ?? messages.codeSlotLabel(index + 1, length)) : undefined}
 		/>
 	);
 

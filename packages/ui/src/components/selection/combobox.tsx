@@ -19,6 +19,7 @@ import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, useMemo, type Key, type ReactNode } from "react";
 
 import { withStateClassName } from "@/internal";
+import { useMessages } from "@/intl";
 import styles from "./selection.module.css";
 
 export const ComboboxInputGroup = forwardRef<HTMLDivElement, ComboboxInputGroupProps>(function ComboboxInputGroup({ className, ...props }, ref) {
@@ -127,8 +128,8 @@ function ComboboxComponent<Value>({
 	"aria-label": ariaLabel,
 	"aria-labelledby": ariaLabelledby,
 	className,
-	clearLabel = "清除選取",
-	emptyMessage = "找不到符合的選項",
+	clearLabel,
+	emptyMessage,
 	inputProps,
 	invalid = false,
 	itemToStringLabel,
@@ -136,9 +137,10 @@ function ComboboxComponent<Value>({
 	placeholder,
 	popupProps,
 	positionerProps,
-	triggerLabel = "顯示選項",
+	triggerLabel,
 	...rootProps
 }: ComboboxProps<Value>) {
+	const messages = useMessages();
 	const optionIndex = useMemo(() => createOptionIndex<Value, ComboboxOption<Value>>(options), [options]);
 	const stringify = useMemo(
 		() =>
@@ -162,10 +164,10 @@ function ComboboxComponent<Value>({
 					autoComplete={inputProps?.autoComplete ?? "off"}
 					placeholder={placeholder}
 				/>
-				<ComboboxClear aria-label={clearLabel}>
+				<ComboboxClear aria-label={clearLabel ?? messages.comboboxClear}>
 					<XIcon aria-hidden="true" weight="bold" />
 				</ComboboxClear>
-				<ComboboxTrigger aria-label={triggerLabel}>
+				<ComboboxTrigger aria-label={triggerLabel ?? messages.comboboxTrigger}>
 					<CaretDownIcon aria-hidden="true" weight="bold" />
 				</ComboboxTrigger>
 			</ComboboxInputGroup>
@@ -190,7 +192,7 @@ function ComboboxComponent<Value>({
 								);
 							}}
 						</ComboboxList>
-						<ComboboxEmpty>{emptyMessage}</ComboboxEmpty>
+						<ComboboxEmpty>{emptyMessage ?? messages.comboboxEmpty}</ComboboxEmpty>
 					</ComboboxPopup>
 				</ComboboxPositioner>
 			</BaseCombobox.Portal>
@@ -266,8 +268,8 @@ function AutocompleteComponent<ItemValue>({
 	"aria-label": ariaLabel,
 	"aria-labelledby": ariaLabelledby,
 	className,
-	clearLabel = "清除搜尋內容",
-	emptyMessage = "找不到建議項目",
+	clearLabel,
+	emptyMessage,
 	inputProps,
 	invalid = false,
 	itemToStringValue,
@@ -275,9 +277,10 @@ function AutocompleteComponent<ItemValue>({
 	placeholder,
 	popupProps,
 	positionerProps,
-	triggerLabel = "顯示建議項目",
+	triggerLabel,
 	...rootProps
 }: AutocompleteProps<ItemValue>) {
+	const messages = useMessages();
 	const optionIndex = useMemo(() => createOptionIndex<ItemValue, AutocompleteOption<ItemValue>>(options), [options]);
 	const stringify = useMemo(
 		() =>
@@ -301,10 +304,10 @@ function AutocompleteComponent<ItemValue>({
 					autoComplete={inputProps?.autoComplete ?? "off"}
 					placeholder={placeholder}
 				/>
-				<ComboboxClear aria-label={clearLabel}>
+				<ComboboxClear aria-label={clearLabel ?? messages.autocompleteClear}>
 					<XIcon aria-hidden="true" weight="bold" />
 				</ComboboxClear>
-				<BaseAutocomplete.Trigger aria-label={triggerLabel} className={styles.comboboxTrigger}>
+				<BaseAutocomplete.Trigger aria-label={triggerLabel ?? messages.autocompleteTrigger} className={styles.comboboxTrigger}>
 					<CaretDownIcon aria-hidden="true" weight="bold" />
 				</BaseAutocomplete.Trigger>
 			</AutocompleteInputGroup>
@@ -323,7 +326,7 @@ function AutocompleteComponent<ItemValue>({
 								);
 							}}
 						</ComboboxList>
-						<ComboboxEmpty>{emptyMessage}</ComboboxEmpty>
+						<ComboboxEmpty>{emptyMessage ?? messages.autocompleteEmpty}</ComboboxEmpty>
 					</ComboboxPopup>
 				</ComboboxPositioner>
 			</BaseAutocomplete.Portal>

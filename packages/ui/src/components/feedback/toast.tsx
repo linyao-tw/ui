@@ -3,6 +3,7 @@ import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { Fragment, forwardRef, type ComponentPropsWithoutRef, type ForwardedRef, type ReactElement, type ReactNode, type RefAttributes } from "react";
 
 import { cx } from "@/internal";
+import { useMessages } from "@/intl";
 import styles from "./feedback.module.css";
 import { FEEDBACK_STATUSES, type FeedbackStatus } from "./feedback.types";
 const feedbackStatusSet: ReadonlySet<string> = new Set(FEEDBACK_STATUSES);
@@ -43,10 +44,8 @@ export interface ToastRootProps<Data extends object = ToastData> extends Omit<Ba
 
 type ToastRootComponent = <Data extends object = ToastData>(props: ToastRootProps<Data> & RefAttributes<HTMLDivElement>) => ReactElement;
 
-export const ToastRoot = forwardRef(function ToastRoot<Data extends object = ToastData>(
-	{ className, closeLabel = "關閉通知", toast, ...props }: ToastRootProps<Data>,
-	ref: ForwardedRef<HTMLDivElement>
-) {
+export const ToastRoot = forwardRef(function ToastRoot<Data extends object = ToastData>({ className, closeLabel, toast, ...props }: ToastRootProps<Data>, ref: ForwardedRef<HTMLDivElement>) {
+	const messages = useMessages();
 	const actionProps = toast.actionProps;
 	const actionClassName = actionProps?.className;
 	const status = getToastStatus(toast);
@@ -59,7 +58,7 @@ export const ToastRoot = forwardRef(function ToastRoot<Data extends object = Toa
 				{toast.description ? <BaseToast.Description className={styles.toastDescription} /> : null}
 			</BaseToast.Content>
 			{actionProps ? <BaseToast.Action {...actionProps} className={cx(styles.toastAction, actionClassName)} /> : null}
-			<BaseToast.Close aria-label={closeLabel} className={styles.toastClose}>
+			<BaseToast.Close aria-label={closeLabel ?? messages.toastClose} className={styles.toastClose}>
 				<XIcon aria-hidden="true" weight="bold" />
 			</BaseToast.Close>
 		</BaseToast.Root>

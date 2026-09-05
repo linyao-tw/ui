@@ -15,6 +15,7 @@ import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, type HTMLAttributes, type JSX, type ReactNode, type RefAttributes } from "react";
 
 import { withStateClassName } from "@/internal";
+import { useMessages } from "@/intl";
 export type { AlertDialogRootChangeEventDetails } from "@base-ui/react/alert-dialog";
 export type { DialogRootChangeEventDetails } from "@base-ui/react/dialog";
 
@@ -51,11 +52,13 @@ export interface DialogPopupProps extends BaseDialogPopupProps {
 	hasCustomClose?: boolean;
 }
 
-export const DialogPopup = forwardRef<HTMLDivElement, DialogPopupProps>(function DialogPopup({ children, className, closeLabel = "關閉對話框", closeProps, hasCustomClose = false, ...props }, ref) {
+export const DialogPopup = forwardRef<HTMLDivElement, DialogPopupProps>(function DialogPopup({ children, className, closeLabel, closeProps, hasCustomClose = false, ...props }, ref) {
+	const messages = useMessages();
+
 	return (
 		<BaseDialog.Popup {...props} ref={ref} className={withStateClassName("lyds-dialog__popup", className)}>
 			{children}
-			{hasCustomClose ? null : <DialogClose {...closeProps} aria-label={closeLabel} />}
+			{hasCustomClose ? null : <DialogClose {...closeProps} aria-label={closeLabel ?? messages.dialogClose} />}
 		</BaseDialog.Popup>
 	);
 });
@@ -77,11 +80,13 @@ export const DialogClose = forwardRef<HTMLButtonElement, DialogCloseProps>(funct
 	{ "aria-label": ariaLabel, children, className, variant = children == null ? "icon" : "action", ...props },
 	ref
 ) {
+	const messages = useMessages();
+
 	return (
 		<BaseDialog.Close
 			{...props}
 			ref={ref}
-			aria-label={ariaLabel ?? (children == null ? "關閉對話框" : undefined)}
+			aria-label={ariaLabel ?? (children == null ? messages.dialogClose : undefined)}
 			className={withStateClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
 		>
 			{children ?? <CloseGlyph />}
@@ -144,14 +149,13 @@ export interface AlertDialogPopupProps extends BaseDialogPopupProps {
 	hasCustomClose?: boolean;
 }
 
-export const AlertDialogPopup = forwardRef<HTMLDivElement, AlertDialogPopupProps>(function AlertDialogPopup(
-	{ children, className, closeLabel = "取消並關閉警示", closeProps, hasCustomClose = false, ...props },
-	ref
-) {
+export const AlertDialogPopup = forwardRef<HTMLDivElement, AlertDialogPopupProps>(function AlertDialogPopup({ children, className, closeLabel, closeProps, hasCustomClose = false, ...props }, ref) {
+	const messages = useMessages();
+
 	return (
 		<BaseAlertDialog.Popup {...props} ref={ref} className={withStateClassName("lyds-dialog__popup lyds-alertDialog__popup", className)}>
 			{children}
-			{hasCustomClose ? null : <AlertDialogClose {...closeProps} aria-label={closeLabel} />}
+			{hasCustomClose ? null : <AlertDialogClose {...closeProps} aria-label={closeLabel ?? messages.alertDialogClose} />}
 		</BaseAlertDialog.Popup>
 	);
 });
@@ -160,11 +164,13 @@ export const AlertDialogClose = forwardRef<HTMLButtonElement, DialogCloseProps>(
 	{ "aria-label": ariaLabel, children, className, variant = children == null ? "icon" : "action", ...props },
 	ref
 ) {
+	const messages = useMessages();
+
 	return (
 		<BaseAlertDialog.Close
 			{...props}
 			ref={ref}
-			aria-label={ariaLabel ?? (children == null ? "取消並關閉警示" : undefined)}
+			aria-label={ariaLabel ?? (children == null ? messages.alertDialogClose : undefined)}
 			className={withStateClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
 		>
 			{children ?? <CloseGlyph />}

@@ -38,6 +38,7 @@ import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { createContext, forwardRef, useContext, useId, type JSX, type RefAttributes } from "react";
 
 import { withStateClassName } from "@/internal";
+import { useMessages } from "@/intl";
 export type { PopoverRootChangeEventDetails } from "@base-ui/react/popover";
 export type { PreviewCardRootChangeEventDetails } from "@base-ui/react/preview-card";
 export type { TooltipRootChangeEventDetails } from "@base-ui/react/tooltip";
@@ -153,11 +154,13 @@ export const PopoverClose = forwardRef<HTMLButtonElement, PopoverCloseProps>(fun
 	{ "aria-label": ariaLabel, children, className, variant = children == null ? "icon" : "action", ...props },
 	ref
 ) {
+	const messages = useMessages();
+
 	return (
 		<BasePopover.Close
 			{...props}
 			ref={ref}
-			aria-label={ariaLabel ?? (children == null ? "關閉彈出視窗" : undefined)}
+			aria-label={ariaLabel ?? (children == null ? messages.popoverClose : undefined)}
 			className={withStateClassName(variant === "icon" ? "lyds-overlayClose" : "lyds-overlayCloseAction", className)}
 		>
 			{children ?? <CloseGlyph />}

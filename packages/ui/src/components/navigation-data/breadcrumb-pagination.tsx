@@ -5,13 +5,15 @@ import { DotsThreeIcon } from "@phosphor-icons/react/dist/csr/DotsThree";
 import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type HTMLAttributes, type LiHTMLAttributes, type MouseEvent, type ReactNode } from "react";
 
 import { cx } from "@/internal";
+import { useMessages } from "@/intl";
 export interface BreadcrumbProps extends HTMLAttributes<HTMLElement> {
 	/** 麵包屑導覽區域的無障礙名稱。 */
 	label?: string;
 }
 
-export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(function Breadcrumb({ className, label = "麵包屑導覽", ...props }, ref) {
-	return <nav ref={ref} aria-label={label} className={cx("lyds-breadcrumb", className)} {...props} />;
+export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(function Breadcrumb({ className, label, ...props }, ref) {
+	const messages = useMessages();
+	return <nav ref={ref} aria-label={label ?? messages.breadcrumbLabel} className={cx("lyds-breadcrumb", className)} {...props} />;
 });
 
 export const BreadcrumbList = forwardRef<HTMLOListElement, HTMLAttributes<HTMLOListElement>>(function BreadcrumbList({ className, ...props }, ref) {
@@ -46,14 +48,13 @@ export const BreadcrumbSeparator = forwardRef<HTMLSpanElement, BreadcrumbSeparat
 	);
 });
 
-export const BreadcrumbEllipsis = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement>>(function BreadcrumbEllipsis(
-	{ "aria-label": ariaLabel = "更多頁面", className, children, ...props },
-	ref
-) {
+export const BreadcrumbEllipsis = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement>>(function BreadcrumbEllipsis({ "aria-label": ariaLabel, className, children, ...props }, ref) {
+	const messages = useMessages();
+
 	return (
 		<span ref={ref} className={cx("lyds-breadcrumb__ellipsis", className)} {...props}>
 			{children ? <span aria-hidden="true">{children}</span> : <DotsThreeIcon aria-hidden="true" weight="bold" />}
-			<span className="lyds-sr-only">{ariaLabel}</span>
+			<span className="lyds-sr-only">{ariaLabel ?? messages.breadcrumbMore}</span>
 		</span>
 	);
 });
@@ -63,8 +64,9 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
 	label?: string;
 }
 
-export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagination({ className, label = "分頁導覽", ...props }, ref) {
-	return <nav ref={ref} aria-label={label} className={cx("lyds-pagination", className)} {...props} />;
+export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagination({ className, label, ...props }, ref) {
+	const messages = useMessages();
+	return <nav ref={ref} aria-label={label ?? messages.paginationLabel} className={cx("lyds-pagination", className)} {...props} />;
 });
 
 export const PaginationList = forwardRef<HTMLUListElement, HTMLAttributes<HTMLUListElement>>(function PaginationList({ className, ...props }, ref) {
@@ -121,30 +123,33 @@ export const PaginationButton = forwardRef<HTMLButtonElement, PaginationButtonPr
 	return <button ref={ref} aria-current={current ? "page" : undefined} className={cx("lyds-pagination__control", className)} data-current={current ? "" : undefined} type={type} {...props} />;
 });
 
-export const PaginationPrevious = forwardRef<HTMLAnchorElement, PaginationLinkProps>(function PaginationPrevious({ "aria-label": ariaLabel = "上一頁", children, ...props }, ref) {
+export const PaginationPrevious = forwardRef<HTMLAnchorElement, PaginationLinkProps>(function PaginationPrevious({ "aria-label": ariaLabel, children, ...props }, ref) {
+	const messages = useMessages();
+
 	return (
-		<PaginationLink ref={ref} aria-label={ariaLabel} {...props}>
+		<PaginationLink ref={ref} aria-label={ariaLabel ?? messages.paginationPrevious} {...props}>
 			{children ?? <ArrowLeftIcon aria-hidden="true" weight="bold" />}
 		</PaginationLink>
 	);
 });
 
-export const PaginationNext = forwardRef<HTMLAnchorElement, PaginationLinkProps>(function PaginationNext({ "aria-label": ariaLabel = "下一頁", children, ...props }, ref) {
+export const PaginationNext = forwardRef<HTMLAnchorElement, PaginationLinkProps>(function PaginationNext({ "aria-label": ariaLabel, children, ...props }, ref) {
+	const messages = useMessages();
+
 	return (
-		<PaginationLink ref={ref} aria-label={ariaLabel} {...props}>
+		<PaginationLink ref={ref} aria-label={ariaLabel ?? messages.paginationNext} {...props}>
 			{children ?? <ArrowRightIcon aria-hidden="true" weight="bold" />}
 		</PaginationLink>
 	);
 });
 
-export const PaginationEllipsis = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement>>(function PaginationEllipsis(
-	{ "aria-label": ariaLabel = "更多頁面", children, className, ...props },
-	ref
-) {
+export const PaginationEllipsis = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement>>(function PaginationEllipsis({ "aria-label": ariaLabel, children, className, ...props }, ref) {
+	const messages = useMessages();
+
 	return (
 		<span ref={ref} className={cx("lyds-pagination__ellipsis", className)} {...props}>
 			{children ? <span aria-hidden="true">{children}</span> : <DotsThreeIcon aria-hidden="true" weight="bold" />}
-			<span className="lyds-sr-only">{ariaLabel}</span>
+			<span className="lyds-sr-only">{ariaLabel ?? messages.paginationMore}</span>
 		</span>
 	);
 });

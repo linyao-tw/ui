@@ -14,3 +14,5 @@ export * from "./components/foundations/index.js";
 export * from "./components/navigation-data/index.js";
 export * from "./components/overlays/index.js";
 export * from "./components/selection/index.js";
+
+export { MessagesProvider, enUSMessages, useMessages, zhTWMessages, type ComponentMessages, type MessagesProviderProps } from "./intl/index.js";

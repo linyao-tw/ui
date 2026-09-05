@@ -245,3 +245,27 @@ Linyao Design System 不自動將 `CalendarDateTime` 轉為 `ZonedDateTime`。�
 5. 只有共用、可重複且可存取的行為才新增元件。
 
 分支修改會失去後續修正、設計變數、鍵盤行為與測試。確定需要新元件時，依[貢獻指南](contributing.md)完成 API、狀態、Storybook stories、測試、可存取性與套件匯出。
+
+## 在地化
+
+元件的預設字串（關閉、上一頁、清除選取、已選擇 N 個檔案等）集中在訊息套件，不再散落於各元件的預設參數。沒有 provider 時使用繁體中文套件，行為與過去一致：
+
+```tsx
+import { MessagesProvider, enUSMessages } from "@linyao.tw/ui";
+
+<MessagesProvider messages={enUSMessages}>
+	<App />
+</MessagesProvider>;
+```
+
+部分覆寫會與外層套件合併，因此只調整單一字串不需要重寫整份：
+
+```tsx
+<MessagesProvider messages={{ dialogClose: "收合面板" }}>
+	<SettingsDialog />
+</MessagesProvider>
+```
+
+優先順序是「元件屬性 → 最近的 provider → 繼承的 provider → 繁體中文預設」。`ComponentMessages` 是完整的字串清單；`codeSlotLabel` 與 `fileSelectionSummary` 是函式，用於需要插入數字的字串。
+
+日期與時間元件不使用這份字串套件。它們的區域格式、月份名稱與區段標籤來自 React Aria Components 的 `I18nProvider` 與 `@internationalized/date`，透過各元件的 `locale` 屬性控制。

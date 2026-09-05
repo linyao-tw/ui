@@ -1,6 +1,7 @@
 import { forwardRef, type AnchorHTMLAttributes, type HTMLAttributes, type LiHTMLAttributes, type MouseEvent } from "react";
 
 import { cx } from "@/internal";
+import { useMessages } from "@/intl";
 export const Header = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function Header({ className, ...props }, ref) {
 	return <header ref={ref} className={cx("lyds-header", className)} {...props} />;
 });
@@ -21,8 +22,9 @@ export interface HeaderNavProps extends HTMLAttributes<HTMLElement> {
 	label?: string;
 }
 
-export const HeaderNav = forwardRef<HTMLElement, HeaderNavProps>(function HeaderNav({ className, label = "主要導覽", ...props }, ref) {
-	return <nav ref={ref} aria-label={label} className={cx("lyds-header__nav", className)} {...props} />;
+export const HeaderNav = forwardRef<HTMLElement, HeaderNavProps>(function HeaderNav({ className, label, ...props }, ref) {
+	const messages = useMessages();
+	return <nav ref={ref} aria-label={label ?? messages.headerNavLabel} className={cx("lyds-header__nav", className)} {...props} />;
 });
 
 export const HeaderActions = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function HeaderActions({ className, ...props }, ref) {
@@ -37,8 +39,9 @@ export interface TabBarProps extends HTMLAttributes<HTMLElement> {
 	label?: string;
 }
 
-export const TabBar = forwardRef<HTMLElement, TabBarProps>(function TabBar({ className, label = "應用程式區段", ...props }, ref) {
-	return <nav ref={ref} aria-label={label} className={cx("lyds-tab-bar", className)} {...props} />;
+export const TabBar = forwardRef<HTMLElement, TabBarProps>(function TabBar({ className, label, ...props }, ref) {
+	const messages = useMessages();
+	return <nav ref={ref} aria-label={label ?? messages.tabBarLabel} className={cx("lyds-tab-bar", className)} {...props} />;
 });
 
 export const TabBarList = forwardRef<HTMLUListElement, HTMLAttributes<HTMLUListElement>>(function TabBarList({ className, ...props }, ref) {
