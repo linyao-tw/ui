@@ -43,12 +43,10 @@ Motion/Ease/InOut        -> --motion-ease-in-out
 - `Text/*`：`Title`、`Main`、`Secondary`、`Muted`、`Disabled`、`Accent`、`Link`、`On_Accent`、`On_Danger`、`Always_White`、`Always_Dark`。
 - `Icon/*`：一般、次要、強調、停用、on-accent 與固定角色。
 - `Divider/*`、`Border/*`：subtle／main／strong、控制項狀態與無效狀態。
-- `Control/*`：primary／secondary／neutral／quaternary／surface、hover／按下／停用、選取、軌道、滑塊、knob、預留文字。`neutral` 提供跨主題的高對比灰色操作；`danger` 保留給破壞性操作。
-- `Focus/*`、`Selection/*`：焦點環、光暈／偏移與選取前景色／背景色。
+- `Control/*`：primary／secondary／neutral／quaternary／surface、hover／按下／停用、選取、軌道、knob、預留文字。`neutral` 提供跨主題的高對比灰色操作；`danger` 保留給破壞性操作。控制項邊框一律使用 `Border/*` 角色，沒有平行的 `Control/Border` 系列。
+- `Focus/*`、`Selection/*`：焦點環、光暈與選取前景色／背景色。在強調色表面內側繪製的焦點環使用 `--focus-ring-on-accent`。
 - `Status/*`：中性、資訊、成功、警告、危險的背景色／前景色／邊框。
-- `Shadow/*`、`Elevation/*`：細線、低、中、浮層、選取與浮動控制項陰影。
-
-舊版 inset／panel-seam aliases 目前解析為 `none`，只供既有使用者主題過渡；新元件不得使用。
+- `Shadow/*`、`Elevation/*`：低、中、浮層、選取與浮動控制項陰影。
 
 正確：
 
@@ -135,7 +133,7 @@ border-radius: var(--radius-md); /* 0.75rem */
 
 只有 1px 邊框／分隔線與 Figma 明確指定的 0.5px 分隔線可使用 `px`。SVG viewBox 座標不屬於 CSS 長度。流動版面可使用 `%`、`fr`、`vw`、`dvh` 與無單位行高。
 
-控制項尺寸變數與 `--control-target-min` 將視覺尺寸與最小互動區域分開。`--shape-cut-*` 是相容性 alias，預設為 `0`；沒有 Figma 結構依據時，不得在元件加入 `clip-path`。
+控制項尺寸變數與 `--control-target-min` 將視覺尺寸與最小互動區域分開。沒有 Figma 結構依據時，不得在元件加入 `clip-path`。
 
 ## 動態效果
 
@@ -166,16 +164,26 @@ Easing：
 
 ## 元件專用變數
 
-只有共用語意變數無法描述元件，而且需要跨主題覆寫時，才新增元件專用變數。例如 Calendar：
+`--component-*` 是設計變數的第三層，用於在不移動全域語意角色的前提下微調單一元件。所有元件專用變數集中定義在 `styles.css` 的元件角色區塊，該區塊同時對 `:root`、`[data-lyds-theme="light"]` 與 `[data-lyds-theme="dark"]` 生效，因此子樹主題會一併重新計算：
 
 ```css
---component-calendar-day-background-selected: var(--control-primary);
---component-calendar-day-foreground-selected: var(--text-on-accent);
---component-calendar-day-background-in-range: var(--background-selected);
---component-calendar-day-ring-today: var(--focus-ring);
+:root,
+[data-lyds-theme="light"],
+[data-lyds-theme="dark"] {
+	--component-field-background: var(--control-surface);
+	--component-field-border-focus: var(--border-control-focus);
+	--component-calendar-day-background-selected: var(--control-primary);
+	--component-calendar-day-foreground-selected: var(--control-on-primary);
+	--component-calendar-day-indicator-today: currentColor;
+}
 ```
 
-元件專用變數應引用語意變數，不得包含原始值。
+規則：
+
+- 只有共用語意變數無法描述元件，而且需要跨主題覆寫時，才新增元件專用變數。
+- 元件專用變數必須引用語意角色或 `currentColor`，不得包含原始色值。
+- 元件 CSS 直接讀取元件專用變數，不再使用 `var(--component-x, var(--semantic-y))` 這種行內備援；備援會讓變數看起來存在卻從未被定義。
+- 元件專用變數不得定義在基礎 `:root` 區塊，否則會在 `:root` 上算出亮色值並繼承到深色子樹。
 
 ## 新增或修改變數
 

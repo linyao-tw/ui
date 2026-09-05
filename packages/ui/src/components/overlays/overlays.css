@@ -459,7 +459,7 @@
 .lyds-dialog__backdrop,
 .lyds-drawer__backdrop {
 	position: fixed;
-	z-index: var(--z-modal);
+	z-index: var(--z-overlay);
 	inset: 0;
 	background: var(--background-backdrop);
 }

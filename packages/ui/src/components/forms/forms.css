@@ -340,7 +340,7 @@
 .lyds-field[data-disabled] .lyds-drop-zone,
 .lyds-field[data-disabled] .lyds-phone-field__country,
 .lyds-drop-zone[data-disabled] {
-	border-color: var(--control-border-disabled);
+	border-color: var(--border-control-disabled);
 	background: var(--background-disabled);
 	color: var(--text-disabled);
 	cursor: not-allowed;

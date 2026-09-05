@@ -9,6 +9,7 @@
 		"base-ui",
 		"accessibility"
 	],
+	"homepage": "https://ui.linyao.tw/",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/linyao-tw/ui.git",

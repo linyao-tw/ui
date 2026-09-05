@@ -764,7 +764,7 @@ button.lyds-pagination__control {
 .lyds-command-palette__backdrop {
 	position: fixed;
 	inset: 0;
-	z-index: var(--z-modal);
+	z-index: var(--z-overlay);
 	background: var(--overlay-scrim);
 	transition: opacity var(--motion-duration-normal) var(--motion-ease-out);
 }
@@ -1020,7 +1020,7 @@ button.lyds-pagination__control {
 	}
 
 	.lyds-scroll-area:hover .lyds-scroll-area__thumb {
-		background: var(--control-border-hover);
+		background: var(--border-control-hover);
 	}
 }
 

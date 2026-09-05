@@ -19,9 +19,9 @@
 
 :root {
 	/* Palette tokens are the only raw color layer. Components consume roles below. */
-	--palette-limestone: #d3ccc1;
+	--palette-limestone: var(--palette-warm-300);
 	--palette-charcoal: #4d4d4d;
-	--palette-vermilion: #fe3300;
+	--palette-vermilion: var(--palette-signal-500);
 	--palette-always-white: #ffffff;
 	--palette-always-dark: #000000;
 	--palette-transparent: transparent;
@@ -77,15 +77,6 @@
 	--font-size-2xl: 1.75rem;
 	--font-size-3xl: 2.5rem;
 	--font-size-display: clamp(3rem, 10vw, 8rem);
-	--font-size-100: var(--font-size-xs);
-	--font-size-200: 0.8125rem;
-	--font-size-300: var(--font-size-sm);
-	--font-size-400: var(--font-size-md);
-	--font-size-500: var(--font-size-lg);
-	--font-size-600: var(--font-size-xl);
-	--font-size-700: var(--font-size-2xl);
-	--font-size-800: 2.25rem;
-	--font-size-900: 3rem;
 	--font-weight-regular: 400;
 	--font-weight-medium: 500;
 	--font-weight-semibold: 600;
@@ -130,14 +121,6 @@
 	--icon-size-sm: 1rem;
 	--icon-size-md: 1.25rem;
 	--icon-size-lg: 1.5rem;
-	--shape-cut-sm: 0;
-	--shape-cut-md: 0;
-	--component-calendar-day-size: 2.75rem;
-	--component-calendar-day-background-selected: var(--control-primary);
-	--component-calendar-day-foreground-selected: var(--control-on-primary);
-	--component-calendar-day-background-in-range: var(--background-selected);
-	--component-calendar-day-foreground-in-range: var(--text-title);
-	--component-calendar-day-ring-today: var(--focus-ring);
 
 	--motion-duration-instant: 0ms;
 	--motion-duration-fast: 120ms;
@@ -210,6 +193,7 @@
 	--border-control-hover: var(--palette-warm-600);
 	--border-control-focus: var(--palette-signal-700);
 	--border-invalid: var(--palette-signal-700);
+	--border-control-disabled: var(--palette-warm-200);
 
 	--control-primary: var(--palette-signal-600);
 	--control-primary-hover: var(--palette-signal-700);
@@ -227,9 +211,6 @@
 	--control-quaternary: var(--palette-warm-200);
 	--control-on-primary: var(--palette-warm-25);
 	--control-on-secondary: var(--palette-warm-900);
-	--control-border: var(--palette-warm-550);
-	--control-border-hover: var(--palette-warm-600);
-	--control-border-disabled: var(--palette-warm-200);
 	--control-surface: var(--palette-warm-100);
 	--control-surface-hover: var(--palette-warm-150);
 	--control-surface-pressed: var(--palette-warm-200);
@@ -239,18 +220,12 @@
 	--control-surface-selected: var(--palette-always-white);
 	--control-surface-disabled: var(--palette-warm-150);
 	--control-knob: var(--palette-always-white);
-	--control-thumb: var(--palette-always-white);
-	--control-thumb-checked: var(--palette-warm-950);
 	--control-track: var(--palette-warm-550);
-	--control-track-checked: var(--palette-signal-500);
-	--control-track-checked-hover: var(--palette-signal-600);
-	--control-range-indicator: var(--palette-signal-800);
 	--control-placeholder: var(--palette-warm-600);
 
 	--focus-ring: var(--palette-signal-700);
 	--focus-halo: var(--palette-always-white);
 	--focus-ring-on-accent: var(--palette-warm-950);
-	--focus-ring-offset: var(--background-main);
 	--selection-background: var(--palette-signal-100);
 	--selection-foreground: var(--palette-signal-900);
 
@@ -274,7 +249,6 @@
 	--status-danger-control-hover: var(--palette-signal-600);
 	--status-danger-control-pressed: var(--palette-signal-800);
 
-	--shadow-hairline: 0 0 0 1px oklch(0.42 0.01 75 / 10%);
 	--shadow-low: 0 0.125rem 0.5rem oklch(0.22 0.01 75 / 8%);
 	--shadow-medium: 0 0.5rem 2rem oklch(0.22 0.01 75 / 12%);
 	--shadow-overlay: 0 1.25rem 5rem oklch(0.16 0.01 75 / 22%);
@@ -285,8 +259,6 @@
 	--elevation-1: var(--shadow-low);
 	--elevation-2: var(--shadow-medium);
 	--elevation-3: var(--shadow-overlay);
-	--elevation-inset: none;
-	--elevation-panel-seam: none;
 }
 
 :root[data-lyds-theme="dark"],
@@ -335,6 +307,7 @@
 	--border-control-hover: var(--palette-warm-400);
 	--border-control-focus: var(--palette-signal-300);
 	--border-invalid: var(--palette-signal-300);
+	--border-control-disabled: var(--palette-warm-800);
 
 	--control-primary: var(--palette-signal-600);
 	--control-primary-hover: var(--palette-signal-700);
@@ -352,9 +325,6 @@
 	--control-quaternary: oklch(0.31 0.008 75);
 	--control-on-primary: var(--palette-warm-25);
 	--control-on-secondary: var(--palette-warm-50);
-	--control-border: var(--palette-warm-550);
-	--control-border-hover: var(--palette-warm-400);
-	--control-border-disabled: var(--palette-warm-800);
 	--control-surface: oklch(0.25 0.008 75);
 	--control-surface-hover: oklch(0.3 0.008 75);
 	--control-surface-pressed: oklch(0.22 0.008 75);
@@ -364,18 +334,12 @@
 	--control-surface-selected: oklch(0.34 0.008 75);
 	--control-surface-disabled: oklch(0.25 0.005 75);
 	--control-knob: var(--palette-warm-50);
-	--control-thumb: var(--palette-warm-50);
-	--control-thumb-checked: var(--palette-warm-950);
 	--control-track: var(--palette-warm-550);
-	--control-track-checked: var(--palette-signal-500);
-	--control-track-checked-hover: var(--palette-signal-400);
-	--control-range-indicator: var(--palette-signal-50);
 	--control-placeholder: var(--palette-warm-400);
 
 	--focus-ring: var(--palette-signal-300);
 	--focus-halo: var(--palette-warm-1000);
 	--focus-ring-on-accent: var(--palette-warm-950);
-	--focus-ring-offset: var(--background-main);
 	--selection-background: var(--palette-signal-900);
 	--selection-foreground: var(--palette-signal-50);
 
@@ -399,7 +363,6 @@
 	--status-danger-control-hover: var(--palette-signal-200);
 	--status-danger-control-pressed: var(--palette-signal-400);
 
-	--shadow-hairline: 0 0 0 1px oklch(0.85 0.017 79 / 10%);
 	--shadow-low: 0 0.125rem 0.5rem oklch(0.05 0.008 75 / 28%);
 	--shadow-medium: 0 0.5rem 2rem oklch(0.05 0.008 75 / 40%);
 	--shadow-overlay: 0 1.25rem 5rem oklch(0.04 0.008 75 / 60%);
@@ -410,8 +373,33 @@
 	--elevation-1: var(--shadow-low);
 	--elevation-2: var(--shadow-medium);
 	--elevation-3: var(--shadow-overlay);
-	--elevation-inset: none;
-	--elevation-panel-seam: none;
+}
+
+/*
+ * Component roles. Each one resolves inside the theme scope it lands in, so a subtree theme
+ * retunes them along with everything else. Override one of these to adjust a single component
+ * without moving the semantic role the rest of the system is built from.
+ */
+:root,
+[data-lyds-theme="light"],
+[data-lyds-theme="dark"] {
+	--component-field-background: var(--control-surface);
+	--component-field-background-hover: var(--control-surface-hover);
+	--component-field-border: var(--border-control);
+	--component-field-border-focus: var(--border-control-focus);
+	--component-field-border-invalid: var(--border-invalid);
+	--component-field-text: var(--text-main);
+	--component-field-label: var(--text-title);
+	--component-field-supporting-text: var(--text-secondary);
+	--component-field-supporting-font-size: 0.8125rem;
+	--component-date-field-segment-foreground: var(--text-title);
+	--component-date-field-segment-background-focused: var(--background-selected);
+	--component-calendar-day-size: 2.75rem;
+	--component-calendar-day-background-selected: var(--control-primary);
+	--component-calendar-day-foreground-selected: var(--control-on-primary);
+	--component-calendar-day-background-in-range: var(--background-selected);
+	--component-calendar-day-foreground-in-range: var(--text-title);
+	--component-calendar-day-indicator-today: currentColor;
 }
 
 body {

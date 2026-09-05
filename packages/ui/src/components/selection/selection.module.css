@@ -35,7 +35,7 @@
 
 .checkbox:hover:not([data-disabled]):not([data-readonly]),
 .radio:hover:not([data-disabled]):not([data-readonly]) {
-	background-color: var(--control-border-hover);
+	background-color: var(--border-control-hover);
 }
 
 .checkbox[data-checked],
@@ -206,7 +206,7 @@
 }
 
 .switch:hover:not([data-disabled]):not([data-readonly]) {
-	background: var(--control-border-hover);
+	background: var(--border-control-hover);
 }
 
 .switch[data-checked] {
@@ -281,7 +281,7 @@
 	position: relative;
 	width: 100%;
 	height: 0.25rem;
-	background: var(--control-border-hover);
+	background: var(--border-control-hover);
 	border: 0;
 	border-radius: var(--radius-round);
 }
