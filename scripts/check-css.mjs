@@ -10,9 +10,17 @@ const scanRoots = ["packages/ui/src/components", "apps/storybook/src"].map(path 
  * escapes the design system, so it has to arrive through a custom property or a calc over one.
  */
 const SCALE_PROPERTIES =
-	"font-size|border-radius|border-(?:start|end)-(?:start|end)-radius|gap|row-gap|column-gap|padding|padding-(?:top|right|bottom|left|inline|block)(?:-(?:start|end))?|margin|margin-(?:top|right|bottom|left|inline|block)(?:-(?:start|end))?";
+	"font-size|line-height|letter-spacing|border-radius|border-(?:start|end)-(?:start|end)-radius|gap|row-gap|column-gap|padding|padding-(?:top|right|bottom|left|inline|block)(?:-(?:start|end))?|margin|margin-(?:top|right|bottom|left|inline|block)(?:-(?:start|end))?";
 const SCALE_DECLARATION = new RegExp(String.raw`(?<![-\w])(${SCALE_PROPERTIES})\s*:\s*([^;{}]+);`, "g");
-const KEYWORD_VALUE = /^(?:0|auto|inherit|initial|unset|revert|none|fit-content|min-content|max-content|[\d.]+%)$/;
+const KEYWORD_VALUE = /^(?:0|auto|normal|inherit|initial|unset|revert|none|fit-content|min-content|max-content|[\d.]+%)$/;
+
+/**
+ * Global stacking belongs to the --z-* scale. Numbers are only allowed for the handful of cases
+ * that order siblings inside a component's own stacking context, where a token would say less
+ * than the number does.
+ */
+const Z_INDEX_DECLARATION = /(?<![-\w])z-index\s*:\s*([^;{}]+);/g;
+const LOCAL_STACKING = /^[0-2]$/;
 const FUNCTION_VALUE = /^(?:calc|clamp|min|max|env|var)\(/;
 
 async function collectCssFiles(directory) {
@@ -74,6 +82,21 @@ function findUntokenizedLengths(source) {
 	});
 }
 
+function findUntokenizedStacking(source) {
+	return [...source.matchAll(Z_INDEX_DECLARATION)].flatMap(match => {
+		const value = match[1].trim();
+		if (value.includes("var(") || LOCAL_STACKING.test(value)) return [];
+
+		return [
+			{
+				description: "untokenized z-index; use var(--z-*) for global layers, or 0-2 for local stacking",
+				line: lineNumber(source, match.index ?? 0),
+				value: match[0].trim()
+			}
+		];
+	});
+}
+
 let cssFiles = [];
 
 for (const root of scanRoots) {
@@ -98,7 +121,8 @@ for (const path of cssFiles) {
 		...findMatches(source, /(?:\d*\.)?\d+px\b/gi, "fixed px length other than an approved 0.5px/1px hairline", value => !["0.5px", "1px"].includes(value)),
 		...findMatches(source, /\btransition\s*:[^;]*\ball\b/gi, "transition: all"),
 		...findMatches(source, /\b(?:cubic-bezier|steps)\(/gi, "untokenized motion curve"),
-		...findUntokenizedLengths(source)
+		...findUntokenizedLengths(source),
+		...findUntokenizedStacking(source)
 	];
 
 	findings.push(...matches.map(finding => ({ ...finding, file })));
@@ -112,5 +136,5 @@ if (findings.length > 0) {
 	console.error(`\n${findings.length} finding(s) across ${cssFiles.length} CSS files.`);
 	process.exitCode = 1;
 } else {
-	console.log(`Validated ${cssFiles.length} CSS files: semantic colors, tokenized lengths, rem units, and tokenized motion.`);
+	console.log(`Validated ${cssFiles.length} CSS files: semantic colors, tokenized lengths and typography, rem units, tokenized stacking, and tokenized motion.`);
 }

@@ -49,8 +49,8 @@
 	color: var(--text-secondary);
 	font-size: var(--font-size-xs);
 	font-weight: var(--font-weight-regular);
-	line-height: 1rem;
-	letter-spacing: -0.02rem;
+	line-height: var(--line-height-control-xs);
+	letter-spacing: var(--letter-spacing-control);
 	transition:
 		color var(--motion-duration-fast) var(--motion-ease-out),
 		font-size var(--motion-duration-fast) var(--motion-ease-out),
@@ -66,7 +66,7 @@
 	overflow: hidden;
 	color: var(--control-placeholder);
 	font-size: var(--font-size-md);
-	line-height: 1.25rem;
+	line-height: var(--line-height-control-md);
 	pointer-events: none;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -85,7 +85,7 @@
 .lyds-field:is([data-focused], [data-filled], [data-invalid]):has(> .lyds-field__control-frame, > .lyds-textarea, > .lyds-number-field, > .lyds-phone-field) > .lyds-field__label {
 	inset-block-start: var(--lyds-field-label-float-top);
 	font-size: var(--font-size-xs);
-	line-height: 1rem;
+	line-height: var(--line-height-control-xs);
 }
 
 .lyds-field[data-invalid] > .lyds-field__label,
@@ -102,7 +102,7 @@
 	font-size: var(--font-size-xs);
 	font-variant-numeric: tabular-nums;
 	font-weight: var(--font-weight-regular);
-	letter-spacing: -0.02rem;
+	letter-spacing: var(--letter-spacing-control);
 	text-transform: none;
 }
 
@@ -112,8 +112,8 @@
 	padding: var(--space-1) var(--space-4);
 	font-size: var(--component-field-supporting-font-size);
 	font-weight: var(--font-weight-regular);
-	line-height: 1rem;
-	letter-spacing: -0.01875rem;
+	line-height: var(--line-height-control-xs);
+	letter-spacing: var(--letter-spacing-control-supporting);
 }
 
 .lyds-field__description {
@@ -157,8 +157,8 @@
 	font-size: var(--font-size-md);
 	font-feature-settings: "cv04" 1;
 	font-weight: var(--font-weight-regular);
-	line-height: 1.25rem;
-	letter-spacing: -0.02rem;
+	line-height: var(--line-height-control-md);
+	letter-spacing: var(--letter-spacing-control);
 }
 
 .lyds-input,
@@ -264,13 +264,13 @@
 .lyds-field__control-frame[data-technical] .lyds-field__input {
 	font-family: var(--font-family-sans);
 	font-variant-numeric: tabular-nums;
-	letter-spacing: -0.02rem;
+	letter-spacing: var(--letter-spacing-control);
 }
 
 .lyds-field__input[type="password"][data-filled] {
 	font-size: var(--component-field-masked-font-size);
 	font-weight: var(--font-weight-medium);
-	line-height: 1.25rem;
+	line-height: var(--line-height-control-md);
 	letter-spacing: 0;
 }
 
@@ -419,7 +419,7 @@
 	font-family: var(--font-family-sans);
 	font-size: var(--font-size-md);
 	font-weight: var(--font-weight-regular);
-	line-height: 1;
+	line-height: var(--line-height-control-flat);
 	cursor: pointer;
 	transition:
 		background-color var(--motion-duration-fast) var(--motion-ease-out),
@@ -530,7 +530,7 @@
 	color: var(--text-secondary);
 	font-family: var(--font-family-sans);
 	font-size: var(--component-field-supporting-font-size);
-	line-height: 1rem;
+	line-height: var(--line-height-control-xs);
 }
 
 .lyds-code-field[data-grouped] {
@@ -615,8 +615,8 @@
 	font-size: var(--component-field-supporting-font-size);
 	font-variant-numeric: tabular-nums;
 	font-weight: var(--font-weight-regular);
-	line-height: 1rem;
-	letter-spacing: -0.01875rem;
+	line-height: var(--line-height-control-xs);
+	letter-spacing: var(--letter-spacing-control-supporting);
 }
 
 .lyds-file-selection__list {
@@ -676,8 +676,8 @@
 	overflow: hidden;
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-regular);
-	line-height: 1.125rem;
-	letter-spacing: -0.01875rem;
+	line-height: var(--line-height-control-xs);
+	letter-spacing: var(--letter-spacing-control-supporting);
 	overflow-wrap: anywhere;
 }
 
@@ -722,16 +722,16 @@
 	color: var(--text-title);
 	font-size: var(--font-size-md);
 	font-weight: var(--font-weight-regular);
-	line-height: 1.25rem;
-	letter-spacing: -0.02rem;
+	line-height: var(--line-height-control-md);
+	letter-spacing: var(--letter-spacing-control);
 }
 
 .lyds-drop-zone__secondary {
 	color: var(--text-secondary);
 	font-size: var(--component-field-supporting-font-size);
 	font-weight: var(--font-weight-regular);
-	line-height: 1rem;
-	letter-spacing: -0.01875rem;
+	line-height: var(--line-height-control-xs);
+	letter-spacing: var(--letter-spacing-control-supporting);
 }
 
 .lyds-drop-zone__button {
@@ -788,7 +788,7 @@
 		overflow: visible;
 		color: var(--text-secondary);
 		font-size: var(--font-size-xs);
-		line-height: 1rem;
+		line-height: var(--line-height-control-xs);
 		pointer-events: auto;
 		white-space: normal;
 	}

@@ -106,13 +106,22 @@
 	--font-weight-medium: 500;
 	--font-weight-semibold: 600;
 	--font-weight-bold: 700;
+	/* Unitless ratios, for text that reflows with whatever size it inherits. */
 	--line-height-tight: 1.2;
 	--line-height-heading: 1.25;
 	--line-height-body: 1.5;
+	/* Fixed leading, for controls whose box height is part of the design. */
+	--line-height-control-xs: 1rem;
+	--line-height-control-sm: 1.0625rem;
+	--line-height-control-md: 1.25rem;
+	--line-height-control-flat: 1;
 	--letter-spacing-tight: -0.02em;
 	--letter-spacing-body: -0.01em;
 	--letter-spacing-label: -0.01em;
 	--letter-spacing-technical: 0.01em;
+	/* Fixed tracking that pairs with the fixed leading above. */
+	--letter-spacing-control: -0.02rem;
+	--letter-spacing-control-supporting: -0.01875rem;
 
 	--space-0: 0;
 	--space-05: 0.125rem;

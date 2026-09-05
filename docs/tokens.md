@@ -115,6 +115,8 @@ Motion/Ease/InOut        -> --motion-ease-in-out
 
 正式環境建議自行代管並覆寫 `--font-family-*`。變數本身已帶系統字型備援，未載入 `fonts.css` 時元件仍可正常呈現。
 
+行高分成兩組：`--line-height-tight`／`-heading`／`-body` 是無單位比例，用於會隨繼承字級縮放的文字；`--line-height-control-xs`／`-sm`／`-md`／`-flat` 是固定行高，用於盒高本身就是設計一部分的控制項。字距同理，`--letter-spacing-tight`／`-body`／`-label`／`-technical` 使用 `em`，`--letter-spacing-control` 與 `--letter-spacing-control-supporting` 是與固定行高搭配的 `rem` 值。
+
 字級、字重、行高與字距均有對應設計變數。日期、時間、計數器、計時器與數值欄位使用：
 
 ```css
@@ -135,7 +137,7 @@ border-radius: var(--radius-md); /* 0.75rem */
 
 只有 1px 邊框／分隔線與 Figma 明確指定的 0.5px 分隔線可使用 `px`。SVG viewBox 座標不屬於 CSS 長度。流動版面可使用 `%`、`fr`、`vw`、`dvh` 與無單位行高。
 
-`pnpm lint:css` 會強制檢查：`font-size`、`border-radius`、`gap`、`padding-*` 與 `margin-*` 的每個值都必須是 `var(...)`、`calc()`／`clamp()`／`min()`／`max()`／`env()`，或 `0`、`auto`、百分比等關鍵字。寫入原始長度會讓檢查失敗：
+`pnpm lint:css` 會強制檢查：`font-size`、`line-height`、`letter-spacing`、`border-radius`、`gap`、`padding-*` 與 `margin-*` 的每個值都必須是 `var(...)`、`calc()`／`clamp()`／`min()`／`max()`／`env()`，或 `0`、`auto`、`normal`、`inherit`、百分比等關鍵字。`z-index` 必須是 `var(--z-*)`，或用於元件自身堆疊脈絡內的 `0`、`1`、`2`。寫入原始長度會讓檢查失敗：
 
 ```css
 padding: 0.75rem var(--space-4); /* 失敗 */

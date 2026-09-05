@@ -88,7 +88,7 @@
 	min-inline-size: 12rem;
 	max-inline-size: 100%;
 	padding-inline: var(--space-3);
-	line-height: 1;
+	line-height: var(--line-height-control-flat);
 }
 
 .lyds-date-input-shell {
@@ -352,7 +352,7 @@
 
 .lyds-calendar-navigation-button {
 	font-size: var(--font-size-xl);
-	line-height: 1;
+	line-height: var(--line-height-control-flat);
 }
 
 .lyds-calendar-heading {
@@ -427,7 +427,7 @@
 	font-size: var(--font-size-sm);
 	font-variant-numeric: tabular-nums lining-nums;
 	font-weight: var(--font-weight-regular);
-	line-height: 1;
+	line-height: var(--line-height-control-flat);
 	text-align: center;
 	outline: none;
 	cursor: pointer;

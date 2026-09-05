@@ -247,7 +247,7 @@
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-regular);
 	letter-spacing: var(--letter-spacing-body);
-	line-height: 1.0625rem;
+	line-height: var(--line-height-control-sm);
 	overflow-wrap: normal;
 	padding: var(--space-1) var(--space-3);
 	white-space: nowrap;

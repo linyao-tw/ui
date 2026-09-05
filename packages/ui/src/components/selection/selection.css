@@ -402,7 +402,7 @@
 	padding-inline: var(--space-2);
 	font-size: var(--font-size-md);
 	font-weight: var(--font-weight-regular);
-	letter-spacing: -0.02em;
+	letter-spacing: var(--letter-spacing-tight);
 	color: var(--text-secondary);
 	background: var(--background-transparent);
 	border: 0;
@@ -427,7 +427,7 @@
 .lyds-segmented-control[data-size="sm"] > .lyds-toggle {
 	min-height: calc(2.5rem - 0.125rem);
 	font-size: var(--font-size-sm);
-	letter-spacing: -0.01em;
+	letter-spacing: var(--letter-spacing-body);
 }
 
 .lyds-segmented-control > .lyds-toggle:hover:not([data-disabled]):not([data-pressed]) {

@@ -21,7 +21,7 @@
 	font-weight: var(--font-weight-semibold);
 	font-feature-settings: "cv04" 1;
 	letter-spacing: var(--letter-spacing-tight);
-	line-height: 1.25rem;
+	line-height: var(--line-height-control-md);
 	text-decoration: none;
 	overflow-wrap: anywhere;
 	text-align: center;
@@ -581,8 +581,8 @@
 	font-size: var(--font-size-xs);
 	font-weight: var(--font-weight-regular);
 	font-feature-settings: "cv04" 1;
-	letter-spacing: -0.0267em;
-	line-height: 1rem;
+	letter-spacing: var(--letter-spacing-tight);
+	line-height: var(--line-height-control-xs);
 	text-transform: uppercase;
 	text-wrap: balance;
 }
@@ -727,8 +727,8 @@
 	font-size: var(--font-size-md);
 	font-weight: var(--font-weight-regular);
 	font-feature-settings: "cv04" 1;
-	letter-spacing: -0.02em;
-	line-height: 1.25rem;
+	letter-spacing: var(--letter-spacing-tight);
+	line-height: var(--line-height-control-md);
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
