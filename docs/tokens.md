@@ -127,13 +127,24 @@ font-variant-numeric: tabular-nums lining-nums;
 
 ```css
 padding: var(--space-3); /* 0.75rem */
-min-height: var(--control-height-md); /* 3rem */
+min-height: var(--control-height-md); /* 3.5rem */
 border-radius: var(--radius-md); /* 0.75rem */
 ```
 
 只有 1px 邊框／分隔線與 Figma 明確指定的 0.5px 分隔線可使用 `px`。SVG viewBox 座標不屬於 CSS 長度。流動版面可使用 `%`、`fr`、`vw`、`dvh` 與無單位行高。
 
-控制項尺寸變數與 `--control-target-min` 將視覺尺寸與最小互動區域分開。沒有 Figma 結構依據時，不得在元件加入 `clip-path`。
+控制項高度分成兩組刻度，元件 CSS 不得再寫入原始高度：
+
+| 刻度                          |       值 | 用途                                                         |
+| ----------------------------- | -------: | ------------------------------------------------------------ |
+| `--control-height-sm`         |   `3rem` | 有 `size` 屬性的元件：Button、IconButton、ListCell、各種欄位 |
+| `--control-height-md`         | `3.5rem` | 同上，預設尺寸                                               |
+| `--control-height-lg`         |   `4rem` | 同上                                                         |
+| `--control-height-compact-sm` | `2.5rem` | 行內與次要控制項：選單項目、工具列按鈕、頭像                 |
+| `--control-height-compact-md` |   `3rem` | 同上                                                         |
+| `--control-height-compact-lg` | `3.5rem` | 同上                                                         |
+
+主刻度最小值是 `3rem`，高於 `--control-target-min`（`2.75rem`）；`--control-target-min` 仍用於本身沒有高度刻度的圖示命中區。沒有 Figma 結構依據時，不得在元件加入 `clip-path`。
 
 ## 動態效果
 

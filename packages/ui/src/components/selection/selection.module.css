@@ -324,7 +324,7 @@
 	align-items: center;
 	justify-content: center;
 	gap: var(--space-2);
-	min-height: var(--control-height-md);
+	min-height: var(--control-height-compact-md);
 	padding-inline: var(--space-3);
 	font: var(--font-weight-medium) var(--font-size-sm) / 1 var(--font-family-sans);
 	letter-spacing: var(--letter-spacing-body);
@@ -458,7 +458,7 @@
 }
 
 .segmentedControl[data-orientation="vertical"] > .toggle {
-	min-height: var(--control-height-md);
+	min-height: var(--control-height-compact-md);
 }
 
 .segmentedControl[data-orientation="vertical"] > .toggle + .toggle::before {
@@ -475,7 +475,7 @@
 	align-items: center;
 	width: 100%;
 	min-width: 12rem;
-	min-height: var(--control-height-lg);
+	min-height: var(--control-height-compact-lg);
 	color: var(--text-main);
 	background: var(--background-elevated);
 	border: 1px solid var(--border-control);
@@ -553,7 +553,7 @@
 
 .comboboxInput {
 	min-width: 0;
-	min-height: calc(var(--control-height-lg) - 0.125rem);
+	min-height: calc(var(--control-height-compact-lg) - 0.125rem);
 	flex: 1;
 	padding-inline: var(--space-4);
 	font: var(--font-weight-regular) var(--font-size-md) / var(--line-height-body) var(--font-family-sans);
@@ -570,7 +570,7 @@
 	place-items: center;
 	flex: 0 0 auto;
 	width: var(--control-target-min);
-	min-height: calc(var(--control-height-lg) - 0.125rem);
+	min-height: calc(var(--control-height-compact-lg) - 0.125rem);
 	font: var(--font-weight-medium) var(--font-size-md) / 1 var(--font-family-sans);
 	color: var(--icon-secondary);
 	background: var(--background-transparent);

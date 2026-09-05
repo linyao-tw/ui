@@ -45,13 +45,13 @@
 }
 
 .alert {
-	min-block-size: var(--control-height-md);
+	min-block-size: var(--control-height-compact-md);
 	padding: var(--space-4);
 }
 
 .banner {
 	inline-size: 100%;
-	min-block-size: var(--control-height-md);
+	min-block-size: var(--control-height-compact-md);
 	padding: var(--space-4) var(--space-6);
 }
 
@@ -179,13 +179,13 @@
 }
 
 .skeleton[data-shape="rectangular"] {
-	min-block-size: var(--control-height-lg);
+	min-block-size: var(--control-height-compact-lg);
 	border-radius: var(--radius-md);
 }
 
 .skeleton[data-shape="circular"] {
-	inline-size: var(--control-height-md);
-	block-size: var(--control-height-md);
+	inline-size: var(--control-height-compact-md);
+	block-size: var(--control-height-compact-md);
 	border-radius: var(--radius-round);
 }
 
@@ -218,8 +218,8 @@
 .emptyStateIcon {
 	display: grid;
 	place-items: center;
-	inline-size: var(--control-height-lg);
-	block-size: var(--control-height-lg);
+	inline-size: var(--control-height-compact-lg);
+	block-size: var(--control-height-compact-lg);
 	margin-block-end: var(--space-5);
 	color: var(--feedback-signal);
 	background: var(--feedback-background);
@@ -286,7 +286,7 @@
 	align-items: center;
 	gap: var(--space-3);
 	inline-size: 100%;
-	min-block-size: var(--control-height-lg);
+	min-block-size: var(--control-height-compact-lg);
 	padding: var(--space-3);
 	color: var(--text-main);
 	background: var(--background-elevated);

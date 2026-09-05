@@ -25,7 +25,7 @@
 }
 
 .lyds-date-field[data-size="sm"] {
-	--lyds-date-control-height: var(--control-height-md);
+	--lyds-date-control-height: var(--control-height-sm);
 }
 
 .lyds-date-field[data-size="lg"] {
@@ -372,7 +372,7 @@
 }
 
 .lyds-calendar-period-select {
-	min-block-size: var(--control-height-md);
+	min-block-size: var(--control-height-compact-md);
 	padding-inline: var(--space-3);
 	border: 1px solid var(--background-transparent);
 	border-radius: var(--radius-md);
@@ -405,7 +405,7 @@
 }
 
 .lyds-calendar-weekday {
-	block-size: var(--control-height-sm);
+	block-size: var(--control-height-compact-sm);
 	color: var(--text-secondary);
 	font-family: var(--font-family-sans);
 	font-size: var(--font-size-xs);

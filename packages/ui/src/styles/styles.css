@@ -114,9 +114,14 @@
 	--radius-round: 999rem;
 	--radius-pill: var(--radius-round);
 
-	--control-height-sm: 2.5rem;
-	--control-height-md: 3rem;
-	--control-height-lg: 3.5rem;
+	/* Components that expose a size prop (Button, IconButton, ListCell, fields) sit on this ladder. */
+	--control-height-sm: 3rem;
+	--control-height-md: 3.5rem;
+	--control-height-lg: 4rem;
+	/* Inline and secondary controls (menu items, toolbar buttons, avatars) sit one step lower. */
+	--control-height-compact-sm: 2.5rem;
+	--control-height-compact-md: 3rem;
+	--control-height-compact-lg: 3.5rem;
 	--control-target-min: 2.75rem;
 	--icon-size-sm: 1rem;
 	--icon-size-md: 1.25rem;

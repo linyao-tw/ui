@@ -1,6 +1,6 @@
 .lyds-field,
 .lyds-input-root {
-	--lyds-field-control-height: 3.5rem;
+	--lyds-field-control-height: var(--control-height-md);
 	--lyds-field-label-rest-top: 1.125rem;
 	--lyds-field-label-float-top: 0.5625rem;
 	--lyds-field-rest-padding-block: 1.125rem;
@@ -20,7 +20,7 @@
 
 .lyds-field[data-size="sm"],
 .lyds-input-root[data-size="sm"] {
-	--lyds-field-control-height: 3rem;
+	--lyds-field-control-height: var(--control-height-sm);
 	--lyds-field-label-rest-top: 0.875rem;
 	--lyds-field-label-float-top: 0.3125rem;
 	--lyds-field-rest-padding-block: 0.875rem;
@@ -30,7 +30,7 @@
 
 .lyds-field[data-size="lg"],
 .lyds-input-root[data-size="lg"] {
-	--lyds-field-control-height: 4rem;
+	--lyds-field-control-height: var(--control-height-lg);
 	--lyds-field-label-rest-top: 1.375rem;
 	--lyds-field-label-float-top: 0.8125rem;
 	--lyds-field-rest-padding-block: 1.375rem;

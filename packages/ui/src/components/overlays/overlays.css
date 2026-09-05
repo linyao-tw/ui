@@ -40,7 +40,7 @@
 .lyds-collapsible__trigger {
 	display: flex;
 	width: 100%;
-	min-height: var(--control-height-lg);
+	min-height: var(--control-height-compact-lg);
 	align-items: center;
 	justify-content: space-between;
 	gap: var(--space-4);
@@ -71,7 +71,7 @@
 
 :where(.lyds-tooltip__trigger, .lyds-popover__trigger, .lyds-previewCard__trigger, .lyds-dialog__trigger, .lyds-alertDialog__trigger, .lyds-drawer__trigger):not(.lyds-button) {
 	display: inline-flex;
-	min-block-size: var(--control-height-md);
+	min-block-size: var(--control-height-compact-md);
 	align-items: center;
 	justify-content: center;
 	padding-inline: var(--space-4);
@@ -657,7 +657,7 @@
 .lyds-drawer__footer:not(.lyds-bottomSheet__footer) > .lyds-overlayCloseAction:not(.lyds-button) {
 	width: 100%;
 	min-inline-size: 0;
-	min-block-size: var(--control-height-lg);
+	min-block-size: var(--control-height-compact-lg);
 }
 
 .lyds-alertDialog__popup {
@@ -830,7 +830,7 @@
 .lyds-bottomSheet__footer > .lyds-button,
 .lyds-bottomSheet__footer > .lyds-overlayCloseAction:not(.lyds-button) {
 	width: 100%;
-	min-height: var(--control-height-lg);
+	min-height: var(--control-height-compact-lg);
 }
 
 @media (forced-colors: active) {

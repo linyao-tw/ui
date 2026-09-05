@@ -873,7 +873,7 @@ button.lyds-pagination__control {
 
 .lyds-command-palette__input {
 	width: 100%;
-	min-height: var(--control-height-lg);
+	min-height: var(--control-height-compact-lg);
 	border: 1px solid var(--border-control);
 	border-radius: var(--radius-md);
 	padding: var(--space-3) var(--space-4);
