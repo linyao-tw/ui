@@ -6,6 +6,11 @@
 
 ### 破壞性變更
 
+- `feedback` 與 `selection` 的元件樣式從 CSS Modules 改為全域 `lyds-*` 類別，並移除兩份手寫的 `*.css.d.ts`。若曾以雜湊後的 module class 名稱覆寫樣式，請改用新的 `lyds-*` 類別（例如 `styles.toastRoot` → `.lyds-toast`、`styles.option` → `.lyds-listbox__option`）。
+- `SegmentedControl` 的屬性型別現在要求 `aria-label` 或 `aria-labelledby` 其中之一。
+- `FileUpload` 與 `DropZone` 的 `readOnly` 不再對應到 `disabled`。欄位維持啟用（因此已選檔案仍會送出），改以 `aria-disabled` 標記並攔截開啟選擇器的點擊。
+- `--letter-spacing` 與 `--line-height` 的原始值改為設計變數；`.lyds-section-heading__title` 的字距由 `-0.0267em` 併入 `--letter-spacing-tight`（`-0.02em`，16px 下差異約 0.1px）。
+
 - `styles.css` 不再載入品牌字型。字型移到可選入口 `@linyao.tw/ui/fonts.css`；未匯入時元件改用設計變數內建的系統字型備援。原本依賴自動載入的專案需要新增一行 `import "@linyao.tw/ui/fonts.css";`，或自行代管字型並覆寫 `--font-family-*`。
 - `PasswordField` 不再預設 `autoComplete="current-password"`。登入表單請明確傳入 `autoComplete="current-password"`，註冊或修改密碼表單傳入 `"new-password"`。
 - `AlertDialog.Popup` 不再自動加入角落關閉控制項。警示對話框應由內容提供明確的確認與取消操作；需要關閉鈕時傳入 `closeButton`。明確傳入 `hasCustomClose={false}` 的呼叫端行為不變。
@@ -28,12 +33,23 @@
 
 ### 新增
 
+- `CardTitle`、`DataTableTitle` 與 `CollectionHeading` 新增 `level` 屬性；`HeadingLevel` 為共用型別，`SectionHeadingLevel` 保留為 deprecated 別名。
+- `Link` 的 `external` 會輸出 `data-external`；當連結實際以 `target="_blank"` 開啟時，可及名稱會附上「在新視窗開啟」提示（訊息鍵 `linkOpensInNewWindow`）。
+- `Dialog`、`Drawer`、`BottomSheet` 與 `AlertDialog` 的 `closeButton`（見上一版），以及 `CommandPalette` 的 parts namespace（`CommandPalette.Root`、`.Input`、`.Popup`⋯）。
+- 設計變數新增固定行高與字距刻度：`--line-height-control-xs`／`-sm`／`-md`／`-flat`、`--letter-spacing-control`、`--letter-spacing-control-supporting`。
+
 - `MessagesProvider`、`useMessages`、`zhTWMessages`、`enUSMessages` 與 `ComponentMessages`：元件預設字串集中管理，可整份替換或逐項覆寫。未使用 provider 時維持繁體中文，行為不變。
 - `@linyao.tw/ui/fonts.css`：可選的品牌字型入口。
 - `Dialog.Popup`、`Drawer.Popup`、`BottomSheet.Popup` 與 `AlertDialog.Popup` 新增 `closeButton`；`hasCustomClose` 標記為 deprecated，仍可使用。
 - 設計變數新增 `--space-05`、`--radius-2xs`、`--border-control-disabled`、`--control-height-compact-*`，以及 `--component-field-*`、`--component-toast-signal-offset`、`--component-calendar-day-*` 等元件角色。
 
 ### 內部
+
+- 原始檔名統一為 kebab-case；Storybook 故事檔沿用 `<Name>.stories.tsx` 並確保全域唯一。
+- 所有 barrel 改為顯式具名匯出（355 個名稱），公開介面不再由 `export *` 決定。
+- `pnpm lint:css` 再擴充：`line-height`、`letter-spacing` 必須來自設計變數，`z-index` 必須是 `var(--z-*)` 或元件內部堆疊用的 `0`–`2`。
+- 元件公開值匯出的測試涵蓋率由 74% 提升至 89%；新增 Table／Collection、ListCell、Popover parts、Toast manager、以及以 parts 組合的 Select 與 Combobox 測試。
+- `docs/architecture.md` 明訂組合模型與別名政策；`docs/contributing.md` 明訂檔名、樣式與匯入路徑規範。
 
 - 六份重複的 className 工具收斂為 `src/internal`。
 - 跨目錄匯入改用 `@/` 別名，並由 ESLint 強制。

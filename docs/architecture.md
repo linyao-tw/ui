@@ -68,6 +68,25 @@ Base UI 不提供完整的日期元件，因此日期與時間元件使用：
 
 套件原始碼、Storybook 與一般用戶端元件使用個別 `/dist/csr/<Name>` 匯出；React Server Components 使用 `/ssr`。品牌標誌、插圖與資料視覺化不屬於介面圖示，但仍需設計審核；不得用手寫 JSX SVG、Unicode 字形或 CSS 偽元素圖示取代既有圖示。
 
+## 組合模型
+
+元件只有三種對外形狀，選哪一種取決於元件本身的結構，不取決於寫的時間：
+
+1. **只有屬性。** 沒有內部結構的元件（`Button`、`Badge`、`TextField`）只暴露屬性，不提供 parts。
+2. **Parts namespace。** 建立在 context root 上的元件（`Dialog`、`Drawer`、`Tabs`、`Accordion`、`Popover`、`Menu`、`Select`、`Combobox`、`CommandPalette`）同時提供 namespace 物件與扁平具名匯出。文件與範例一律使用 namespace 形式：
+
+   ```tsx
+   <Dialog.Root>
+   	<Dialog.Popup>…</Dialog.Popup>
+   </Dialog.Root>
+   ```
+
+3. **可呼叫的預設編排 + parts。** 當單一編排能涵蓋多數情境時（`Select`、`Combobox`、`Autocomplete`），元件本身可直接以 `options` 呼叫，parts 仍保留給需要完全控制的情況。
+
+沒有共用 root 的語意包裝（`Table`、`Breadcrumb`、`Pagination`、`Collection`、`Header`、`TabBar`）只提供扁平匯出。它們的各部位彼此獨立、不共用 context，硬掛上 namespace 只會製造「有 root」的錯覺。
+
+別名（`Modal` 之於 `Dialog`、`AlertView` 之於 `Alert`、`List*` 之於 `Collection*`、`SegmentedControlItem` 之於 `Toggle`）必須是同一個物件，並由測試斷言其同一性。新增別名前先確認名稱差異真的有意義。
+
 ## API 規則
 
 相同概念使用相同名稱：

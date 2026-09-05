@@ -174,3 +174,30 @@ export const CommandPaletteShortcut = forwardRef<HTMLElement, HTMLAttributes<HTM
 	const { className, ...shortcutProps } = props;
 	return <kbd ref={ref} className={cx("lyds-command-palette__shortcut", className)} {...shortcutProps} />;
 });
+
+/**
+ * Every component built on a context root also exposes its parts as a namespace, so composing one
+ * reads the same way as composing a Dialog or a Select.
+ */
+export const CommandPaletteNamespace = Object.assign(CommandPalette, {
+	Backdrop: CommandPaletteBackdrop,
+	Close: CommandPaletteClose,
+	Description: CommandPaletteDescription,
+	Empty: CommandPaletteEmpty,
+	Group: CommandPaletteGroup,
+	GroupLabel: CommandPaletteGroupLabel,
+	Input: CommandPaletteInput,
+	Item: CommandPaletteItem,
+	ItemIndicator: CommandPaletteItemIndicator,
+	Label: CommandPaletteLabel,
+	List: CommandPaletteList,
+	Popup: CommandPalettePopup,
+	Portal: CommandPalettePortal,
+	Root: CommandPalette,
+	Separator: CommandPaletteSeparator,
+	Shortcut: CommandPaletteShortcut,
+	Status: CommandPaletteStatus,
+	Title: CommandPaletteTitle,
+	Trigger: CommandPaletteTrigger,
+	Viewport: CommandPaletteViewport
+});

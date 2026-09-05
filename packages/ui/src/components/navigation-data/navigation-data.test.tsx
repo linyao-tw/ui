@@ -17,7 +17,16 @@ import {
 	PaginationLink,
 	PaginationList
 } from "./breadcrumb-pagination";
-import { CommandPalette, CommandPaletteInput, CommandPalettePopup, CommandPalettePortal, CommandPaletteTitle, CommandPaletteTrigger, CommandPaletteViewport } from "./command-palette";
+import {
+	CommandPalette,
+	CommandPaletteInput,
+	CommandPaletteNamespace,
+	CommandPalettePopup,
+	CommandPalettePortal,
+	CommandPaletteTitle,
+	CommandPaletteTrigger,
+	CommandPaletteViewport
+} from "./command-palette";
 import { Toolbar, ToolbarButton } from "./menubar-toolbar";
 import {
 	NavigationMenu,
@@ -311,5 +320,14 @@ describe("tables and collections", () => {
 		expect(ListItem).toBe(CollectionItem);
 		expect(ListLink).toBe(CollectionLink);
 		expect(ListButton).toBe(CollectionButton);
+	});
+});
+
+describe("command palette namespace", () => {
+	it("exposes every part on the root export", () => {
+		expect(CommandPaletteNamespace.Root).toBe(CommandPaletteNamespace);
+		expect(CommandPaletteNamespace.Input).toBe(CommandPaletteInput);
+		expect(CommandPaletteNamespace.Popup).toBe(CommandPalettePopup);
+		expect(CommandPaletteNamespace.Trigger).toBe(CommandPaletteTrigger);
 	});
 });

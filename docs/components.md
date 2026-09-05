@@ -269,3 +269,22 @@ import { MessagesProvider, enUSMessages } from "@linyao.tw/ui";
 優先順序是「元件屬性 → 最近的 provider → 繼承的 provider → 繁體中文預設」。`ComponentMessages` 是完整的字串清單；`codeSlotLabel` 與 `fileSelectionSummary` 是函式，用於需要插入數字的字串。
 
 日期與時間元件不使用這份字串套件。它們的區域格式、月份名稱與區段標籤來自 React Aria Components 的 `I18nProvider` 與 `@internationalized/date`，透過各元件的 `locale` 屬性控制。
+
+## 組合方式
+
+`Dialog`、`Drawer`、`Tabs`、`Accordion`、`Popover`、`Menu`、`Select`、`Combobox` 與 `CommandPalette` 都同時提供 namespace 與扁平匯出，建議使用 namespace：
+
+```tsx
+<CommandPalette.Root>
+	<CommandPalette.Trigger>開啟指令列</CommandPalette.Trigger>
+	<CommandPalette.Portal>
+		<CommandPalette.Backdrop />
+		<CommandPalette.Popup>
+			<CommandPalette.Input />
+			<CommandPalette.List>{/* … */}</CommandPalette.List>
+		</CommandPalette.Popup>
+	</CommandPalette.Portal>
+</CommandPalette.Root>
+```
+
+`CommandPalette` 本身也是 root 元件，因此 `<CommandPalette>` 與 `<CommandPalette.Root>` 之外的 parts 都掛在同一個匯出上。完整規則見[架構文件的組合模型](architecture.md#組合模型)。

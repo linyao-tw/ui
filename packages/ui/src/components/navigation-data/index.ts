@@ -21,7 +21,7 @@ export {
 	type PaginationProps
 } from "./breadcrumb-pagination";
 export {
-	CommandPalette,
+	CommandPaletteNamespace as CommandPalette,
 	CommandPaletteBackdrop,
 	CommandPaletteClose,
 	CommandPaletteDescription,
