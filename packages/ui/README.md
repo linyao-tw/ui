@@ -88,6 +88,6 @@ Linyao Design System 以 WCAG 2.2 AA 為目標，提供鍵盤操作、焦點樣�
 
 ## 文件
 
-完整的安裝、Storybook、開發、元件、設計變數、主題與發佈規範請參閱 [專案 README](https://github.com/linyao-tw/ui#readme) 與 [文件目錄](https://github.com/linyao-tw/ui/tree/main/docs)。
+變更記錄見 [CHANGELOG.md](https://github.com/linyao-tw/ui/blob/main/CHANGELOG.md)。完整的安裝、Storybook、開發、元件、設計變數、主題與發佈規範請參閱 [專案 README](https://github.com/linyao-tw/ui#readme) 與 [文件目錄](https://github.com/linyao-tw/ui/tree/main/docs)。
 
 授權：Apache-2.0。套件與專案包含相同的完整授權檔。

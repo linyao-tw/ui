@@ -16,6 +16,8 @@ Linyao Design System 是麟曜數位工作室的設計系統，透過 npm 套件
 - Storybook 用於元件審閱、狀態展示與可存取性檢查。
 - 元件、設計變數、主題與 CSS 均由 `@linyao.tw/ui` 提供；介面圖示統一使用 `@phosphor-icons/react`。
 
+變更記錄見 [CHANGELOG.md](CHANGELOG.md)。
+
 ## 安裝
 
 使用 pnpm 安裝：
