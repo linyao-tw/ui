@@ -25,6 +25,8 @@ export interface ComponentMessages {
 	fileUploadInvalidFile: string;
 	fileUploadTrigger: string;
 	headerNavLabel: string;
+	/** Appended to a link's accessible name when it opens in a new window. */
+	linkOpensInNewWindow: string;
 	numberFieldDecrement: string;
 	numberFieldIncrement: string;
 	paginationLabel: string;
@@ -65,6 +67,7 @@ export const zhTWMessages: ComponentMessages = {
 	fileUploadInvalidFile: "不支援的檔案類型",
 	fileUploadTrigger: "選擇檔案",
 	headerNavLabel: "主要導覽",
+	linkOpensInNewWindow: "（在新視窗開啟）",
 	numberFieldDecrement: "減少數值",
 	numberFieldIncrement: "增加數值",
 	paginationLabel: "分頁導覽",
@@ -103,6 +106,7 @@ export const enUSMessages: ComponentMessages = {
 	fileUploadInvalidFile: "Unsupported file type",
 	fileUploadTrigger: "Choose files",
 	headerNavLabel: "Main",
+	linkOpensInNewWindow: "(opens in a new window)",
 	numberFieldDecrement: "Decrease value",
 	numberFieldIncrement: "Increase value",
 	paginationLabel: "Pagination",

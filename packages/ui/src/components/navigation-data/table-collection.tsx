@@ -10,6 +10,7 @@ import {
 	type ThHTMLAttributes
 } from "react";
 
+import type { HeadingLevel } from "@/components/foundations/section-heading";
 import { cx } from "@/internal";
 export const TableFrame = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function TableFrame({ className, ...props }, ref) {
 	return <div ref={ref} className={cx("lyds-table-frame", className)} {...props} />;
@@ -65,11 +66,17 @@ export const DataTableHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDiv
 	return <div ref={ref} className={cx("lyds-data-table__header", className)} {...props} />;
 });
 
-export const DataTableTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadingElement>>(function DataTableTitle({ children, className, ...props }, ref) {
+export interface DataTableTitleProps extends HTMLAttributes<HTMLHeadingElement> {
+	/** Heading level for the surrounding document outline. */
+	level?: HeadingLevel;
+}
+
+export const DataTableTitle = forwardRef<HTMLHeadingElement, DataTableTitleProps>(function DataTableTitle({ children, className, level = 2, ...props }, ref) {
+	const Heading = `h${level}` as const;
 	return (
-		<h2 ref={ref} className={cx("lyds-data-table__title", className)} {...props}>
+		<Heading ref={ref} className={cx("lyds-data-table__title", className)} {...props}>
 			{children}
-		</h2>
+		</Heading>
 	);
 });
 
@@ -119,11 +126,17 @@ export const CollectionContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLD
 	return <div ref={ref} className={cx("lyds-collection__content", className)} {...props} />;
 });
 
-export const CollectionHeading = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadingElement>>(function CollectionHeading({ children, className, ...props }, ref) {
+export interface CollectionHeadingProps extends HTMLAttributes<HTMLHeadingElement> {
+	/** Heading level for the surrounding document outline. */
+	level?: HeadingLevel;
+}
+
+export const CollectionHeading = forwardRef<HTMLHeadingElement, CollectionHeadingProps>(function CollectionHeading({ children, className, level = 3, ...props }, ref) {
+	const Heading = `h${level}` as const;
 	return (
-		<h3 ref={ref} className={cx("lyds-collection__heading", className)} {...props}>
+		<Heading ref={ref} className={cx("lyds-collection__heading", className)} {...props}>
 			{children}
-		</h3>
+		</Heading>
 	);
 });
 

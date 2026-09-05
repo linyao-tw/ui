@@ -1,12 +1,13 @@
 import { createElement, forwardRef, type HTMLAttributes, type ReactNode } from "react";
 
+import type { HeadingLevel } from "@/components/foundations/section-heading";
 import { cx } from "@/internal";
 import { type FeedbackStatus } from "./feedback.types";
 export interface EmptyStateProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 	actions?: ReactNode;
 	description?: ReactNode;
 	eyebrow?: ReactNode;
-	headingLevel?: 2 | 3 | 4 | 5 | 6;
+	headingLevel?: HeadingLevel;
 	icon?: ReactNode;
 	status?: FeedbackStatus;
 	title: ReactNode;

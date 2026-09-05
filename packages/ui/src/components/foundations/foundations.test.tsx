@@ -297,3 +297,51 @@ describe("foundation accessibility", () => {
 		expect(results.violations).toEqual([]);
 	});
 });
+
+describe("heading levels and link targets", () => {
+	it("lets a card title sit at the level its page needs", () => {
+		render(
+			<Card>
+				<CardTitle level={4}>Node status</CardTitle>
+			</Card>
+		);
+
+		expect(screen.getByRole("heading", { name: "Node status", level: 4 })).toBeInTheDocument();
+	});
+
+	it("defaults a card title to h3", () => {
+		render(
+			<Card>
+				<CardTitle>Node status</CardTitle>
+			</Card>
+		);
+
+		expect(screen.getByRole("heading", { name: "Node status", level: 3 })).toBeInTheDocument();
+	});
+
+	it("warns that a link opens a new window and secures the relationship", () => {
+		render(
+			<Link href="https://example.com" target="_blank" external>
+				Operations handbook
+			</Link>
+		);
+
+		const link = screen.getByRole("link", { name: /Operations handbook/ });
+		expect(link).toHaveAccessibleName(expect.stringMatching(/^Operations handbook\s*（在新視窗開啟）$/));
+		expect(link.querySelector(".lyds-sr-only")).toHaveTextContent("（在新視窗開啟）");
+		expect(link).toHaveAttribute("rel", "noopener noreferrer");
+		expect(link).toHaveAttribute("data-external");
+	});
+
+	it("stays quiet about new windows when the link opens in place", () => {
+		render(
+			<Link href="/handbook" external>
+				Operations handbook
+			</Link>
+		);
+
+		const link = screen.getByRole("link", { name: "Operations handbook" });
+		expect(link).toHaveAccessibleName("Operations handbook");
+		expect(link).toHaveAttribute("data-external");
+	});
+});

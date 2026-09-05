@@ -1,16 +1,6 @@
-import { cx } from "@/internal";
+import { type AccessibleName, cx } from "@/internal";
 import * as React from "react";
 import { Button, type ButtonProps } from "./button";
-type AccessibleName =
-	| {
-			"aria-label": string;
-			"aria-labelledby"?: string;
-	  }
-	| {
-			"aria-label"?: string;
-			"aria-labelledby": string;
-	  };
-
 type IconButtonBaseProps = Omit<ButtonProps, "aria-label" | "aria-labelledby" | "children" | "endIcon" | "startIcon"> & {
 	children: React.ReactNode;
 };

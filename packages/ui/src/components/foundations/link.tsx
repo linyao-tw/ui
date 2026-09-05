@@ -1,4 +1,5 @@
 import { type ComponentRenderProp, cx, type ElementProps } from "@/internal";
+import { useMessages } from "@/intl";
 import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
 export type LinkVariant = "default" | "accent" | "subtle";
@@ -24,8 +25,12 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link
 	{ children, variant = "default", size = "md", disabled = false, external = false, render, className, href, target, rel, onClick, ...props },
 	ref
 ) {
+	const messages = useMessages();
 	const state: LinkState = { disabled, external, size, variant };
 	const secureRel = target === "_blank" && !rel ? "noopener noreferrer" : rel;
+	// The warning belongs to what the link actually does, not to the decorative flag: a link is
+	// only unexpected when it really opens a new window.
+	const opensNewWindow = !disabled && target === "_blank";
 
 	return useRender<LinkState, HTMLAnchorElement>({
 		defaultTagName: "a",
@@ -36,11 +41,19 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link
 		state,
 		props: {
 			...props,
-			children,
+			children: opensNewWindow ? (
+				<>
+					{children}
+					<span className="lyds-sr-only">{messages.linkOpensInNewWindow}</span>
+				</>
+			) : (
+				children
+			),
 			href: disabled ? undefined : href,
 			target,
 			rel: secureRel,
 			"aria-disabled": disabled || undefined,
+			"data-external": external || undefined,
 			tabIndex: disabled ? -1 : props.tabIndex,
 			className: cx("lyds-link", className),
 			onClick: (event: React.MouseEvent<HTMLAnchorElement>) => {

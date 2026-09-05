@@ -2,7 +2,12 @@ import { type ComponentRenderProp, cx, type ElementProps } from "@/internal";
 import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
 export type SectionHeadingSize = "sm" | "md" | "lg";
-export type SectionHeadingLevel = 2 | 3 | 4 | 5 | 6;
+
+/** Heading levels a component may render. h1 is the page's, so components never take it. */
+export type HeadingLevel = 2 | 3 | 4 | 5 | 6;
+
+/** @deprecated Use `HeadingLevel`, which every component that renders a heading now shares. */
+export type SectionHeadingLevel = HeadingLevel;
 
 export interface SectionHeadingState extends Record<string, unknown> {
 	size: SectionHeadingSize;

@@ -10,7 +10,7 @@ import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { MinusIcon } from "@phosphor-icons/react/dist/csr/Minus";
 import { forwardRef, useCallback, useId, useState, type ForwardedRef, type JSX, type ReactNode, type RefAttributes } from "react";
 
-import { cx, withStateClassName } from "@/internal";
+import { cx, withStateClassName, type AccessibleName } from "@/internal";
 
 function CheckGlyph({ indeterminate = false }: { indeterminate?: boolean }) {
 	return indeterminate ? <MinusIcon aria-hidden="true" weight="bold" /> : <CheckIcon aria-hidden="true" weight="bold" />;
@@ -220,7 +220,10 @@ export const ToggleGroup = forwardRef(function ToggleGroup<Value extends string 
 	return <BaseToggleGroup {...props} className={withStateClassName("lyds-toggle-group", className)} ref={ref} />;
 }) as ToggleGroupComponent;
 
-export interface SegmentedControlProps<Value extends string = string> extends Omit<BaseToggleGroupProps<Value>, "aria-readonly" | "defaultValue" | "multiple" | "onValueChange" | "value"> {
+interface SegmentedControlOwnProps<Value extends string = string> extends Omit<
+	BaseToggleGroupProps<Value>,
+	"aria-label" | "aria-labelledby" | "aria-readonly" | "defaultValue" | "multiple" | "onValueChange" | "value"
+> {
 	allowEmpty?: boolean;
 	defaultValue?: Value | null;
 	name?: string;
@@ -229,10 +232,25 @@ export interface SegmentedControlProps<Value extends string = string> extends Om
 	value?: Value | null;
 }
 
+/** The segments name themselves; the group they belong to does not, so it has to be told. */
+export type SegmentedControlProps<Value extends string = string> = SegmentedControlOwnProps<Value> & AccessibleName;
+
 type SegmentedControlComponent = <Value extends string = string>(props: SegmentedControlProps<Value> & RefAttributes<HTMLDivElement>) => JSX.Element;
 
 export const SegmentedControl = forwardRef(function SegmentedControl<Value extends string = string>(
-	{ allowEmpty = false, "aria-label": ariaLabel, className, defaultValue = null, disabled = false, name, onValueChange, size = "md", value, ...props }: SegmentedControlProps<Value>,
+	{
+		allowEmpty = false,
+		"aria-label": ariaLabel,
+		"aria-labelledby": ariaLabelledby,
+		className,
+		defaultValue = null,
+		disabled = false,
+		name,
+		onValueChange,
+		size = "md",
+		value,
+		...props
+	}: SegmentedControlProps<Value>,
 	ref: ForwardedRef<HTMLDivElement>
 ) {
 	const controlled = value !== undefined;
@@ -244,6 +262,7 @@ export const SegmentedControl = forwardRef(function SegmentedControl<Value exten
 			<BaseToggleGroup
 				{...props}
 				aria-label={ariaLabel}
+				aria-labelledby={ariaLabelledby}
 				className={withStateClassName("lyds-segmented-control", className)}
 				data-size={size}
 				disabled={disabled}

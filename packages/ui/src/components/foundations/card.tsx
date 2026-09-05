@@ -1,6 +1,7 @@
 import { type ComponentRenderProp, cx, type ElementProps } from "@/internal";
 import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
+import type { HeadingLevel } from "./section-heading";
 export type CardVariant = "material" | "elevated" | "inset" | "outline" | "cloud";
 export type CardSize = "sm" | "md" | "lg";
 
@@ -71,9 +72,13 @@ export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(func
 	return useCardSlot("div", "header", children, render, className, props, ref);
 });
 
-export type CardTitleProps = CardSlotProps<"h3">;
-export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(function CardTitle({ children, render, className, ...props }, ref) {
-	return useCardSlot("h3", "title", children, render, className, props, ref);
+export type CardTitleProps = CardSlotProps<"h3"> & {
+	/** Heading level for the surrounding document outline. Cards nest, so this is rarely h3. */
+	level?: HeadingLevel;
+};
+
+export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(function CardTitle({ children, level = 3, render, className, ...props }, ref) {
+	return useCardSlot(`h${level}` as const, "title", children, render, className, props, ref);
 });
 
 export type CardDescriptionProps = CardSlotProps<"p">;
