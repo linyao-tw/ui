@@ -20,7 +20,7 @@ const workspaceCli = {
 	vite: join(dirname(storybookRequire.resolve("vite/package.json")), "bin", "vite.js")
 };
 
-const requiredFiles = ["LICENSE", "README.md", "dist/index.d.ts", "dist/index.js", "dist/styles.css", "package.json"];
+const requiredFiles = ["LICENSE", "README.md", "dist/fonts.css", "dist/index.d.ts", "dist/index.js", "dist/styles.css", "package.json"];
 
 const forbiddenFiles = [
 	{ pattern: /(^|\/)src(?:\/|$)/i, reason: "source files" },
@@ -300,8 +300,13 @@ const cssUrl = import.meta.resolve("@linyao.tw/ui/styles.css");
 const cssPath = fileURLToPath(cssUrl);
 const css = await readFile(cssPath, "utf8");
 if (css.trim().length === 0) throw new Error("@linyao.tw/ui/styles.css resolved to an empty file.");
+if (css.includes("@import")) throw new Error("@linyao.tw/ui/styles.css must not pull in remote resources; fonts belong in the optional fonts.css entry.");
 
-console.log(\`Named ESM imports work; CSS export resolves to \${cssPath}.\`);
+const fontsPath = fileURLToPath(import.meta.resolve("@linyao.tw/ui/fonts.css"));
+const fonts = await readFile(fontsPath, "utf8");
+if (!fonts.includes("@font-face") && !fonts.includes("@import")) throw new Error("@linyao.tw/ui/fonts.css resolved without any font declarations.");
+
+console.log(\`Named ESM imports work; CSS exports resolve to \${cssPath} and \${fontsPath}.\`);
 `
 	);
 	runCommand("Verify Node ESM named imports and the CSS export", "node", [runtimeSmokePath], {
@@ -460,6 +465,8 @@ async function main() {
 			"esm-only",
 			"--exclude-entrypoints",
 			"styles.css",
+			"--exclude-entrypoints",
+			"fonts.css",
 			"--no-emoji",
 			"--no-color"
 		]);

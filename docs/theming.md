@@ -10,7 +10,20 @@ Linyao Design System 以語意變數定義主題。所有主題共用相同的�
 import "@linyao.tw/ui/styles.css";
 ```
 
-不得從 `@linyao.tw/ui/dist/**`、`src/**` 或內部 CSS 路徑匯入。唯一公開樣式入口是 `@linyao.tw/ui/styles.css`。
+不得從 `@linyao.tw/ui/dist/**`、`src/**` 或內部 CSS 路徑匯入。公開樣式入口只有兩個：必要的 `@linyao.tw/ui/styles.css`，以及可選的 `@linyao.tw/ui/fonts.css`。
+
+### 字型
+
+`styles.css` 不載入任何遠端資源。品牌字型是獨立的可選入口：
+
+```tsx
+import "@linyao.tw/ui/fonts.css"; // 選用
+import "@linyao.tw/ui/styles.css";
+```
+
+`fonts.css` 會向 `font.emtech.cc` 與 `fonts.gstatic.com` 發出三個跨來源請求。正式環境建議自行代管相同字型，並覆寫 `--font-family-sans`、`--font-family-serif` 與 `--font-family-mono` 指向自己的 `@font-face`；設計變數本身已帶有系統字型備援，未載入 `fonts.css` 時元件仍可正常呈現。
+
+不匯入 `fonts.css` 的理由通常是：Content Security Policy 未允許這兩個網域、離線或內網環境無法連線，或需要避免 CSS `@import` 造成的串行阻塞。
 
 ## 選擇主題
 

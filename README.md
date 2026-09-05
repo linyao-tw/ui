@@ -30,6 +30,12 @@ pnpm add @linyao.tw/ui @phosphor-icons/react
 import "@linyao.tw/ui/styles.css";
 ```
 
+品牌字型是可選的獨立入口，`styles.css` 不含任何遠端請求：
+
+```tsx
+import "@linyao.tw/ui/fonts.css";
+```
+
 從套件根目錄使用公開 API：
 
 ```tsx

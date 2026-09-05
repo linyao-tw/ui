@@ -18,6 +18,12 @@ pnpm add @linyao.tw/ui @phosphor-icons/react
 import "@linyao.tw/ui/styles.css";
 ```
 
+`styles.css` 不含任何遠端請求。需要品牌字型時另外匯入可選入口，或自行代管字型並覆寫 `--font-family-*`：
+
+```tsx
+import "@linyao.tw/ui/fonts.css";
+```
+
 ## 使用
 
 ```tsx

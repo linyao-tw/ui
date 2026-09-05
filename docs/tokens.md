@@ -107,11 +107,13 @@ Motion/Ease/InOut        -> --motion-ease-in-out
 --font-family-mono: "Geist Mono", ui-monospace, monospace;
 ```
 
-CSS 會載入：
+這三個字族由可選入口 `@linyao.tw/ui/fonts.css` 載入，`styles.css` 不含任何遠端請求：
 
 - `https://font.emtech.cc/css/GenKiGothicTW.css`
 - `https://font.emtech.cc/css/GenKiMinTW.css`
 - Google Fonts 的 Geist Mono variable family
+
+正式環境建議自行代管並覆寫 `--font-family-*`。變數本身已帶系統字型備援，未載入 `fonts.css` 時元件仍可正常呈現。
 
 字級、字重、行高與字距均有對應設計變數。日期、時間、計數器、計時器與數值欄位使用：
 

@@ -1,3 +1,4 @@
+import "@linyao.tw/ui/fonts.css";
 import "@linyao.tw/ui/styles.css";
 import "./preview.css";
 

@@ -26,7 +26,8 @@
 			"import": "./dist/index.js",
 			"default": "./dist/index.js"
 		},
-		"./styles.css": "./dist/styles.css"
+		"./styles.css": "./dist/styles.css",
+		"./fonts.css": "./dist/fonts.css"
 	},
 	"main": "./dist/index.js",
 	"module": "./dist/index.js",

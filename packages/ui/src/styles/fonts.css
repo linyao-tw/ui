@@ -1,0 +1,13 @@
+/*
+ * Optional hosted brand typefaces. This entry is separate from styles.css because it makes three
+ * cross-origin requests that a consumer may not be able to accept: a Content Security Policy has to
+ * allow font.emtech.cc and fonts.gstatic.com, CSS @import serialises and blocks rendering, and an
+ * offline or air-gapped build cannot reach either host at all.
+ *
+ * Import it for a quick start. For production, self-host the same families and point
+ * --font-family-sans, --font-family-serif and --font-family-mono at your own @font-face rules; the
+ * design tokens already carry system fallbacks, so the components render correctly either way.
+ */
+@import url("https://font.emtech.cc/css/GenKiGothicTW.css");
+@import url("https://font.emtech.cc/css/GenKiMinTW.css");
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:ital,wght@0,100..900;1,100..900&display=swap");

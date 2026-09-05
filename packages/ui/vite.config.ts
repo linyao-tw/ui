@@ -1,5 +1,5 @@
 import react from "@vitejs/plugin-react";
-import { existsSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
@@ -43,6 +43,14 @@ const normalizeDeclarationSpecifiers = (declarationPath: string, content: string
 export default defineConfig({
 	plugins: [
 		react(),
+		{
+			// styles.css is the single bundled stylesheet, so the optional font entry is copied through
+			// verbatim rather than being pulled into it.
+			name: "lyds-emit-fonts-entry",
+			generateBundle() {
+				this.emitFile({ type: "asset", fileName: "fonts.css", source: readFileSync(new URL("./src/styles/fonts.css", import.meta.url), "utf8") });
+			}
+		},
 		dts({
 			entryRoot: "src",
 			exclude: ["src/**/*.stories.*", "src/**/*.test.*", "src/test/**"],
