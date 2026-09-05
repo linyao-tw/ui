@@ -4,11 +4,16 @@ import "./preview.css";
 
 import type { Preview } from "@storybook/react-vite";
 
+/** Injected by vitest.config.ts so the story test run can sweep both themes. Undefined in dev. */
+declare const __LYDS_STORY_THEME__: "light" | "dark" | undefined;
+
+const defaultTheme = typeof __LYDS_STORY_THEME__ === "string" ? __LYDS_STORY_THEME__ : "light";
+
 const preview: Preview = {
 	globalTypes: {
 		theme: {
 			description: "Linyao Design System 色彩主題",
-			defaultValue: "light",
+			defaultValue: defaultTheme,
 			toolbar: {
 				icon: "mirror",
 				items: [

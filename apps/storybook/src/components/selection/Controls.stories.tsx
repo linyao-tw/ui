@@ -136,7 +136,7 @@ export const SliderControl: Story = {
 
 		await expect(track).not.toBeNull();
 		await expect(indicator).not.toBeNull();
-		await expect(getComputedStyle(track!).backgroundColor).toBe(resolveBackgroundColor(canvasElement, "--control-border-hover"));
+		await expect(getComputedStyle(track!).backgroundColor).toBe(resolveBackgroundColor(canvasElement, "--border-control-hover"));
 		await expect(getComputedStyle(indicator!).backgroundColor).toBe(resolveBackgroundColor(canvasElement, "--control-selected"));
 	},
 	render: () => (

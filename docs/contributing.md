@@ -23,6 +23,16 @@ command -v playwright
 
 若全域 CLI 可用，使用它執行截圖、開啟頁面或 codegen。只有需要提交可重複使用的測試或 CI 瀏覽器覆蓋時，才新增專案層級的 Playwright 依賴。
 
+## Storybook 與測試
+
+Story 測試會跑兩次：一次淺色、一次深色。`apps/storybook/vitest.config.ts` 定義 `storybook-light` 與 `storybook-dark` 兩個 project，透過 `__LYDS_STORY_THEME__` 設定 `theme` global 的預設值；`preview.tsx` 的 a11y addon 設為 `test: "error"`，因此對比不足會讓 CI 失敗，而不是留給人工審閱。
+
+Story 內的 `play` 斷言若要比對顏色，必須從設計變數解析（見 `Controls.stories.tsx` 的 `resolveBackgroundColor`），不得寫死 `rgb()` 值，否則深色主題必然失敗。
+
+```sh
+pnpm --filter @lyds/storybook test
+```
+
 ## 新增元件前的檢查
 
 1. `@linyao.tw/ui` 是否已有相同語意的元件？
