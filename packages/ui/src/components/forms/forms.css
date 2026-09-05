@@ -300,6 +300,7 @@
 .lyds-number-field__group:focus-within,
 .lyds-otp-field__input:focus-visible,
 .lyds-drop-zone__input:focus-visible + .lyds-drop-zone,
+.lyds-file-upload__input:focus-visible + .lyds-file-upload__trigger,
 .lyds-phone-field__country:has(:focus-visible) {
 	border-color: var(--border-control-focus);
 	outline: var(--border-width-strong) solid var(--focus-ring);
@@ -754,8 +755,7 @@
 	.lyds-code-field__group:focus-within,
 	.lyds-phone-field__country:has(:focus-visible),
 	.lyds-file-upload__input:focus-visible + .lyds-file-upload__trigger,
-	.lyds-drop-zone__input:focus-visible + .lyds-drop-zone,
-	.lyds-drop-zone__button:focus-visible {
+	.lyds-drop-zone__input:focus-visible + .lyds-drop-zone {
 		outline-color: CanvasText;
 	}
 }

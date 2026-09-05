@@ -259,6 +259,12 @@ describe("PhoneField", () => {
 	});
 });
 
+/** Every id in aria-describedby must resolve, or assistive technology silently drops the whole list. */
+function expectResolvableDescribedBy(element: HTMLElement) {
+	const ids = element.getAttribute("aria-describedby")?.split(" ").filter(Boolean) ?? [];
+	expect(ids.filter(id => document.getElementById(id) == null)).toEqual([]);
+}
+
 describe("file controls", () => {
 	it("reports files selected with the native file picker", async () => {
 		const user = userEvent.setup();
@@ -268,8 +274,8 @@ describe("file controls", () => {
 
 		const input = screen.getByLabelText<HTMLInputElement>("Diagnostic file 選擇檔案", { selector: "input" });
 		expect(input).toHaveAccessibleDescription("Attach the exported diagnostic report.");
-		expect(input).toHaveAttribute("tabindex", "-1");
-		expect(screen.getByRole("button", { name: "選擇檔案" })).toHaveClass("lyds-button");
+		expect(input).not.toHaveAttribute("tabindex");
+		expectResolvableDescribedBy(input);
 		await user.upload(input, file);
 
 		expect(input.files).toHaveLength(1);
@@ -326,8 +332,24 @@ describe("file controls", () => {
 		expect(screen.getByRole("list", { name: "已選擇的檔案" })).toHaveTextContent("telemetry.csv");
 
 		await user.tab();
-		expect(screen.getByRole("button", { name: "選擇檔案" })).toHaveFocus();
-		expect(input).toHaveAttribute("tabindex", "-1");
+		expect(input).toHaveFocus();
+		expect(container.querySelector("label.lyds-drop-zone__button")).toHaveAttribute("for", input.id);
+	});
+
+	it("keeps the description and error on the control the keyboard can reach", async () => {
+		const user = userEvent.setup();
+		const file = new File(["report"], "report.pdf", { type: "application/pdf" });
+		render(<FileUpload label="Evidence" description="Attach the signed report." error="Attach at least one file." invalid />);
+
+		const input = screen.getByLabelText<HTMLInputElement>("Evidence 選擇檔案", { selector: "input" });
+		await user.tab();
+		expect(input).toHaveFocus();
+		expectResolvableDescribedBy(input);
+		expect(input).toHaveAccessibleDescription(/Attach the signed report\./);
+		expect(input).toHaveAccessibleDescription(/Attach at least one file\./);
+
+		await user.upload(input, file);
+		expectResolvableDescribedBy(input);
 	});
 
 	it("marks rejected file types beside the file name without duplicating field errors", async () => {
@@ -389,8 +411,8 @@ describe("file controls", () => {
 
 		expect(screen.getByLabelText("Locked picker 選擇檔案", { selector: "input" })).toBeDisabled();
 		expect(screen.getByLabelText("Locked drop zone 選擇檔案", { selector: "input" })).toBeDisabled();
-		expect(screen.getAllByRole("button", { name: "選擇檔案" })).toHaveLength(2);
-		expect(screen.getAllByRole("button", { name: "選擇檔案" }).every(button => button.hasAttribute("disabled"))).toBe(true);
+		expect(container.querySelectorAll("label.lyds-button[data-disabled]")).toHaveLength(2);
+		expect(container.querySelectorAll("button")).toHaveLength(0);
 
 		const zone = container.querySelector<HTMLDivElement>(".lyds-drop-zone");
 		expect(zone).not.toBeNull();

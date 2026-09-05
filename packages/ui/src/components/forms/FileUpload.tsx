@@ -3,7 +3,6 @@ import { FileIcon } from "@phosphor-icons/react/dist/csr/File";
 import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
 import * as React from "react";
 import { cx } from "../../internal";
-import { Button } from "../foundations/Button";
 import "./forms.css";
 import { FieldFrame, type FieldAnatomyProps } from "./internal";
 type NativeFileInputProps = Omit<
@@ -93,6 +92,36 @@ function useClearFileSelectionOnFormReset(inputRef: React.RefObject<HTMLInputEle
 		form.addEventListener("reset", handleReset);
 		return () => form.removeEventListener("reset", handleReset);
 	}, [formId, inputRef, setSelectedFiles]);
+}
+
+interface FileTriggerProps {
+	children: React.ReactNode;
+	className: string;
+	disabled: boolean;
+	htmlFor: string;
+	id: string;
+	size: FieldAnatomyProps["size"];
+	startIcon?: React.ReactNode;
+}
+
+/**
+ * The visible affordance is a label bound to the real file input, so the input keeps the single
+ * tab stop, the accessible name and native picker activation. Rendering a button beside the input
+ * instead would leave the description, error and validity on an element the keyboard cannot reach.
+ */
+function FileTrigger({ children, className, disabled, htmlFor, id, size, startIcon }: FileTriggerProps) {
+	return (
+		<label className={cx("lyds-button", className)} data-disabled={disabled || undefined} data-size={size} data-variant="secondary" htmlFor={htmlFor}>
+			{startIcon != null ? (
+				<span className="lyds-button__icon" aria-hidden="true">
+					{startIcon}
+				</span>
+			) : null}
+			<span className="lyds-button__label" id={id}>
+				{children}
+			</span>
+		</label>
+	);
 }
 
 export interface FileUploadProps extends NativeFileInputProps, FieldAnatomyProps {
@@ -194,13 +223,12 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(fu
 					required={required}
 					aria-invalid={invalid || undefined}
 					aria-labelledby={label != null ? `${labelId} ${triggerId}` : triggerId}
-					aria-describedby={[description != null ? descriptionId : null, selectedFiles.length > 0 ? selectionSummaryId : null, errorId].filter(Boolean).join(" ")}
-					tabIndex={-1}
+					aria-describedby={cx(description != null && descriptionId, selectedFiles.length > 0 && selectionSummaryId, error != null && errorId) || undefined}
 					onChange={handleChange}
 				/>
-				<Button className="lyds-file-upload__trigger" disabled={disabled || readOnly} size={size} variant="secondary" onClick={() => inputRef.current?.click()}>
-					<span id={triggerId}>{triggerLabel}</span>
-				</Button>
+				<FileTrigger className="lyds-file-upload__trigger" disabled={Boolean(disabled || readOnly)} htmlFor={id} id={triggerId} size={size}>
+					{triggerLabel}
+				</FileTrigger>
 				<FileSelectionPreview accept={inputProps.accept} files={selectedFiles} invalidFileLabel={invalidFileLabel} summaryId={selectionSummaryId} />
 			</div>
 		</FieldFrame>
@@ -388,8 +416,7 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 				required={required}
 				aria-invalid={invalid || undefined}
 				aria-labelledby={label != null ? `${labelId} ${triggerId}` : triggerId}
-				aria-describedby={[description != null ? descriptionId : null, selectedFiles.length > 0 ? selectionSummaryId : null, errorId].filter(Boolean).join(" ")}
-				tabIndex={-1}
+				aria-describedby={cx(description != null && descriptionId, selectedFiles.length > 0 && selectionSummaryId, error != null && errorId) || undefined}
 				onChange={handleInputChange}
 			/>
 			<div
@@ -407,16 +434,9 @@ export const DropZone = React.forwardRef<HTMLInputElement, DropZoneProps>(functi
 					<span className="lyds-drop-zone__primary">{primaryLabel}</span>
 					<span className="lyds-drop-zone__secondary">{secondaryLabel}</span>
 				</span>
-				<Button
-					className="lyds-drop-zone__button"
-					disabled={disabled || readOnly}
-					size={size}
-					startIcon={<PlusIcon aria-hidden="true" weight="bold" />}
-					variant="secondary"
-					onClick={() => inputRef.current?.click()}
-				>
-					<span id={triggerId}>{browseLabel}</span>
-				</Button>
+				<FileTrigger className="lyds-drop-zone__button" disabled={Boolean(disabled || readOnly)} htmlFor={id} id={triggerId} size={size} startIcon={<PlusIcon aria-hidden="true" weight="bold" />}>
+					{browseLabel}
+				</FileTrigger>
 				<FileSelectionPreview accept={inputProps.accept} files={selectedFiles} invalidFileLabel={invalidFileLabel} summaryId={selectionSummaryId} />
 			</div>
 		</FieldFrame>
