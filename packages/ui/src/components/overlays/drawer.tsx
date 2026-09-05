@@ -15,7 +15,7 @@ import {
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, type HTMLAttributes, type JSX, type RefAttributes } from "react";
 
-import { withStateClassName } from "@/internal";
+import { cx, withStateClassName } from "@/internal";
 import { useMessages } from "@/intl";
 export type { DrawerRootChangeEventDetails } from "@base-ui/react/drawer";
 
@@ -110,19 +110,19 @@ export const DrawerSwipeArea = forwardRef<HTMLDivElement, DrawerSwipeAreaProps>(
 export type DrawerHeaderProps = HTMLAttributes<HTMLDivElement>;
 
 export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(function DrawerHeader({ className, ...props }, ref) {
-	return <div {...props} ref={ref} className={className ? `lyds-drawer__header ${className}` : "lyds-drawer__header"} />;
+	return <div {...props} ref={ref} className={cx("lyds-drawer__header", className)} />;
 });
 
 export type DrawerBodyProps = HTMLAttributes<HTMLDivElement>;
 
 export const DrawerBody = forwardRef<HTMLDivElement, DrawerBodyProps>(function DrawerBody({ className, ...props }, ref) {
-	return <div {...props} ref={ref} className={className ? `lyds-drawer__body ${className}` : "lyds-drawer__body"} />;
+	return <div {...props} ref={ref} className={cx("lyds-drawer__body", className)} />;
 });
 
 export type DrawerFooterProps = HTMLAttributes<HTMLDivElement>;
 
 export const DrawerFooter = forwardRef<HTMLDivElement, DrawerFooterProps>(function DrawerFooter({ className, ...props }, ref) {
-	return <div {...props} ref={ref} className={className ? `lyds-drawer__footer ${className}` : "lyds-drawer__footer"} />;
+	return <div {...props} ref={ref} className={cx("lyds-drawer__footer", className)} />;
 });
 
 export const Drawer = {
@@ -184,22 +184,22 @@ export type BottomSheetHandleProps = HTMLAttributes<HTMLDivElement>;
 /** 符合觸控尺寸的裝飾性操作提示；滑動行為仍由 Base UI 負責。 */
 export const BottomSheetHandle = forwardRef<HTMLDivElement, BottomSheetHandleProps>(function BottomSheetHandle({ className, ...props }, ref) {
 	return (
-		<div {...props} ref={ref} aria-hidden="true" className={className ? `lyds-bottomSheet__handle ${className}` : "lyds-bottomSheet__handle"}>
+		<div {...props} ref={ref} aria-hidden="true" className={cx("lyds-bottomSheet__handle", className)}>
 			<span className="lyds-bottomSheet__handleBar" />
 		</div>
 	);
 });
 
 export const BottomSheetHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(function BottomSheetHeader({ className, ...props }, ref) {
-	return <div {...props} ref={ref} className={className ? `lyds-drawer__header lyds-bottomSheet__header ${className}` : "lyds-drawer__header lyds-bottomSheet__header"} />;
+	return <div {...props} ref={ref} className={cx("lyds-drawer__header lyds-bottomSheet__header", className)} />;
 });
 
 export const BottomSheetBody = forwardRef<HTMLDivElement, DrawerBodyProps>(function BottomSheetBody({ className, ...props }, ref) {
-	return <div {...props} ref={ref} className={className ? `lyds-drawer__body lyds-bottomSheet__body ${className}` : "lyds-drawer__body lyds-bottomSheet__body"} />;
+	return <div {...props} ref={ref} className={cx("lyds-drawer__body lyds-bottomSheet__body", className)} />;
 });
 
 export const BottomSheetFooter = forwardRef<HTMLDivElement, DrawerFooterProps>(function BottomSheetFooter({ className, ...props }, ref) {
-	return <div {...props} ref={ref} className={className ? `lyds-drawer__footer lyds-bottomSheet__footer ${className}` : "lyds-drawer__footer lyds-bottomSheet__footer"} />;
+	return <div {...props} ref={ref} className={cx("lyds-drawer__footer lyds-bottomSheet__footer", className)} />;
 });
 
 export const BottomSheet = {

@@ -1,5 +1,3 @@
-import "./date-time.css";
-
 export { Calendar, type CalendarProps, type FirstDayOfWeek, type WeekdayStyle } from "./calendar";
 export { DateField, type DateFieldProps } from "./date-field";
 export { DatePicker, DateTimePicker, type DatePickerProps, type DateTimePickerProps, type DateTimeValue } from "./date-picker";

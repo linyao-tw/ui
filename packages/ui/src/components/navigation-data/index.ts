@@ -1,5 +1,3 @@
-import "./navigation-data.css";
-
 export * from "./breadcrumb-pagination.js";
 export * from "./command-palette.js";
 export * from "./header-tab-bar.js";

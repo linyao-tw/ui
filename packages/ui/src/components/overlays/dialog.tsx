@@ -14,7 +14,7 @@ import {
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, type HTMLAttributes, type JSX, type ReactNode, type RefAttributes } from "react";
 
-import { withStateClassName } from "@/internal";
+import { cx, withStateClassName } from "@/internal";
 import { useMessages } from "@/intl";
 export type { AlertDialogRootChangeEventDetails } from "@base-ui/react/alert-dialog";
 export type { DialogRootChangeEventDetails } from "@base-ui/react/dialog";
@@ -102,19 +102,19 @@ export const DialogClose = forwardRef<HTMLButtonElement, DialogCloseProps>(funct
 export type DialogHeaderProps = HTMLAttributes<HTMLDivElement>;
 
 export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(function DialogHeader({ className, ...props }, ref) {
-	return <div {...props} ref={ref} className={className ? `lyds-dialog__header ${className}` : "lyds-dialog__header"} />;
+	return <div {...props} ref={ref} className={cx("lyds-dialog__header", className)} />;
 });
 
 export type DialogBodyProps = HTMLAttributes<HTMLDivElement>;
 
 export const DialogBody = forwardRef<HTMLDivElement, DialogBodyProps>(function DialogBody({ className, ...props }, ref) {
-	return <div {...props} ref={ref} className={className ? `lyds-dialog__body ${className}` : "lyds-dialog__body"} />;
+	return <div {...props} ref={ref} className={cx("lyds-dialog__body", className)} />;
 });
 
 export type DialogFooterProps = HTMLAttributes<HTMLDivElement>;
 
 export const DialogFooter = forwardRef<HTMLDivElement, DialogFooterProps>(function DialogFooter({ className, ...props }, ref) {
-	return <div {...props} ref={ref} className={className ? `lyds-dialog__footer ${className}` : "lyds-dialog__footer"} />;
+	return <div {...props} ref={ref} className={cx("lyds-dialog__footer", className)} />;
 });
 
 export const Dialog = {
@@ -200,7 +200,7 @@ export interface AlertDialogActionsProps extends HTMLAttributes<HTMLDivElement> 
 }
 
 export const AlertDialogActions = forwardRef<HTMLDivElement, AlertDialogActionsProps>(function AlertDialogActions({ className, ...props }, ref) {
-	return <div {...props} ref={ref} className={className ? `lyds-dialog__footer lyds-alertDialog__actions ${className}` : "lyds-dialog__footer lyds-alertDialog__actions"} />;
+	return <div {...props} ref={ref} className={cx("lyds-dialog__footer lyds-alertDialog__actions", className)} />;
 });
 
 export const AlertDialog = {
