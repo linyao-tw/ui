@@ -174,6 +174,18 @@ test("classifies a missing exact version as absent from a valid version array", 
 	assert.deepEqual(commands[0].args, ["view", PACKAGE_NAME, "versions", "--json", `--registry=${NPM_REGISTRY}`]);
 });
 
+test("accepts npm 12 single-element arrays around the dist-tags object", async () => {
+	const registry = await inspectRegistry({
+		packageName: PACKAGE_NAME,
+		kind: "production",
+		version: "1.2.3",
+		distTag: "latest",
+		runCommand: mockRegistry([], [jsonResult(["1.2.2"]), jsonResult([{ latest: "1.2.2" }])])
+	});
+
+	assert.deepEqual(registry, { state: "absent", tagVersion: "1.2.2" });
+});
+
 test("fails closed for registry E404, authentication, network, and malformed responses", async t => {
 	for (const [name, response] of [
 		["E404", result("", 1, "npm error E404")],

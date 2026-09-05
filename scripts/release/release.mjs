@@ -308,6 +308,13 @@ function validateVersionList(value) {
 }
 
 function validateDistTags(value) {
+	if (Array.isArray(value)) {
+		if (value.length !== 1) {
+			throw new ReleaseError("npm view dist-tags returned an invalid object");
+		}
+		[value] = value;
+	}
+
 	if (value === null || typeof value !== "object" || Array.isArray(value)) {
 		throw new ReleaseError("npm view dist-tags returned an invalid object");
 	}
