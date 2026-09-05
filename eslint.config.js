@@ -42,6 +42,12 @@ export default tseslint.config(
 			"no-restricted-imports": [
 				"error",
 				{
+					patterns: [
+						{
+							regex: "^\\.\\./",
+							message: "Import across directories with the @/ alias; keep ./ for siblings in the same folder."
+						}
+					],
 					paths: [
 						{
 							name: "phosphor-react",

@@ -14,7 +14,7 @@ import {
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, type HTMLAttributes, type JSX, type ReactNode, type RefAttributes } from "react";
 
-import { withStateClassName } from "../../internal";
+import { withStateClassName } from "@/internal";
 export type { AlertDialogRootChangeEventDetails } from "@base-ui/react/alert-dialog";
 export type { DialogRootChangeEventDetails } from "@base-ui/react/dialog";
 

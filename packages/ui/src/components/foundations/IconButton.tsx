@@ -1,5 +1,5 @@
+import { cx } from "@/internal";
 import * as React from "react";
-import { cx } from "../../internal";
 import { Button, type ButtonProps } from "./Button";
 type AccessibleName =
 	| {

@@ -1,8 +1,8 @@
+import { cx } from "@/internal";
 import { Input as BaseInput } from "@base-ui/react/input";
 import { FileIcon } from "@phosphor-icons/react/dist/csr/File";
 import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
 import * as React from "react";
-import { cx } from "../../internal";
 import "./forms.css";
 import { FieldFrame, type FieldAnatomyProps } from "./internal";
 type NativeFileInputProps = Omit<

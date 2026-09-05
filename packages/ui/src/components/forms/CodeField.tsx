@@ -1,6 +1,6 @@
+import { cx, withStateClassName } from "@/internal";
 import { OTPField as BaseOTPField } from "@base-ui/react/otp-field";
 import * as React from "react";
-import { cx, withStateClassName } from "../../internal";
 import "./forms.css";
 import { FieldFrame } from "./internal";
 import type { OTPFieldProps } from "./OTPField";

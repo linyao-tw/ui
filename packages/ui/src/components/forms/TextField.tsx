@@ -1,10 +1,10 @@
+import { cx, withStateClassName } from "@/internal";
 import { Field as BaseField } from "@base-ui/react/field";
 import { Input as BaseInput } from "@base-ui/react/input";
 import { EyeIcon } from "@phosphor-icons/react/dist/csr/Eye";
 import { EyeSlashIcon } from "@phosphor-icons/react/dist/csr/EyeSlash";
 import { MagnifyingGlassIcon } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import * as React from "react";
-import { cx, withStateClassName } from "../../internal";
 import "./forms.css";
 import { FieldFrame, type FieldAnatomyProps } from "./internal";
 type TextFieldInputProps = Omit<BaseInput.Props, "className" | "disabled" | "name" | "readOnly" | "required" | "size" | "style">;

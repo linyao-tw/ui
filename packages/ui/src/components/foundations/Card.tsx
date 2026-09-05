@@ -1,6 +1,6 @@
+import { type ComponentRenderProp, cx, type ElementProps } from "@/internal";
 import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
-import { type ComponentRenderProp, cx, type ElementProps } from "../../internal";
 export type CardVariant = "material" | "elevated" | "inset" | "outline" | "cloud";
 export type CardSize = "sm" | "md" | "lg";
 

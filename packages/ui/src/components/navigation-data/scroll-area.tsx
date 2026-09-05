@@ -1,7 +1,7 @@
 import { ScrollArea as BaseScrollArea } from "@base-ui/react/scroll-area";
 import { forwardRef, type ComponentRef } from "react";
 
-import { withStateClassName } from "../../internal";
+import { withStateClassName } from "@/internal";
 export const ScrollArea = forwardRef<ComponentRef<typeof BaseScrollArea.Root>, BaseScrollArea.Root.Props>(function ScrollArea(props, ref) {
 	const { className, ...rootProps } = props;
 	return <BaseScrollArea.Root ref={ref} className={withStateClassName<BaseScrollArea.Root.State>("lyds-scroll-area", className)} {...rootProps} />;

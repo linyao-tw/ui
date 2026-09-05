@@ -1,4 +1,5 @@
 import type { StorybookConfig } from "@storybook/react-vite";
+import { fileURLToPath } from "node:url";
 
 const config: StorybookConfig = {
 	stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
@@ -9,7 +10,14 @@ const config: StorybookConfig = {
 	},
 	docs: {
 		defaultName: "文件"
-	}
+	},
+	viteFinal: config => ({
+		...config,
+		resolve: {
+			...config.resolve,
+			alias: { ...config.resolve?.alias, "@": fileURLToPath(new URL("../src", import.meta.url)) }
+		}
+	})
 };
 
 export default config;

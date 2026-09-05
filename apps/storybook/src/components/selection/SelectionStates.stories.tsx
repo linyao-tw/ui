@@ -30,7 +30,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
-import "../story-layout.css";
+import "@/components/story-layout.css";
 
 const offices = [
 	{ value: "north", label: "台北辦公室", description: "台北 · 開放中" },

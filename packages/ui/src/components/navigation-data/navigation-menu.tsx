@@ -2,7 +2,7 @@ import { NavigationMenu as BaseNavigationMenu } from "@base-ui/react/navigation-
 import { CaretDownIcon } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { forwardRef, type ComponentRef, type ForwardedRef, type ReactElement, type RefAttributes } from "react";
 
-import { withStateClassName } from "../../internal";
+import { withStateClassName } from "@/internal";
 function NavigationMenuInner<Value = string>(props: BaseNavigationMenu.Root.Props<Value>, ref: ForwardedRef<HTMLElement>) {
 	const { className, ...rootProps } = props;
 	return <BaseNavigationMenu.Root ref={ref} className={withStateClassName<BaseNavigationMenu.Root.State>("lyds-navigation-menu", className)} {...rootProps} />;

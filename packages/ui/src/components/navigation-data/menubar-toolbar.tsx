@@ -5,7 +5,7 @@ import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { CircleIcon } from "@phosphor-icons/react/dist/csr/Circle";
 import { forwardRef, type ComponentRef, type ForwardedRef, type ReactElement, type RefAttributes } from "react";
 
-import { withStateClassName } from "../../internal";
+import { withStateClassName } from "@/internal";
 export const Menubar = forwardRef<ComponentRef<typeof BaseMenubar>, BaseMenubar.Props>(function Menubar(props, ref) {
 	const { className, ...menubarProps } = props;
 	return <BaseMenubar ref={ref} className={withStateClassName<BaseMenubar.State>("lyds-menubar", className)} {...menubarProps} />;

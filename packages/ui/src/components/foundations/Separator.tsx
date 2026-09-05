@@ -1,6 +1,6 @@
+import { cx } from "@/internal";
 import { Separator as BaseSeparator, type SeparatorProps as BaseSeparatorProps } from "@base-ui/react/separator";
 import * as React from "react";
-import { cx } from "../../internal";
 export type SeparatorVariant = "solid" | "technical";
 export type SeparatorSpacing = "none" | "sm" | "md" | "lg";
 

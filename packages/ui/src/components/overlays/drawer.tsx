@@ -15,7 +15,7 @@ import {
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, type HTMLAttributes, type JSX, type RefAttributes } from "react";
 
-import { withStateClassName } from "../../internal";
+import { withStateClassName } from "@/internal";
 export type { DrawerRootChangeEventDetails } from "@base-ui/react/drawer";
 
 function CloseGlyph(): JSX.Element {

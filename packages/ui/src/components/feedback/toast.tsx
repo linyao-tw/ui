@@ -2,7 +2,7 @@ import { Toast as BaseToast } from "@base-ui/react/toast";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { Fragment, forwardRef, type ComponentPropsWithoutRef, type ForwardedRef, type ReactElement, type ReactNode, type RefAttributes } from "react";
 
-import { cx } from "../../internal";
+import { cx } from "@/internal";
 import styles from "./feedback.module.css";
 import { FEEDBACK_STATUSES, type FeedbackStatus } from "./feedback.types";
 const feedbackStatusSet: ReadonlySet<string> = new Set(FEEDBACK_STATUSES);

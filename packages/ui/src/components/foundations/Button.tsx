@@ -1,6 +1,6 @@
+import { cx } from "@/internal";
 import { Button as BaseButton, type ButtonProps as BaseButtonProps } from "@base-ui/react/button";
 import * as React from "react";
-import { cx } from "../../internal";
 export type ButtonVariant = "primary" | "secondary" | "neutral" | "quiet" | "danger";
 export type ButtonSize = "sm" | "md" | "lg";
 

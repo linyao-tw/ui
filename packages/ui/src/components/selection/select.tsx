@@ -16,7 +16,7 @@ import { CaretDownIcon } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { forwardRef, type Key, type ReactNode } from "react";
 
-import { combineStateClassNames, withStateClassName } from "../../internal";
+import { combineStateClassNames, withStateClassName } from "@/internal";
 import styles from "./selection.module.css";
 
 export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(function SelectTrigger({ className, ...props }, ref) {

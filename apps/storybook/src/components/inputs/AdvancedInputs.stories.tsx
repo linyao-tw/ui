@@ -2,7 +2,7 @@ import { CodeField, DropZone, FileUpload, NumberField, OTPField, PhoneField } fr
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
-import "../story-layout.css";
+import "@/components/story-layout.css";
 
 const meta = {
 	title: "元件/輸入/進階輸入",

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect } from "storybook/test";
 
-import "../components/story-layout.css";
+import "@/components/story-layout.css";
 
 const defaultRange = {
 	start: new CalendarDate(2026, 8, 28),

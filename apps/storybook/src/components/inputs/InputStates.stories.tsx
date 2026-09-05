@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ReactNode } from "react";
 import { expect, within } from "storybook/test";
 
-import "../story-layout.css";
+import "@/components/story-layout.css";
 
 const meta = {
 	title: "元件/輸入/狀態總覽",

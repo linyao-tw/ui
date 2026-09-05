@@ -1,6 +1,6 @@
+import { type ComponentRenderProp, cx, type ElementProps } from "@/internal";
 import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
-import { type ComponentRenderProp, cx, type ElementProps } from "../../internal";
 export type SectionHeadingSize = "sm" | "md" | "lg";
 export type SectionHeadingLevel = 2 | 3 | 4 | 5 | 6;
 

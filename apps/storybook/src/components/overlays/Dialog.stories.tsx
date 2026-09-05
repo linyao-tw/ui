@@ -2,7 +2,7 @@ import { AlertDialog, Button, Dialog, TextField } from "@linyao.tw/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
-import "../story-layout.css";
+import "@/components/story-layout.css";
 
 const meta = {
 	title: "元件/浮層/對話框",

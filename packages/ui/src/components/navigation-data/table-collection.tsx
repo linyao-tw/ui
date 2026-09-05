@@ -10,7 +10,7 @@ import {
 	type ThHTMLAttributes
 } from "react";
 
-import { cx } from "../../internal";
+import { cx } from "@/internal";
 export const TableFrame = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function TableFrame({ className, ...props }, ref) {
 	return <div ref={ref} className={cx("lyds-table-frame", className)} {...props} />;
 });

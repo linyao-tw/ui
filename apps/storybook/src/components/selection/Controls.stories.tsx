@@ -2,7 +2,7 @@ import { CheckboxGroup, CheckboxItem, Switch as LydsSwitch, RadioGroup, RadioIte
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
 
-import "../story-layout.css";
+import "@/components/story-layout.css";
 
 function resolveBackgroundColor(container: HTMLElement, customProperty: string) {
 	const probe = document.createElement("span");

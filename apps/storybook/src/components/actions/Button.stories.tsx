@@ -5,7 +5,7 @@ import { FloppyDiskIcon } from "@phosphor-icons/react/dist/csr/FloppyDisk";
 import { PlusIcon } from "@phosphor-icons/react/dist/csr/Plus";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import "../story-layout.css";
+import "@/components/story-layout.css";
 
 const meta = {
 	title: "元件/操作/按鈕",

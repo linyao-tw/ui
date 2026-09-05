@@ -10,7 +10,7 @@ import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { MinusIcon } from "@phosphor-icons/react/dist/csr/Minus";
 import { forwardRef, useId, useState, type ForwardedRef, type JSX, type ReactNode, type RefAttributes } from "react";
 
-import { cx, withStateClassName } from "../../internal";
+import { cx, withStateClassName } from "@/internal";
 import styles from "./selection.module.css";
 
 function CheckGlyph({ indeterminate = false }: { indeterminate?: boolean }) {

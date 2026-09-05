@@ -72,7 +72,7 @@ import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
-import "../story-layout.css";
+import "@/components/story-layout.css";
 
 const meta = {
 	title: "元件/導覽/狀態",

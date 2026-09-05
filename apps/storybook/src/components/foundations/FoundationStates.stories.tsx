@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ReactNode } from "react";
 import { expect, within } from "storybook/test";
 
-import "../story-layout.css";
+import "@/components/story-layout.css";
 
 const buttonVariants = ["primary", "secondary", "neutral", "quiet", "danger"] as const;
 const buttonSizes = ["sm", "md", "lg"] as const;

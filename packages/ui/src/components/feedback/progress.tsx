@@ -1,7 +1,7 @@
 import { Progress as BaseProgress } from "@base-ui/react/progress";
 import { forwardRef, type ReactNode } from "react";
 
-import { cx } from "../../internal";
+import { cx } from "@/internal";
 import styles from "./feedback.module.css";
 import { type FeedbackStatus } from "./feedback.types";
 export interface ProgressProps extends Omit<BaseProgress.Root.Props, "children" | "className"> {

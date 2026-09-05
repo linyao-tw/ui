@@ -31,4 +31,6 @@ Linyao Design System 是麟曜數位工作室的設計系統。專案顯示名�
 
 安裝或使用 `@linyao.tw/ui`、組合元件、調整語意設計變數或主題、新增元件、撰寫 Storybook 或測試、檢查無障礙，或準備發布時，必須先讀取 `skills/lyds-ui/SKILL.md`，並依工作類型讀取其中指定的參考文件。
 
+程式碼規範：跨目錄匯入一律使用 `@/` 別名，不得出現 `../`；同目錄使用 `./`。元件 CSS 的顏色、長度與動態效果一律使用設計變數，不得寫入原始值；`pnpm lint:css` 會強制檢查。完整規範見 `docs/contributing.md` 與 `docs/tokens.md`。
+
 優先使用既有公開元件或組合方式，不要先建立新的基礎元件。未取得使用者明確同意前，不得發布 `@linyao.tw/ui`、建立發布標籤、啟用 npm 發布開關或變更 npm dist-tag。

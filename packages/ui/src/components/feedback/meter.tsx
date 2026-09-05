@@ -1,7 +1,7 @@
 import { Meter as BaseMeter } from "@base-ui/react/meter";
 import { forwardRef, type ReactNode } from "react";
 
-import { cx } from "../../internal";
+import { cx } from "@/internal";
 import styles from "./feedback.module.css";
 import { type FeedbackStatus } from "./feedback.types";
 export interface MeterProps extends Omit<BaseMeter.Root.Props, "children" | "className"> {

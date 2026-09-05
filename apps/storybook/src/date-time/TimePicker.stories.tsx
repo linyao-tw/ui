@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect, userEvent, within } from "storybook/test";
 
-import "../components/story-layout.css";
+import "@/components/story-layout.css";
 
 const defaultTime = new Time(14, 30);
 

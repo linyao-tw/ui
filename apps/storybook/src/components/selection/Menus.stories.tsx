@@ -2,7 +2,7 @@ import { ContextMenu, DropdownMenu, MenuCheckboxItem, MenuCheckboxItemIndicator,
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
-import "../story-layout.css";
+import "@/components/story-layout.css";
 
 const meta = {
 	title: "元件/選擇/選單",

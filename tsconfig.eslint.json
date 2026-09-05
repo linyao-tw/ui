@@ -1,7 +1,8 @@
 {
 	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
-		"noEmit": true
+		"noEmit": true,
+		"paths": { "@/*": ["./packages/ui/src/*", "./apps/storybook/src/*"] }
 	},
 	"include": ["packages/**/*.ts", "packages/**/*.tsx", "apps/**/*.ts", "apps/**/*.tsx", "apps/**/.storybook/**/*.ts", "apps/**/.storybook/**/*.tsx"]
 }

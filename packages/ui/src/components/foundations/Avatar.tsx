@@ -1,6 +1,6 @@
+import { cx } from "@/internal";
 import { Avatar as BaseAvatar, type AvatarImageProps, type AvatarRootProps, type ImageLoadingStatus } from "@base-ui/react/avatar";
 import * as React from "react";
-import { cx } from "../../internal";
 export type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type AvatarVariant = "neutral" | "accent";
 export type AvatarStatus = "online" | "away" | "busy" | "offline";

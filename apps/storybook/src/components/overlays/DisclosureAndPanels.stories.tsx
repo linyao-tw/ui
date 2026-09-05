@@ -2,7 +2,7 @@ import { Accordion, BottomSheet, Button, Collapsible, Drawer } from "@linyao.tw/
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
-import "../story-layout.css";
+import "@/components/story-layout.css";
 
 const meta = {
 	title: "元件/浮層/展開與面板",

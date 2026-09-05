@@ -1,6 +1,6 @@
 import { forwardRef, type AnchorHTMLAttributes, type HTMLAttributes, type LiHTMLAttributes, type MouseEvent } from "react";
 
-import { cx } from "../../internal";
+import { cx } from "@/internal";
 export const Header = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(function Header({ className, ...props }, ref) {
 	return <header ref={ref} className={cx("lyds-header", className)} {...props} />;
 });

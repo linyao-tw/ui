@@ -1,6 +1,6 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 
-import { cx } from "../../internal";
+import { cx } from "@/internal";
 import styles from "./feedback.module.css";
 import { type FeedbackStatus } from "./feedback.types";
 type SpinnerAccessibilityProps =

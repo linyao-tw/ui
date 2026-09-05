@@ -1,6 +1,12 @@
 import react from "@vitejs/plugin-react";
+import { existsSync, statSync } from "node:fs";
+import { dirname, join, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
+
+const sourceRoot = fileURLToPath(new URL("./src", import.meta.url));
+const outputRoot = fileURLToPath(new URL("./dist", import.meta.url));
 
 const isExternal = (id: string) =>
 	id === "react" ||
@@ -12,12 +18,27 @@ const isExternal = (id: string) =>
 	id.startsWith("@phosphor-icons/react") ||
 	id.startsWith("react-aria-components");
 
-const addJavaScriptExtension = (specifier: string) => (/\.(?:[cm]?js|json|css)$/i.test(specifier) ? specifier : `${specifier}.js`);
+/**
+ * Declarations are emitted without extensions, and a specifier that points at a directory needs
+ * `/index.js` rather than `.js`. Resolving against the mirrored source tree keeps barrel modules
+ * from emitting a path that resolves to nothing, which `pnpm pack:check` reports as an internal
+ * resolution error rather than a build failure.
+ */
+const addJavaScriptExtension = (declarationPath: string, specifier: string) => {
+	if (/\.(?:[cm]?js|json|css)$/i.test(specifier)) return specifier;
 
-const normalizeDeclarationSpecifiers = (content: string) =>
+	const sourceDirectory = dirname(join(sourceRoot, relative(outputRoot, declarationPath)));
+	const target = resolve(sourceDirectory, specifier);
+	return existsSync(target) && statSync(target).isDirectory() ? `${specifier}/index.js` : `${specifier}.js`;
+};
+
+const normalizeDeclarationSpecifiers = (declarationPath: string, content: string) =>
 	content
-		.replace(/(\bfrom\s+["'])(\.\.?\/[^"']+)(["'])/g, (_match, prefix: string, specifier: string, suffix: string) => `${prefix}${addJavaScriptExtension(specifier)}${suffix}`)
-		.replace(/(\bimport\s*\(\s*["'])(\.\.?\/[^"']+)(["']\s*\))/g, (_match, prefix: string, specifier: string, suffix: string) => `${prefix}${addJavaScriptExtension(specifier)}${suffix}`);
+		.replace(/(\bfrom\s+["'])(\.\.?\/[^"']+)(["'])/g, (_match, prefix: string, specifier: string, suffix: string) => `${prefix}${addJavaScriptExtension(declarationPath, specifier)}${suffix}`)
+		.replace(
+			/(\bimport\s*\(\s*["'])(\.\.?\/[^"']+)(["']\s*\))/g,
+			(_match, prefix: string, specifier: string, suffix: string) => `${prefix}${addJavaScriptExtension(declarationPath, specifier)}${suffix}`
+		);
 
 export default defineConfig({
 	plugins: [
@@ -27,12 +48,15 @@ export default defineConfig({
 			exclude: ["src/**/*.stories.*", "src/**/*.test.*", "src/test/**"],
 			insertTypesEntry: true,
 			beforeWriteFile: (filePath, content) => ({
-				content: normalizeDeclarationSpecifiers(content),
+				content: normalizeDeclarationSpecifiers(filePath, content),
 				filePath
 			}),
 			tsconfigPath: "./tsconfig.build.json"
 		})
 	],
+	resolve: {
+		alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) }
+	},
 	build: {
 		cssCodeSplit: false,
 		lib: {

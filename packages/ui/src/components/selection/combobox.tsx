@@ -18,7 +18,7 @@ import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { forwardRef, useMemo, type Key, type ReactNode } from "react";
 
-import { withStateClassName } from "../../internal";
+import { withStateClassName } from "@/internal";
 import styles from "./selection.module.css";
 
 export const ComboboxInputGroup = forwardRef<HTMLDivElement, ComboboxInputGroupProps>(function ComboboxInputGroup({ className, ...props }, ref) {

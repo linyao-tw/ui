@@ -1,3 +1,4 @@
+import { cx } from "@/internal";
 import type { CalendarDate } from "@internationalized/date";
 import { CaretLeftIcon } from "@phosphor-icons/react/dist/csr/CaretLeft";
 import { CaretRightIcon } from "@phosphor-icons/react/dist/csr/CaretRight";
@@ -15,7 +16,6 @@ import {
 	CalendarYearPicker,
 	type CalendarProps as AriaCalendarProps
 } from "react-aria-components/Calendar";
-import { cx } from "../../internal";
 import type { CalendarBehaviorProps, DateValue as LydsDateValue } from "./date-types";
 import { LocaleBoundary } from "./shared";
 export type { FirstDayOfWeek } from "./date-types";

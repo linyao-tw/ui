@@ -37,7 +37,7 @@ import {
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { createContext, forwardRef, useContext, useId, type JSX, type RefAttributes } from "react";
 
-import { withStateClassName } from "../../internal";
+import { withStateClassName } from "@/internal";
 export type { PopoverRootChangeEventDetails } from "@base-ui/react/popover";
 export type { PreviewCardRootChangeEventDetails } from "@base-ui/react/preview-card";
 export type { TooltipRootChangeEventDetails } from "@base-ui/react/tooltip";

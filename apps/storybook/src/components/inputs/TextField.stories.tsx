@@ -2,7 +2,7 @@ import { CodeField, Input, PasswordField, PhoneField, SearchField, Textarea, Tex
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
-import "../story-layout.css";
+import "@/components/story-layout.css";
 
 const meta = {
 	title: "元件/輸入/文字欄位",

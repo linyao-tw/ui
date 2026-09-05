@@ -1,7 +1,7 @@
 import { Field as BaseField } from "@base-ui/react/field";
 import type * as React from "react";
 
-import { cx } from "../../internal";
+import { cx } from "@/internal";
 
 export type FieldSize = "sm" | "md" | "lg";
 

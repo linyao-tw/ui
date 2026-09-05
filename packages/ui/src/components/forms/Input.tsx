@@ -1,7 +1,7 @@
+import { withStateClassName } from "@/internal";
 import { Field as BaseField } from "@base-ui/react/field";
 import { Input as BaseInput } from "@base-ui/react/input";
 import * as React from "react";
-import { withStateClassName } from "../../internal";
 import "./forms.css";
 import { type FieldSize } from "./internal";
 export interface InputProps extends Omit<BaseInput.Props, "size"> {

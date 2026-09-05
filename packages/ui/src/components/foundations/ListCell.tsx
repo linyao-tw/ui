@@ -1,6 +1,6 @@
+import { type ComponentRenderProp, cx, type ElementProps } from "@/internal";
 import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
-import { type ComponentRenderProp, cx, type ElementProps } from "../../internal";
 export type ListCellVariant = "default" | "inset";
 export type ListCellSize = "sm" | "md" | "lg";
 export type ListCellCurrentSemantics = "page" | "step" | "location" | "date" | "time";

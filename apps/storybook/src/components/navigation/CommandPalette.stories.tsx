@@ -19,7 +19,7 @@ import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
-import "../story-layout.css";
+import "@/components/story-layout.css";
 
 const commands = ["開啟設定", "建立文件", "切換為深色主題", "封存選取項目"];
 

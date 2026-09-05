@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect, userEvent } from "storybook/test";
 
-import "../components/story-layout.css";
+import "@/components/story-layout.css";
 
 const defaultDate = new CalendarDate(2026, 8, 31);
 const defaultTime = new Time(14, 30, 45);

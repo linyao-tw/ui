@@ -3,7 +3,7 @@ import { Dialog as BaseDialog } from "@base-ui/react/dialog";
 import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { forwardRef, useCallback, useImperativeHandle, useRef, useState, type ComponentRef, type HTMLAttributes, type ReactNode } from "react";
 
-import { cx, withStateClassName } from "../../internal";
+import { cx, withStateClassName } from "@/internal";
 export interface CommandPaletteProps<Value> extends Omit<BaseCombobox.Root.Props<Value, false>, "autoComplete" | "children" | "defaultOpen" | "inline" | "modal" | "onOpenChange" | "open"> {
 	children: ReactNode;
 	defaultOpen?: boolean;

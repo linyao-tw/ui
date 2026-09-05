@@ -11,7 +11,7 @@ import { Tabs as BaseTabs, type TabsIndicatorProps, type TabsListProps, type Tab
 import { CaretDownIcon } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { forwardRef, type JSX } from "react";
 
-import { withStateClassName } from "../../internal";
+import { withStateClassName } from "@/internal";
 export type { AccordionRootChangeEventDetails } from "@base-ui/react/accordion";
 export type { CollapsibleRootChangeEventDetails } from "@base-ui/react/collapsible";
 export type { TabsRootChangeEventDetails } from "@base-ui/react/tabs";

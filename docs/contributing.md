@@ -54,6 +54,21 @@ command -v playwright
 - 不加入另一套樣式化元件系統。
 - Base UI 組合使用 `render`，不是 `asChild`。Render 回呼必須完整傳遞 props 與 ref。
 
+### 模組與匯入路徑
+
+- 跨目錄一律使用 `@/` 別名，不得出現 `../`：
+
+  ```ts
+  import { cx } from "@/internal"; // 正確
+  import { Button } from "@/components/foundations/Button"; // 正確
+  import { cx } from "../../internal"; // 錯誤
+  ```
+
+- 同目錄的相鄰模組使用 `./`。
+- `@/` 對應 `packages/ui/src`，同時設定於 `packages/ui/tsconfig.json`、`tsconfig.eslint.json` 與 `packages/ui/vite.config.ts`，因此型別檢查、lint、測試與建置行為一致。
+- 別名只存在於原始碼。建置會解析成相對路徑；`pnpm pack:check` 會以 `arethetypeswrong` 驗證發佈後的 `.d.ts` 仍可解析，指向目錄的 barrel 會自動補上 `/index.js`。
+- 共用工具集中在 `src/internal`，不得在元件資料夾內重新實作。
+
 ### 圖示
 
 - 介面圖示只使用 `@phosphor-icons/react`；用戶端原始碼、Storybook 與測試使用個別 `/dist/csr/<Name>` 匯入。

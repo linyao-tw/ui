@@ -1,6 +1,6 @@
 import { forwardRef, type HTMLAttributes } from "react";
 
-import { cx } from "../../internal";
+import { cx } from "@/internal";
 import styles from "./feedback.module.css";
 export interface SkeletonProps extends Omit<HTMLAttributes<HTMLSpanElement>, "aria-hidden" | "children"> {
 	shape?: "text" | "rectangular" | "circular";

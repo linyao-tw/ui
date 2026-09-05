@@ -17,7 +17,7 @@ import { Separator as BaseSeparator, type SeparatorProps } from "@base-ui/react/
 import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { forwardRef } from "react";
 
-import { withStateClassName } from "../../internal";
+import { withStateClassName } from "@/internal";
 import styles from "./selection.module.css";
 
 export const MenuTrigger = forwardRef<HTMLButtonElement, MenuTriggerProps>(function MenuTrigger({ className, ...props }, ref) {

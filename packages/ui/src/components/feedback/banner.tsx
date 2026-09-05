@@ -1,6 +1,6 @@
 import { forwardRef, type HTMLAttributes } from "react";
 
-import { cx } from "../../internal";
+import { cx } from "@/internal";
 import styles from "./feedback.module.css";
 import { getLiveRegionProps, type FeedbackLiveMode, type FeedbackStatus } from "./feedback.types";
 export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
