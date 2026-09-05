@@ -353,3 +353,38 @@ describe("overlay close controls", () => {
 		expect(screen.getByRole("button", { name: "Done" })).toBeInTheDocument();
 	});
 });
+
+describe("floating overlay parts", () => {
+	it("renders the popover through its backdrop, viewport and titled popup", async () => {
+		const user = userEvent.setup();
+		render(
+			<Popover.Root>
+				<Popover.Trigger>Details</Popover.Trigger>
+				<Popover.Portal>
+					<Popover.Backdrop />
+					<Popover.Positioner>
+						<Popover.Popup>
+							<Popover.Arrow />
+							<Popover.Viewport>
+								<Popover.Title>Node alpha</Popover.Title>
+								<Popover.Description>Primary region</Popover.Description>
+								<Popover.Close />
+							</Popover.Viewport>
+						</Popover.Popup>
+					</Popover.Positioner>
+				</Popover.Portal>
+			</Popover.Root>
+		);
+
+		await user.click(screen.getByRole("button", { name: "Details" }));
+
+		const popup = await screen.findByRole("dialog");
+		expect(popup).toHaveAccessibleName("Node alpha");
+		expect(popup).toHaveAccessibleDescription("Primary region");
+		expect(document.querySelector(".lyds-popover__backdrop")).not.toBeNull();
+		expect(document.querySelector(".lyds-popover__viewport")).not.toBeNull();
+
+		await user.click(screen.getByRole("button", { name: "關閉彈出視窗" }));
+		await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+	});
+});

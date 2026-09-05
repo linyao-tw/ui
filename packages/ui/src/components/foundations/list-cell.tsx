@@ -1,4 +1,4 @@
-import { type ComponentRenderProp, cx, type ElementProps } from "@/internal";
+import { type AccessibleName, type ComponentRenderProp, cx, type ElementProps } from "@/internal";
 import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
 export type ListCellVariant = "default" | "inset";
@@ -50,16 +50,6 @@ interface ListCellContextValue {
 }
 
 const ListCellContext = React.createContext<ListCellContextValue>({ current: undefined, disabled: false });
-
-type AccessibleName =
-	| {
-			"aria-label": string;
-			"aria-labelledby"?: string;
-	  }
-	| {
-			"aria-label"?: string;
-			"aria-labelledby": string;
-	  };
 
 type ListCellLinkActionProps = Omit<ElementProps<"a">, "aria-label" | "aria-labelledby" | "children" | "className"> & {
 	href: string;

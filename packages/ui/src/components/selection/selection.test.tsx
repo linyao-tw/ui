@@ -1,10 +1,37 @@
 import "@testing-library/jest-dom/vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import axe from "axe-core";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
-import { Autocomplete, CheckboxGroup, CheckboxItem, Combobox, ContextMenu, DropdownMenu, RadioGroup, RadioItem, SegmentedControl, SegmentedControlItem, Select, Slider, Switch } from "./index";
+import { Alert } from "@/components/feedback";
+import { AlertView } from "@/components/feedback/alert";
+import { Dialog, Modal } from "@/components/overlays";
+import {
+	Autocomplete,
+	CheckboxGroup,
+	CheckboxItem,
+	Combobox,
+	ComboboxClear,
+	ComboboxInput,
+	ComboboxInputGroup,
+	ComboboxItem,
+	ComboboxItemIndicator,
+	ComboboxList,
+	ComboboxPopup,
+	ComboboxPositioner,
+	ComboboxTrigger,
+	ContextMenu,
+	DropdownMenu,
+	RadioGroup,
+	RadioItem,
+	SegmentedControl,
+	SegmentedControlItem,
+	Select,
+	Slider,
+	Switch,
+	Toggle
+} from "./index";
 
 beforeAll(() => {
 	document.documentElement.style.setProperty("--motion-duration-fast", "0ms");
@@ -328,5 +355,96 @@ describe("selection popups", () => {
 		const target = screen.getByTestId("context-target");
 		expect(target).not.toHaveAttribute("role", "button");
 		expect(target).toHaveAttribute("tabindex", "0");
+	});
+});
+
+describe("select composed from its parts", () => {
+	it("builds a listbox with grouped, separated options", async () => {
+		const user = userEvent.setup();
+		render(
+			// Base UI reads the trigger's display text from `items`; without it Select.Value shows the raw value.
+			<Select.Root items={{ ams: "Amsterdam", tpe: "Taipei" }}>
+				<Select.Trigger aria-label="Region">
+					<Select.Value placeholder="Pick one" />
+				</Select.Trigger>
+				<Select.Portal>
+					<Select.Positioner alignItemWithTrigger={false}>
+						<Select.Popup>
+							<Select.List>
+								<Select.Group>
+									<Select.GroupLabel>Asia</Select.GroupLabel>
+									<Select.Item value="tpe">
+										<Select.ItemIndicator>✓</Select.ItemIndicator>
+										<Select.ItemText>Taipei</Select.ItemText>
+									</Select.Item>
+								</Select.Group>
+								<Select.Separator />
+								<Select.Item value="ams">
+									<Select.ItemText>Amsterdam</Select.ItemText>
+								</Select.Item>
+							</Select.List>
+						</Select.Popup>
+					</Select.Positioner>
+				</Select.Portal>
+			</Select.Root>
+		);
+
+		const trigger = screen.getByRole("combobox", { name: "Region" });
+		expect(trigger).toHaveTextContent("Pick one");
+
+		await user.click(trigger);
+		const listbox = await screen.findByRole("listbox");
+		expect(within(listbox).getByRole("group", { name: "Asia" })).toBeInTheDocument();
+		expect(within(listbox).getAllByRole("option")).toHaveLength(2);
+
+		await user.click(within(listbox).getByRole("option", { name: "Amsterdam" }));
+		expect(trigger).toHaveTextContent("Amsterdam");
+	});
+});
+
+describe("combobox composed from its parts", () => {
+	it("filters through the input group and reports the empty state", async () => {
+		const user = userEvent.setup();
+		render(
+			<Combobox.Root items={["Taipei", "Amsterdam"]}>
+				<ComboboxInputGroup>
+					<ComboboxInput aria-label="Region" placeholder="Search" />
+					<ComboboxClear aria-label="Clear">×</ComboboxClear>
+					<ComboboxTrigger aria-label="Show options">▾</ComboboxTrigger>
+				</ComboboxInputGroup>
+				<Combobox.Portal>
+					<ComboboxPositioner>
+						<ComboboxPopup>
+							<ComboboxList>
+								{(item: string) => (
+									<ComboboxItem key={item} value={item}>
+										<ComboboxItemIndicator>✓</ComboboxItemIndicator>
+										{item}
+									</ComboboxItem>
+								)}
+							</ComboboxList>
+							<Combobox.Empty>Nothing here</Combobox.Empty>
+						</ComboboxPopup>
+					</ComboboxPositioner>
+				</Combobox.Portal>
+			</Combobox.Root>
+		);
+
+		const input = screen.getByRole("combobox", { name: "Region" });
+		await user.click(screen.getByRole("button", { name: "Show options" }));
+		expect(await screen.findByRole("listbox")).toBeInTheDocument();
+		expect(screen.getAllByRole("option")).toHaveLength(2);
+
+		await user.type(input, "Ams");
+		await waitFor(() => expect(screen.getAllByRole("option")).toHaveLength(1));
+		expect(screen.getByRole("option", { name: /Amsterdam/ })).toBeInTheDocument();
+	});
+});
+
+describe("exported aliases point at the same components", () => {
+	it("keeps the alias and the canonical export interchangeable", () => {
+		expect(Modal).toBe(Dialog);
+		expect(AlertView).toBe(Alert);
+		expect(SegmentedControlItem).toBe(Toggle);
 	});
 });

@@ -1,14 +1,16 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import axe from "axe-core";
 import { describe, expect, it, vi } from "vitest";
 
+import { MessagesProvider, enUSMessages } from "@/intl";
 import { Alert } from "./alert";
 import { Banner } from "./banner";
 import { Meter } from "./meter";
 import { Progress } from "./progress";
 import { Skeleton } from "./skeleton";
 import { Spinner } from "./spinner";
-import { createToastManager, ToastProvider } from "./toast";
+import { ToastProvider, createToastManager } from "./toast";
 
 describe("static feedback semantics", () => {
 	it("does not turn static alerts and banners into live alerts by default", () => {
@@ -152,5 +154,54 @@ describe("feedback accessibility", () => {
 			}
 		});
 		expect(results.violations).toEqual([]);
+	});
+});
+
+describe("toast manager", () => {
+	// Base UI keeps the close control out of the accessibility tree until the toast is focused, so
+	// these assertions read it from the DOM rather than through a role query.
+	const closeControl = () => document.querySelector<HTMLButtonElement>(".lyds-toast__close");
+
+	it("renders queued toasts through the provider's viewport and closes them", async () => {
+		const user = userEvent.setup();
+		const manager = createToastManager();
+
+		render(
+			<ToastProvider toastManager={manager} timeout={0}>
+				<button type="button" onClick={() => manager.add({ title: "Deploy finished", description: "Node alpha is live.", data: { status: "success" } })}>
+					Deploy
+				</button>
+			</ToastProvider>
+		);
+
+		await user.click(screen.getByRole("button", { name: "Deploy" }));
+
+		const title = await screen.findByText("Deploy finished");
+		expect(screen.getByText("Node alpha is live.")).toBeInTheDocument();
+		expect(title.closest(".lyds-toast")).toHaveAttribute("data-status", "success");
+		expect(document.querySelector(".lyds-toast__viewport")).toHaveAttribute("aria-live", "polite");
+
+		expect(closeControl()).toHaveAttribute("aria-label", "關閉通知");
+		await user.click(closeControl() as HTMLButtonElement);
+		await waitFor(() => expect(screen.queryByText("Deploy finished")).not.toBeInTheDocument());
+	});
+
+	it("takes the close label from the message bundle", async () => {
+		const user = userEvent.setup();
+		const manager = createToastManager();
+
+		render(
+			<MessagesProvider messages={enUSMessages}>
+				<ToastProvider toastManager={manager} timeout={0}>
+					<button type="button" onClick={() => manager.add({ title: "Saved" })}>
+						Save
+					</button>
+				</ToastProvider>
+			</MessagesProvider>
+		);
+
+		await user.click(screen.getByRole("button", { name: "Save" }));
+		await screen.findByText("Saved");
+		expect(closeControl()).toHaveAttribute("aria-label", "Close notification");
 	});
 });

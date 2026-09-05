@@ -31,7 +31,31 @@ import {
 	NavigationMenuTrigger,
 	NavigationMenuViewport
 } from "./navigation-menu";
-import { DataTable, DataTableRegion, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "./table-collection";
+import {
+	Collection,
+	CollectionButton,
+	CollectionDescription,
+	CollectionHeading,
+	CollectionItem,
+	CollectionLink,
+	DataTable,
+	DataTableRegion,
+	List,
+	ListButton,
+	ListItem,
+	ListLink,
+	OrderedCollection,
+	OrderedList,
+	Table,
+	TableBody,
+	TableCaption,
+	TableCell,
+	TableFooter,
+	TableFrame,
+	TableHead,
+	TableHeader,
+	TableRow
+} from "./table-collection";
 
 describe("breadcrumb and pagination semantics", () => {
 	it("names the breadcrumb landmark and marks only the current page", () => {
@@ -203,5 +227,89 @@ describe("command palette composition", () => {
 		expect(trigger).toHaveAttribute("aria-expanded", "false");
 		expect(screen.queryByRole("dialog", { name: "Canceled deck" })).not.toBeInTheDocument();
 		view.unmount();
+	});
+});
+
+describe("tables and collections", () => {
+	it("exposes table semantics through the composed parts", () => {
+		render(
+			<TableFrame>
+				<Table>
+					<TableCaption>Active nodes</TableCaption>
+					<TableHeader>
+						<TableRow>
+							<TableHead>Node</TableHead>
+							<TableHead textAlign="end">Throughput</TableHead>
+						</TableRow>
+					</TableHeader>
+					<TableBody>
+						<TableRow>
+							<TableCell>alpha</TableCell>
+							<TableCell numeric textAlign="end">
+								1420
+							</TableCell>
+						</TableRow>
+					</TableBody>
+					<TableFooter>
+						<TableRow>
+							<TableCell colSpan={2}>1 node</TableCell>
+						</TableRow>
+					</TableFooter>
+				</Table>
+			</TableFrame>
+		);
+
+		const table = screen.getByRole("table", { name: "Active nodes" });
+		expect(table).toBeInTheDocument();
+		expect(screen.getAllByRole("columnheader")).toHaveLength(2);
+		expect(screen.getByRole("columnheader", { name: "Node" })).toHaveAttribute("scope", "col");
+		expect(screen.getByRole("cell", { name: "1420" })).toHaveAttribute("data-numeric");
+		expect(screen.getByRole("cell", { name: "1420" })).toHaveAttribute("data-align", "end");
+	});
+
+	it("labels a data table region only when it is given a name", () => {
+		const { rerender } = render(<DataTableRegion>rows</DataTableRegion>);
+		expect(screen.queryByRole("region")).not.toBeInTheDocument();
+
+		rerender(<DataTableRegion label="Node rows">rows</DataTableRegion>);
+		expect(screen.getByRole("region", { name: "Node rows" })).toBeInTheDocument();
+	});
+
+	it("keeps list semantics across the unordered and ordered collections", () => {
+		render(
+			<>
+				<Collection aria-label="Recent runs" density="compact">
+					<CollectionItem>
+						<CollectionLink href="/runs/1" selected>
+							<CollectionHeading level={4}>Run 1</CollectionHeading>
+							<CollectionDescription>Completed</CollectionDescription>
+						</CollectionLink>
+					</CollectionItem>
+				</Collection>
+				<OrderedCollection aria-label="Steps">
+					<ListItem>
+						<ListButton selected>Step 1</ListButton>
+					</ListItem>
+				</OrderedCollection>
+			</>
+		);
+
+		const unordered = screen.getByRole("list", { name: "Recent runs" });
+		expect(unordered).toHaveAttribute("data-density", "compact");
+		expect(unordered.tagName).toBe("UL");
+		expect(screen.getByRole("link", { name: /Run 1/ })).toHaveAttribute("aria-current", "page");
+		expect(screen.getByRole("heading", { name: "Run 1", level: 4 })).toBeInTheDocument();
+
+		const ordered = screen.getByRole("list", { name: "Steps" });
+		expect(ordered.tagName).toBe("OL");
+		expect(screen.getByRole("button", { name: "Step 1" })).toHaveAttribute("aria-pressed", "true");
+	});
+
+	it("aliases the list family onto the same collection elements", () => {
+		expect(List).toBe(Collection);
+		expect(OrderedList).toBe(OrderedCollection);
+		expect(ListItem).toBe(CollectionItem);
+		expect(ListLink).toBe(CollectionLink);
+		expect(ListButton).toBe(CollectionButton);
 	});
 });

@@ -13,7 +13,7 @@ import { Button } from "./button";
 import { Card, CardBody, CardFooter, CardHeader, CardTitle } from "./card";
 import { IconButton } from "./icon-button";
 import { Link } from "./link";
-import { ListCell, ListCellContent, ListCellDescription, ListCellLeading, ListCellTitle } from "./list-cell";
+import { ListCell, ListCellAction, ListCellContent, ListCellDescription, ListCellLeading, ListCellMetadata, ListCellTitle, ListCellTrailing } from "./list-cell";
 import { SectionHeading } from "./section-heading";
 import { Separator } from "./separator";
 
@@ -343,5 +343,49 @@ describe("heading levels and link targets", () => {
 		const link = screen.getByRole("link", { name: "Operations handbook" });
 		expect(link).toHaveAccessibleName("Operations handbook");
 		expect(link).toHaveAttribute("data-external");
+	});
+});
+
+describe("list cell composition", () => {
+	it("keeps every slot addressable and carries the selection semantics onto the action", () => {
+		render(
+			<ListCell selected selectionSemantics="page" size="lg" variant="inset">
+				<ListCellLeading>◆</ListCellLeading>
+				<ListCellContent>
+					<ListCellTitle>alpha</ListCellTitle>
+					<ListCellDescription>Primary region</ListCellDescription>
+					<ListCellMetadata>Updated 2 minutes ago</ListCellMetadata>
+				</ListCellContent>
+				<ListCellTrailing>
+					<ListCellAction aria-label="Open node" href="/nodes/alpha" />
+				</ListCellTrailing>
+			</ListCell>
+		);
+
+		const cell = screen.getByText("alpha").closest(".lyds-list-cell");
+		expect(cell).toHaveAttribute("data-size", "lg");
+		expect(cell).toHaveAttribute("data-variant", "inset");
+		expect(cell?.querySelector(".lyds-list-cell__leading")).toHaveTextContent("◆");
+		expect(cell?.querySelector(".lyds-list-cell__metadata")).toHaveTextContent("Updated 2 minutes ago");
+
+		const action = screen.getByRole("link", { name: "Open node" });
+		expect(action).toHaveAttribute("aria-current", "page");
+		expect(action).toHaveAttribute("href", "/nodes/alpha");
+	});
+
+	it("disables the action along with the cell", () => {
+		const { container } = render(
+			<ListCell disabled>
+				<ListCellTitle>alpha</ListCellTitle>
+				<ListCellAction aria-label="Open node" href="/nodes/alpha" />
+			</ListCell>
+		);
+
+		// Dropping href also drops the link role, which is the point: a disabled action is not a target.
+		const action = container.querySelector(".lyds-list-cell__action");
+		expect(action).toHaveAttribute("aria-disabled", "true");
+		expect(action).not.toHaveAttribute("href");
+		expect(action).toHaveAttribute("tabindex", "-1");
+		expect(screen.queryByRole("link")).not.toBeInTheDocument();
 	});
 });
