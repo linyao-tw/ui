@@ -2,9 +2,9 @@
 
 版本號依循 [Semantic Versioning](https://semver.org/lang/zh-TW/)。發佈流程與 dist-tag 規則見 [`docs/publishing.md`](docs/publishing.md)。
 
-## 2.0.0 — 2026-09-06
+## 1.1.0 — 2026-09-06
 
-JavaScript 匯出介面沒有任何移除項目（只新增四個），因此 `import { … } from "@linyao.tw/ui"` 不需要調整。主版號來自 CSS 與行為層：移除的設計變數、重新定義的控制項高度刻度，以及不再自動載入的字型。
+JavaScript 匯出介面沒有任何移除項目（只新增四個），因此 `import { … } from "@linyao.tw/ui"` 不需要調整。CSS 與部分元件預設行為有變動，升級時請依下列步驟調整。
 
 ### 升級指南
 
@@ -16,7 +16,7 @@ JavaScript 匯出介面沒有任何移除項目（只新增四個），因此 `i
 6. **SegmentedControl**：補上 `aria-label` 或 `aria-labelledby`，否則型別檢查會失敗。
 7. **CSS 覆寫**：`feedback` 與 `selection` 的元件從 CSS Modules 改為全域類別。原本的雜湊名稱（如 `_toastRoot_f6yg4_1`）本來就會隨每次建置改變、不適合當作選擇器；現在是穩定的 `.lyds-toast`、`.lyds-listbox__option` 等。
 
-### 破壞性變更
+### 需要調整的變更
 
 - `feedback` 與 `selection` 的元件樣式從 CSS Modules 改為全域 `lyds-*` 類別，並移除兩份手寫的 `*.css.d.ts`。若曾以雜湊後的 module class 名稱覆寫樣式，請改用新的 `lyds-*` 類別（例如 `styles.toastRoot` → `.lyds-toast`、`styles.option` → `.lyds-listbox__option`）。
 - `SegmentedControl` 的屬性型別現在要求 `aria-label` 或 `aria-labelledby` 其中之一。
