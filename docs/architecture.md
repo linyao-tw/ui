@@ -110,24 +110,27 @@ Base UI 不提供完整的日期元件，因此日期與時間元件使用：
 
 所有元件顏色必須使用語意變數。固定長度必須來自設計變數，由 `pnpm lint:css` 強制檢查；只有 1px 細線或分隔線可使用 `px`。流動版面可使用 `%`、`fr`、viewport units 或無單位行高。
 
-全域基準樣式限定為：
+全域基準樣式限定為 box-sizing 與 margin／padding 歸零、`body` 的背景／文字色／字體、表單控制項的 `font: inherit`、`::selection`，以及列印色彩。全部包在 `@layer lyds.base` 內：
 
 ```css
-*,
-*::before,
-*::after {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
+@layer lyds.base {
+	*,
+	*::before,
+	*::after {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
 
-@media print {
-	* {
-		print-color-adjust: exact;
-		-webkit-print-color-adjust: exact;
+	body {
+		background: var(--background-main);
+		color: var(--text-main);
+		/* … */
 	}
 }
 ```
+
+未分層的樣式一律勝過分層樣式，因此使用端不需要靠選擇器權重就能覆寫這層基準；元件庫不應該讓應用程式為了改自己的 `body` 而提高權重。設計變數、元件樣式與 `.lyds-*` 工具類別維持未分層，行為與過去一致。
 
 新增全域正規化前必須說明具體的相容性問題，不加入完整且具版面偏好的 CSS reset。
 

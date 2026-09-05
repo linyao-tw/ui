@@ -1,15 +1,44 @@
-*,
-*::before,
-*::after {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
+/*
+ * Document baseline. It lives in a cascade layer so that any unlayered rule in the consuming
+ * application wins over it regardless of specificity: a library that resets margins and paints the
+ * body should never be something an app has to out-specify. Design tokens, component styles and the
+ * utility classes below stay unlayered, so they still behave exactly as before.
+ */
+@layer lyds.base {
+	*,
+	*::before,
+	*::after {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
 
-@media print {
-	* {
-		print-color-adjust: exact;
-		-webkit-print-color-adjust: exact;
+	body {
+		background: var(--background-main);
+		color: var(--text-main);
+		font-family: var(--font-family-sans);
+		font-size: var(--font-size-md);
+		line-height: var(--line-height-body);
+		text-rendering: optimizeLegibility;
+	}
+
+	button,
+	input,
+	textarea,
+	select {
+		font: inherit;
+	}
+
+	::selection {
+		background: var(--selection-background);
+		color: var(--selection-foreground);
+	}
+
+	@media print {
+		* {
+			print-color-adjust: exact;
+			-webkit-print-color-adjust: exact;
+		}
 	}
 }
 
@@ -405,27 +434,6 @@
 	--component-calendar-day-background-in-range: var(--background-selected);
 	--component-calendar-day-foreground-in-range: var(--text-title);
 	--component-calendar-day-indicator-today: currentColor;
-}
-
-body {
-	background: var(--background-main);
-	color: var(--text-main);
-	font-family: var(--font-family-sans);
-	font-size: var(--font-size-md);
-	line-height: var(--line-height-body);
-	text-rendering: optimizeLegibility;
-}
-
-button,
-input,
-textarea,
-select {
-	font: inherit;
-}
-
-::selection {
-	background: var(--selection-background);
-	color: var(--selection-foreground);
 }
 
 .lyds-numeric {

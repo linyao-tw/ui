@@ -24,6 +24,8 @@ import "@linyao.tw/ui/styles.css";
 import "@linyao.tw/ui/fonts.css";
 ```
 
+`styles.css` 除了設計變數與元件樣式，也包含一層文件基準樣式：`box-sizing`、`margin`／`padding` 歸零、`body` 的背景與文字色、表單控制項的 `font: inherit` 與 `::selection`。這層放在 `@layer lyds.base`，未分層的應用程式樣式一律勝過它，因此覆寫不需要提高選擇器權重。
+
 ## 使用
 
 ```tsx
