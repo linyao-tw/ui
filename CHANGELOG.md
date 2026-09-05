@@ -2,7 +2,19 @@
 
 版本號依循 [Semantic Versioning](https://semver.org/lang/zh-TW/)。發佈流程與 dist-tag 規則見 [`docs/publishing.md`](docs/publishing.md)。
 
-## 未發佈
+## 2.0.0 — 2026-09-06
+
+JavaScript 匯出介面沒有任何移除項目（只新增四個），因此 `import { … } from "@linyao.tw/ui"` 不需要調整。主版號來自 CSS 與行為層：移除的設計變數、重新定義的控制項高度刻度，以及不再自動載入的字型。
+
+### 升級指南
+
+1. **字型**：在匯入 `styles.css` 之前加上 `import "@linyao.tw/ui/fonts.css";`，或自行代管字型並覆寫 `--font-family-sans`／`-serif`／`-mono`。不處理的話元件會退回系統字型。
+2. **控制項高度**：若自訂 CSS 使用了 `--control-height-sm`／`-md`／`-lg`，數值已由 `2.5`／`3`／`3.5rem` 改為 `3`／`3.5`／`4rem`。要維持原本尺寸請改用 `--control-height-compact-*`。
+3. **移除的設計變數**：見下方清單，每一項都有對應的既有角色可替換。
+4. **密碼欄位**：登入表單補上 `autoComplete="current-password"`，註冊或改密碼表單用 `"new-password"`。
+5. **AlertDialog**：需要角落關閉鈕時傳 `closeButton`。
+6. **SegmentedControl**：補上 `aria-label` 或 `aria-labelledby`，否則型別檢查會失敗。
+7. **CSS 覆寫**：`feedback` 與 `selection` 的元件從 CSS Modules 改為全域類別。原本的雜湊名稱（如 `_toastRoot_f6yg4_1`）本來就會隨每次建置改變、不適合當作選擇器；現在是穩定的 `.lyds-toast`、`.lyds-listbox__option` 等。
 
 ### 破壞性變更
 
