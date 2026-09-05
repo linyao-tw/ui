@@ -48,17 +48,22 @@ export interface DialogPopupProps extends BaseDialogPopupProps {
 	closeLabel?: string;
 	/** 傳給內建關閉控制項的屬性。 */
 	closeProps?: Omit<DialogCloseProps, "children">;
-	/** 僅在彈出內容另有可存取的 Dialog.Close 時設定。 */
+	/** Renders the built-in corner close control. */
+	closeButton?: boolean;
+	/**
+	 * @deprecated Pass `closeButton={false}` instead. Kept so existing call sites keep working.
+	 */
 	hasCustomClose?: boolean;
 }
 
-export const DialogPopup = forwardRef<HTMLDivElement, DialogPopupProps>(function DialogPopup({ children, className, closeLabel, closeProps, hasCustomClose = false, ...props }, ref) {
+export const DialogPopup = forwardRef<HTMLDivElement, DialogPopupProps>(function DialogPopup({ children, className, closeButton, closeLabel, closeProps, hasCustomClose = false, ...props }, ref) {
 	const messages = useMessages();
+	const showCloseButton = closeButton ?? !hasCustomClose;
 
 	return (
 		<BaseDialog.Popup {...props} ref={ref} className={withStateClassName("lyds-dialog__popup", className)}>
+			{showCloseButton ? <DialogClose {...closeProps} aria-label={closeLabel ?? messages.dialogClose} /> : null}
 			{children}
-			{hasCustomClose ? null : <DialogClose {...closeProps} aria-label={closeLabel ?? messages.dialogClose} />}
 		</BaseDialog.Popup>
 	);
 });
@@ -145,17 +150,29 @@ export interface AlertDialogPopupProps extends BaseDialogPopupProps {
 	closeLabel?: string;
 	/** 傳給內建取消／關閉控制項的屬性。 */
 	closeProps?: Omit<DialogCloseProps, "children">;
-	/** 僅在彈出內容另有可存取的 AlertDialog.Close 時設定。 */
+	/**
+	 * Renders the built-in corner close control. An alert dialog asks for a deliberate choice, so
+	 * this defaults to `false` and the popup should carry its own confirm and cancel actions.
+	 */
+	closeButton?: boolean;
+	/**
+	 * @deprecated Pass `closeButton` instead. Kept so existing call sites keep working.
+	 */
 	hasCustomClose?: boolean;
 }
 
-export const AlertDialogPopup = forwardRef<HTMLDivElement, AlertDialogPopupProps>(function AlertDialogPopup({ children, className, closeLabel, closeProps, hasCustomClose = false, ...props }, ref) {
+export const AlertDialogPopup = forwardRef<HTMLDivElement, AlertDialogPopupProps>(function AlertDialogPopup(
+	{ children, className, closeButton, closeLabel, closeProps, hasCustomClose, ...props },
+	ref
+) {
 	const messages = useMessages();
+	// The historic default injected a dismiss control; only an explicit hasCustomClose={false} still asks for one.
+	const showCloseButton = closeButton ?? hasCustomClose === false;
 
 	return (
 		<BaseAlertDialog.Popup {...props} ref={ref} className={withStateClassName("lyds-dialog__popup lyds-alertDialog__popup", className)}>
+			{showCloseButton ? <AlertDialogClose {...closeProps} aria-label={closeLabel ?? messages.alertDialogClose} /> : null}
 			{children}
-			{hasCustomClose ? null : <AlertDialogClose {...closeProps} aria-label={closeLabel ?? messages.alertDialogClose} />}
 		</BaseAlertDialog.Popup>
 	);
 });

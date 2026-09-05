@@ -48,17 +48,22 @@ export interface DrawerPopupProps extends BaseDrawerPopupProps {
 	closeLabel?: string;
 	/** 傳給內建關閉控制項的屬性。 */
 	closeProps?: Omit<DrawerCloseProps, "children">;
-	/** 僅在彈出內容另有可存取的 Drawer.Close 時設定。 */
+	/** Renders the built-in corner close control. */
+	closeButton?: boolean;
+	/**
+	 * @deprecated Pass `closeButton={false}` instead. Kept so existing call sites keep working.
+	 */
 	hasCustomClose?: boolean;
 }
 
-export const DrawerPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(function DrawerPopup({ children, className, closeLabel, closeProps, hasCustomClose = false, ...props }, ref) {
+export const DrawerPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(function DrawerPopup({ children, className, closeButton, closeLabel, closeProps, hasCustomClose = false, ...props }, ref) {
 	const messages = useMessages();
+	const showCloseButton = closeButton ?? !hasCustomClose;
 
 	return (
 		<BaseDrawer.Popup {...props} ref={ref} className={withStateClassName("lyds-drawer__popup", className)}>
+			{showCloseButton ? <DrawerClose {...closeProps} aria-label={closeLabel ?? messages.drawerClose} /> : null}
 			{children}
-			{hasCustomClose ? null : <DrawerClose {...closeProps} aria-label={closeLabel ?? messages.drawerClose} />}
 		</BaseDrawer.Popup>
 	);
 });
@@ -159,13 +164,17 @@ export function BottomSheetRoot<Payload = unknown>({ snapPoints = defaultBottomS
 	return <BaseDrawer.Root {...props} swipeDirection="down" snapPoints={snapPoints} defaultSnapPoint={defaultSnapPoint ?? accessibleDefaultSnapPoint} />;
 }
 
-export const BottomSheetPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(function BottomSheetPopup({ children, className, closeLabel, closeProps, hasCustomClose = false, ...props }, ref) {
+export const BottomSheetPopup = forwardRef<HTMLDivElement, DrawerPopupProps>(function BottomSheetPopup(
+	{ children, className, closeButton, closeLabel, closeProps, hasCustomClose = false, ...props },
+	ref
+) {
 	const messages = useMessages();
+	const showCloseButton = closeButton ?? !hasCustomClose;
 
 	return (
 		<BaseDrawer.Popup {...props} ref={ref} className={withStateClassName("lyds-drawer__popup lyds-bottomSheet__popup", className)}>
+			{showCloseButton ? <DrawerClose {...closeProps} aria-label={closeLabel ?? messages.bottomSheetClose} /> : null}
 			{children}
-			{hasCustomClose ? null : <DrawerClose {...closeProps} aria-label={closeLabel ?? messages.bottomSheetClose} />}
 		</BaseDrawer.Popup>
 	);
 });

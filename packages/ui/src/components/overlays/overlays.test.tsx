@@ -269,3 +269,87 @@ describe("modal overlays", () => {
 		});
 	});
 });
+
+describe("overlay close controls", () => {
+	it("makes the dialog's built-in close the first tab stop rather than the last", async () => {
+		const user = userEvent.setup();
+		render(
+			<Dialog.Root defaultOpen>
+				<Dialog.Portal>
+					<Dialog.Backdrop />
+					<Dialog.Popup>
+						<Dialog.Title>Deploy</Dialog.Title>
+						<Dialog.Body>
+							<button type="button">First body control</button>
+							<button type="button">Second body control</button>
+						</Dialog.Body>
+					</Dialog.Popup>
+				</Dialog.Portal>
+			</Dialog.Root>
+		);
+
+		const popup = await screen.findByRole("dialog");
+		const close = screen.getByRole("button", { name: "關閉對話框" });
+		const firstBodyControl = screen.getByRole("button", { name: "First body control" });
+
+		expect([...popup.querySelectorAll("button")][0]).toBe(close);
+		expect(close.compareDocumentPosition(firstBodyControl) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+
+		firstBodyControl.focus();
+		await user.tab({ shift: true });
+		expect(close).toHaveFocus();
+	});
+
+	it("does not inject a dismiss control into an alert dialog", async () => {
+		render(
+			<AlertDialog.Root defaultOpen>
+				<AlertDialog.Portal>
+					<AlertDialog.Backdrop />
+					<AlertDialog.Popup>
+						<AlertDialog.Title>Disconnect node?</AlertDialog.Title>
+						<AlertDialog.Actions>
+							<AlertDialog.Close>Cancel</AlertDialog.Close>
+							<button type="button">Disconnect</button>
+						</AlertDialog.Actions>
+					</AlertDialog.Popup>
+				</AlertDialog.Portal>
+			</AlertDialog.Root>
+		);
+
+		const popup = await screen.findByRole("alertdialog");
+		expect(popup.querySelector(".lyds-overlayClose")).toBeNull();
+		expect([...popup.querySelectorAll("button")].map(button => button.textContent)).toEqual(["Cancel", "Disconnect"]);
+	});
+
+	it("still renders a dismiss control when an alert dialog asks for one", async () => {
+		render(
+			<AlertDialog.Root defaultOpen>
+				<AlertDialog.Portal>
+					<AlertDialog.Popup closeButton>
+						<AlertDialog.Title>Disconnect node?</AlertDialog.Title>
+					</AlertDialog.Popup>
+				</AlertDialog.Portal>
+			</AlertDialog.Root>
+		);
+
+		const popup = await screen.findByRole("alertdialog");
+		expect(popup.querySelector(".lyds-overlayClose")).not.toBeNull();
+	});
+
+	it("suppresses the dialog close control through closeButton={false}", async () => {
+		render(
+			<Dialog.Root defaultOpen>
+				<Dialog.Portal>
+					<Dialog.Popup closeButton={false}>
+						<Dialog.Title>Deploy</Dialog.Title>
+						<Dialog.Close>Done</Dialog.Close>
+					</Dialog.Popup>
+				</Dialog.Portal>
+			</Dialog.Root>
+		);
+
+		const popup = await screen.findByRole("dialog");
+		expect(popup.querySelector(".lyds-overlayClose")).toBeNull();
+		expect(screen.getByRole("button", { name: "Done" })).toBeInTheDocument();
+	});
+});

@@ -1,10 +1,17 @@
 import { Combobox as BaseCombobox } from "@base-ui/react/combobox";
 import { Dialog as BaseDialog } from "@base-ui/react/dialog";
 import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
-import { forwardRef, useCallback, useImperativeHandle, useRef, useState, type ComponentRef, type HTMLAttributes, type ReactNode } from "react";
+import { createContext, forwardRef, useCallback, useContext, useRef, useState, type ComponentRef, type HTMLAttributes, type ReactNode, type RefObject } from "react";
 
 import { cx, withStateClassName } from "@/internal";
 import { useMessages } from "@/intl";
+/**
+ * The popup moves focus to the search input when the palette opens. Sharing a ref beats looking the
+ * input up by class name: a consumer can render a different input, and a class name that focus
+ * management depends on becomes public API by accident.
+ */
+const CommandPaletteInputContext = createContext<RefObject<HTMLInputElement | null> | null>(null);
+
 export interface CommandPaletteProps<Value> extends Omit<BaseCombobox.Root.Props<Value, false>, "autoComplete" | "children" | "defaultOpen" | "inline" | "modal" | "onOpenChange" | "open"> {
 	children: ReactNode;
 	defaultOpen?: boolean;
@@ -34,22 +41,26 @@ export function CommandPalette<Value>({ children, defaultOpen = false, modal = t
 		[isControlled, onOpenChange]
 	);
 
+	const inputRef = useRef<HTMLInputElement | null>(null);
+
 	return (
-		<BaseDialog.Root modal={modal} open={resolvedOpen} onOpenChange={changeOpen}>
-			<BaseCombobox.Root
-				{...comboboxProps}
-				autoComplete="none"
-				inline
-				open={resolvedOpen}
-				onOpenChange={(nextOpen, eventDetails) => {
-					if (nextOpen !== resolvedOpen) {
-						changeOpen(nextOpen, eventDetails);
-					}
-				}}
-			>
-				{children}
-			</BaseCombobox.Root>
-		</BaseDialog.Root>
+		<CommandPaletteInputContext value={inputRef}>
+			<BaseDialog.Root modal={modal} open={resolvedOpen} onOpenChange={changeOpen}>
+				<BaseCombobox.Root
+					{...comboboxProps}
+					autoComplete="none"
+					inline
+					open={resolvedOpen}
+					onOpenChange={(nextOpen, eventDetails) => {
+						if (nextOpen !== resolvedOpen) {
+							changeOpen(nextOpen, eventDetails);
+						}
+					}}
+				>
+					{children}
+				</BaseCombobox.Root>
+			</BaseDialog.Root>
+		</CommandPaletteInputContext>
 	);
 }
 
@@ -72,22 +83,11 @@ export const CommandPaletteViewport = forwardRef<ComponentRef<typeof BaseDialog.
 
 export const CommandPalettePopup = forwardRef<ComponentRef<typeof BaseDialog.Popup>, BaseDialog.Popup.Props>(function CommandPalettePopup(props, ref) {
 	const { className, initialFocus, ...popupProps } = props;
-	const popupRef = useRef<ComponentRef<typeof BaseDialog.Popup>>(null);
-	useImperativeHandle(ref, () => popupRef.current as ComponentRef<typeof BaseDialog.Popup>);
+	const inputRef = useContext(CommandPaletteInputContext);
+	const focusSearchInput = useCallback((openType: string) => (openType === "touch" ? true : (inputRef?.current ?? true)), [inputRef]);
 
 	return (
-		<BaseDialog.Popup
-			ref={popupRef}
-			className={withStateClassName<BaseDialog.Popup.State>("lyds-command-palette__popup", className)}
-			initialFocus={
-				initialFocus ??
-				(openType => {
-					if (openType === "touch") return true;
-					return popupRef.current?.querySelector<HTMLElement>(".lyds-command-palette__input") ?? true;
-				})
-			}
-			{...popupProps}
-		/>
+		<BaseDialog.Popup ref={ref} className={withStateClassName<BaseDialog.Popup.State>("lyds-command-palette__popup", className)} initialFocus={initialFocus ?? focusSearchInput} {...popupProps} />
 	);
 });
 
@@ -118,8 +118,18 @@ export const CommandPaletteLabel = forwardRef<ComponentRef<typeof BaseCombobox.L
 
 export const CommandPaletteInput = forwardRef<ComponentRef<typeof BaseCombobox.Input>, BaseCombobox.Input.Props>(function CommandPaletteInput(props, ref) {
 	const messages = useMessages();
+	const paletteInputRef = useContext(CommandPaletteInputContext);
 	const { className, placeholder = messages.commandPalettePlaceholder, ...inputProps } = props;
-	return <BaseCombobox.Input ref={ref} className={withStateClassName<BaseCombobox.Input.State>("lyds-command-palette__input", className)} placeholder={placeholder} {...inputProps} />;
+	const setInput = useCallback(
+		(node: HTMLInputElement | null) => {
+			if (paletteInputRef) paletteInputRef.current = node;
+			if (typeof ref === "function") ref(node);
+			else if (ref) ref.current = node;
+		},
+		[paletteInputRef, ref]
+	);
+
+	return <BaseCombobox.Input ref={setInput} className={withStateClassName<BaseCombobox.Input.State>("lyds-command-palette__input", className)} placeholder={placeholder} {...inputProps} />;
 });
 
 export const CommandPaletteList = forwardRef<ComponentRef<typeof BaseCombobox.List>, BaseCombobox.List.Props>(function CommandPaletteList(props, ref) {
